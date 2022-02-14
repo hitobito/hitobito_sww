@@ -10,16 +10,74 @@ de:
 
       ### GROUPS
 
-      group/root:
-        one: Hauptgruppe
-        other: Hauptgruppen
+      group/schweizer_wanderwege:
+        one: Schweizer Wanderwege
+        other: Schweizer Wanderwege
 
+      group/fachorganisation:
+        one: Fachorganisation
+        other: Fachorganisation
+
+      group/kontakte:
+        one: Kontakte
+        other: Kontakte
+
+      group/vorstand:
+        one: Vorstand
+        other: Vorstand
+
+      group/geschaeftsstelle:
+        one: Geschäftsleitung
+        other: Geschäftsleitung
+
+      group/gremium_projektgruppe:
+        one: Gremium/Projektgruppe
+        other: Gremium/Projektgruppe
+
+      group/mitglieder:
+        one: Mitglieder
+        other: Mitglieder
 
       ### ROLES
 
-      group/root/leader:
+      group/schweizer_wanderwege/mitarbeitende:
+        one: Mitarbeitende
+      group/schweizer_wanderwege/support:
+        one: Support
+
+      group/kontakte/kontakt:
+        one: Kontakt
+
+      group/vorstand/praesident:
+        one: Präsident
+      group/vorstand/vizepraesident:
+        one: Vizepräsident
+      group/vorstand/vorstandsmitglied:
+        one: Vorstandsmitglied
+
+      group/geschaeftsstelle/geschaeftsfuehrer:
+        one: Geschäftsführer
+      group/geschaeftsstelle/kassier:
+        one: Kassier
+      group/geschaeftsstelle/technischer_leiter:
+        one: Technischer Leiter
+      group/geschaeftsstelle/mitarbeiter:
+        one: Mitarbeiter
+
+      group/gremium_projektgruppe/leitung:
         one: Leitung
-        description: Leitungspersonen verwalten die Applikation.
-      group/root/member:
+      group/gremium_projektgruppe/mitglied:
         one: Mitglied
-        description: Mitglieder sind alle anderen.
+
+      group/mitglieder/aktivmitglied:
+        one: Aktivmitglied
+      group/mitglieder/passivmitglied:
+        one: Passivmitglied
+      group/mitglieder/freimitglied:
+        one: Freimitglied
+      group/mitglieder/organisationen:
+        one: Organisationen
+      group/mitglieder/partner:
+        one: Partner
+      group/mitglieder/spender:
+        one: Spender
