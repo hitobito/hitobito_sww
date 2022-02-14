@@ -1,4 +1,4 @@
-# Hitobito Sww
+# Hitobito SWW
 
 This hitobito wagon defines the organization hierarchy with groups and roles
 of Sww.
