@@ -1,0 +1,20 @@
+name: 'Lint and test'
+
+on:
+  # The nightly obuild allows us to notice if changes to the core
+  # break the wagon.
+  schedule:
+  - cron:  '38 3 * * *'
+  push:
+    paths-ignore:
+      - 'doc/**'
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - 'doc/**'
+      - '**.md'
+jobs:
+  wagon_tests:
+    uses: hitobito/hitobito/.github/workflows/wagon-tests.yml@master
+    with:
+      wagon_repository: ${{ github.event.repository.name }}
