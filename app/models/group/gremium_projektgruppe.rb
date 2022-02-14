@@ -5,16 +5,20 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
+class Group::GremiumProjektgruppe < ::Group
 
-module Sww::Group
-  extend ActiveSupport::Concern
+  children Group::GremiumProjektgruppe
 
-  included do
-    # Define additional used attributes
-    # self.used_attributes += [:website, :bank_account, :description]
-    # self.superior_attributes = [:bank_account]
+  ### ROLES
 
-    root_types Group::SchweizerWanderwege
+  class Leitung < ::Role
+    self.permissions = [:group_and_below_full]
   end
+
+  class Mitglied < ::Role
+    self.permissions = [:group_and_below_read]
+  end
+
+  roles Leitung, Mitglied
 
 end

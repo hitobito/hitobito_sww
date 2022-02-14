@@ -6,4 +6,4 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 
-Group::Root.seed_once(:parent_id, name: 'Hauptgruppe')
+Group::SchweizerWanderwege.seed_once(:parent_id, name: 'Schweizer Wanderwege')
