@@ -20,6 +20,45 @@ if root.address.blank?
   end
 end
 
-# TODO: define more groups
+fachorganisationen = Group::Fachorganisation.seed(:name, :parent_id,
+                                                  {
+                                                    name: 'Berner Wanderwege BWW',
+                                                    parent_id: root.id
+                                                  },
+                                                  {
+                                                    name: 'Zürcher Wanderwege',
+                                                    parent_id: root.id
+                                                  }
+                                                 )
+
+Group::GremiumProjektgruppe.seed(:name, :parent_id,
+                                 {
+                                   name: 'Gremium',
+                                   parent_id: fachorganisationen[0].id
+                                 },
+                                 {
+                                   name: 'Projektgruppe',
+                                   parent_id: fachorganisationen[0].id
+                                 },
+                                 {
+                                   name: 'Gremium',
+                                   parent_id: fachorganisationen[1].id
+                                 },
+                                 {
+                                   name: 'Projektgruppe',
+                                   parent_id: fachorganisationen[1].id
+                                 }
+                                )
+
+Group::Mitglieder.seed(:name, :parent_id,
+                       {
+                         name: 'Mitglieder',
+                         parent_id: fachorganisationen[0].id
+                       },
+                       {
+                         name: 'Mitglieder',
+                         parent_id: fachorganisationen[1].id
+                       }
+                      )
 
 Group.rebuild!
