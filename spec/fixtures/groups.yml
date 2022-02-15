@@ -1,0 +1,104 @@
+#  Copyright (c) 2012-2022, Schweizer Wanderwege. This file is part of
+#  hitobito_sww and licensed under the Affero General Public License version 3
+#  or later. See the COPYING file at the top-level directory or at
+#  https://github.com/hitobito/hitobito_sww.
+
+
+schweizer_wanderwege:
+  parent:
+  lft: 1
+  rgt: 22
+  name: Schweizer Wanderwege
+  type: Group::SchweizerWanderwege
+  email: sww@sww.example.com
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:schweizer_wanderwege) %>
+
+berner_wanderwege:
+  parent: schweizer_wanderwege
+  lft: 2
+  rgt: 11
+  name: Berner Wanderwege BWW
+  type: Group::Fachorganisation
+  email: bww@sww.example.com
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:berner_wanderwege) %>
+
+zuercher_wanderwege:
+  parent: schweizer_wanderwege
+  lft: 12
+  rgt: 21
+  name: Zürcher Wanderwege
+  type: Group::Fachorganisation
+  email: bww@sww.example.com
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:zuercher_wanderwege) %>
+
+berner_gremium:
+  parent: berner_wanderwege
+  lft: 3
+  rgt: 4
+  name: Gremium
+  type: Group::GremiumProjektgruppe
+  email: berner_gremium@sww.example.com
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:berner_wanderwege) %>
+
+berner_vorstand:
+  parent: berner_wanderwege
+  lft: 5
+  rgt: 6
+  name: Vorstand
+  type: Group::Vorstand
+  email: berner_vorstand@sww.example.com
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:berner_wanderwege) %>
+
+berner_geschaeftsstelle:
+  parent: berner_wanderwege
+  lft: 7
+  rgt: 8
+  name: Geschäftsstelle
+  type: Group::Geschaeftsstelle
+  email: berner_geschaeftsstelle@sww.example.com
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:berner_wanderwege) %>
+
+berner_mitglieder:
+  parent: berner_wanderwege
+  lft: 9
+  rgt: 10
+  name: Mitglieder
+  type: Group::Mitglieder
+  email: berner_mitglieder@sww.example.com
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:berner_wanderwege) %>
+
+zuercher_gremium:
+  parent: zuercher_wanderwege
+  lft: 13
+  rgt: 14
+  name: Gremium
+  type: Group::GremiumProjektgruppe
+  email: zuercher_gremium@sww.example.com
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:zuercher_wanderwege) %>
+
+zuercher_vorstand:
+  parent: zuercher_wanderwege
+  lft: 15
+  rgt: 16
+  name: Vorstand
+  type: Group::Vorstand
+  email: zuercher_vorstand@sww.example.com
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:zuercher_wanderwege) %>
+
+zuercher_geschaeftsstelle:
+  parent: zuercher_wanderwege
+  lft: 17
+  rgt: 18
+  name: Geschäftsstelle
+  type: Group::Geschaeftsstelle
+  email: zuercher_geschaeftsstelle@sww.example.com
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:zuercher_wanderwege) %>
+
+zuercher_mitglieder:
+  parent: zuercher_wanderwege
+  lft: 19
+  rgt: 20
+  name: Mitglieder
+  type: Group::Mitglieder
+  email: zuercher_mitglieder@sww.example.com
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:zuercher_wanderwege) %>
