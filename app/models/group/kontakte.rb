@@ -5,16 +5,16 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
+class Group::Kontakte < ::Group
 
-module Sww::Group
-  extend ActiveSupport::Concern
+  children Group::Kontakte
 
-  included do
-    # Define additional used attributes
-    # self.used_attributes += [:website, :bank_account, :description]
-    # self.superior_attributes = [:bank_account]
+  ### ROLES
 
-    root_types Group::SchweizerWanderwege
+  class Kontakt < ::Role
+    self.permissions = []
   end
+
+  roles Kontakt
 
 end
