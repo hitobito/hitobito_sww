@@ -63,7 +63,7 @@ $tableColorHover: lighten($purple, 50%);
 
 // Typography
 // -------------------------
-$sansFontFamily: Helvetica, Arial, sans-serif !default;
+$sansFontFamily: "PT Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $headingFontFamily: $sansFontFamily !default;
 $baseFontFamily: $sansFontFamily !default;
 $headingsFontWeight: normal !default; // instead of browser default, bold
