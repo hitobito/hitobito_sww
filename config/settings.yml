@@ -10,6 +10,9 @@
 application:
   languages:
     de: Deutsch
+    fr: Französisch
+    it: Italienisch
+
   logo:
     image: logo.svg
     height: 70
