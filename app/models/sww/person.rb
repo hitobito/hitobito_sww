@@ -12,6 +12,19 @@ module Sww::Person
   included do
     Person::PUBLIC_ATTRS << :member_number << :custom_salutation << :magazin_abo_number
     Person::INTERNAL_ATTRS << :alabus_id << :member_number
-  end
 
+    before_validation :set_incremented_member_number, unless: :member_number_present?
+
+    validates :member_number, uniqueness: true
+
+    private
+
+    def set_incremented_member_number
+      self.member_number = Person.maximum(:member_number).succ
+    end
+
+    def member_number_present?
+      member_number.present?
+    end
+  end
 end
