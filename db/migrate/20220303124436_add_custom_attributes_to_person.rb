@@ -10,7 +10,7 @@ class AddCustomAttributesToPerson < ActiveRecord::Migration[6.1]
   def change
 
     add_column :people, :alabus_id, :string, index: { unique: true }
-    add_column :people, :member_number, :integer, index: true, null: false
+    add_column :people, :member_number, :integer, index: true
     add_column :people, :custom_salutation, :string
     add_column :people, :magazin_abo_number, :integer, index: true
 

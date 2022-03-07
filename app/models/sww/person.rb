@@ -18,7 +18,8 @@ module Sww::Person
     # start numbering from this value for people created in hitobito
     INIT_MEMBER_NUMBER = 100_000
 
-    before_validation :set_incremented_member_number, unless: :member_number
+    before_validation :set_incremented_member_number,
+                      unless: :member_number
 
     validates :member_number,
               uniqueness: true,
