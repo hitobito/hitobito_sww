@@ -5,26 +5,41 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
 module Sww::Person
   extend ActiveSupport::Concern
 
   included do
-    Person::PUBLIC_ATTRS << :member_number << :custom_salutation << :magazin_abo_number
+    add_public_attrs = %I[custom_salutation magazin_abo_number]
+    Person::PUBLIC_ATTRS.push(*add_public_attrs)
     Person::INTERNAL_ATTRS << :alabus_id << :member_number
 
-    before_validation :set_incremented_member_number, unless: :member_number_present?
+    # member number is already present in legacy system (alabus)
+    # and is imported
+    # start numbering from this value for people created in hitobito
+    INIT_MEMBER_NUMBER = 100_000
 
-    validates :member_number, uniqueness: true
+    before_validation :set_incremented_member_number, unless: :member_number
 
-    private
+    validates :member_number,
+              uniqueness: true,
+              if: -> { member_number >= INIT_MEMBER_NUMBER }
 
-    def set_incremented_member_number
-      self.member_number = Person.maximum(:member_number).succ
-    end
+    attr_readonly :member_number
+    attr_readonly :alabus_id
+  end
 
-    def member_number_present?
-      member_number.present?
+  private
+
+  def set_incremented_member_number
+    self.member_number = next_member_number
+  end
+
+  def next_member_number
+    max_nr = Person.maximum(:member_number) || 1
+    if max_nr < INIT_MEMBER_NUMBER
+      INIT_MEMBER_NUMBER
+    else
+      max_nr.succ
     end
   end
 end

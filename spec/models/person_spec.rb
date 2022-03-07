@@ -9,10 +9,21 @@ require 'spec_helper'
 
 describe Person do
 
+  it 'includes custom attributes' do
+    %I[custom_salutation magazin_abo_number].each do |a|
+      expect(Person::PUBLIC_ATTRS).to include(a)
+    end
+
+    %I[member_number alabus_id].each do |a|
+      expect(Person::INTERNAL_ATTRS).to include(a)
+    end
+  end
+
   describe 'member number' do
     before do
-      Fabricate(:person, member_number: 100)
-      Fabricate(:person, member_number: 200)
+      Person.destroy_all
+      Fabricate(:person)
+      Fabricate(:person)
     end
 
     it 'sets incremented number' do
@@ -23,7 +34,7 @@ describe Person do
       person.save!
       person.reload
 
-      expect(person.member_number).to eq(201)
+      expect(person.member_number).to eq(100_002)
     end
 
     it 'does not overwrite manually set member number' do
@@ -36,12 +47,12 @@ describe Person do
       expect(person.member_number).to eq(1)
     end
 
-    it 'has to be unique' do
-      person = Person.new(first_name: 'Klaus', member_number: 100)
+    it 'has to be unique if bigger than init value for new records' do
+      person = Person.new(first_name: 'Klaus', member_number: 100_000)
 
       expect(person).to_not be_valid
 
-      person.member_number = 300
+      person.member_number = 100_002
 
       expect(person).to be_valid
     end
