@@ -23,6 +23,7 @@ module HitobitoSww
     config.to_prepare do
       # extend application classes here
       Group.include Sww::Group
+      Person.include Sww::Person
     end
 
     initializer 'sww.add_settings' do |_app|

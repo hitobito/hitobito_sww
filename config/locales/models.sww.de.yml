@@ -81,3 +81,9 @@ de:
         one: Partner
       group/mitglieder/spender:
         one: Spender
+    attributes:
+      person:
+        custom_salutation: Benutzerdefinierte Anrede
+        magazin_abo_number: 'Abo # Magazin'
+        member_number: Mitgliedernummer
+
