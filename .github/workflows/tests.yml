@@ -15,6 +15,12 @@ on:
       - '**.md'
 jobs:
   wagon_tests:
-    uses: hitobito/hitobito/.github/workflows/wagon-tests.yml@master
+    uses: hitobito/hitobito/.github/workflows/wagon-tests.yml@bug/1642_fix_wagon_cron_job
+    # steps:
+    #   - name: Find repository name
+    #     id: find_repository_name
+    #     run: |
+    #       echo "::set-output name=repository_name::$(${${{github.repository}}##*/})"
     with:
-      wagon_repository: ${{ github.event.repository.name }}
+      # wagon_repository: ${{ steps.find_repository_name.outputs.repository_name }}
+      wagon_repository: ${{ github.repository }}
