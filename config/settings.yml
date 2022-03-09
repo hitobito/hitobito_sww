@@ -13,6 +13,9 @@ application:
     fr: Französisch
     it: Italienisch
 
+  additional_languages:
+    en: Englisch
+
   logo:
     image: logo.svg
     height: 70
