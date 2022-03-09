@@ -16,7 +16,7 @@ module Sww::Person
     # member number is already present in legacy system (alabus)
     # and is imported
     # start numbering from this value for people created in hitobito
-    INIT_MEMBER_NUMBER = 100_000
+    INIT_MEMBER_NUMBER = 300_000
 
     before_validation :set_incremented_member_number,
                       unless: :member_number
