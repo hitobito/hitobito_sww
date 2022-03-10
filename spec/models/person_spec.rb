@@ -34,7 +34,7 @@ describe Person do
       person.save!
       person.reload
 
-      expect(person.member_number).to eq(100_002)
+      expect(person.member_number).to eq(300_002)
     end
 
     it 'does not overwrite manually set member number' do
@@ -48,11 +48,11 @@ describe Person do
     end
 
     it 'has to be unique if bigger than init value for new records' do
-      person = Person.new(first_name: 'Klaus', member_number: 100_000)
+      person = Person.new(first_name: 'Klaus', member_number: 300_000)
 
       expect(person).to_not be_valid
 
-      person.member_number = 100_002
+      person.member_number = 300_002
 
       expect(person).to be_valid
     end
