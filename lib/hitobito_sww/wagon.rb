@@ -24,8 +24,11 @@ module HitobitoSww
       # extend application classes here
       Group.include Sww::Group
       Person.include Sww::Person
+      Role.include Sww::Role
 
       TagListsHelper.include Sww::TagListsHelper
+
+      PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number, :name_add_on, :title]
     end
 
     initializer 'sww.add_settings' do |_app|
