@@ -81,6 +81,9 @@ de:
         one: Partner
       group/mitglieder/spender:
         one: Spender
+      group/mitglieder/magazin_abonnent:
+        one: Magazin Abonnent 
+
     attributes:
       person:
         custom_salutation: Benutzerdefinierte Anrede
