@@ -15,30 +15,17 @@ namespace :import do
     raise unless person_csv.exist?
 
     CSV.parse(person_csv.read, headers: true, header_converters: :symbol).each do |import_row|
-      person_hash = {}
-      person_hash[:alabus_id] = import_row[:id]
-      person_hash[:member_number] = import_row[:membernumber]
-      person_hash[:first_name] = import_row[:firstname]
-      person_hash[:last_name] = import_row[:lastname]
-      person_hash[:birthday] = import_row[:birthdate]
-      person_hash[:email] = import_row[:email] unless Person.exists?(email: import_row[:email])
-      person_hash[:address] = [import_row[:primaryaddressaddressline1],
-                               import_row[:primaryaddressaddressline2]].join("\n")
-      person_hash[:zip_code] = import_row[:primaryaddresszip]
-      person_hash[:town] = import_row[:primaryaddresscity]
+      person_attrs = DataMigrator.person_attrs_from_import_row(import_row)
 
-      person_hash[:language] = DataMigrator.person_language(import_row) if import_row[:language]
+      DataMigrator.assign_salutation!(person_attrs, import_row)
 
-      DataMigrator.assign_salutation!(person_hash, import_row)
+      DataMigrator.assign_company!(person_attrs, import_row)
 
-      DataMigrator.assign_company!(person_hash, import_row)
+      person_attrs[:primary_group_id] = DataMigrator.default_contact_group_id
 
-      person_hash[:primary_group_id] = DataMigrator.default_contact_group_id
-      person_hash[:created_at] = person_hash[:updated_at] = Time.zone.now
+      Person.upsert(person_attrs)
 
-      Person.upsert(person_hash)
-
-      person = Person.find_by(alabus_id: person_hash[:alabus_id])
+      person = Person.find_by(alabus_id: person_attrs[:alabus_id])
 
       DataMigrator.insert_role!(person)
       DataMigrator.insert_phone_numbers!(person, import_row)
@@ -48,7 +35,7 @@ namespace :import do
   end
 
   desc 'Import people for FO'
-  task :people_fo, [:group_id] => :environment do
+  task :people_fo, [:group_id] => :environment do |_t, args|
     person_csv = Wagons.find('sww').root.join('db/seeds/production/people_fo.csv')
     raise unless person_csv.exist?
 
@@ -56,13 +43,16 @@ namespace :import do
     raise unless group
 
     tag_mappings = {
-      'Printabo': 'abo:print',
-      'Kombiabo': 'abo:kombi',
-      'Einzel': 'category:Einzel',
-      'Doppelmitglied': 'category:Doppelmitglied'
+      'Print-Abo': { name: 'abo:print' },
+      'Kombi-Abo': { name: 'abo:kombi' },
+      'Einzel': { name: 'category:Einzel' },
+      'Doppelmitglied': { name: 'category:Doppelmitglied' },
+      'Newsletter': { name: 'Newsletter' }
     }
-    tag_mappings.values.each do |attrs|
-      ActsAsTaggableOn::Tag.upsert(attrs)
+    tag_mappings.values.each do |tag|
+      ActsAsTaggableOn::Tag.upsert(name: tag[:name])
+
+      tag.merge!(id: ActsAsTaggableOn::Tag.find_by(name: tag[:name]).id)
     end
 
     CSV.parse(person_csv.read, headers: true, header_converters: :symbol).each do |import_row|
@@ -71,28 +61,72 @@ namespace :import do
       person_attrs[:magazin_abo_number] = import_row[:abo1number]
       person_attrs[:title] = import_row[:title]
 
+      country_mappings = {
+        'Schweiz': 'CH',
+        'Deutschland': 'DE'
+      }
+
+      person_attrs[:country] = country_mappings[import_row[:primaryaddresscountrylictranslated]&.to_sym] || 'CH'
+      person_attrs[:name_add_on] = import_row[:nameaddon]
+
+      taken_email = person_attrs.delete(:email) if Person.exists?(email: person_attrs[:email])
+
       Person.upsert(person_attrs)
 
       person = Person.find_by(alabus_id: person_attrs[:alabus_id])
 
-      role_attrs = {
+      if taken_email.present?
+        additional_mail_attrs = {
+          contactable_type: Person.sti_name,
+          contactable_id: person.id,
+          email: taken_email,
+          label: 'Privat'
+        }
+
+        AdditionalEmail.upsert(additional_mail_attrs)
+      end
+
+      mitglied_attrs = {
         person_id: person.id,
         group_id: group.id,
         type: Group::Mitglieder::Aktivmitglied.sti_name,
-        created_at: import_row[:MemberEntryDate],
-        deleted_at: import_row[:MemberExitDate],
+        created_at: import_row[:memberentrydate],
+        deleted_at: import_row[:memberexitdate],
         updated_at: Time.zone.now
       }
 
-      Role.upsert(role_attrs)
+      magazin_abo_attrs = {
+        person_id: person.id,
+        group_id: group.id,
+        type: Group::Mitglieder::MagazinAbonnent.sti_name,
+        created_at: import_row[:abo1start],
+        deleted_at: import_row[:abo1end],
+        updated_at: Time.zone.now
+      }
+
+      [mitglied_attrs, magazin_abo_attrs].each do |attrs|
+        if attrs[:deleted_at].present? && attrs[:created_at].nil?
+          attrs[:created_at] = DateTime.parse(attrs[:deleted_at]).yesterday
+        end
+
+      # Upsert doesn't set deleted_at for some reason
+      # Role.new(attrs).save(validate: false)
+        Role.create!(attrs)
+
+      end
 
       tagging_attrs = { taggable_id: person.id, taggable_type: Person.sti_name }
 
-      abo_tagging_attrs = tagging_attrs.merge({ tag_id: tag_mappings[import_row[:abotyp1]] })
-      category_tagging_attrs = tagging_attrs.merge({ tag_id: tag_mappings[import_row[:primarycategory]] })
+      [:abo1, :primarycategory, :primarycommchannel].each do |tag|
+        tag_id = tag_mappings[import_row[tag]&.to_sym].try(:[], :id)
 
-      ActsAsTaggableOn::Tagging.upsert(abo_tagging_attrs)
-      ActsAsTaggableOn::Tagging.upsert(category_tagging_attrs)
+        next unless tag_id
+
+        attrs = tagging_attrs.merge({ tag_id: tag_id })
+
+        ActsAsTaggableOn::Tagging.upsert(attrs)
+
+      end
 
       DataMigrator.insert_phone_numbers!(person, import_row)
       DataMigrator.insert_social_account!(person, import_row)

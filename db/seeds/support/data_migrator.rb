@@ -24,12 +24,6 @@ class DataMigrator
       person_hash[:town] = import_row[:primaryaddresscity]
 
       person_hash[:language] = DataMigrator.person_language(import_row) if import_row[:language]
-
-      DataMigrator.assign_salutation!(person_hash, import_row)
-
-      DataMigrator.assign_company!(person_hash, import_row)
-
-      person_hash[:primary_group_id] = DataMigrator.default_contact_group_id
       person_hash[:created_at] = person_hash[:updated_at] = Time.zone.now
       person_hash
     end
