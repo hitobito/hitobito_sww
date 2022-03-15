@@ -89,4 +89,11 @@ de:
         custom_salutation: Benutzerdefinierte Anrede
         magazin_abo_number: 'Abo # Magazin'
         member_number: Mitgliedernummer
+        name_add_on: Namenszusatz
+        title: Titel
+
+  tags:
+    categories:
+      abo: Abonnement
+      category: Kategorie
 

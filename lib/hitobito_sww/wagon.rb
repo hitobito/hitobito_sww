@@ -24,6 +24,8 @@ module HitobitoSww
       # extend application classes here
       Group.include Sww::Group
       Person.include Sww::Person
+
+      TagListsHelper.include Sww::TagListsHelper
     end
 
     initializer 'sww.add_settings' do |_app|
