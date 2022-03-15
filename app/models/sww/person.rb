@@ -9,7 +9,7 @@ module Sww::Person
   extend ActiveSupport::Concern
 
   included do
-    add_public_attrs = %I[custom_salutation magazin_abo_number]
+    add_public_attrs = %I[custom_salutation magazin_abo_number title name_add_on]
     Person::PUBLIC_ATTRS.push(*add_public_attrs)
     Person::INTERNAL_ATTRS << :alabus_id << :member_number
 
