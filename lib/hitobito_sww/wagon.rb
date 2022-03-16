@@ -28,7 +28,8 @@ module HitobitoSww
 
       TagListsHelper.include Sww::TagListsHelper
 
-      PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number, :name_add_on, :title]
+      PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
+                                           :name_add_on, :title]
     end
 
     initializer 'sww.add_settings' do |_app|

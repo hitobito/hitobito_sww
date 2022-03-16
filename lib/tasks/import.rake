@@ -66,7 +66,8 @@ namespace :import do
         'Deutschland': 'DE'
       }
 
-      person_attrs[:country] = country_mappings[import_row[:primaryaddresscountrylictranslated]&.to_sym] || 'CH'
+      country = country_mappings[import_row[:primaryaddresscountrylictranslated]&.to_sym]
+      person_attrs[:country] = country || 'CH'
       person_attrs[:name_add_on] = import_row[:nameaddon]
 
       taken_email = person_attrs.delete(:email) if Person.exists?(email: person_attrs[:email])

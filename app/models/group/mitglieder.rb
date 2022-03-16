@@ -39,6 +39,7 @@ class Group::Mitglieder < ::Group
     self.permissions = []
   end
 
-  roles Aktivmitglied, Passivmitglied, Freimitglied, Organisationen, Partner, Spender, MagazinAbonnent
+  roles Aktivmitglied, Passivmitglied, Freimitglied, Organisationen,
+        Partner, Spender, MagazinAbonnent
 
 end
