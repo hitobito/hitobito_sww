@@ -31,14 +31,14 @@ $white: $sww_white !default;
 
 // Colors
 // ----------------------------
-$blue: $sww_yellow !default;
+$blue: $sww_black !default;
 $blueDark: darken($sww_yellow, 5%) !default;
 $green: #8db850 !default;
 $greenDark: darken($green, 10%) !default;
 
 $orange: lighten($sww_red_light, 10%) !default;
 $orangeDark: $sww_red_light;
-$purple: darken($sww_yellow, 5%);
+$purple: $sww_yellow;
 $purpleDark: darken($purple, 5%) !default;
 
 $red: $sww_red !default;
@@ -53,7 +53,7 @@ $bodyBackground: $footerBackground !default;
 
 $focusColor: $sww_red;
 $shadowColor: darken($pageBackground, 10%);
-$linkColor: $sww_yellow !default;
+$linkColor: $black !default;
 $linkColorHover: $sww_red !default;
 
 $footerColor: $white;
