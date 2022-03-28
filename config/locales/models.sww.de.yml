@@ -94,8 +94,8 @@ de:
 
       role:
         dates: Daten
-        created_at: Eintritt
-        deleted_at: Austritt
+        created_at: Von
+        deleted_at: Bis
 
   tags:
     categories:
