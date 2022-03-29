@@ -39,6 +39,8 @@ namespace :import do
     person_csv = Wagons.find('sww').root.join('db/seeds/production/people_fo.csv')
     raise unless person_csv.exist?
 
+    raise 'group id must be passed as first argument' unless args[:group_id]
+
     group = Group.find(args[:group_id])
     raise unless group
 
@@ -70,17 +72,19 @@ namespace :import do
       person_attrs[:country] = country || 'CH'
       person_attrs[:name_add_on] = import_row[:nameaddon]
 
-      taken_email = person_attrs.delete(:email) if Person.exists?(email: person_attrs[:email])
+      DataMigrator.assign_salutation!(person_attrs, import_row)
+
+      DataMigrator.assign_company!(person_attrs, import_row)
 
       Person.upsert(person_attrs)
 
       person = Person.find_by(alabus_id: person_attrs[:alabus_id])
 
-      if taken_email.present?
+      if import_row[:email].present? && person_attrs[:email].nil? # email is already taken
         additional_mail_attrs = {
           contactable_type: Person.sti_name,
           contactable_id: person.id,
-          email: taken_email,
+          email: import_row[:email],
           label: 'Privat'
         }
 
@@ -106,14 +110,18 @@ namespace :import do
       }
 
       [mitglied_attrs, magazin_abo_attrs].each do |attrs|
+        attrs[:created_at] = DateTime.parse(attrs[:created_at]) if attrs[:created_at]
+        attrs[:deleted_at] = DateTime.parse(attrs[:deleted_at]) if attrs[:deleted_at]
+
         if attrs[:deleted_at].present? && attrs[:created_at].nil?
-          attrs[:created_at] = DateTime.parse(attrs[:deleted_at]).yesterday
+          attrs[:created_at] = attrs[:deleted_at].yesterday
         end
 
-      # Upsert doesn't set deleted_at for some reason
-      # Role.new(attrs).save(validate: false)
-        Role.create!(attrs)
-
+        # Because of a known issue of the acts_as_paranoid gem,
+        # you can not directly create a model in a deleted state.
+        # Thus we have to update it afterwards.
+        Role.insert(attrs)
+        Role.last.update(attrs)
       end
 
       tagging_attrs = { taggable_id: person.id, taggable_type: Person.sti_name }
