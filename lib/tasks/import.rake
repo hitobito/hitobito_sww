@@ -142,4 +142,47 @@ namespace :import do
       DataMigrator.insert_note!(person, import_row)
     end
   end
+
+  desc 'Import invoices for FO'
+  task :invoices_fo, [:layer_id] => :environment do |_t, args|
+    invoice_csv = Wagons.find('sww').root.join('db/seeds/production/invoices_fo.csv')
+
+    raise "#{invoice_csv} must be present" unless invoice_csv.exist?
+
+    raise 'group id must be passed as first argument' unless args[:layer_id]
+
+    layer = Group.find(args[:layer_id])
+    raise unless layer
+
+    CSV.parse(invoice_csv.read, headers: true, header_converters: :symbol).each do |import_row|
+      next unless import_row[:status] == 'Offen'
+
+      next unless import_row[:id]
+
+      person = Person.find_by(alabus_id: import_row[:id])
+
+      next unless person
+
+      invoice_attrs = {}
+
+      invoice_attrs[:title] = ['Rechnung Alabus', import_row[:primarycategory]].compact.join(' ')
+      invoice_attrs[:state] = :issued
+      invoice_attrs[:esr_number] = import_row[:esr]
+      invoice_attrs[:sent_at] = DateTime.parse(import_row[:billdate])
+      invoice_attrs[:created_at] = DateTime.parse(import_row[:createdon])
+
+      invoice_attrs[:recipient_id] = person.id
+
+      invoice_attrs[:invoice_items_attributes] = [
+        { name: import_row[:primarycategory], unit_cost: import_row[:amount] || 0, count: 1 }
+      ]
+
+      invoice_attrs[:group_id] = layer.id
+
+      # The Invoice model has a couple of callbacks that we need to fill required attributes.
+      # However it also overwrites a couple of our attributes thus we have to update afterwards
+      invoice = Invoice.create!(invoice_attrs)
+      invoice.update!(invoice_attrs.except(:invoice_items_attributes))
+    end
+  end
 end

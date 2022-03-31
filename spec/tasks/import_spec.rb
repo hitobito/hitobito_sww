@@ -119,3 +119,98 @@ describe "import:people_fo" do
     expect(person.country).to eq('CH')
   end
 end
+
+describe 'import:invoices_fo' do
+  before do
+    expect_any_instance_of(Pathname).to receive(:join)
+                                    .and_return(Wagons.find('sww')
+                                                      .root
+                                                      .join('spec/fixtures/files/invoices_fo.csv'))
+
+    groups(:berner_wanderwege).create_invoice_config!
+  end
+
+  after do
+    Rake::Task["import:invoices_fo"].reenable
+  end
+
+  it "raises if given no argument" do
+    expect do
+      Rake::Task["import:invoices_fo"].invoke
+    end.to raise_error(RuntimeError, 'group id must be passed as first argument')
+  end
+
+  it "raises if group with given id does not exist" do
+    expect do
+      Rake::Task["import:invoices_fo"].invoke(Group.maximum(:id).succ)
+    end.to raise_error(ActiveRecord::RecordNotFound)
+  end
+
+  it "raises if group with given id does not exist" do
+    expect do
+      Rake::Task["import:invoices_fo"].invoke(Group.maximum(:id).succ)
+    end.to raise_error(ActiveRecord::RecordNotFound)
+  end
+
+  it "imports invoices from csv" do
+    recipient = Person.create!(alabus_id: '5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1', first_name: 'Max')
+
+    expect do
+      Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
+    end.to change { Invoice.count }.by(1)
+
+    expect(Invoice.where(recipient: recipient).count).to eq(1)
+
+    invoice = Invoice.find_by(recipient: recipient)
+
+    expect(invoice.title).to eq('Rechnung Alabus Privatperson')
+    expect(invoice.state).to eq('issued')
+    expect(invoice.esr_number).to eq('00 37592 44815 05725 00000 00013')
+    expect(invoice.sent_at).to eq(DateTime.new(2022, 3, 28))
+    expect(invoice.created_at).to eq(DateTime.new(2022, 3, 28))
+
+    expect(invoice.invoice_items.count).to eq(1)
+
+    invoice_item = invoice.invoice_items.first
+
+    expect(invoice_item.name).to eq('Privatperson')
+    expect(invoice_item.unit_cost).to eq(75)
+    expect(invoice_item.count).to eq(1)
+  end
+
+  it "does not import if recipient is not found" do
+    expect do
+      Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
+    end.to change { Invoice.count }.by(0)
+  end
+
+  it "does not import invoices with other state than 'Offen'" do
+    recipient_for_open_invoice = Person.create!(alabus_id: '5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1', first_name: 'Max')
+    recipient_for_non_open_invoice = Person.create!(alabus_id: 'wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje', first_name: 'Alice')
+
+    expect do
+      Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
+    end.to change { Invoice.count }.by(1)
+
+    expect(Invoice.where(recipient: recipient_for_open_invoice).count).to eq(1)
+    expect(Invoice.where(recipient: recipient_for_non_open_invoice).count).to eq(0)
+  end
+
+  it "assigns 0 as fallback unit_cost" do
+    recipient = Person.create!(alabus_id: 'wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee', first_name: 'Bob')
+
+    expect do
+      Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
+    end.to change { Invoice.count }.by(1)
+
+    expect(Invoice.where(recipient: recipient).count).to eq(1)
+
+    invoice = Invoice.find_by(recipient: recipient)
+    expect(invoice.invoice_items.count).to eq(1)
+
+    invoice_item = invoice.invoice_items.first
+
+    expect(invoice_item.name).to eq('Familienmitglied')
+    expect(invoice_item.unit_cost).to eq(0)
+  end
+end

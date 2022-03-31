@@ -1,0 +1,4 @@
+Name,ID,Esr,EsrRefLineForAmount,BillDate,Amount,AmountPaid,AmountToPay,CreditDate,Status,Language,AddressLine1,AddressLine2,Zip,City,ReminderDateFirst,ReminderDateSecond,ReminderDateThird,BoType,CreatedOn,EsrAccount,Type,Kind,Salutation,NameAddon,NameReverse,ContactPerson,Department,Country,Email,AdditionalInformation1,AdditionalInformation2,BillGrouping1,BillGrouping1BoType,BillGrouping1Id,Remarks,IgnoreBillForBillListType,LastName,FirstName,PrimaryCategory,Id
+Muster Max,5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1,00 37592 44815 05725 00000 00013,,28.03.2022,75,,,,Offen,,,,,,,,,,28.03.2022,,,,,,,,,,,,,,,,,,,,Privatperson,123456
+Alice,wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje,00 34519 87043 97732 00000 00013,,10.02.2022,75,,,,Geschlossen,,,,,,,,,,10.02.2022,,,,,,,,,,,,,,,,,,,,Einzelmitglied,123456
+Bob,wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee,00 65823 21284 96217 00000 00013,,13.03.2022,,,,,Offen,,,,,,,,,,13.03.2022,,,,,,,,,,,,,,,,,,,,Familienmitglied,123456
