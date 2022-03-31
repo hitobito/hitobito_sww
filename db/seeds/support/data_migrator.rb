@@ -10,6 +10,24 @@ class DataMigrator
 
   class << self
 
+    def person_attrs_from_import_row(import_row)
+      person_hash = {}
+      person_hash[:alabus_id] = import_row[:id]
+      person_hash[:member_number] = import_row[:membernumber]
+      person_hash[:first_name] = import_row[:firstname]
+      person_hash[:last_name] = import_row[:lastname]
+      person_hash[:birthday] = import_row[:birthdate]
+      person_hash[:email] = import_row[:email] unless Person.exists?(email: import_row[:email])
+      person_hash[:address] = [import_row[:primaryaddressaddressline1],
+                               import_row[:primaryaddressaddressline2]].join("\n")
+      person_hash[:zip_code] = import_row[:primaryaddresszip]
+      person_hash[:town] = import_row[:primaryaddresscity]
+
+      person_hash[:language] = DataMigrator.person_language(import_row) if import_row[:language]
+      person_hash[:created_at] = person_hash[:updated_at] = Time.zone.now
+      person_hash
+    end
+
     def person_language(import_row)
       Person::LANGUAGES.invert[import_row[:language]]
     end

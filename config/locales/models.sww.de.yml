@@ -81,9 +81,28 @@ de:
         one: Partner
       group/mitglieder/spender:
         one: Spender
+      group/mitglieder/magazin_abonnent:
+        one: Magazin Abonnent 
+
     attributes:
       person:
         custom_salutation: Benutzerdefinierte Anrede
         magazin_abo_number: 'Abo # Magazin'
         member_number: Mitgliedernummer
+        name_add_on: Namenszusatz
+        title: Titel
 
+      role:
+        dates: Daten
+        created_at: Von
+        deleted_at: Bis
+
+  tags:
+    categories:
+      abo: Abonnement
+      category: Kategorie
+
+  errors:
+    messages:
+      cannot_be_later_than_today: kann nicht später als heute sein
+      cannot_be_later_than_deleted_at: muss vor oder am selben Tag wie der Austritt sein
