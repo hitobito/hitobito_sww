@@ -32,10 +32,10 @@ describe "import:people_fo" do
     end.to raise_error(ActiveRecord::RecordNotFound)
   end
 
-  it "imports people from csv" do
+  it "imports people and companies from csv" do
     expect do
       Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
-    end.to change { Person.count }.by(4)
+    end.to change { Person.count }.by(5)
 
     person = Person.find_by(alabus_id: '1skuw-b52nqz-g2iw4kjn-2-g21sdwqh-qa7')
     expect(person).to be_present
@@ -76,6 +76,11 @@ describe "import:people_fo" do
     expect(person.social_accounts.first.name).to eq('https://www.hitobito.com')
 
     expect(person.notes.first.text).to eq('GV')
+
+    company = Person.find_by(alabus_id: 'haw31-axzcd1-jb44x23z-z-jtxn23wd1-k42')
+    expect(company).to be_present
+    expect(company.company_name).to eq('Hitobito AG')
+    expect(company.member_number).to eq(42)
   end
 
   it "imports mail as additional mail if already taken" do
