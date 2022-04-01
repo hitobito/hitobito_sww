@@ -62,7 +62,7 @@ describe "import:people_fo" do
     expect(person.taggings.count).to eq(3)
 
     person.taggings.each do |tagging|
-      expect(['abo:kombi', 'category:Einzel', 'Newsletter']).to include(tagging.tag.name)
+      expect(['abo:kombi', 'category:Einzelmitglied mit Magazin', 'Newsletter']).to include(tagging.tag.name)
     end
 
     expect(person.phone_numbers.count).to eq(2)

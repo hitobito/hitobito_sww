@@ -47,8 +47,6 @@ namespace :import do
     tag_mappings = {
       'Print-Abo': { name: 'abo:print' },
       'Kombi-Abo': { name: 'abo:kombi' },
-      'Einzel': { name: 'category:Einzel' },
-      'Doppelmitglied': { name: 'category:Doppelmitglied' },
       'Newsletter': { name: 'Newsletter' }
     }
     tag_mappings.values.each do |tag|
@@ -128,7 +126,15 @@ namespace :import do
 
       tagging_attrs = { taggable_id: person.id, taggable_type: Person.sti_name }
 
-      [:abo1, :primarycategory, :primarycommchannel].each do |tag|
+      if import_row[:primarycategory].present?
+        tag_name = "category:#{import_row[:primarycategory]}"
+        tag = ActsAsTaggableOn::Tag.find_or_create_by!(name: tag_name)
+
+        ActsAsTaggableOn::Tagging.upsert(tagging_attrs.merge(tag_id: tag.id))
+      end
+
+
+      [:abo1, :primarycommchannel].each do |tag|
         tag_id = tag_mappings[import_row[tag]&.to_sym].try(:[], :id)
 
         next unless tag_id
