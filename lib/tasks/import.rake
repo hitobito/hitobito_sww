@@ -55,6 +55,8 @@ namespace :import do
       tag.merge!(id: ActsAsTaggableOn::Tag.find_by(name: tag[:name]).id)
     end
 
+    failed_import_rows = []
+
     CSV.parse(person_csv.read, headers: true, header_converters: :symbol).each do |import_row|
       person_attrs = DataMigrator.person_attrs_from_import_row(import_row)
 
@@ -74,9 +76,19 @@ namespace :import do
 
       DataMigrator.assign_company!(person_attrs, import_row)
 
-      Person.upsert(person_attrs)
+      if person_attrs[:alabus_id]
+        Person.upsert(person_attrs)
+      else
+        failed_import_rows << import_row
+        next
+      end
 
       person = Person.find_by(alabus_id: person_attrs[:alabus_id])
+
+      unless person
+        failed_import_rows << import_row
+        next
+      end
 
       if import_row[:email].present? && person_attrs[:email].nil? # email is already taken
         additional_mail_attrs = {
@@ -149,6 +161,18 @@ namespace :import do
       DataMigrator.insert_social_account!(person, import_row)
       DataMigrator.insert_note!(person, import_row)
     end
+
+    total_count = CSV.parse(person_csv.read, headers: true).size
+    successful_count = total_count - failed_import_rows.size
+    puts "Successfully imported #{successful_count}/#{total_count} people"
+    if failed_import_rows.any?
+      puts "FAILED ROWS:"
+      puts failed_import_rows.map { |row| ["first_name: #{row[:firstname]}",
+                                           "last_name: #{row[:lastname]}",
+                                           "email: #{row[:email]}",
+                                           "alabus_id: #{row[:id]}"].join(', ') }.join("\n")
+    end
+
   end
 
   desc 'Import invoices for FO'

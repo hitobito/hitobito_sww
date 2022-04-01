@@ -135,6 +135,25 @@ describe "import:people_fo" do
 
     expect(person.country).to eq('CH')
   end
+
+  it "assigns Schweiz as fallback country" do
+    Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
+
+    person = Person.find_by(alabus_id: 'bew31-axzcd1-jbhox23z-z-jtxn23wd1-k3g')
+    expect(person).to be_present
+
+    expect(person.country).to eq('CH')
+  end
+
+  it "does not import person without alabus id and prints to stdout" do
+    expected_output = ['Successfully imported 5/6 people',
+                       'FAILED ROWS:',
+                       "first_name: Daniel, last_name: Failing, email: failing@example.com, alabus_id: \n"].join("\n")
+
+    expect do
+      Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
+    end.to output(expected_output).to_stdout
+  end
 end
 
 describe 'import:invoices_fo' do
