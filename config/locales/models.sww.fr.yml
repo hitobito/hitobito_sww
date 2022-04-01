@@ -5,3 +5,104 @@
 
 
 fr:
+  activerecord:
+    models:
+
+      ### GROUPS
+
+      group/schweizer_wanderwege:
+        one: ''
+        other: ''
+
+      group/fachorganisation:
+        one: ''
+        other: ''
+
+      group/kontakte:
+        one: ''
+        other: ''
+
+      group/vorstand:
+        one: ''
+        other: ''
+
+      group/geschaeftsstelle:
+        one: ''
+        other: ''
+
+      group/gremium_projektgruppe:
+        one: ''
+        other: ''
+
+      group/mitglieder:
+        one: ''
+        other: ''
+
+      ### ROLES
+
+      group/schweizer_wanderwege/mitarbeitende:
+        one: ""
+      group/schweizer_wanderwege/support:
+        one: ""
+
+      group/kontakte/kontakt:
+        one: ""
+
+      group/vorstand/praesident:
+        one: ""
+      group/vorstand/vizepraesident:
+        one: ""
+      group/vorstand/vorstandsmitglied:
+        one: ""
+
+      group/geschaeftsstelle/geschaeftsfuehrer:
+        one: ""
+      group/geschaeftsstelle/kassier:
+        one: ""
+      group/geschaeftsstelle/technischer_leiter:
+        one: ""
+      group/geschaeftsstelle/mitarbeiter:
+        one: ""
+
+      group/gremium_projektgruppe/leitung:
+        one: ""
+      group/gremium_projektgruppe/mitglied:
+        one: ""
+
+      group/mitglieder/aktivmitglied:
+        one: ""
+      group/mitglieder/passivmitglied:
+        one: ""
+      group/mitglieder/freimitglied:
+        one: ""
+      group/mitglieder/organisationen:
+        one: ""
+      group/mitglieder/partner:
+        one: ""
+      group/mitglieder/spender:
+        one: ""
+      group/mitglieder/magazin_abonnent:
+        one: "" 
+
+    attributes:
+      person:
+        custom_salutation: ""
+        magazin_abo_number: ''
+        member_number: ""
+        name_add_on: ""
+        title: ""
+
+      role:
+        dates: ""
+        created_at: ""
+        deleted_at: ""
+
+  tags:
+    categories:
+      abo: ""
+      category: ""
+
+  errors:
+    messages:
+      cannot_be_later_than_today: ""
+      cannot_be_later_than_deleted_at: ""
