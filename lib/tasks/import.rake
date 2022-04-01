@@ -117,6 +117,8 @@ namespace :import do
           attrs[:created_at] = attrs[:deleted_at].yesterday
         end
 
+        next unless attrs[:created_at]
+
         # Because of a known issue of the acts_as_paranoid gem,
         # you can not directly create a model in a deleted state.
         # Thus we have to update it afterwards.

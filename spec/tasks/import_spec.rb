@@ -115,6 +115,18 @@ describe "import:people_fo" do
     expect(magazin_abo.deleted_at).to eq(DateTime.new(1999, 1, 1))
   end
 
+  it "imports role only if created_at can be set" do
+    Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
+
+    person_with_two_roles = Person.find_by(alabus_id: '1skuw-b52nqz-g2iw4kjn-2-g21sdwqh-qa7')
+    person_with_one_role = Person.find_by(alabus_id: '1s23w-b52n1x-2ciw2kjn-g-g213bwvh-1x7')
+    person_without_roles = Person.find_by(alabus_id: 'bew31-axzcd1-jbhox23z-z-jtxn23wd1-k3g')
+
+    expect(person_with_two_roles.roles.with_deleted.count).to eq(2)
+    expect(person_with_one_role.roles.with_deleted.count).to eq(1)
+    expect(person_without_roles.roles.with_deleted.count).to eq(0)
+  end
+
   it "assigns Schweiz as fallback country" do
     Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
 
