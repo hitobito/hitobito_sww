@@ -3,16 +3,17 @@ require 'spec_helper'
 Rails.application.load_tasks
 
 describe "import:people_fo" do
+
+  after do
+    Rake::Task["import:people_fo"].reenable
+  end
+
   context 'valid people' do
     before do
       allow_any_instance_of(Pathname).to receive(:join)
         .and_return(Wagons.find('sww')
         .root
         .join('spec/fixtures/files/people_fo.csv'))
-    end
-
-    after do
-      Rake::Task["import:people_fo"].reenable
     end
 
     it "raises if given no argument" do
@@ -168,6 +169,11 @@ describe "import:people_fo" do
 end
 
 describe 'import:invoices_fo' do
+
+  after do
+    Rake::Task["import:invoices_fo"].reenable
+  end
+
   context 'valid invoices' do
     before do
       allow_any_instance_of(Pathname).to receive(:join)
@@ -176,10 +182,6 @@ describe 'import:invoices_fo' do
         .join('spec/fixtures/files/invoices_fo.csv'))
 
       groups(:berner_wanderwege).create_invoice_config!
-    end
-
-    after do
-      Rake::Task["import:invoices_fo"].reenable
     end
 
     it "raises if given no argument" do
@@ -272,7 +274,7 @@ describe 'import:invoices_fo' do
     end
   end
 
-  context 'valid invoices' do
+  context 'invalid invoices' do
     before do
       allow_any_instance_of(Pathname).to receive(:join)
         .and_return(Wagons.find('sww')
