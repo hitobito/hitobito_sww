@@ -146,7 +146,7 @@ describe "import:people_fo" do
   end
 
   it "does not import person without alabus id and prints to stdout" do
-    expected_output = ['Successfully imported 5/6 people',
+    expected_output = ['Successfully imported 5/6 rows',
                        'FAILED ROWS:',
                        "first_name: Daniel, last_name: Failing, email: failing@example.com, alabus_id: \n"].join("\n")
 
@@ -221,14 +221,14 @@ describe 'import:invoices_fo' do
   end
 
   it "does not import invoices with other state than 'Offen'" do
-    recipient_for_open_invoice = Person.create!(alabus_id: '5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1', first_name: 'Max')
+    recipient_for_open_invoice1 = Person.create!(alabus_id: '5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1', first_name: 'Max')
     recipient_for_non_open_invoice = Person.create!(alabus_id: 'wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje', first_name: 'Alice')
 
     expect do
       Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
     end.to change { Invoice.count }.by(1)
 
-    expect(Invoice.where(recipient: recipient_for_open_invoice).count).to eq(1)
+    expect(Invoice.where(recipient: recipient_for_open_invoice1).count).to eq(1)
     expect(Invoice.where(recipient: recipient_for_non_open_invoice).count).to eq(0)
   end
 
@@ -248,5 +248,34 @@ describe 'import:invoices_fo' do
 
     expect(invoice_item.name).to eq('Familienmitglied')
     expect(invoice_item.unit_cost).to eq(0)
+  end
+
+  it 'outputs report' do
+    recipient_after_reload = Person.create!(alabus_id: 'wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee', first_name: 'Bob')
+    recipient = Person.create!(alabus_id: 'wi2523f-t431xg-57eww221-h-j634x6sd-ghae', first_name: 'Daniel')
+
+    expected_output = ['Successfully imported 0/5 rows',
+                       'FAILED ROWS:',
+                       'esr_number: 00 37592 44815 05725 00000 00013, sent_at: 28.03.2022, created_at: 28.03.2022, alabus_id: 5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1, amount: 75, failing_note: person not found',
+                       'esr_number: 00 34519 87043 97732 00000 00013, sent_at: 10.02.2022, created_at: 10.02.2022, alabus_id: wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje, amount: 75, failing_note: status is not "Offen"',
+                       "esr_number: 00 65823 21284 96217 00000 00013, sent_at: 13.03.2022, created_at: 13.03.2022, alabus_id: wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee, amount: , failing_note: invoice not found after reload",
+                       "esr_number: 00 43914 69124 312592 00000 00013, sent_at: 25.03.2022, created_at: 25.03.2022, alabus_id: , amount: 100, failing_note: id not present",
+                       "esr_number: , sent_at: , created_at: , alabus_id: wi2523f-t431xg-57eww221-h-j634x6sd-ghae, amount: 100, failing_note: Gültigkeitsprüfung ist fehlgeschlagen: Referenz Nummer muss ausgefüllt werden\n",
+                       
+    ].join("\n")
+
+    
+    after_reload_gone_double = double
+
+    expect(Invoice).to receive(:create!).with(hash_including(recipient_id: recipient_after_reload.id)).exactly(:once).and_return(after_reload_gone_double)
+    expect(Invoice).to receive(:create!).with(hash_including(recipient_id: recipient.id)).exactly(:once).and_call_original
+    expect(after_reload_gone_double).to receive(:update!)
+    expect(after_reload_gone_double).to receive(:reload)
+    expect(after_reload_gone_double).to receive(:present?).and_return(false)
+
+    expect do
+      Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
+    end.to output(expected_output).to_stdout
+
   end
 end
