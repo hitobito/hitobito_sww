@@ -186,70 +186,87 @@ namespace :import do
     layer = Group.find(args[:layer_id])
     raise unless layer
 
-    failed_import_rows = []
+    ActiveRecord::Base.transaction do
 
-    CSV.parse(invoice_csv.read, headers: true, header_converters: :symbol).each do |import_row|
-      unless import_row[:status] == 'Offen'
-        failed_import_rows << import_row.to_h.merge(failing_note: :'status is not "Offen"')
-        next
+      failed_import_rows = []
+      non_open_import_rows = []
+
+      CSV.parse(invoice_csv.read, headers: true, header_converters: :symbol).each do |import_row|
+        unless import_row[:status] == 'Offen'
+          non_open_import_rows << import_row.to_h
+          next
+        end
+
+        unless import_row[:id].present?
+          failed_import_rows << import_row.to_h.merge(failing_note: :'id not present')
+          next
+        end
+
+        person = Person.find_by(alabus_id: import_row[:id])
+
+        unless person.present?
+          failed_import_rows << import_row.to_h.merge(failing_note: :'person not found')
+          next
+        end
+
+        invoice_attrs = {}
+
+        invoice_attrs[:title] = ['Rechnung Alabus', import_row[:primarycategory]].compact.join(' ')
+        invoice_attrs[:state] = :issued
+        invoice_attrs[:esr_number] = import_row[:esr]
+        invoice_attrs[:sent_at] = DateTime.parse(import_row[:billdate]) if import_row[:billdate]
+        invoice_attrs[:created_at] = DateTime.parse(import_row[:createdon]) if import_row[:createdon]
+
+        invoice_attrs[:recipient_id] = person.id
+
+        invoice_attrs[:invoice_items_attributes] = [
+          { name: import_row[:primarycategory], unit_cost: import_row[:amount] || 0, count: 1 }
+        ]
+
+        invoice_attrs[:group_id] = layer.id
+
+        # The Invoice model has a couple of callbacks that we need to fill required attributes.
+        # However it also overwrites a couple of our attributes thus we have to update afterwards
+        invoice = Invoice.create!(invoice_attrs)
+        invoice.update!(invoice_attrs.except(:invoice_items_attributes))
+
+        invoice.reload
+
+        unless invoice.present?
+          failed_import_rows << import_row.to_h.merge(failing_note: :'invoice not found after reload')
+        end
+
+      rescue ActiveRecord::RecordInvalid => e
+        failed_import_rows << import_row.to_h.merge(failing_note: e.message)
       end
 
-      unless import_row[:id].present?
-        failed_import_rows << import_row.to_h.merge(failing_note: :'id not present')
-        next
+      total_count = CSV.parse(invoice_csv.read, headers: true).size - non_open_import_rows.size
+      successful_count = total_count - failed_import_rows.size
+      puts "Successfully imported #{successful_count}/#{total_count} rows"
+      if non_open_import_rows.any?
+        puts 'ROWS WITH STATUS OTHER THAN "Offen":'
+        puts non_open_import_rows.map { |row|
+          ["esr_number: #{row[:esr]}",
+           "sent_at: #{row[:billdate]}",
+           "created_at: #{row[:createdon]}",
+           "alabus_id: #{row[:id]}",
+           "amount: #{row[:amount]}"].join(', ')
+        }.join("\n")
       end
 
-      person = Person.find_by(alabus_id: import_row[:id])
+      if failed_import_rows.any?
+        puts "FAILED ROWS:"
+        puts failed_import_rows.map { |row|
+          ["esr_number: #{row[:esr]}",
+           "sent_at: #{row[:billdate]}",
+           "created_at: #{row[:createdon]}",
+           "alabus_id: #{row[:id]}",
+           "amount: #{row[:amount]}",
+           "failing_note: #{row[:failing_note].to_s}"].join(', ')
+        }.join("\n")
 
-      unless person.present?
-        failed_import_rows << import_row.to_h.merge(failing_note: :'person not found')
-        next
+        raise ActiveRecord::Rollback
       end
-
-      invoice_attrs = {}
-
-      invoice_attrs[:title] = ['Rechnung Alabus', import_row[:primarycategory]].compact.join(' ')
-      invoice_attrs[:state] = :issued
-      invoice_attrs[:esr_number] = import_row[:esr]
-      invoice_attrs[:sent_at] = DateTime.parse(import_row[:billdate]) if import_row[:billdate]
-      invoice_attrs[:created_at] = DateTime.parse(import_row[:createdon]) if import_row[:createdon]
-
-      invoice_attrs[:recipient_id] = person.id
-
-      invoice_attrs[:invoice_items_attributes] = [
-        { name: import_row[:primarycategory], unit_cost: import_row[:amount] || 0, count: 1 }
-      ]
-
-      invoice_attrs[:group_id] = layer.id
-
-      # The Invoice model has a couple of callbacks that we need to fill required attributes.
-      # However it also overwrites a couple of our attributes thus we have to update afterwards
-      invoice = Invoice.create!(invoice_attrs)
-      invoice.update!(invoice_attrs.except(:invoice_items_attributes))
-
-      invoice.reload
-
-      unless invoice.present?
-        failed_import_rows << import_row.to_h.merge(failing_note: :'invoice not found after reload')
-      end
-
-    rescue ActiveRecord::RecordInvalid => e
-      failed_import_rows << import_row.to_h.merge(failing_note: e.message)
-    end
-
-    total_count = CSV.parse(invoice_csv.read, headers: true).size
-    successful_count = total_count - failed_import_rows.size
-    puts "Successfully imported #{successful_count}/#{total_count} rows"
-    if failed_import_rows.any?
-      puts "FAILED ROWS:"
-      puts failed_import_rows.map { |row|
-        ["esr_number: #{row[:esr]}",
-         "sent_at: #{row[:billdate]}",
-         "created_at: #{row[:createdon]}",
-         "alabus_id: #{row[:id]}",
-         "amount: #{row[:amount]}",
-         "failing_note: #{row[:failing_note].to_s}"].join(', ')
-      }.join("\n")
     end
 
   end
