@@ -7,7 +7,7 @@
 
 require Wagons.find('sww').root.join('db/seeds/support/data_migrator.rb')
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable Metrics/BlockLength, Metrics/LineLength
 namespace :import do
   desc 'Import people'
   task people_sww: [:environment] do
