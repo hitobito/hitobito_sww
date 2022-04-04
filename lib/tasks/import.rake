@@ -72,6 +72,7 @@ namespace :import do
         country = country_mappings[import_row[:primaryaddresscountrylictranslated]&.to_sym]
         person_attrs[:country] = country || 'CH'
         person_attrs[:name_add_on] = import_row[:nameaddon]
+        person_attrs[:primary_group_id] = group.id
 
         DataMigrator.assign_salutation!(person_attrs, import_row)
 
@@ -154,12 +155,14 @@ namespace :import do
           attrs = tagging_attrs.merge({ tag_id: tag_id })
 
           ActsAsTaggableOn::Tagging.upsert(attrs)
-
         end
 
         DataMigrator.insert_phone_numbers!(person, import_row)
         DataMigrator.insert_social_account!(person, import_row)
         DataMigrator.insert_note!(person, import_row)
+
+      rescue ActiveRecord::RecordInvalid, ActiveRecord::StatementInvalid
+        failed_import_rows << import_row
       end
 
       total_count = CSV.parse(person_csv.read, headers: true).size
@@ -238,7 +241,7 @@ namespace :import do
           failed_import_rows << import_row.to_h.merge(failing_note: :'invoice not found after reload')
         end
 
-      rescue ActiveRecord::RecordInvalid => e
+      rescue ActiveRecord::RecordInvalid, ActiveRecord::StatementInvalid, Mysql2::Error => e
         failed_import_rows << import_row.to_h.merge(failing_note: e.message)
       end
 
