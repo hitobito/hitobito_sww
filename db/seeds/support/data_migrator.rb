@@ -62,7 +62,7 @@ class DataMigrator
         updated_at: Time.zone.now
       }
 
-      Role.upsert(attrs)
+      Role.upsert(attrs) unless Note.exists?(attrs.except(:created_at, :updated_at))
     end
 
     def insert_phone_numbers!(person, import_row)
@@ -79,7 +79,7 @@ class DataMigrator
           label: 'Mobil',
           number: import_row[:mobile]
         }
-      ].filter { |attr_row| attr_row[:number].present? }
+      ].filter { |attr_row| attr_row[:number].present? && !PhoneNumber.exists?(attr_row) }
 
       PhoneNumber.upsert_all(attrs) unless attrs.empty?
     end
@@ -94,7 +94,7 @@ class DataMigrator
         name: import_row[:web]
       }
 
-      SocialAccount.upsert(attrs)
+      SocialAccount.upsert(attrs) unless SocialAccount.exists?(attrs)
     end
 
     def insert_note!(person, import_row)
@@ -109,7 +109,7 @@ class DataMigrator
         updated_at: Time.zone.now
       }
 
-      Note.upsert(attrs)
+      Note.upsert(attrs) unless Note.exists?(attrs.except(:created_at, :updated_at))
     end
   end
 end
