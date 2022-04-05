@@ -147,7 +147,7 @@ namespace :import do
           ActsAsTaggableOn::Tagging.upsert(tagging_attrs.merge(tag_id: tag.id))
         end
 
-        [:abo1, :primarycategory, :primarycommchannel].each do |tag|
+        [:abo1, :primarycommchannel].each do |tag|
           tag_id = tag_mappings[import_row[tag]&.to_sym].try(:[], :id)
 
           next unless tag_id
