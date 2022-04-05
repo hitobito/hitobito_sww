@@ -174,6 +174,7 @@ namespace :import do
                                              "last_name: #{row[:lastname]}",
                                              "email: #{row[:email]}",
                                              "alabus_id: #{row[:id]}"].join(', ') }.join("\n")
+        puts "\nnothing was imported due to errors. Please fix import source file and try again."
         raise ActiveRecord::Rollback
       end
 
@@ -270,6 +271,7 @@ namespace :import do
            "failing_note: #{row[:failing_note].to_s}"].join(', ')
         }.join("\n")
 
+        puts "\nnothing was imported due to errors. Please fix import source file and try again."
         raise ActiveRecord::Rollback
       end
     end

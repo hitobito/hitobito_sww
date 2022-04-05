@@ -159,7 +159,8 @@ describe "import:people_fo" do
     it "does not import person without alabus id and prints to stdout" do
       expected_output = ['Successfully imported 5/6 rows',
                          'FAILED ROWS:',
-                         "first_name: Daniel, last_name: Failing, email: failing@example.com, alabus_id: \n"].join("\n")
+                         "first_name: Daniel, last_name: Failing, email: failing@example.com, alabus_id: \n",
+                         "nothing was imported due to errors. Please fix import source file and try again.\n"].join("\n")
 
       expect do
         Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
@@ -295,8 +296,8 @@ describe 'import:invoices_fo' do
                          'esr_number: 00 37592 44815 05725 00000 00013, sent_at: 28.03.2022, created_at: 28.03.2022, alabus_id: 5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1, amount: 75, failing_note: person not found',
                          "esr_number: 00 65823 21284 96217 00000 00013, sent_at: 13.03.2022, created_at: 13.03.2022, alabus_id: wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee, amount: , failing_note: invoice not found after reload",
                          "esr_number: 00 43914 69124 312592 00000 00013, sent_at: 25.03.2022, created_at: 25.03.2022, alabus_id: , amount: 100, failing_note: id not present",
-                         "esr_number: , sent_at: , created_at: , alabus_id: wi2523f-t431xg-57eww221-h-j634x6sd-ghae, amount: 100, failing_note: Gültigkeitsprüfung ist fehlgeschlagen: Referenz Nummer muss ausgefüllt werden\n"
-      ].join("\n")
+                         "esr_number: , sent_at: , created_at: , alabus_id: wi2523f-t431xg-57eww221-h-j634x6sd-ghae, amount: 100, failing_note: Gültigkeitsprüfung ist fehlgeschlagen: Referenz Nummer muss ausgefüllt werden\n",
+                         "nothing was imported due to errors. Please fix import source file and try again.\n"].join("\n")
 
 
       after_reload_gone_double = double
