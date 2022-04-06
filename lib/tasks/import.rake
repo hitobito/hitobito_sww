@@ -138,7 +138,7 @@ namespace :import do
           Role.last.update(attrs)
         end
 
-        tagging_attrs = { taggable_id: person.id, taggable_type: Person.sti_name }
+        tagging_attrs = { taggable_id: person.id, taggable_type: Person.sti_name, context: 'tags' }
 
         if import_row[:primarycategory].present?
           tag_name = "category:#{import_row[:primarycategory]}"
