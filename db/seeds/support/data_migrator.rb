@@ -98,7 +98,7 @@ class DataMigrator
     end
 
     def insert_note!(person, import_row)
-      return unless import_row[:primarynote]
+      return unless import_row[:primarynote].present?
 
       attrs = {
         subject_id: person.id,
