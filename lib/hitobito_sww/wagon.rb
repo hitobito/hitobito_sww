@@ -26,6 +26,10 @@ module HitobitoSww
       Person.include Sww::Person
       Role.include Sww::Role
 
+      Export::Pdf::Invoice::ReceiverAddress.include Sww::Export::Pdf::Invoice::ReceiverAddress
+      Export::Pdf::Invoice::InvoiceInformation.include Sww::Export::Pdf::Invoice::InvoiceInformation
+      Export::Pdf::Invoice::Articles.include Sww::Export::Pdf::Invoice::Articles
+
       TagListsHelper.include Sww::TagListsHelper
 
       PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
