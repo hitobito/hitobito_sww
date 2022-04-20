@@ -28,7 +28,7 @@ module Sww::Export::Pdf::Invoice::Articles
     end
   end
 
-  def render
+  def total_data
     decorated = invoice.decorate
     [
       [I18n.t('invoices.pdf.cost'), decorated.cost],
