@@ -11,98 +11,98 @@ fr:
       ### GROUPS
 
       group/schweizer_wanderwege:
-        one: ''
-        other: ''
+        one: Suisse Rando
+        other: Suisse Rando
 
       group/fachorganisation:
-        one: ''
-        other: ''
+        one: Associations de randonnée
+        other: Associations de randonnée
 
       group/kontakte:
-        one: ''
-        other: ''
+        one: Contacts
+        other: Contacts
 
       group/vorstand:
-        one: ''
-        other: ''
+        one: Comité
+        other: Comité
 
       group/geschaeftsstelle:
-        one: ''
-        other: ''
+        one: Direction
+        other: Direction
 
       group/gremium_projektgruppe:
-        one: ''
-        other: ''
+        one: Comité/groupe de projet
+        other: Comité/groupe de projet
 
       group/mitglieder:
-        one: ''
-        other: ''
+        one: Membre
+        other: Membres
 
       ### ROLES
 
       group/schweizer_wanderwege/mitarbeitende:
-        one: ""
+        one: Collaborateurs
       group/schweizer_wanderwege/support:
-        one: ""
+        one: Support
 
       group/kontakte/kontakt:
-        one: ""
+        one: Contact
 
       group/vorstand/praesident:
-        one: ""
+        one: Président
       group/vorstand/vizepraesident:
-        one: ""
+        one: Vice-président
       group/vorstand/vorstandsmitglied:
-        one: ""
+        one: Membre du conseil
 
       group/geschaeftsstelle/geschaeftsfuehrer:
-        one: ""
+        one: Directeur
       group/geschaeftsstelle/kassier:
-        one: ""
+        one: Caissier
       group/geschaeftsstelle/technischer_leiter:
-        one: ""
+        one: Responsable technique
       group/geschaeftsstelle/mitarbeiter:
-        one: ""
+        one: Collaborateur
 
       group/gremium_projektgruppe/leitung:
-        one: ""
+        one: Direction
       group/gremium_projektgruppe/mitglied:
-        one: ""
+        one: Membre
 
       group/mitglieder/aktivmitglied:
-        one: ""
+        one: Membre actif
       group/mitglieder/passivmitglied:
-        one: ""
+        one: Membre passif
       group/mitglieder/freimitglied:
-        one: ""
+        one: Membre libre
       group/mitglieder/organisationen:
-        one: ""
+        one: Organisations
       group/mitglieder/partner:
-        one: ""
+        one: Partenaire
       group/mitglieder/spender:
-        one: ""
+        one: Donateur
       group/mitglieder/magazin_abonnent:
-        one: "" 
+        one: Abonnement Magazine 
 
     attributes:
       person:
-        custom_salutation: ""
-        magazin_abo_number: ''
-        member_number: ""
-        name_add_on: ""
-        title: ""
+        custom_salutation: Formule d'appel personnalisée
+        magazin_abo_number: 'Numéro d''abonnement au magazine'
+        member_number: Numéro de membre
+        name_add_on: Complément de nom
+        title: Titre
 
       role:
-        dates: ""
-        created_at: ""
-        deleted_at: ""
+        dates: Dates
+        created_at: De
+        deleted_at: Jusqu'à
 
   tags:
     categories:
-      abo: ""
-      category: ""
+      abo: Abonnement
+      category: Catégorie
 
   errors:
     messages:
-      cannot_be_later_than_today: ""
-      cannot_be_later_than_deleted_at: ""
+      cannot_be_later_than_today: ne peut pas être plus tard qu'aujourd'hui
+      cannot_be_later_than_deleted_at: doit avoir lieu avant ou le même jour que la sortie
