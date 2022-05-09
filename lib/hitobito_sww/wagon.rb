@@ -24,7 +24,6 @@ module HitobitoSww
       # extend application classes here
       Group.include Sww::Group
       Person.include Sww::Person
-      Role.include Sww::Role
 
       Export::Pdf::Invoice::ReceiverAddress.include Sww::Export::Pdf::Invoice::ReceiverAddress
       Export::Pdf::Invoice::InvoiceInformation.include Sww::Export::Pdf::Invoice::InvoiceInformation

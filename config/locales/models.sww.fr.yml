@@ -92,11 +92,6 @@ fr:
         name_add_on: Complément de nom
         title: Titre
 
-      role:
-        dates: Dates
-        created_at: De
-        deleted_at: Jusqu'à
-
   tags:
     categories:
       abo: Abonnement
