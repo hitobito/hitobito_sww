@@ -92,11 +92,6 @@ it:
         name_add_on: ""
         title: ""
 
-      role:
-        dates: ""
-        created_at: ""
-        deleted_at: ""
-
   tags:
     categories:
       abo: ""

@@ -92,11 +92,6 @@ de:
         name_add_on: Namenszusatz
         title: Titel
 
-      role:
-        dates: Daten
-        created_at: Von
-        deleted_at: Bis
-
   tags:
     categories:
       abo: Abonnement
