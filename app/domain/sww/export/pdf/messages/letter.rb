@@ -6,9 +6,27 @@
 module Sww::Export::Pdf::Messages::Letter
   extend ActiveSupport::Concern
 
+  MEMBERSHIP_CARD_MARGIN = 2.cm
+
   def sections
-    @sections ||= [Export::Pdf::Messages::Letter::MembershipCard.new(pdf,
-                                                                     @letter,
-                                                                     @options.slice(:debug, :stamped))] + super
+    @sections ||= if membership_card?
+                    [Export::Pdf::Messages::Letter::MembershipCard.new(pdf,
+                                                                       @letter,
+                                                                       @options.slice(:debug, :stamped))] + super
+                  else
+                    super
+                  end
+  end
+
+  def render_options
+    super.merge(margin: margin)
+  end
+
+  def margin
+    membership_card? ? MEMBERSHIP_CARD_MARGIN : MARGIN
+  end
+
+  def membership_card?
+    @letter.membership_card?
   end
 end
