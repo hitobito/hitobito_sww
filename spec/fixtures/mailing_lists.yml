@@ -3,12 +3,8 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-zuercher_leiter:
-  person: top_leader
-  group: zuercher_gremium
-  type: Group::GremiumProjektgruppe::Leitung
-
-zuercher_mitglied:
-  person: zuercher_wanderer
-  group: zuercher_mitglieder
-  type: Group::Mitglieder::Aktivmitglied
+zuercher:
+  group: zuercher_wanderwege
+  name: zuercher mailing list
+  mail_name: zuercher
+  subscribable: true

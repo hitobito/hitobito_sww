@@ -10,3 +10,11 @@ berner_wanderer:
   town: Bern
   additional_information: bla bla
   contact_data_visible: true
+
+zuercher_wanderer:
+  first_name: Alice
+  last_name: Bar
+  email: alice@example.com
+  town: Zürich
+  zip_code: 8001
+  address: Belpstrasse 37
