@@ -34,7 +34,7 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
 
     def body
       offset_cursor_from_top 14.cm
-      bounding_box([0, cursor], width: bounds.width, height: 13.cm) do
+      bounding_box([0, cursor], width: bounds.width, height: bounds.height - cursor) do
         pdf.markup(letter.body.to_s)
       end
     end
