@@ -6,7 +6,14 @@
 de:
 
   messages:
+    export:
+      pdf:
+        letter:
+          membership_card:
+            title: Leserausweis WANDERN.CH
+
     letter:
       fields_sww:
         membership_card_caption: Information für Mitgliederausweis mit drucken
+
 

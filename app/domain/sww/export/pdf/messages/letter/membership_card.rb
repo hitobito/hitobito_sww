@@ -9,11 +9,10 @@ module Sww::Export::Pdf::Messages::Letter
     def render(recipient, options)
       offset_cursor_from_top 4.4.cm
       bounding_box([10.2.cm, cursor], width: 5.7.cm, height: 1.2.cm) do
-        text ['Carte de lecteur WANDERN.ch',
-              recipient.person.member_number,
-              recipient.person.full_name].join("\n")
-
-        stroke_bounds
+        text_box([I18n.t('messages.export.pdf.letter.membership_card.title'),
+                  recipient.person.member_number,
+                  "<b>#{recipient.person.full_name}<b>"].join("\n"),
+        inline_format: true, size: 8.pt)
       end
     end
 

@@ -10,9 +10,10 @@ module Sww::Export::Pdf::Messages::Letter
 
   def sections
     @sections ||= if membership_card?
-                    [Export::Pdf::Messages::Letter::MembershipCard,
+                    [
+                      Export::Pdf::Messages::Letter::MembershipCard,
                       Export::Pdf::Messages::Letter::MembershipCards::Header,
-                      Export::Pdf::Messages::Letter::MembershipCards::Content,
+                      Export::Pdf::Messages::Letter::MembershipCards::Content
                     ].map { |section| section.new(pdf,
                                                   @letter,
                                                   @options.slice(:debug, :stamped))
@@ -27,7 +28,9 @@ module Sww::Export::Pdf::Messages::Letter
   end
 
   def margin
-    membership_card? ? MEMBERSHIP_CARD_MARGIN : MARGIN
+    membership_card? ?
+      MEMBERSHIP_CARD_MARGIN :
+      Export::Pdf::Messages::Letter::MARGIN
   end
 
   def membership_card?
