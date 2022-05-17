@@ -10,17 +10,22 @@ module Sww::Export::Pdf::Messages::Letter
 
   def sections
     @sections ||= if membership_card?
-                    [
-                      Export::Pdf::Messages::Letter::MembershipCard,
-                      Export::Pdf::Messages::Letter::MembershipCards::Header,
-                      Export::Pdf::Messages::Letter::MembershipCards::Content
-                    ].map { |section| section.new(pdf,
-                                                  @letter,
-                                                  @options.slice(:debug, :stamped))
-                    }
+                    membership_card_sections
                   else
                     super
                   end
+  end
+
+  def membership_card_sections
+    [
+      Export::Pdf::Messages::Letter::MembershipCard,
+      Export::Pdf::Messages::Letter::MembershipCards::Header,
+      Export::Pdf::Messages::Letter::MembershipCards::Content
+    ].collect do |section|
+      section.new(pdf,
+                  @letter,
+                  @options.slice(:debug, :stamped))
+    end
   end
 
   def render_options
