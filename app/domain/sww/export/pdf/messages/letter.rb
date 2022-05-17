@@ -10,9 +10,13 @@ module Sww::Export::Pdf::Messages::Letter
 
   def sections
     @sections ||= if membership_card?
-                    [Export::Pdf::Messages::Letter::MembershipCard.new(pdf,
-                                                                       @letter,
-                                                                       @options.slice(:debug, :stamped))] + super
+                    [Export::Pdf::Messages::Letter::MembershipCard,
+                      Export::Pdf::Messages::Letter::MembershipCards::Header,
+                      Export::Pdf::Messages::Letter::MembershipCards::Content,
+                    ].map { |section| section.new(pdf,
+                                                  @letter,
+                                                  @options.slice(:debug, :stamped))
+                    }
                   else
                     super
                   end
