@@ -30,3 +30,6 @@ root_email: hitobito-sww@puzzle.ch
 
 messages:
   enable_writing: true
+
+assignments:
+  enabled: true
