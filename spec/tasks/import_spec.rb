@@ -36,7 +36,7 @@ describe "import:people_fo" do
 
     it "imports people and companies from csv" do
       expect do
-        Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
+        Rake::Task["import:people_fo"].invoke(groups(:berner_mitglieder).id)
       end.to change { Person.count }.by(5)
 
       person = Person.find_by(alabus_id: '1skuw-b52nqz-g2iw4kjn-2-g21sdwqh-qa7')

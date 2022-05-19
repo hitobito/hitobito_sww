@@ -135,7 +135,7 @@ namespace :import do
           # you can not directly create a model in a deleted state.
           # Thus we have to update it afterwards.
           Role.insert(attrs)
-          Role.last.update(attrs)
+          Role.with_deleted.last.update(attrs)
         end
 
         tagging_attrs = { taggable_id: person.id, taggable_type: Person.sti_name, context: 'tags' }
