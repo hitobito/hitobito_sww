@@ -20,7 +20,6 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
     def shipping_text
       text_box("<font size='7pt'>#{shipping_method} #{letter.pp_post.upcase} | POST CH AG</font>",
                inline_format: true, single_line: true)
-
     end
 
     def shipping_method
