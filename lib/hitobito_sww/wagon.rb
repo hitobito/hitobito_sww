@@ -28,6 +28,7 @@ module HitobitoSww
       Export::Pdf::Invoice::ReceiverAddress.include Sww::Export::Pdf::Invoice::ReceiverAddress
       Export::Pdf::Invoice::InvoiceInformation.include Sww::Export::Pdf::Invoice::InvoiceInformation
       Export::Pdf::Invoice::Articles.prepend Sww::Export::Pdf::Invoice::Articles
+      Export::Tabular::People::PeopleFull.prepend Sww::Export::Tabular::People::PeopleFull
 
       TagListsHelper.include Sww::TagListsHelper
 
