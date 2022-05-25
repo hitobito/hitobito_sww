@@ -13,8 +13,19 @@ module Sww::Export::Pdf::Messages::Letter
       bounding_box([10.2.cm, cursor], width: 5.7.cm, height: 1.2.cm) do
         text_box([I18n.t('messages.export.pdf.letter.membership_card.title'),
                   recipient.person.member_number,
-                  "<b>#{recipient.person.full_name}<b>"].join("\n"),
+                  "<b>#{person_or_company_name(recipient)}</b>"].join("\n"),
         inline_format: true, size: 8.pt)
+      end
+    end
+
+    private
+
+    def person_or_company_name(recipient)
+      person = recipient.person
+      if person.company?
+        person.company_name.to_s.squish
+      else
+        person.full_name.to_s.squish
       end
     end
 
