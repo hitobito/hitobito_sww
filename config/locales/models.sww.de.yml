@@ -91,6 +91,8 @@ de:
         member_number: Mitgliedernummer
         name_add_on: Namenszusatz
         title: Titel
+      message:
+        membership_card: Mitgliederausweis
 
   tags:
     categories:

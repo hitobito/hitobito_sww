@@ -29,11 +29,16 @@ module HitobitoSww
       Export::Pdf::Invoice::InvoiceInformation.include Sww::Export::Pdf::Invoice::InvoiceInformation
       Export::Pdf::Invoice::Articles.prepend Sww::Export::Pdf::Invoice::Articles
       Export::Tabular::People::PeopleFull.prepend Sww::Export::Tabular::People::PeopleFull
+      Export::Pdf::Messages::Letter.prepend Sww::Export::Pdf::Messages::Letter
+      Export::Pdf::Messages::Letter::Section.prepend Sww::Export::Pdf::Messages::Letter::Section
 
       TagListsHelper.include Sww::TagListsHelper
 
       PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
                                            :name_add_on, :title]
+
+      MessagesController::PERMITTED_LETTER_ATTRS += [:membership_card]
+      MessagesController::PERMITTED_INVOICE_LETTER_ATTRS += [:membership_card]
     end
 
     initializer 'sww.add_settings' do |_app|
