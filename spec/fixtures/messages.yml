@@ -6,6 +6,7 @@
 membership_card_letter:
   mailing_list: zuercher
   type: Message::Letter
-  subject: Leserkarte 2022 WANDERN.CH
+  subject: Mitgliederausweis 2022 WANDERN.CH
   date_location_text: Bern, 17. Mai 2022
   shipping_method: normal
+  membership_card: true

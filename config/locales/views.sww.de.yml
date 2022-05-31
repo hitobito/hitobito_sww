@@ -10,7 +10,7 @@ de:
       pdf:
         letter:
           membership_card:
-            title: Leserausweis WANDERN.CH
+            title: Mitgliederausweis
 
     letter:
       fields_sww:

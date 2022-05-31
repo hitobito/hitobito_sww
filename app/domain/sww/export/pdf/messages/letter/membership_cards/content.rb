@@ -17,9 +17,11 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
 
       offset_cursor_from_top 12.cm
 
-      stamped(:subject)
+      unless letter.invoice?
+        stamped(:subject)
 
-      pdf.move_down 0.5.cm
+        pdf.move_down 0.5.cm
+      end
 
       stamped(:body)
     end
