@@ -20,9 +20,9 @@ module Sww::Export::Pdf::Messages::Letter
 
   def membership_card_sections
     [
-      Export::Pdf::Messages::Letter::MembershipCard,
-      Export::Pdf::Messages::Letter::MembershipCards::Header,
-      Export::Pdf::Messages::Letter::MembershipCards::Content
+      ::Sww::Export::Pdf::Messages::Letter::MembershipCard,
+      ::Sww::Export::Pdf::Messages::Letter::MembershipCards::Header,
+      ::Sww::Export::Pdf::Messages::Letter::MembershipCards::Content
     ].collect do |section|
       section.new(pdf,
                   @letter,

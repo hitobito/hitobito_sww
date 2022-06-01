@@ -32,17 +32,17 @@ describe Export::Pdf::Messages::Letter do
       let(:letter) { messages(:membership_card_letter) }
 
       it 'renders membership card in addition to letter' do
-        expect(text_with_position).to eq([[180, 685, "Post CH AG"],
-                                          [71, 672, "P.P."],
-                                          [91, 672, ""],
-                                          [71, 654, "Alice Bar"],
-                                          [71, 644, "Belpstrasse 37"],
-                                          [71, 633, "8001 Zürich"],
-                                          [71, 559, "Bern, 17. Mai 2022"],
-                                          [71, 531, "Leserkarte 2022 WANDERN.CH"],
-                                          [71, 502, "Hallo"],
-                                          [71, 482, "Gerne stellen wir Ihnen Ihre Leserkarte zu! "],
-                                          [71, 461, "Bis bald"]])
+        expect(text_with_position).to eq([[346, 711, "Mitgliederausweis"],
+                                          [346, 693, "Alice Bar"],
+                                          [57, 704, "P.P.  | POST CH AG"],
+                                          [57, 682, "Alice Bar"],
+                                          [57, 672, "Belpstrasse 37"],
+                                          [57, 662, "8001 Zürich"],
+                                          [420, 517, "Bern, 17. Mai 2022"],
+                                          [57, 491, "MITGLIEDERAUSWEIS 2022 WANDERN.CH"],
+                                          [57, 463, "Hallo"],
+                                          [57, 442, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
+                                          [57, 422, "Bis bald"]])
 
       end
   end
