@@ -39,8 +39,8 @@ module HitobitoSww
       PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
                                            :name_add_on, :title]
 
-      MessagesController::PERMITTED_LETTER_ATTRS += [:membership_card]
-      MessagesController::PERMITTED_INVOICE_LETTER_ATTRS += [:membership_card]
+      MessagesController::PERMITTED_LETTER_ATTRS += [:membership_card, :membership_expires_on]
+      MessagesController::PERMITTED_INVOICE_LETTER_ATTRS += [:membership_card, :membership_expires_on]
     end
 
     initializer 'sww.add_settings' do |_app|

@@ -93,6 +93,7 @@ de:
         title: Titel
       message:
         membership_card: Mitgliederausweis
+        membership_expires_on: Mitgliedschaft gültig bis
 
   tags:
     categories:
