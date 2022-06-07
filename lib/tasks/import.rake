@@ -169,13 +169,11 @@ namespace :import do
       successful_count = total_count - failed_import_rows.size
       puts "Successfully imported #{successful_count}/#{total_count} rows"
       if failed_import_rows.any?
-        puts 'FAILED ROWS:'
-        puts failed_import_rows.map { |row|
-               ["first_name: #{row[:firstname]}",
-                "last_name: #{row[:lastname]}",
-                "email: #{row[:email]}",
-                "alabus_id: #{row[:id]}"].join(', ')
-             } .join("\n")
+        puts "FAILED ROWS:"
+        puts failed_import_rows.map { |row| ["first_name: #{row[:firstname]}",
+                                             "last_name: #{row[:lastname]}",
+                                             "email: #{row[:email]}",
+                                             "alabus_id: #{row[:id]}"].join(', ') }.join("\n")
         puts "\nnothing was imported due to errors. Please fix import source file and try again."
         raise ActiveRecord::Rollback
       end
@@ -205,14 +203,14 @@ namespace :import do
           next
         end
 
-        if import_row[:id].blank?
+        unless import_row[:id].present?
           failed_import_rows << import_row.to_h.merge(failing_note: :'id not present')
           next
         end
 
         person = Person.find_by(alabus_id: import_row[:id])
 
-        if person.blank?
+        unless person.present?
           failed_import_rows << import_row.to_h.merge(failing_note: :'person not found')
           next
         end
@@ -240,7 +238,7 @@ namespace :import do
 
         invoice.reload
 
-        if invoice.blank?
+        unless invoice.present?
           failed_import_rows << import_row.to_h.merge(failing_note: :'invoice not found after reload')
         end
 
@@ -263,14 +261,14 @@ namespace :import do
       end
 
       if failed_import_rows.any?
-        puts 'FAILED ROWS:'
+        puts "FAILED ROWS:"
         puts failed_import_rows.map { |row|
           ["esr_number: #{row[:esr]}",
            "sent_at: #{row[:billdate]}",
            "created_at: #{row[:createdon]}",
            "alabus_id: #{row[:id]}",
            "amount: #{row[:amount]}",
-           "failing_note: #{row[:failing_note]}"].join(', ')
+           "failing_note: #{row[:failing_note].to_s}"].join(', ')
         }.join("\n")
 
         puts "\nnothing was imported due to errors. Please fix import source file and try again."
