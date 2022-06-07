@@ -10,3 +10,4 @@ membership_card_letter:
   date_location_text: Bern, 17. Mai 2022
   shipping_method: normal
   membership_card: true
+  membership_expires_on: 12.12.2042
