@@ -11,6 +11,7 @@ de:
         letter:
           membership_card:
             title: Mitgliederausweis
+            valid_until: Gültig bis
 
     letter:
       fields_sww:

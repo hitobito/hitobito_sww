@@ -23,6 +23,7 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
         pdf.move_down 0.5.cm
       end
 
+      render_salutation(recipient) if letter.salutation?
       stamped(:body)
     end
 

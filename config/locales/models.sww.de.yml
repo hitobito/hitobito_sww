@@ -95,9 +95,9 @@ de:
           sehr_geehrte:
             label: Sehr geehrte*r Frau/Herr [Nachname]
             value:
-              m: Sehr geehrter Herr {last_name}
-              w: Sehr geehrte Frau {last_name}
-              other: Sehr geehrte*r {first_name} {last_name}
+              m: Sehr geehrter Herr %{last_name}
+              w: Sehr geehrte Frau %{last_name}
+              other: Sehr geehrte*r %{first_name} %{last_name}
 
     attributes:
       person:
