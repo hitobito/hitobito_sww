@@ -10,7 +10,7 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
 
     SUBJECT_WIDTH = 12.8.cm
 
-    def render(recipient, options)
+    def render(recipient, _options)
       offset_cursor_from_top 11.2.cm
 
       stamped(:date_location_text)

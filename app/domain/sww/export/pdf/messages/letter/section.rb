@@ -9,9 +9,11 @@ module Sww::Export::Pdf::Messages::Letter::Section
   extend ActiveSupport::Concern
 
   def offset_cursor_from_top(offset)
-    margin = letter.membership_card? ?
-      Export::Pdf::Messages::Letter::MEMBERSHIP_CARD_MARGIN :
-      Export::Pdf::Messages::Letter::MARGIN
+    margin = if letter.membership_card?
+               Export::Pdf::Messages::Letter::MEMBERSHIP_CARD_MARGIN
+             else
+               Export::Pdf::Messages::Letter::MARGIN
+end
     position = pdf.bounds.top - (offset - margin)
 
     pdf.move_cursor_to position

@@ -8,7 +8,7 @@
 module Sww::Export::Pdf::Messages::Letter::MembershipCards
   class Header < Export::Pdf::Messages::Letter::Header
 
-    def render(recipient, options)
+    def render(recipient, _options)
       offset_cursor_from_top 4.7.cm
       bounding_box([0, cursor], width: 8.7.cm, height: 2.6.cm) do
         stamped(:shipping_text)

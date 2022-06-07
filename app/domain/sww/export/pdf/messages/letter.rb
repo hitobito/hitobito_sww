@@ -35,9 +35,11 @@ module Sww::Export::Pdf::Messages::Letter
   end
 
   def margin
-    membership_card? ?
-      MEMBERSHIP_CARD_MARGIN :
+    if membership_card?
+      MEMBERSHIP_CARD_MARGIN
+    else
       Export::Pdf::Messages::Letter::MARGIN
+end
   end
 
   def membership_card?
