@@ -5,15 +5,8 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
-module Sww::Export::Pdf::Invoice::ReceiverAddress
-
-  def render
-    float do
-      bounding_box([0, 640], width: bounds.width, height: 80) do
-        table(receiver_address_data, cell_style: { borders: [], padding: [0, 0, 0, 0] })
-      end
-    end
+module Sww::Export::Pdf::Invoice
+  def sections
+    [InvoiceInformation, ReceiverAddress, Articles]
   end
-
 end
