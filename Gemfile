@@ -1,4 +1,4 @@
-load File.expand_path('../app_root.rb', __FILE__)
+load File.expand_path('app_root.rb', __dir__)
 
 source 'https://rubygems.org'
 

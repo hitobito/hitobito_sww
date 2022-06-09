@@ -84,6 +84,21 @@ de:
       group/mitglieder/magazin_abonnent:
         one: Magazin Abonnent 
 
+      salutation:
+        available:
+          guten_tag:
+            label: Guten Tag
+            value:
+              m: Guten Tag
+              w: Guten Tag
+              other: Guten Tag
+          sehr_geehrte:
+            label: Sehr geehrte*r Frau/Herr [Nachname]
+            value:
+              m: Sehr geehrter Herr %{last_name}
+              w: Sehr geehrte Frau %{last_name}
+              other: Sehr geehrte*r %{first_name} %{last_name}
+
     attributes:
       person:
         custom_salutation: Benutzerdefinierte Anrede
@@ -93,6 +108,7 @@ de:
         title: Titel
       message:
         membership_card: Mitgliederausweis
+        membership_expires_on: Mitgliedschaft gültig bis
 
   tags:
     categories:
