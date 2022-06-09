@@ -11,8 +11,9 @@ describe Export::Pdf::Invoice do
   let(:invoice) { invoices(:invoice) }
 
   subject do
-      pdf = described_class.render(invoice, payment_slip: true, articles: true)
-      PDF::Inspector::Text.analyze(pdf)
+    invoice.update!(issued_at: Date.parse('2022-06-15'), due_at: Date.parse('2022-08-01'))
+    pdf = described_class.render(invoice, payment_slip: true, articles: true)
+    PDF::Inspector::Text.analyze(pdf)
   end
 
   def text_with_position
@@ -28,9 +29,15 @@ describe Export::Pdf::Invoice do
   end
 
   it 'renders invoice information to the right' do
-    expect(text_with_position).to include([347, 686, "Rechnungsnummer:"],
-                                          [457, 686, invoice.sequence_number],
-                                          [347, 674, "Rechnungssteller:"],
-                                          [457, 674, "Bob Foo"])
+    expect(text_with_position).to include([347, 649, "Rechnungsdatum:"],
+                                          [448, 649, "15.06.2022"])
+  end
+
+  it 'renders invoice number as column label' do
+    expect(text_with_position).to include([57, 525, "Rechnungsnummer: 636980692-2"])
+  end
+
+  it 'renders invoice due at bellow articles table' do
+    expect(text_with_position).to include([57, 497, "Fällig bis:      01.08.2022"])
   end
 end

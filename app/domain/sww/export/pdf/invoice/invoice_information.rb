@@ -7,13 +7,19 @@
 
 
 module Sww::Export::Pdf::Invoice::InvoiceInformation
-  extend ActiveSupport::Concern
 
-  included do
-    def render
-      bounding_box([290, 640], width: bounds.width, height: 80) do
-        table(information, cell_style: { borders: [], padding: [1, 20, 0, 0] })
-      end
+  def render
+    return unless invoice.issued_at.present?
+
+    bounding_box([290, 603], width: bounds.width, height: 80) do
+      table(information, cell_style: { borders: [], padding: [1, 20, 0, 0] })
     end
   end
+
+  private
+
+  def information
+    [labeled_information(:invoice_date, I18n.l(invoice.issued_at))]
+  end
+
 end

@@ -25,9 +25,11 @@ module HitobitoSww
       Group.include Sww::Group
       Person.include Sww::Person
 
-      Export::Pdf::Invoice::ReceiverAddress.include Sww::Export::Pdf::Invoice::ReceiverAddress
-      Export::Pdf::Invoice::InvoiceInformation.include Sww::Export::Pdf::Invoice::InvoiceInformation
+      Export::Pdf::Invoice.prepend Sww::Export::Pdf::Invoice
+      Export::Pdf::Invoice::ReceiverAddress.prepend Sww::Export::Pdf::Invoice::ReceiverAddress
+      Export::Pdf::Invoice::InvoiceInformation.prepend Sww::Export::Pdf::Invoice::InvoiceInformation
       Export::Pdf::Invoice::Articles.prepend Sww::Export::Pdf::Invoice::Articles
+
       Export::Tabular::People::PeopleFull.prepend Sww::Export::Tabular::People::PeopleFull
       Export::Pdf::Messages::Letter.prepend Sww::Export::Pdf::Messages::Letter
       Export::Pdf::Messages::Letter::Section.prepend Sww::Export::Pdf::Messages::Letter::Section

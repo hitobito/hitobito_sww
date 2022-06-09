@@ -7,7 +7,6 @@
 
 
 module Sww::Export::Pdf::Invoice::Articles
-  extend ActiveSupport::Concern
 
   def total_box # rubocop:disable Metrics/MethodLength
     bounding_box([0, cursor], width: bounds.width) do
@@ -26,6 +25,7 @@ module Sww::Export::Pdf::Invoice::Articles
         end
       end
     end
+    render_due_at
   end
 
   def total_data
@@ -35,4 +35,19 @@ module Sww::Export::Pdf::Invoice::Articles
       [I18n.t('invoices.pdf.total'), decorated.total]
     ]
   end
+
+  private
+
+  def articles
+    articles = super
+    articles[0][0] = 
+      I18n.t('invoices.pdf.invoice_number') + ": #{invoice.sequence_number}"
+    articles
+  end
+
+  def render_due_at
+    pdf.move_up 15
+    text I18n.t('invoices.pdf.due_at') + ":      #{I18n.l(invoice.due_at)}"
+  end
+
 end
