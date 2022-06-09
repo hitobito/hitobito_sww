@@ -32,8 +32,8 @@ describe Export::Pdf::Messages::Letter do
       let(:letter) { messages(:membership_card_letter) }
 
       it 'renders membership card in addition to letter' do
-        expect(text_with_position).to eq([[346, 710, "Mitgliederausweis"],
-                                          [346, 687, "Alice Bar"],
+        expect(text_with_position).to eq([[346, 721, "Mitgliederausweis"],
+                                          [346, 698, "Alice Bar"],
                                           [511, 710, "Gültig bis"],
                                           [517, 698, "12.2042"],
                                           [57, 704, "P.P.  | POST CH AG"],

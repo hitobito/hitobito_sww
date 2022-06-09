@@ -9,7 +9,7 @@ module Sww::Export::Pdf::Messages::Letter
   class MembershipCard < Export::Pdf::Messages::Letter::Section
 
     def render(recipient, _options)
-      offset_cursor_from_top 4.4.cm
+      offset_cursor_from_top 4.cm
       bounding_box([10.2.cm, cursor], width: 5.7.cm, height: 1.2.cm) do
         text_box(["<b>#{I18n.t('messages.export.pdf.letter.membership_card.title')}</b>",
                   recipient.person.member_number,
