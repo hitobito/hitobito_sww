@@ -7,5 +7,5 @@
 
 
 module HitobitoSww
-  VERSION = '1.27.20'
+  VERSION = '1.27.25'
 end
