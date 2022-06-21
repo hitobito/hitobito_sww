@@ -32,7 +32,6 @@ module HitobitoSww
 
       Export::Tabular::People::PeopleFull.prepend Sww::Export::Tabular::People::PeopleFull
       Export::Pdf::Messages::Letter.prepend Sww::Export::Pdf::Messages::Letter
-      Export::Pdf::Messages::Letter::Section.prepend Sww::Export::Pdf::Messages::Letter::Section
 
       TagListsHelper.include Sww::TagListsHelper
 

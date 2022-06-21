@@ -39,7 +39,7 @@ module Sww::Export::Pdf::Messages::Letter
       MEMBERSHIP_CARD_MARGIN
     else
       Export::Pdf::Messages::Letter::MARGIN
-end
+    end
   end
 
   def membership_card?

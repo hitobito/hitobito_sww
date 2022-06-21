@@ -22,6 +22,41 @@ describe Export::Pdf::Invoice do
     end
   end
 
+  it 'renders membership_card when true' do
+    invoice.update!(membership_card: true, membership_expires_on: Date.parse('2022-10-01'))
+    expect(text_with_position).to eq([[346, 721, "Mitgliederausweis"],
+                                      [346, 698, "Bob Foo"],
+                                      [511, 710, "Gültig bis"],
+                                      [517, 698, "10.2022"],
+                                      [347, 649, "Rechnungsdatum:"],
+                                      [448, 649, "15.06.2022"],
+                                      [57, 687, "Max Muster"],
+                                      [57, 676, "Belpstrasse 37"],
+                                      [57, 664, "3007 Bern"],
+                                      [57, 558, "Invoice"],
+                                      [57, 525, "Rechnungsnummer: 636980692-2"],
+                                      [363, 525, "Anzahl"],
+                                      [419, 525, "Preis"],
+                                      [464, 525, "Betrag"],
+                                      [515, 525, "MwSt."],
+                                      [436, 512, "Zwischenbetrag"],
+                                      [505, 512, "0.00 CHF"],
+                                      [436, 496, "Gesamtbetrag"],
+                                      [505, 496, "0.00 CHF"],
+                                      [57, 497, "Fällig bis:      01.08.2022"],
+                                      [72, 171, "636980692-4"],
+                                      [252, 171, "636980692-4"],
+                                      [352, 196, "00 00376 80338 90000 00000 00021"],
+                                      [7, 116, "00 00376 80338 90000 00000 00021"],
+                                      [7, 103, "Max Muster"],
+                                      [7, 87, "Belpstrasse 37"],
+                                      [7, 71, "3007 Bern"],
+                                      [352, 147, "Max Muster"],
+                                      [352, 131, "Belpstrasse 37"],
+                                      [352, 115, "3007 Bern"],
+                                      [220, 45, "042>000063698069200000000000022+ 636980692000004>"]])
+  end
+
   it 'renders receiver address to the left' do
     expect(text_with_position).to include([57, 687, "Max Muster"],
                                           [57, 676, "Belpstrasse 37"],

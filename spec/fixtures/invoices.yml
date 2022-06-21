@@ -6,10 +6,10 @@
 invoice:
   title: Invoice
   group: berner_wanderwege
-  recipient: top_leader
+  recipient: berner_wanderer
   recipient_email: top_leader@example.com
   recipient_address: "Max Muster\nBelpstrasse 37\n3007 Bern"
-  creator: berner_wanderer
+  creator: zuercher_wanderer
   payment_slip: ch_esr
   sequence_number: <%= ActiveRecord::FixtureSet.identify(:berner_wanderwege) %>-2
   esr_number: '00 00376 80338 90000 00000 00021'
