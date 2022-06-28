@@ -6,7 +6,33 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 module Sww::Export::Pdf::Invoice
-  def sections
-    [InvoiceInformation, ReceiverAddress, Articles]
+  extend ActiveSupport::Concern
+
+  class RunnerSww < Export::Pdf::Invoice::Runner
+    def invoice_page(pdf, invoice, options)
+      @page_invoice = invoice
+      super
+    end
+
+    def sections
+      invoice_sections = [Export::Pdf::Invoice::InvoiceInformation,
+                          Export::Pdf::Invoice::ReceiverAddress,
+                          Export::Pdf::Invoice::Articles]
+
+
+      if membership_card?
+        [Sww::Export::Pdf::Messages::Letter::MembershipCard] + invoice_sections
+      else
+        invoice_sections
+      end
+    end
+
+    def membership_card?
+      @page_invoice.membership_card?
+    end
+  end
+
+  prepended do
+    self.runner = RunnerSww
   end
 end

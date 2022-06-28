@@ -32,12 +32,12 @@ module HitobitoSww
 
       Export::Tabular::People::PeopleFull.prepend Sww::Export::Tabular::People::PeopleFull
       Export::Pdf::Messages::Letter.prepend Sww::Export::Pdf::Messages::Letter
-      Export::Pdf::Messages::Letter::Section.prepend Sww::Export::Pdf::Messages::Letter::Section
 
       TagListsHelper.include Sww::TagListsHelper
 
       PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
                                            :name_add_on, :title]
+      InvoicesController.permitted_attrs += [:membership_card, :membership_expires_on]
 
       MessagesController::PERMITTED_LETTER_ATTRS += [:membership_card,
                                                      :membership_expires_on]

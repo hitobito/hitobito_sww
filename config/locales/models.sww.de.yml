@@ -109,6 +109,9 @@ de:
       message:
         membership_card: Mitgliederausweis
         membership_expires_on: Mitgliedschaft gültig bis
+      invoice:
+        membership_card: Mitgliederausweis
+        membership_expires_on: Mitgliedschaft gültig bis
 
   tags:
     categories:
