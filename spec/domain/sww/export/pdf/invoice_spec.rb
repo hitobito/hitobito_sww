@@ -28,22 +28,21 @@ describe Export::Pdf::Invoice do
                                       [346, 698, "Bob Foo"],
                                       [511, 710, "Gültig bis"],
                                       [517, 698, "10.2022"],
-                                      [347, 649, "Rechnungsdatum:"],
-                                      [448, 649, "15.06.2022"],
+                                      [406, 530, "Rechnungsdatum: 15.06.2022"],
                                       [57, 687, "Max Muster"],
                                       [57, 676, "Belpstrasse 37"],
                                       [57, 664, "3007 Bern"],
-                                      [57, 558, "Invoice"],
-                                      [57, 525, "Rechnungsnummer: 636980692-2"],
-                                      [363, 525, "Anzahl"],
-                                      [419, 525, "Preis"],
-                                      [464, 525, "Betrag"],
-                                      [515, 525, "MwSt."],
-                                      [436, 512, "Zwischenbetrag"],
-                                      [505, 512, "0.00 CHF"],
-                                      [436, 496, "Gesamtbetrag"],
-                                      [505, 496, "0.00 CHF"],
-                                      [57, 497, "Fällig bis:      01.08.2022"],
+                                      [57, 530, "Invoice"],
+                                      [57, 497, "Rechnungsnummer: 636980692-2"],
+                                      [363, 497, "Anzahl"],
+                                      [419, 497, "Preis"],
+                                      [464, 497, "Betrag"],
+                                      [515, 497, "MwSt."],
+                                      [436, 484, "Zwischenbetrag"],
+                                      [505, 484, "0.00 CHF"],
+                                      [436, 467, "Gesamtbetrag"],
+                                      [505, 467, "0.00 CHF"],
+                                      [57, 468, "Fällig bis:      01.08.2022"],
                                       [72, 171, "636980692-4"],
                                       [252, 171, "636980692-4"],
                                       [352, 196, "00 00376 80338 90000 00000 00021"],
@@ -64,15 +63,14 @@ describe Export::Pdf::Invoice do
   end
 
   it 'renders invoice information to the right' do
-    expect(text_with_position).to include([347, 649, "Rechnungsdatum:"],
-                                          [448, 649, "15.06.2022"])
+    expect(text_with_position).to include([406, 530, "Rechnungsdatum: 15.06.2022"])
   end
 
   it 'renders invoice number as column label' do
-    expect(text_with_position).to include([57, 525, "Rechnungsnummer: 636980692-2"])
+    expect(text_with_position).to include([57, 497, "Rechnungsnummer: 636980692-2"])
   end
 
   it 'renders invoice due at bellow articles table' do
-    expect(text_with_position).to include([57, 497, "Fällig bis:      01.08.2022"])
+    expect(text_with_position).to include([57, 468, "Fällig bis:      01.08.2022"])
   end
 end

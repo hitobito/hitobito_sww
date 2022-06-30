@@ -11,15 +11,15 @@ module Sww::Export::Pdf::Invoice::InvoiceInformation
   def render
     return unless invoice.issued_at.present?
 
-    bounding_box([290, 603], width: bounds.width, height: 80) do
-      table(information, cell_style: { borders: [], padding: [1, 20, 0, 0] })
+    bounding_box([303, 480], width: 180, height: 20) do
+      text information, align: :right
     end
   end
 
   private
 
   def information
-    [labeled_information(:invoice_date, I18n.l(invoice.issued_at))]
+    labeled_information(:invoice_date, I18n.l(invoice.issued_at)).join(' ')
   end
 
 end

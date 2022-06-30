@@ -8,6 +8,28 @@
 
 module Sww::Export::Pdf::Invoice::Articles
 
+  def render # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    reminder = invoice.payment_reminders.last
+
+    move_cursor_to 510
+    pdf.move_down 1.cm
+    font_size(12) { text title(reminder) }
+    pdf.move_down 8
+    text invoice.description
+
+    if reminder
+      pdf.move_down 8
+      font_size(10) { text reminder.text }
+    end
+
+    pdf.move_down 10
+    pdf.font_size(8) { articles_table }
+
+    total_box unless invoice.hide_total?
+    pdf.move_down 4
+    font_size(8) { text invoice.payment_information }
+  end
+
   def total_box # rubocop:disable Metrics/MethodLength
     bounding_box([0, cursor], width: bounds.width) do
       font_size(8) do

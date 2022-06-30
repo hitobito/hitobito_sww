@@ -15,15 +15,15 @@ module Sww::Export::Pdf::Invoice
     end
 
     def sections
-      invoice_sections = [Export::Pdf::Invoice::InvoiceInformation,
-                          Export::Pdf::Invoice::ReceiverAddress,
-                          Export::Pdf::Invoice::Articles]
+      sections = [Export::Pdf::Invoice::InvoiceInformation,
+                  Export::Pdf::Invoice::ReceiverAddress,
+                  Export::Pdf::Invoice::Articles]
 
 
       if membership_card?
-        [Sww::Export::Pdf::Messages::Letter::MembershipCard] + invoice_sections
+        [Sww::Export::Pdf::Messages::Letter::MembershipCard] + sections
       else
-        invoice_sections
+        sections
       end
     end
 
