@@ -20,3 +20,7 @@ de:
   invoices:
     form_sww:
       membership_card_caption: Mitgliederausweis mit drucken
+
+    evaluations:
+      show:
+        excess: Spenden
