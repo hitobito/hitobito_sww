@@ -10,7 +10,7 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
 
     def render(recipient, _options)
       offset_cursor_from_top 4.7.cm
-      bounding_box([0, cursor], width: 8.7.cm, height: 2.6.cm) do
+      bounding_box(address_position, width: 8.7.cm, height: 2.6.cm) do
         stamped(:shipping_text)
 
         pdf.move_down 0.7.cm
@@ -32,5 +32,13 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
       }[letter.shipping_method.to_sym]
     end
 
+    def address_position
+      x_coords = {
+        left: 0,
+        right: 290
+      }[letter.group.settings(:messages_letter).address_position&.to_sym]
+      x_coords ||= 0
+      [x_coords, cursor]
+    end
   end
 end
