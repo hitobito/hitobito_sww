@@ -7,11 +7,14 @@
 
 module Sww::Export::Pdf::Messages::Letter
   class MembershipCard < Export::Pdf::Section
+    include Export::Pdf::AddressRenderers
+    LEFT_ADDRESS_X = 10.2.cm
+    RIGHT_ADDRESS_X = 0
 
     def render(message_recipient = nil, _options = {})
       recipient = fetch_recipient(message_recipient)
       offset_cursor_from_top 4.cm
-      bounding_box(position, width: 5.7.cm, height: 1.2.cm) do
+      bounding_box(address_position(model.group), width: 5.7.cm, height: 1.2.cm) do
         text_box(["<b>#{I18n.t('messages.export.pdf.letter.membership_card.title')}</b>",
                   recipient.member_number,
                   "<b>#{person_or_company_name(recipient)}</b>"].join("\n"),
@@ -46,15 +49,5 @@ module Sww::Export::Pdf::Messages::Letter
       when Message then message_recipient.person
       end
     end
-
-    def position
-      x_coords = {
-        left: 10.2.cm,
-        right: 0
-      }[model.group.settings(:messages_letter).address_position&.to_sym]
-      x_coords ||= 0
-      [x_coords, cursor]
-    end
-
   end
 end

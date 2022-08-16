@@ -35,9 +35,9 @@ describe Export::Pdf::Invoice do
                                         [511, 710, "Gültig bis"],
                                         [517, 698, "10.2022"],
                                         [406, 530, "Rechnungsdatum: 15.06.2022"],
-                                        [57, 687, "Max Muster"],
+                                        [57, 688, "Max Muster"],
                                         [57, 676, "Belpstrasse 37"],
-                                        [57, 664, "3007 Bern"],
+                                        [57, 665, "3007 Bern"],
                                         [57, 530, "Invoice"],
                                         [57, 497, "Rechnungsnummer: 636980692-2"],
                                         [363, 497, "Anzahl"],
@@ -63,9 +63,9 @@ describe Export::Pdf::Invoice do
     end
 
     it 'renders receiver address' do
-      expect(text_with_position).to include([57, 687, "Max Muster"],
+      expect(text_with_position).to include([57, 688, "Max Muster"],
                                             [57, 676, "Belpstrasse 37"],
-                                            [57, 664, "3007 Bern"])
+                                            [57, 665, "3007 Bern"])
     end
   end
 
@@ -82,9 +82,9 @@ describe Export::Pdf::Invoice do
                                         [222, 710, "Gültig bis"],
                                         [227, 698, "10.2022"],
                                         [406, 530, "Rechnungsdatum: 15.06.2022"],
-                                        [347, 687, "Max Muster"],
+                                        [347, 688, "Max Muster"],
                                         [347, 676, "Belpstrasse 37"],
-                                        [347, 664, "3007 Bern"],
+                                        [347, 665, "3007 Bern"],
                                         [57, 530, "Invoice"],
                                         [57, 497, "Rechnungsnummer: 636980692-2"],
                                         [363, 497, "Anzahl"],
@@ -110,9 +110,9 @@ describe Export::Pdf::Invoice do
     end
 
     it 'renders receiver address' do
-      expect(text_with_position).to include([347, 687, "Max Muster"],
+      expect(text_with_position).to include([347, 688, "Max Muster"],
                                             [347, 676, "Belpstrasse 37"],
-                                            [347, 664, "3007 Bern"])
+                                            [347, 665, "3007 Bern"])
     end
   end
 
