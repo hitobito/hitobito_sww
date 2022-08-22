@@ -7,10 +7,13 @@
 
 module Sww::Export::Pdf::Messages::Letter::MembershipCards
   class Header < Export::Pdf::Messages::Letter::Header
+    include Export::Pdf::AddressRenderers
+    LEFT_ADDRESS_X = 0
+    RIGHT_ADDRESS_X = 10.2.cm
 
     def render(recipient, _options)
       offset_cursor_from_top 4.7.cm
-      bounding_box([0, cursor], width: 8.7.cm, height: 2.6.cm) do
+      bounding_box(address_position(group), width: 8.7.cm, height: 2.6.cm) do
         stamped(:shipping_text)
 
         pdf.move_down 0.7.cm
@@ -31,6 +34,5 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
         priority: 'P.P. A'
       }[letter.shipping_method.to_sym]
     end
-
   end
 end

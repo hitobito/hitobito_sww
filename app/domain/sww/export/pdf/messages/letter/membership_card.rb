@@ -7,29 +7,29 @@
 
 module Sww::Export::Pdf::Messages::Letter
   class MembershipCard < Export::Pdf::Section
+    include Export::Pdf::AddressRenderers
+    LEFT_ADDRESS_X = 10.2.cm
+    RIGHT_ADDRESS_X = 0
 
     def render(message_recipient = nil, _options = {})
       recipient = fetch_recipient(message_recipient)
       offset_cursor_from_top 4.cm
-      bounding_box([10.2.cm, cursor], width: 5.7.cm, height: 1.2.cm) do
+      bounding_box(address_position(model.group), width: 5.7.cm, height: 1.2.cm) do
         text_box(["<b>#{I18n.t('messages.export.pdf.letter.membership_card.title')}</b>",
                   recipient.member_number,
                   "<b>#{person_or_company_name(recipient)}</b>"].join("\n"),
                  inline_format: true, size: 10.pt)
+
+        pdf.move_down 0.4.cm
+        bounding_box([5.3.cm, cursor], width: 2.0.cm, height: 1.2.cm) do
+          text_box([I18n.t('messages.export.pdf.letter.membership_card.valid_until'),
+                    membership_expires_on].join("\n"),
+          inline_format: true, size: 10.pt, align: :right)
+        end
       end
-      render_valid_until
     end
 
     private
-
-    def render_valid_until
-      offset_cursor_from_top 4.4.cm
-      bounding_box([15.5.cm, cursor], width: 2.0.cm, height: 1.2.cm) do
-        text_box([I18n.t('messages.export.pdf.letter.membership_card.valid_until'),
-                 membership_expires_on].join("\n"),
-                 inline_format: true, size: 10.pt, align: :right)
-      end
-    end
 
     def person_or_company_name(person)
       if person.company?
@@ -48,8 +48,6 @@ module Sww::Export::Pdf::Messages::Letter
       when Invoice then model.recipient
       when Message then message_recipient.person
       end
-
     end
-
   end
 end

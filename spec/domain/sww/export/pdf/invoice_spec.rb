@@ -22,44 +22,98 @@ describe Export::Pdf::Invoice do
     end
   end
 
-  it 'renders membership_card when true' do
-    invoice.update!(membership_card: true, membership_expires_on: Date.parse('2022-10-01'))
-    expect(text_with_position).to eq([[346, 721, "Mitgliederausweis"],
-                                      [346, 698, "Bob Foo"],
-                                      [511, 710, "Gültig bis"],
-                                      [517, 698, "10.2022"],
-                                      [406, 530, "Rechnungsdatum: 15.06.2022"],
-                                      [57, 687, "Max Muster"],
-                                      [57, 676, "Belpstrasse 37"],
-                                      [57, 664, "3007 Bern"],
-                                      [57, 530, "Invoice"],
-                                      [57, 497, "Rechnungsnummer: 636980692-2"],
-                                      [363, 497, "Anzahl"],
-                                      [419, 497, "Preis"],
-                                      [464, 497, "Betrag"],
-                                      [515, 497, "MwSt."],
-                                      [436, 484, "Zwischenbetrag"],
-                                      [505, 484, "0.00 CHF"],
-                                      [436, 467, "Gesamtbetrag"],
-                                      [505, 467, "0.00 CHF"],
-                                      [57, 468, "Fällig bis:      01.08.2022"],
-                                      [72, 171, "636980692-4"],
-                                      [252, 171, "636980692-4"],
-                                      [352, 196, "00 00376 80338 90000 00000 00021"],
-                                      [7, 116, "00 00376 80338 90000 00000 00021"],
-                                      [7, 103, "Max Muster"],
-                                      [7, 87, "Belpstrasse 37"],
-                                      [7, 71, "3007 Bern"],
-                                      [352, 147, "Max Muster"],
-                                      [352, 131, "Belpstrasse 37"],
-                                      [352, 115, "3007 Bern"],
-                                      [220, 45, "042>000063698069200000000000022+ 636980692000004>"]])
+  context 'rendered left' do
+    before do
+      invoice.group.settings(:messages_letter).address_position = :left
+      invoice.group.save!
+    end
+
+    it 'renders membership_card when true' do
+      invoice.update!(membership_card: true, membership_expires_on: Date.parse('2022-10-01'))
+      expect(text_with_position).to eq([[346, 721, "Mitgliederausweis"],
+                                        [346, 698, "Bob Foo"],
+                                        [511, 710, "Gültig bis"],
+                                        [517, 698, "10.2022"],
+                                        [406, 530, "Rechnungsdatum: 15.06.2022"],
+                                        [57, 688, "Max Muster"],
+                                        [57, 676, "Belpstrasse 37"],
+                                        [57, 665, "3007 Bern"],
+                                        [57, 530, "Invoice"],
+                                        [57, 497, "Rechnungsnummer: 636980692-2"],
+                                        [363, 497, "Anzahl"],
+                                        [419, 497, "Preis"],
+                                        [464, 497, "Betrag"],
+                                        [515, 497, "MwSt."],
+                                        [436, 484, "Zwischenbetrag"],
+                                        [505, 484, "0.00 CHF"],
+                                        [436, 467, "Gesamtbetrag"],
+                                        [505, 467, "0.00 CHF"],
+                                        [57, 468, "Fällig bis:      01.08.2022"],
+                                        [72, 171, "636980692-4"],
+                                        [252, 171, "636980692-4"],
+                                        [352, 196, "00 00376 80338 90000 00000 00021"],
+                                        [7, 116, "00 00376 80338 90000 00000 00021"],
+                                        [7, 103, "Max Muster"],
+                                        [7, 87, "Belpstrasse 37"],
+                                        [7, 71, "3007 Bern"],
+                                        [352, 147, "Max Muster"],
+                                        [352, 131, "Belpstrasse 37"],
+                                        [352, 115, "3007 Bern"],
+                                        [220, 45, "042>000063698069200000000000022+ 636980692000004>"]])
+    end
+
+    it 'renders receiver address' do
+      expect(text_with_position).to include([57, 688, "Max Muster"],
+                                            [57, 676, "Belpstrasse 37"],
+                                            [57, 665, "3007 Bern"])
+    end
   end
 
-  it 'renders receiver address to the left' do
-    expect(text_with_position).to include([57, 687, "Max Muster"],
-                                          [57, 676, "Belpstrasse 37"],
-                                          [57, 664, "3007 Bern"])
+  context 'rendered right' do
+    before do
+      invoice.group.settings(:messages_letter).address_position = :right
+      invoice.group.save!
+    end
+
+    it 'renders membership_card when true' do
+      invoice.update!(membership_card: true, membership_expires_on: Date.parse('2022-10-01'))
+      expect(text_with_position).to eq([[57, 721, "Mitgliederausweis"],
+                                        [57, 698, "Bob Foo"],
+                                        [222, 710, "Gültig bis"],
+                                        [227, 698, "10.2022"],
+                                        [406, 530, "Rechnungsdatum: 15.06.2022"],
+                                        [347, 688, "Max Muster"],
+                                        [347, 676, "Belpstrasse 37"],
+                                        [347, 665, "3007 Bern"],
+                                        [57, 530, "Invoice"],
+                                        [57, 497, "Rechnungsnummer: 636980692-2"],
+                                        [363, 497, "Anzahl"],
+                                        [419, 497, "Preis"],
+                                        [464, 497, "Betrag"],
+                                        [515, 497, "MwSt."],
+                                        [436, 484, "Zwischenbetrag"],
+                                        [505, 484, "0.00 CHF"],
+                                        [436, 467, "Gesamtbetrag"],
+                                        [505, 467, "0.00 CHF"],
+                                        [57, 468, "Fällig bis:      01.08.2022"],
+                                        [72, 171, "636980692-4"],
+                                        [252, 171, "636980692-4"],
+                                        [352, 196, "00 00376 80338 90000 00000 00021"],
+                                        [7, 116, "00 00376 80338 90000 00000 00021"],
+                                        [7, 103, "Max Muster"],
+                                        [7, 87, "Belpstrasse 37"],
+                                        [7, 71, "3007 Bern"],
+                                        [352, 147, "Max Muster"],
+                                        [352, 131, "Belpstrasse 37"],
+                                        [352, 115, "3007 Bern"],
+                                        [220, 45, "042>000063698069200000000000022+ 636980692000004>"]])
+    end
+
+    it 'renders receiver address' do
+      expect(text_with_position).to include([347, 688, "Max Muster"],
+                                            [347, 676, "Belpstrasse 37"],
+                                            [347, 665, "3007 Bern"])
+    end
   end
 
   it 'renders invoice information to the right' do
