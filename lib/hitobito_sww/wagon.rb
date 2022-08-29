@@ -39,6 +39,13 @@ module HitobitoSww
                                            :name_add_on, :title]
       InvoicesController.permitted_attrs += [:membership_card, :membership_expires_on]
 
+      # Since permitted_attrs are an array, it's really hard to expand nested attrs
+      # rubocop:disable Metrics/LineLength
+      invoice_lists_invoice_permitted_attrs_hash = InvoiceListsController.permitted_attrs.find { |attr| attr.is_a?(Hash) && attr.keys.include?(:invoice) }
+      invoice_lists_invoice_permitted_attrs = invoice_lists_invoice_permitted_attrs_hash[:invoice]
+      invoice_lists_invoice_permitted_attrs_hash.merge!(invoice: invoice_lists_invoice_permitted_attrs + [:membership_card, :membership_expires_on])
+      # rubocop:enable Metrics/LineLength
+
       MessagesController::PERMITTED_LETTER_ATTRS += [:membership_card,
                                                      :membership_expires_on]
       MessagesController::PERMITTED_INVOICE_LETTER_ATTRS += [:membership_card,

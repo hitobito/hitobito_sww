@@ -17,6 +17,11 @@ de:
       fields_sww:
         membership_card_caption: Mitgliederausweis mit drucken
 
+
+  invoice_lists:
+    form_invoice_fields_sww:
+      membership_card_caption: Mitgliederausweis mit drucken
+
   invoices:
     form_sww:
       membership_card_caption: Mitgliederausweis mit drucken
