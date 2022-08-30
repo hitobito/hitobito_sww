@@ -12,30 +12,37 @@ fr:
 
       group/schweizer_wanderwege:
         one: Suisse Rando
+        many: Suisse Rando
         other: Suisse Rando
 
       group/fachorganisation:
         one: Associations de randonnée
+        many: Associations de randonnée
         other: Associations de randonnée
 
       group/kontakte:
         one: Contacts
+        many: Contacts
         other: Contacts
 
       group/vorstand:
         one: Comité
+        many: Comité
         other: Comité
 
       group/geschaeftsstelle:
         one: Direction
+        many: Direction
         other: Direction
 
       group/gremium_projektgruppe:
         one: Comité/groupe de projet
+        many: Comité/groupe de projet
         other: Comité/groupe de projet
 
       group/mitglieder:
         one: Membre
+        many: Membres
         other: Membres
 
       ### ROLES
@@ -84,6 +91,21 @@ fr:
       group/mitglieder/magazin_abonnent:
         one: Abonnement Magazine 
 
+      salutation:
+        available:
+          guten_tag:
+            label: Bonjour
+            value:
+              m: Bonjour
+              w: Bonjour
+              other: Bonjour
+          sehr_geehrte:
+            label: ""
+            value:
+              m: ""
+              w: ""
+              other: ""
+
     attributes:
       person:
         custom_salutation: Formule d'appel personnalisée
@@ -91,6 +113,12 @@ fr:
         member_number: Numéro de membre
         name_add_on: Complément de nom
         title: Titre
+      message:
+        membership_card: ""
+        membership_expires_on: ""
+      invoice:
+        membership_card: ""
+        membership_expires_on: ""
 
   tags:
     categories:

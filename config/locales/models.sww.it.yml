@@ -12,30 +12,37 @@ it:
 
       group/schweizer_wanderwege:
         one: ''
+        many: ''
         other: ''
 
       group/fachorganisation:
         one: ''
+        many: ''
         other: ''
 
       group/kontakte:
         one: ''
+        many: ''
         other: ''
 
       group/vorstand:
         one: ''
+        many: ''
         other: ''
 
       group/geschaeftsstelle:
         one: ''
+        many: ''
         other: ''
 
       group/gremium_projektgruppe:
         one: ''
+        many: ''
         other: ''
 
       group/mitglieder:
         one: ''
+        many: ''
         other: ''
 
       ### ROLES
@@ -84,6 +91,21 @@ it:
       group/mitglieder/magazin_abonnent:
         one: "" 
 
+      salutation:
+        available:
+          guten_tag:
+            label: ""
+            value:
+              m: ""
+              w: ""
+              other: ""
+          sehr_geehrte:
+            label: ""
+            value:
+              m: ""
+              w: ""
+              other: ""
+
     attributes:
       person:
         custom_salutation: ""
@@ -91,6 +113,12 @@ it:
         member_number: ""
         name_add_on: ""
         title: ""
+      message:
+        membership_card: ""
+        membership_expires_on: ""
+      invoice:
+        membership_card: ""
+        membership_expires_on: ""
 
   tags:
     categories:
