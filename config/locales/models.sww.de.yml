@@ -112,6 +112,13 @@ de:
       invoice:
         membership_card: Mitgliederausweis
         membership_expires_on: Mitgliedschaft gültig bis
+      group_setting:
+        settings:
+          membership_card: Mitgliederkarten
+        left_offset: Abstand von links (cm)
+        top_offset: Abstand von oben (cm)
+        left_address_offset: Addressabstand von links (cm)
+        top_address_offset: Addressabstand von oben (cm)
 
   tags:
     categories:
