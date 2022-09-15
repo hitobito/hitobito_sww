@@ -49,5 +49,13 @@ module Sww::Export::Pdf::Messages::Letter
       when Message then message_recipient.person
       end
     end
+
+    def left_offset(group)
+      group.settings(:membership_card).left_offset
+    end
+
+    def top_offset(group)
+      group.settings(:membership_card).top_offset
+    end
   end
 end

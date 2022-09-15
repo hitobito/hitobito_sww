@@ -19,6 +19,23 @@ module Sww::GroupSetting
         top_offset: nil
       }
     })
+
+    def left_offset_type
+      :number
+    end
+
+    def top_offset_type
+      :number
+    end
+
+    def left_address_offset_type
+      :number
+    end
+
+    def top_address_offset_type
+      :number
+    end
+
   end
 
 end

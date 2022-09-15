@@ -22,8 +22,8 @@ module HitobitoSww
 
     config.to_prepare do
       # extend application classes here
-      Group.include Sww::Group
       GroupSetting.include Sww::GroupSetting
+      Group.include Sww::Group
       Person.include Sww::Person
 
       Export::Pdf::AddressRenderers.include Sww::Export::Pdf::AddressRenderers
