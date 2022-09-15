@@ -23,60 +23,87 @@ describe Export::Pdf::Messages::Letter do
 
     let (:recipient) { people(:top_leader) }
 
-      subject { Export::Pdf::Messages::Letter.new(letter, options) }
+    subject { Export::Pdf::Messages::Letter.new(letter, options) }
 
+    before do
+      Messages::LetterDispatch.new(letter).run
+    end
+
+    let(:letter) { messages(:membership_card_letter) }
+
+    context 'rendered left' do
       before do
-        Messages::LetterDispatch.new(letter).run
+        letter.group.settings(:messages_letter).address_position = :left
+        letter.group.save!
       end
 
-      let(:letter) { messages(:membership_card_letter) }
+      it 'renders membership card in addition to letter' do
+        expect(text_with_position).to eq([[346, 721, "Mitgliederausweis"],
+                                          [346, 698, "Alice Bar"],
+                                          [511, 710, "Gültig bis"],
+                                          [517, 698, "12.2042"],
+                                          [57, 704, "P.P.  | POST CH AG"],
+                                          [57, 682, "Alice Bar"],
+                                          [57, 672, "Belpstrasse 37"],
+                                          [57, 662, "8001 Zürich"],
+                                          [420, 517, "Bern, 17. Mai 2022"],
+                                          [57, 491, "MITGLIEDERAUSWEIS 2022 WANDERN.CH"],
+                                          [57, 463, "Hallo"],
+                                          [57, 442, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
+                                          [57, 422, "Bis bald"]])
 
-      context 'rendered left' do
-        before do
-          letter.group.settings(:messages_letter).address_position = :left
-          letter.group.save!
-        end
+      end
+    end
 
-        it 'renders membership card in addition to letter' do
-          expect(text_with_position).to eq([[346, 721, "Mitgliederausweis"],
-                                            [346, 698, "Alice Bar"],
-                                            [511, 710, "Gültig bis"],
-                                            [517, 698, "12.2042"],
-                                            [57, 704, "P.P.  | POST CH AG"],
-                                            [57, 682, "Alice Bar"],
-                                            [57, 672, "Belpstrasse 37"],
-                                            [57, 662, "8001 Zürich"],
-                                            [420, 517, "Bern, 17. Mai 2022"],
-                                            [57, 491, "MITGLIEDERAUSWEIS 2022 WANDERN.CH"],
-                                            [57, 463, "Hallo"],
-                                            [57, 442, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
-                                            [57, 422, "Bis bald"]])
-
-        end
+    context 'rendered right' do
+      before do
+        letter.group.settings(:messages_letter).address_position = :right
+        letter.group.save!
       end
 
-      context 'rendered right' do
-        before do
-          letter.group.settings(:messages_letter).address_position = :right
-          letter.group.save!
-        end
-
-        it 'renders membership card in addition to letter' do
-          expect(text_with_position).to eq([[57, 721, "Mitgliederausweis"],
-                                            [57, 698, "Alice Bar"],
-                                            [222, 710, "Gültig bis"],
-                                            [227, 698, "12.2042"],
-                                            [346, 704, "P.P.  | POST CH AG"],
-                                            [346, 682, "Alice Bar"],
-                                            [346, 672, "Belpstrasse 37"],
-                                            [346, 662, "8001 Zürich"],
-                                            [420, 517, "Bern, 17. Mai 2022"],
-                                            [57, 491, "MITGLIEDERAUSWEIS 2022 WANDERN.CH"],
-                                            [57, 463, "Hallo"],
-                                            [57, 442, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
-                                            [57, 422, "Bis bald"]])
-        end
+      it 'renders membership card in addition to letter' do
+        expect(text_with_position).to eq([[57, 721, "Mitgliederausweis"],
+                                          [57, 698, "Alice Bar"],
+                                          [222, 710, "Gültig bis"],
+                                          [227, 698, "12.2042"],
+                                          [346, 704, "P.P.  | POST CH AG"],
+                                          [346, 682, "Alice Bar"],
+                                          [346, 672, "Belpstrasse 37"],
+                                          [346, 662, "8001 Zürich"],
+                                          [420, 517, "Bern, 17. Mai 2022"],
+                                          [57, 491, "MITGLIEDERAUSWEIS 2022 WANDERN.CH"],
+                                          [57, 463, "Hallo"],
+                                          [57, 442, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
+                                          [57, 422, "Bis bald"]])
       end
+    end
+
+    context 'rendered at custom offset' do
+      before do
+        letter.group.settings(:messages_letter).left_address_offset = 3 # 3.cm = 85
+        letter.group.settings(:messages_letter).top_address_offset = 5
+
+        letter.group.settings(:membership_card).left_offset = 10
+        letter.group.settings(:membership_card).top_offset = 5
+        letter.group.save!
+      end
+
+      it 'renders membership card in addition to letter' do
+        expect(text_with_position).to eq([[283, 693, "Mitgliederausweis"],
+                                          [283, 670, "Alice Bar"],
+                                          [449, 682, "Gültig bis"],
+                                          [454, 670, "12.2042"],
+                                          [85, 695, "P.P.  | POST CH AG"],
+                                          [85, 674, "Alice Bar"],
+                                          [85, 663, "Belpstrasse 37"],
+                                          [85, 653, "8001 Zürich"],
+                                          [420, 517, "Bern, 17. Mai 2022"],
+                                          [57, 491, "MITGLIEDERAUSWEIS 2022 WANDERN.CH"],
+                                          [57, 463, "Hallo"],
+                                          [57, 442, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
+                                          [57, 422, "Bis bald"]])
+      end
+    end
   end
 
   private
