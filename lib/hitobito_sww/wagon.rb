@@ -22,9 +22,11 @@ module HitobitoSww
 
     config.to_prepare do
       # extend application classes here
+      GroupSetting.include Sww::GroupSetting
       Group.include Sww::Group
       Person.include Sww::Person
 
+      Export::Pdf::AddressRenderers.include Sww::Export::Pdf::AddressRenderers
       Export::Pdf::Invoice.prepend Sww::Export::Pdf::Invoice
       Export::Pdf::Invoice::ReceiverAddress.prepend Sww::Export::Pdf::Invoice::ReceiverAddress
       Export::Pdf::Invoice::InvoiceInformation.prepend Sww::Export::Pdf::Invoice::InvoiceInformation

@@ -82,7 +82,7 @@ de:
       group/mitglieder/spender:
         one: Spender
       group/mitglieder/magazin_abonnent:
-        one: Magazin Abonnent 
+        one: Magazin Abonnent
 
       salutation:
         available:
@@ -112,6 +112,13 @@ de:
       invoice:
         membership_card: Mitgliederausweis
         membership_expires_on: Mitgliedschaft gültig bis
+      group_setting:
+        settings:
+          membership_card: Mitgliederausweise
+        left_position: Abstand von links (cm)
+        top_position: Abstand von oben (cm)
+        left_address_position: Addressabstand von links (cm)
+        top_address_position: Addressabstand von oben (cm)
 
   tags:
     categories:

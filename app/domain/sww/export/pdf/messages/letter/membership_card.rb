@@ -49,5 +49,13 @@ module Sww::Export::Pdf::Messages::Letter
       when Message then message_recipient.person
       end
     end
+
+    def left_position(group)
+      group.settings(:membership_card).left_position
+    end
+
+    def top_position(group)
+      group.settings(:membership_card).top_position
+    end
   end
 end
