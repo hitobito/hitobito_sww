@@ -9,8 +9,8 @@ module Sww::Export::Pdf::AddressRenderers
   extend ActiveSupport::Concern
 
   included do
-    def address_position(group)
-      left = left_offset(group)
+    def address_position(group) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+      left = left_position(group)
       x_coords = left.to_f.cm - page.margins[:left] if left.present?
 
       x_coords ||= {
@@ -19,19 +19,19 @@ module Sww::Export::Pdf::AddressRenderers
       }[group.settings(:messages_letter).address_position&.to_sym]
       x_coords ||= 0
 
-      top = top_offset(group)
+      top = top_position(group)
       y_coords = pdf.bounds.top - (top.to_f.cm - page.margins[:top]) if top.present?
       y_coords ||= cursor
 
       [x_coords, y_coords]
     end
 
-    def left_offset(group)
-      group.settings(:messages_letter).left_address_offset
+    def left_position(group)
+      group.settings(:messages_letter).left_address_position
     end
 
-    def top_offset(group)
-      group.settings(:messages_letter).top_address_offset
+    def top_position(group)
+      group.settings(:messages_letter).top_address_position
     end
   end
 end

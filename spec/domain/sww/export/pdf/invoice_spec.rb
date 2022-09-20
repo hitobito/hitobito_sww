@@ -116,10 +116,10 @@ describe Export::Pdf::Invoice do
     end
   end
 
-  context 'rendered at custom offset' do
+  context 'rendered at custom position' do
     before do
-      invoice.group.settings(:messages_letter).left_address_offset = 3 # 3.cm = 85
-      invoice.group.settings(:messages_letter).top_address_offset = 5
+      invoice.group.settings(:messages_letter).left_address_position = 3 # 3.cm = 85
+      invoice.group.settings(:messages_letter).top_address_position = 5
       invoice.group.save!
     end
 

@@ -78,13 +78,13 @@ describe Export::Pdf::Messages::Letter do
       end
     end
 
-    context 'rendered at custom offset' do
+    context 'rendered at custom position' do
       before do
-        letter.group.settings(:messages_letter).left_address_offset = 3 # 3.cm = 85
-        letter.group.settings(:messages_letter).top_address_offset = 5
+        letter.group.settings(:messages_letter).left_address_position = 3 # 3.cm = 85
+        letter.group.settings(:messages_letter).top_address_position = 5
 
-        letter.group.settings(:membership_card).left_offset = 10
-        letter.group.settings(:membership_card).top_offset = 5
+        letter.group.settings(:membership_card).left_position = 10
+        letter.group.settings(:membership_card).top_position = 5
         letter.group.save!
       end
 

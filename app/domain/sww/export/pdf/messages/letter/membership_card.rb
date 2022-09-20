@@ -50,12 +50,12 @@ module Sww::Export::Pdf::Messages::Letter
       end
     end
 
-    def left_offset(group)
-      group.settings(:membership_card).left_offset
+    def left_position(group)
+      group.settings(:membership_card).left_position
     end
 
-    def top_offset(group)
-      group.settings(:membership_card).top_offset
+    def top_position(group)
+      group.settings(:membership_card).top_position
     end
   end
 end

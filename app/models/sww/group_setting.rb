@@ -9,30 +9,30 @@ module Sww::GroupSetting
   extend ActiveSupport::Concern
 
   included do
-    GroupSetting::SETTINGS.deep_merge!({
-      messages_letter: { 
-        left_address_offset: nil,
-        top_address_offset: nil
+    GroupSetting::SETTINGS.deep_merge!(
+      messages_letter: {
+        left_address_position: nil,
+        top_address_position: nil
       },
       membership_card: {
-        left_offset: nil,
-        top_offset: nil
+        left_position: nil,
+        top_position: nil
       }
-    })
+    )
 
-    def left_offset_type
+    def left_position_type
       :number
     end
 
-    def top_offset_type
+    def top_position_type
       :number
     end
 
-    def left_address_offset_type
+    def left_address_position_type
       :number
     end
 
-    def top_address_offset_type
+    def top_address_position_type
       :number
     end
 
