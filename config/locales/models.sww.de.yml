@@ -82,7 +82,7 @@ de:
       group/mitglieder/spender:
         one: Spender
       group/mitglieder/magazin_abonnent:
-        one: Magazin Abonnent 
+        one: Magazin Abonnent
 
       salutation:
         available:

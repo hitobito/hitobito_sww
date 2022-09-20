@@ -25,9 +25,9 @@ describe Export::Pdf::Messages::LetterWithInvoice do
 
     subject { Export::Pdf::Messages::LetterWithInvoice.new(letter, options) }
 
-    let!(:invoice_config) { 
+    let!(:invoice_config) {
       InvoiceConfig.create!(group: letter.group,
-                            sequence_number: 1, 
+                            sequence_number: 1,
                             address: "Puzzle\nBelpstrasse 37\n3007 Bern",
                             iban: 'CH93 0030 0111 6238 5295 7',
                             account_number: '10-5318-5',
