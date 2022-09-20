@@ -114,7 +114,7 @@ de:
         membership_expires_on: Mitgliedschaft gültig bis
       group_setting:
         settings:
-          membership_card: Mitgliederkarten
+          membership_card: Mitgliederausweise
         left_offset: Abstand von links (cm)
         top_offset: Abstand von oben (cm)
         left_address_offset: Addressabstand von links (cm)
