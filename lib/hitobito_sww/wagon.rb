@@ -36,6 +36,7 @@ module HitobitoSww
       Export::Pdf::Messages::Letter.prepend Sww::Export::Pdf::Messages::Letter
 
       TagListsHelper.include Sww::TagListsHelper
+      StandardFormBuilder.include Sww::StandardFormBuilder
 
       PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
                                            :name_add_on, :title]

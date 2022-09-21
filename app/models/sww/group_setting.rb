@@ -21,21 +21,19 @@ module Sww::GroupSetting
     )
 
     def left_position_type
-      :number
+      :positive_number
     end
 
     def top_position_type
-      :number
+      :positive_number
     end
 
     def left_address_position_type
-      :number
+      :positive_number
     end
 
     def top_address_position_type
-      :number
+      :positive_number
     end
-
   end
-
 end
