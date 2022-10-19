@@ -21,6 +21,10 @@ application:
     height: 70
     width: 200
 
+<% mail_domain = ENV['RAILS_MAIL_DOMAIN'].presence ||
+                 ENV['RAILS_HOST_NAME'].presence ||
+                 'localhost' %>
+
 email:
   # Sender for all emails sent by the application
   sender: <%= "Schweizer Wanderwege - Suisse Rando <noreply@#{mail_domain}>" %>
