@@ -89,7 +89,7 @@ it:
       group/mitglieder/spender:
         one: ""
       group/mitglieder/magazin_abonnent:
-        one: "" 
+        one: ""
 
       salutation:
         available:
@@ -119,6 +119,13 @@ it:
       invoice:
         membership_card: ""
         membership_expires_on: ""
+      group_setting:
+        settings:
+          membership_card: ""
+        left_position: ""
+        top_position: ""
+        left_address_position: ""
+        top_address_position: ""
 
   tags:
     categories:

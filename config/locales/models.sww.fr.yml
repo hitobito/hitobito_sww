@@ -89,7 +89,7 @@ fr:
       group/mitglieder/spender:
         one: Donateur
       group/mitglieder/magazin_abonnent:
-        one: Abonnement Magazine 
+        one: Abonnement Magazine
 
       salutation:
         available:
@@ -102,8 +102,8 @@ fr:
           sehr_geehrte:
             label: ""
             value:
-              m: ""
-              w: ""
+              m: "Cher Monsieur %{last_name}"
+              w: "Chère Madame %{last_name}"
               other: ""
 
     attributes:
@@ -114,11 +114,18 @@ fr:
         name_add_on: Complément de nom
         title: Titre
       message:
-        membership_card: ""
-        membership_expires_on: ""
+        membership_card: Carte de membre
+        membership_expires_on: Adhésion valide jusqu'au
       invoice:
-        membership_card: ""
-        membership_expires_on: ""
+        membership_card: Carte de membre
+        membership_expires_on: Adhésion valide jusqu'au
+      group_setting:
+        settings:
+          membership_card: Carte de membre
+        left_position: Distance par rapport à la gauche (cm)
+        top_position: Distance à partir du haut (cm)
+        left_address_position: Distance de l'adresse par rapport à la gauche (cm)
+        top_address_position: Distance de l'adresse à partir du haut (cm)
 
   tags:
     categories:
