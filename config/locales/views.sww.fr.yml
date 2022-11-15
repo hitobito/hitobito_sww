@@ -11,7 +11,7 @@ fr:
         letter:
           membership_card:
             title: Carte de membre
-            valid_until: "Adhésion valide jusqu'au "
+            valid_until: Validité
 
     letter:
       fields_sww:
