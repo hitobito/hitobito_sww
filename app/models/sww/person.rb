@@ -11,7 +11,7 @@ module Sww::Person
   included do
     add_public_attrs = [:custom_salutation, :magazin_abo_number, :title, :name_add_on]
     Person::PUBLIC_ATTRS.push(*add_public_attrs)
-    Person::INTERNAL_ATTRS << :alabus_id << :member_number
+    Person::INTERNAL_ATTRS << :alabus_id << :member_number << :sww_cms_profile_id
 
     # member number is already present in legacy system (alabus)
     # and is imported
