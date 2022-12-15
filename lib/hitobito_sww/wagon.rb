@@ -39,6 +39,7 @@ module HitobitoSww
       TagListsHelper.include Sww::TagListsHelper
       StandardFormBuilder.include Sww::StandardFormBuilder
 
+      PersonResource.include Sww::PersonResource
       Oauth::ProfilesController.prepend Sww::Oauth::ProfilesController
       PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
                                            :name_add_on, :title]

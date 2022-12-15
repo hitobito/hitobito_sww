@@ -32,3 +32,12 @@ zuercher_leiter:
   address: Bahnsteig 37
   member_number: 42441
   sww_cms_profile_id: 42
+
+zuercher_leiter:
+  first_name: Charlie
+  last_name: Baz
+  email: charlie@example.com
+  town: Zürich
+  zip_code: 8001
+  address: Belpstrasse 37
+  sww_cms_profile_id: 2
