@@ -11,12 +11,16 @@ class Group::Benutzerkonten < ::Group
 
   ### ROLES
 
+  class Verwalter < ::Role
+    self.permissions = [:layer_full]
+  end
+
   class Benutzerkonto < ::Role
     self.visible_from_above = false
 
     self.permissions = []
   end
 
-  roles Benutzerkonto
+  roles Benutzerkonto, Verwalter
 
 end
