@@ -14,6 +14,10 @@ de:
         one: Schweizer Wanderwege
         other: Schweizer Wanderwege
 
+      group/benutzerkonten:
+        one: Benutzerkonten
+        other: Benutzerkonten
+
       group/fachorganisation:
         one: Fachorganisation
         other: Fachorganisation
@@ -44,6 +48,10 @@ de:
         one: Mitarbeitende
       group/schweizer_wanderwege/support:
         one: Support
+
+      group/benutzerkonten/benutzerkonto:
+        one: Benutzerkonto
+        other: Benutzerkonten
 
       group/kontakte/kontakt:
         one: Kontakt
