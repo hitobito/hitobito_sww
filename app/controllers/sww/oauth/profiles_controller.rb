@@ -8,7 +8,7 @@
 module Sww::Oauth::ProfilesController
   extend ActiveSupport::Concern
 
-  def public_attrs_with_roles
-    super.merge(sww_cms_profile_id: person.sww_cms_profile_id)
+  def scope_attrs
+    super&.merge(sww_cms_profile_id: person.sww_cms_profile_id)
   end
 end

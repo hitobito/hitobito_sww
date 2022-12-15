@@ -13,17 +13,52 @@ describe Oauth::ProfilesController do
   let(:app) { Oauth::Application.create!(name: 'MyApp', redirect_uri: redirect_uri) }
   let(:redirect_uri) { 'urn:ietf:wg:oauth:2.0:oob' }
 
-  let(:token) { app.access_tokens.create!(resource_owner_id: user.id, scopes: 'openid', expires_in: 2.hours) }
+  let(:token) { app.access_tokens.create!(resource_owner_id: user.id, scopes: 'name email with_roles', expires_in: 2.hours) }
 
   context 'GET show' do
     context 'with name scope' do
-      it 'does not render sww_cms_profile_id' do
+      it 'renders sww_cms_profile_id' do
+        @request.headers['X-Scope'] = 'name'
         get :show, params: { access_token: token.token }
 
-        require 'pry'; binding.pry unless $pstop
         json = JSON.parse(response.body)
 
-        expect(json)
+        expect(json).to be_present
+        expect(json['id']).to eq(user.id)
+        expect(json).to have_key('sww_cms_profile_id')
+        expect(json['email']).to eq(user.email)
+        expect(json['sww_cms_profile_id']).to eq(42)
+      end
+    end
+
+    context 'with with_roles scope' do
+      it 'renders sww_cms_profile_id' do
+        @request.headers['X-Scope'] = 'with_roles'
+
+        get :show, params: { access_token: token.token }
+
+        json = JSON.parse(response.body)
+
+        expect(json).to be_present
+        expect(json['id']).to eq(user.id)
+        expect(json).to have_key('sww_cms_profile_id')
+        expect(json['email']).to eq(user.email)
+        expect(json['sww_cms_profile_id']).to eq(42)
+      end
+    end
+
+    context 'without scope' do
+      it 'does not render sww_cms_profile_id' do
+        @request.headers['X-Scope'] = ''
+
+        get :show, params: { access_token: token.token }
+
+        json = JSON.parse(response.body)
+
+        expect(json).to be_present
+        expect(json['id']).to eq(user.id)
+        expect(json).to_not have_key('sww_cms_profile_id')
+        expect(json['email']).to eq(user.email)
       end
     end
   end
