@@ -9,7 +9,8 @@ class Group::SchweizerWanderwege < ::Group
 
   self.layer = true
 
-  children Group::Kontakte,
+  children Group::Benutzerkonten,
+           Group::Kontakte,
            Group::Fachorganisation
 
   ### ROLES

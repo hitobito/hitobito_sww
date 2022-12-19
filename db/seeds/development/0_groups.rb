@@ -20,6 +20,12 @@ if root.address.blank?
   end
 end
 
+Group::Benutzerkonten.seed(:name, :parent_id,
+                          {
+                            name: 'CMS',
+                            parent_id: root.id
+                          })
+
 fachorganisationen = Group::Fachorganisation.seed(:name, :parent_id,
                                                   {
                                                     name: 'Berner Wanderwege BWW',
