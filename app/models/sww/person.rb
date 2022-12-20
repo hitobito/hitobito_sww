@@ -9,9 +9,9 @@ module Sww::Person
   extend ActiveSupport::Concern
 
   included do
-    add_public_attrs = [:custom_salutation, :magazin_abo_number, :title, :name_add_on]
+    add_public_attrs = [:custom_salutation, :magazin_abo_number, :title, :name_add_on, :sww_cms_profile_id]
     Person::PUBLIC_ATTRS.push(*add_public_attrs)
-    Person::INTERNAL_ATTRS << :alabus_id << :member_number << :sww_cms_profile_id
+    Person::INTERNAL_ATTRS << :alabus_id << :member_number
 
     # member number is already present in legacy system (alabus)
     # and is imported

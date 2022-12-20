@@ -12,7 +12,11 @@ describe JsonApi::PeopleController, type: [:request] do
   after { I18n.locale = :de }
 
   let(:params) { {} }
-  let(:wanderer) { people(:zuercher_wanderer) }
+  let(:cms_benutzer) do
+    wanderer = people(:zuercher_wanderer)
+    wanderer.update!(sww_cms_profile_id: 42)
+    wanderer
+  end
   let(:permitted_service_token) { Fabricate(:service_token,
                                             layer: groups(:zuercher_wanderwege),
                                             name: 'permitted',
@@ -42,14 +46,16 @@ describe JsonApi::PeopleController, type: [:request] do
 
     context 'with signed in user session' do
       context 'authorized' do
+
+        let(:mitarbeiter) { Fabricate(Group::Geschaeftsstelle::Mitarbeiter.to_s, group: groups(:zuercher_geschaeftsstelle)).person }
         before do
-          sign_in(wanderer)
+          sign_in(mitarbeiter)
           # mock check for user since sign_in devise helper is not setting any cookies
           allow_any_instance_of(described_class)
             .to receive(:user_session?).and_return(true)
         end
 
-        it 'returns sww_cms_profile_id' do
+        it 'does not return sww_cms_profile_id if no show details permission' do
           jsonapi_get "/api/people/#{wanderer.id}", params: params
 
           expect(response).to have_http_status(200)
