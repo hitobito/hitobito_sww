@@ -65,6 +65,7 @@ describe Export::Pdf::Messages::LetterWithInvoice do
       it 'renders membership card in addition to letter' do
         expected_content =
           [[346, 721, "Mitgliederausweis"],
+           [346, 710, "42431"],
            [346, 698, "Alice Bar"],
            [511, 710, "Gültig bis"],
            [517, 698, "12.2042"],
@@ -121,6 +122,7 @@ describe Export::Pdf::Messages::LetterWithInvoice do
       it 'renders membership card in addition to letter' do
         expected_content = 
           [[57, 721, "Mitgliederausweis"],
+           [57, 710, "42431"],
            [57, 698, "Alice Bar"],
            [222, 710, "Gültig bis"],
            [227, 698, "12.2042"],
@@ -181,6 +183,7 @@ describe Export::Pdf::Messages::LetterWithInvoice do
       it 'renders membership card in addition to letter' do
         expected_content = 
           [[283, 693, "Mitgliederausweis"],
+           [283, 681, "42431"],
            [283, 670, "Alice Bar"],
            [449, 682, "Gültig bis"],
            [454, 670, "12.2042"],

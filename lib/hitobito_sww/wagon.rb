@@ -25,6 +25,7 @@ module HitobitoSww
       GroupSetting.include Sww::GroupSetting
       Group.include Sww::Group
       Person.include Sww::Person
+      PersonResource.include Sww::PersonResource
 
       Export::Pdf::AddressRenderers.include Sww::Export::Pdf::AddressRenderers
       Export::Pdf::Invoice.prepend Sww::Export::Pdf::Invoice

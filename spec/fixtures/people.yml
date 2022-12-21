@@ -10,6 +10,7 @@ berner_wanderer:
   town: Bern
   additional_information: bla bla
   contact_data_visible: true
+  member_number: 42421
 
 zuercher_wanderer:
   first_name: Alice
@@ -18,3 +19,13 @@ zuercher_wanderer:
   town: Zürich
   zip_code: 8001
   address: Belpstrasse 37
+  member_number: 42431
+
+zuercher_leiter:
+  first_name: Charlie
+  last_name: Baz
+  email: charlie@example.com
+  town: Zürich
+  zip_code: 8001
+  address: Bahnsteig 37
+  member_number: 42441

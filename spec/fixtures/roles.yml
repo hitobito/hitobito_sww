@@ -4,11 +4,16 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 zuercher_leiter:
-  person: top_leader
+  person: zuercher_leiter
   group: zuercher_gremium
   type: Group::GremiumProjektgruppe::Leitung
 
 zuercher_mitglied:
   person: zuercher_wanderer
   group: zuercher_mitglieder
+  type: Group::Mitglieder::Aktivmitglied
+
+berner_mitglied:
+  person: berner_wanderer
+  group: berner_mitglieder
   type: Group::Mitglieder::Aktivmitglied
