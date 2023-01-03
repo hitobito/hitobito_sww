@@ -6,16 +6,25 @@
 schweizer_wanderwege:
   parent:
   lft: 1
-  rgt: 22
+  rgt: 24
   name: Schweizer Wanderwege
   type: Group::SchweizerWanderwege
   email: sww@sww.example.com
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:schweizer_wanderwege) %>
 
-berner_wanderwege:
+benutzerkonten:
   parent: schweizer_wanderwege
   lft: 2
-  rgt: 11
+  rgt: 3
+  name: Benutzerkonten
+  type: Group::Benutzerkonten
+  email: benutzerkonten@sww.example.com
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:benutzerkonten) %>
+
+berner_wanderwege:
+  parent: schweizer_wanderwege
+  lft: 4
+  rgt: 13
   name: Berner Wanderwege BWW
   type: Group::Fachorganisation
   email: bww@sww.example.com
@@ -23,8 +32,8 @@ berner_wanderwege:
 
 zuercher_wanderwege:
   parent: schweizer_wanderwege
-  lft: 12
-  rgt: 21
+  lft: 14
+  rgt: 23
   name: Zürcher Wanderwege
   type: Group::Fachorganisation
   email: bww@sww.example.com
@@ -32,8 +41,8 @@ zuercher_wanderwege:
 
 berner_gremium:
   parent: berner_wanderwege
-  lft: 3
-  rgt: 4
+  lft: 5
+  rgt: 6
   name: Gremium
   type: Group::GremiumProjektgruppe
   email: berner_gremium@sww.example.com
@@ -41,8 +50,8 @@ berner_gremium:
 
 berner_vorstand:
   parent: berner_wanderwege
-  lft: 5
-  rgt: 6
+  lft: 7
+  rgt: 8
   name: Vorstand
   type: Group::Vorstand
   email: berner_vorstand@sww.example.com
@@ -50,8 +59,8 @@ berner_vorstand:
 
 berner_geschaeftsstelle:
   parent: berner_wanderwege
-  lft: 7
-  rgt: 8
+  lft: 9
+  rgt: 10
   name: Geschäftsstelle
   type: Group::Geschaeftsstelle
   email: berner_geschaeftsstelle@sww.example.com
@@ -59,8 +68,8 @@ berner_geschaeftsstelle:
 
 berner_mitglieder:
   parent: berner_wanderwege
-  lft: 9
-  rgt: 10
+  lft: 11
+  rgt: 12
   name: Mitglieder
   type: Group::Mitglieder
   email: berner_mitglieder@sww.example.com
@@ -68,8 +77,8 @@ berner_mitglieder:
 
 zuercher_gremium:
   parent: zuercher_wanderwege
-  lft: 13
-  rgt: 14
+  lft: 15
+  rgt: 16
   name: Gremium
   type: Group::GremiumProjektgruppe
   email: zuercher_gremium@sww.example.com
@@ -77,8 +86,8 @@ zuercher_gremium:
 
 zuercher_vorstand:
   parent: zuercher_wanderwege
-  lft: 15
-  rgt: 16
+  lft: 17
+  rgt: 18
   name: Vorstand
   type: Group::Vorstand
   email: zuercher_vorstand@sww.example.com
@@ -86,8 +95,8 @@ zuercher_vorstand:
 
 zuercher_geschaeftsstelle:
   parent: zuercher_wanderwege
-  lft: 17
-  rgt: 18
+  lft: 19
+  rgt: 20
   name: Geschäftsstelle
   type: Group::Geschaeftsstelle
   email: zuercher_geschaeftsstelle@sww.example.com
@@ -95,8 +104,8 @@ zuercher_geschaeftsstelle:
 
 zuercher_mitglieder:
   parent: zuercher_wanderwege
-  lft: 19
-  rgt: 20
+  lft: 21
+  rgt: 22
   name: Mitglieder
   type: Group::Mitglieder
   email: zuercher_mitglieder@sww.example.com

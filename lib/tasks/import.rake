@@ -6,6 +6,7 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 require Wagons.find('sww').root.join('db/seeds/support/data_migrator.rb')
+require Wagons.find('sww').root.join('db/seeds/support/data_migrator_cms.rb')
 
 # rubocop:disable Metrics/BlockLength, Metrics/LineLength
 namespace :import do
@@ -274,6 +275,30 @@ namespace :import do
         puts "\nnothing was imported due to errors. Please fix import source file and try again."
         raise ActiveRecord::Rollback
       end
+    end
+  end
+
+  desc 'Imports people from CMS'
+  task people_cms: [:environment] do
+    person_csv = Wagons.find('sww').root.join('db/seeds/production/people_cms.csv')
+    raise unless person_csv.exist?
+
+    CSV.parse(person_csv.read, headers: true, header_converters: :symbol, col_sep: ';').each do |import_row|
+      person_attrs = DataMigratorCms.person_attrs_from_import_row(import_row)
+
+      person_attrs[:primary_group_id] = DataMigratorCms.default_user_group_id
+
+      DataMigratorCms.assign_company!(person_attrs, import_row)
+
+      unless Person.exists?(email: person_attrs[:email])
+        DataMigratorCms.set_password!(person_attrs, import_row)
+      end
+
+      Person.upsert(person_attrs)
+
+      person = Person.find_by(sww_cms_profile_id: person_attrs[:sww_cms_profile_id])
+
+      DataMigratorCms.insert_role!(person)
     end
 
   end
