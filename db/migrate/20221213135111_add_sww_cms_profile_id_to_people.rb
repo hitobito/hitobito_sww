@@ -5,14 +5,8 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-module Sww::PersonResource
-  extend ActiveSupport::Concern
-
-  included do
-    attribute :title, :string
-    attribute :custom_salutation, :string
-    attribute :name_add_on, :string
-    attribute :magazin_abo_number, :integer
-    attribute :sww_cms_profile_id, :integer, writable: false
+class AddSwwCmsProfileIdToPeople < ActiveRecord::Migration[6.1]
+  def change
+    add_column :people, :sww_cms_profile_id, :integer, null: true
   end
 end
