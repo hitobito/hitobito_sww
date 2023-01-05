@@ -283,23 +283,49 @@ namespace :import do
     person_csv = Wagons.find('sww').root.join('db/seeds/production/people_cms.csv')
     raise unless person_csv.exist?
 
-    CSV.parse(person_csv.read, headers: true, header_converters: :symbol, col_sep: ';').each do |import_row|
-      person_attrs = DataMigratorCms.person_attrs_from_import_row(import_row)
+    duplicate_profile_ids = Person.group(:sww_cms_profile_id).count.select { |_k, v| v > 1 }.keys
 
-      person_attrs[:primary_group_id] = DataMigratorCms.default_user_group_id
-
-      DataMigratorCms.assign_company!(person_attrs, import_row)
-
-      unless Person.exists?(email: person_attrs[:email])
-        DataMigratorCms.set_password!(person_attrs, import_row)
-      end
-
-      Person.upsert(person_attrs)
-
-      person = Person.find_by(sww_cms_profile_id: person_attrs[:sww_cms_profile_id])
-
-      DataMigratorCms.insert_role!(person)
+    if duplicate_profile_ids.any?
+      raise ['Duplicate sww_cms_profile_id found in database:',
+             duplicate_profile_ids].flatten.join("\n")
     end
 
+    ActiveRecord::Base.transaction do
+      failed_import_rows = []
+
+      CSV.parse(person_csv.read, headers: true, header_converters: :symbol, col_sep: ';').each do |import_row|
+        person_attrs = DataMigratorCms.person_attrs_from_import_row(import_row)
+
+        person_attrs[:primary_group_id] = DataMigratorCms.default_user_group_id
+
+        DataMigratorCms.assign_company!(person_attrs, import_row)
+
+        unless Person.exists?(email: person_attrs[:email])
+          DataMigratorCms.set_password!(person_attrs, import_row)
+        end
+
+        Person.upsert(person_attrs)
+
+        person = Person.find_by(sww_cms_profile_id: person_attrs[:sww_cms_profile_id])
+
+        DataMigratorCms.insert_role!(person)
+
+      rescue ActiveRecord::RecordInvalid, ActiveRecord::StatementInvalid
+        failed_import_rows << import_row
+      end
+
+      total_count = CSV.parse(person_csv.read, headers: true).size
+      successful_count = total_count - failed_import_rows.size
+      puts "Successfully imported #{successful_count}/#{total_count} rows"
+      if failed_import_rows.any?
+        puts "FAILED ROWS:"
+        puts failed_import_rows.map { |row| ["first_name: #{row[:profile_prename]}",
+                                             "last_name: #{row[:profile_lastname]}",
+                                             "email: #{row[:profile_email]}",
+                                             "cms_profile_id: #{row[:profile_id]}"].join(', ') }.join("\n")
+        puts "\nnothing was imported due to errors. Please fix import source file and try again."
+        raise ActiveRecord::Rollback
+      end
+    end
   end
 end

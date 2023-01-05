@@ -334,6 +334,17 @@ describe "import:people_cms" do
         .join('spec/fixtures/files/people_cms.csv'))
     end
 
+    it "raises if sww_cms_profile_id duplicates are given" do
+      Fabricate(:person, sww_cms_profile_id: 42)
+      Fabricate(:person, sww_cms_profile_id: 42)
+      Fabricate(:person, sww_cms_profile_id: 1337)
+      Fabricate(:person, sww_cms_profile_id: 1337)
+
+      expect do
+        Rake::Task["import:people_fo"].invoke
+      end.to raise_error(RuntimeError, 'group id must be passed as first argument')
+    end
+
     it "imports people and companies from csv" do
       expect do
         Rake::Task["import:people_cms"].invoke

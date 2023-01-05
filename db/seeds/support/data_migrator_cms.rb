@@ -17,7 +17,6 @@ class DataMigratorCms
       person_hash[:first_name] = import_row[:profile_prename]
       person_hash[:last_name] = import_row[:profile_lastname]
       person_hash[:birthday] = import_row[:birthdate]
-      person_hash[:email] = import_row[:email] unless Person.exists?(email: import_row[:email])
       person_hash[:address] = [import_row[:profile_address],
                                import_row[:profile_streetnr]].join(' ')
       person_hash[:zip_code] = import_row[:profile_zip]
