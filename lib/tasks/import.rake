@@ -308,6 +308,8 @@ namespace :import do
 
         person = Person.find_by(sww_cms_profile_id: person_attrs[:sww_cms_profile_id])
 
+        person.confirm
+
         DataMigratorCms.insert_role!(person)
 
       rescue ActiveRecord::RecordInvalid, ActiveRecord::StatementInvalid
