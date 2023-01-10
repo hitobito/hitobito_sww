@@ -137,15 +137,6 @@ describe "import:people_fo" do
 
       expect(person.country).to eq('CH')
     end
-
-    it "assigns Schweiz as fallback country" do
-      Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
-
-      person = Person.find_by(alabus_id: 'bew31-axzcd1-jbhox23z-z-jtxn23wd1-k3g')
-      expect(person).to be_present
-
-      expect(person.country).to eq('CH')
-    end
   end
 
   context 'invalid people' do
@@ -323,6 +314,121 @@ describe 'import:invoices_fo' do
         Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
       end.to_not change { Invoice.count }
 
+    end
+  end
+end
+
+describe "import:people_cms" do
+
+  let!(:benutzerkonten_group) { groups(:benutzerkonten) }
+
+  after do
+    Rake::Task["import:people_cms"].reenable
+  end
+
+  context 'valid people' do
+    before do
+      allow_any_instance_of(Pathname).to receive(:join)
+        .and_return(Wagons.find('sww')
+        .root
+        .join('spec/fixtures/files/people_cms.csv'))
+    end
+
+    it "raises if sww_cms_profile_id duplicates are given" do
+      Fabricate(:person, sww_cms_profile_id: 42)
+      Fabricate(:person, sww_cms_profile_id: 42)
+      Fabricate(:person, sww_cms_profile_id: 1337)
+      Fabricate(:person, sww_cms_profile_id: 1337)
+
+      expect do
+        Rake::Task["import:people_fo"].invoke
+      end.to raise_error(RuntimeError, 'group id must be passed as first argument')
+    end
+
+    it "imports people and companies from csv" do
+      expect do
+        Rake::Task["import:people_cms"].invoke
+      end.to change { Person.count }.by(2)
+
+      person = Person.find_by(sww_cms_profile_id: 1)
+      expect(person).to be_present
+
+      expect(person.first_name).to eq('Max')
+      expect(person.last_name).to eq('Muster')
+      expect(person.address).to eq('Musterweg 12')
+      expect(person.zip_code).to eq('3000')
+      expect(person.town).to eq('Bern')
+      expect(person.country).to eq('DE')
+      expect(person.email).to eq('max.muster@example.com')
+      expect(person.language).to eq('fr')
+      expect(person.valid_password?('great_password')).to eq(true)
+
+      expect(person.roles.with_deleted.count).to eq(1)
+
+      role = Group::Benutzerkonten::Benutzerkonto.find_by(person_id: person.id,
+                                                          group_id: benutzerkonten_group.id)
+
+      expect(role).to be_present
+
+      company = Person.find_by(sww_cms_profile_id: 42)
+      expect(company).to be_present
+      expect(company.company_name).to eq('Hitobito AG')
+      expect(company.address).to eq('Belpstrasse 37')
+      expect(company.zip_code).to eq('3007')
+      expect(company.town).to eq('Bern')
+      expect(company.email).to eq('info@hitobito.com')
+      expect(company.encrypted_password).to be_nil
+
+      role = Group::Benutzerkonten::Benutzerkonto.find_by(person_id: company.id, group_id: benutzerkonten_group)
+
+      expect(role).to be_present
+    end
+
+    it "assigns Schweiz as fallback country" do
+      Rake::Task["import:people_cms"].invoke
+
+      person = Person.find_by(sww_cms_profile_id: 42)
+      expect(person).to be_present
+
+      expect(person.country).to eq('CH')
+    end
+
+    it "assigns Deutsch as fallback language" do
+      Rake::Task["import:people_cms"].invoke
+
+      person = Person.find_by(sww_cms_profile_id: 42)
+      expect(person).to be_present
+
+      expect(person.language).to eq('de')
+    end
+
+    it "updates existing person except password and creates role" do
+      existing = Fabricate(:person, first_name: 'Bob', password: 'old_password', password_confirmation: 'old_password', email: 'max.muster@example.com')
+
+      Fabricate(Group::Mitglieder::Aktivmitglied.to_s, person: existing, group: groups(:berner_mitglieder))
+
+      expect do
+        Rake::Task["import:people_cms"].invoke
+      end.to change { existing.roles.count }.by(1)
+
+      existing.reload
+
+      expect(existing.first_name).to eq('Max')
+      expect(existing.last_name).to eq('Muster')
+      expect(existing.address).to eq('Musterweg 12')
+      expect(existing.zip_code).to eq('3000')
+      expect(existing.town).to eq('Bern')
+      expect(existing.country).to eq('DE')
+      expect(existing.email).to eq('max.muster@example.com')
+      expect(existing.language).to eq('fr')
+      expect(existing.valid_password?('old_password')).to eq(true)
+      expect(existing.valid_password?('great_password')).to eq(false)
+
+      expect(existing.roles.size).to eq(2)
+
+      role = Group::Benutzerkonten::Benutzerkonto.find_by(person_id: existing.id, group_id: benutzerkonten_group)
+
+      expect(role).to be_present
     end
   end
 end
