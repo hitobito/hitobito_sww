@@ -34,10 +34,6 @@ class DataMigratorCms
       person_hash
     end
 
-    def person_language(import_row)
-      Person::LANGUAGES.invert[import_row[:language]]
-    end
-
     def set_password!(person_hash, import_row)
       password = import_row[:profile_password]
       
@@ -66,53 +62,6 @@ class DataMigratorCms
       }
 
       Role.upsert(attrs) unless Role.exists?(attrs.except(:created_at, :updated_at))
-    end
-
-    def insert_phone_numbers!(person, import_row)
-      attrs = [
-        {
-          contactable_id: person.id,
-          contactable_type: Person.sti_name,
-          label: person.company? ? 'Arbeit' : 'Privat',
-          number: import_row[:mainphone]
-        },
-        {
-          contactable_id: person.id,
-          contactable_type: Person.sti_name,
-          label: 'Mobil',
-          number: import_row[:mobile]
-        }
-      ].filter { |attr_row| attr_row[:number].present? && !PhoneNumber.exists?(attr_row) }
-
-      PhoneNumber.upsert_all(attrs) unless attrs.empty?
-    end
-
-    def insert_social_account!(person, import_row)
-      return unless import_row[:web]
-
-      attrs = {
-        contactable_id: person.id,
-        contactable_type: Person.sti_name,
-        label: 'Webseite',
-        name: import_row[:web]
-      }
-
-      SocialAccount.upsert(attrs) unless SocialAccount.exists?(attrs)
-    end
-
-    def insert_note!(person, import_row)
-      return unless import_row[:primarynote].present?
-
-      attrs = {
-        subject_id: person.id,
-        author_id: person.id,
-        subject_type: Person.sti_name,
-        text: import_row[:primarynote],
-        created_at: Time.zone.now,
-        updated_at: Time.zone.now
-      }
-
-      Note.upsert(attrs) unless Note.exists?(attrs.except(:created_at, :updated_at))
     end
   end
 end
