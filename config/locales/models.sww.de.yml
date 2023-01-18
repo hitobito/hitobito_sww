@@ -138,3 +138,8 @@ de:
     messages:
       cannot_be_later_than_today: kann nicht später als heute sein
       cannot_be_later_than_deleted_at: muss vor oder am selben Tag wie der Austritt sein
+
+  event:
+    application_market:
+      popover_waiting_list:
+        waiting_list_info: Setze diese Person auf die Warteliste.

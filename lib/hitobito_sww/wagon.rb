@@ -22,6 +22,7 @@ module HitobitoSww
 
     config.to_prepare do
       # extend application classes here
+      Event.include Sww::Event
       GroupSetting.include Sww::GroupSetting
       Group.include Sww::Group
       Person.include Sww::Person
