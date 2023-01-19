@@ -16,11 +16,6 @@ class SwwPersonSeeder < PersonSeeder
     else 1
     end
   end
-
-  def standard_attributes(first_name, last_name)
-    super.merge(member_number: rand(99_999))
-  end
-
 end
 
 puzzlers = [

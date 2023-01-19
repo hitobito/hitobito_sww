@@ -13,7 +13,7 @@ class DataMigrator
     def person_attrs_from_import_row(import_row)
       person_hash = {}
       person_hash[:alabus_id] = import_row[:id]
-      person_hash[:member_number] = import_row[:membernumber]
+      person_hash[:manual_member_number] = import_row[:membernumber]
       person_hash[:first_name] = import_row[:firstname]
       person_hash[:last_name] = import_row[:lastname]
       person_hash[:birthday] = import_row[:birthdate]

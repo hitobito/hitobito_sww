@@ -82,7 +82,7 @@ describe "import:people_fo" do
       company = Person.find_by(alabus_id: 'haw31-axzcd1-jb44x23z-z-jtxn23wd1-k42')
       expect(company).to be_present
       expect(company.company_name).to eq('Hitobito AG')
-      expect(company.member_number).to eq(42)
+      expect(company.manual_member_number).to eq(42)
     end
 
     it "imports mail as additional mail if already taken" do

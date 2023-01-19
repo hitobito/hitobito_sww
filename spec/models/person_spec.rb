@@ -14,48 +14,57 @@ describe Person do
       expect(Person::PUBLIC_ATTRS).to include(a)
     end
 
-    %I[member_number alabus_id].each do |a|
+    %I[member_number manual_member_number alabus_id].each do |a|
       expect(Person::INTERNAL_ATTRS).to include(a)
     end
   end
 
-  describe 'member number' do
-    before do
-      Person.destroy_all
-      Fabricate(:person)
-      Fabricate(:person)
+  it '::MEMBER_NUMBER_CALCULATION_OFFSET is correct' do
+    expect(described_class::MEMBER_NUMBER_CALCULATION_OFFSET).to eq 300_000
+  end
+
+  describe '#manual_member_number' do
+    it 'should validate uniqueness' do
+      _person = Fabricate(:person, manual_member_number: 42)
+      duplicate = Fabricate.build(:person, manual_member_number: 42)
+      expect(duplicate).not_to be_valid
+      expect(duplicate.errors[:manual_member_number]).to include("ist bereits vergeben")
     end
 
-    it 'sets incremented number' do
-      person = Person.new(first_name: 'Klaus')
+    it 'should validate value' do
+      person = Fabricate.build(:person, manual_member_number: described_class::MEMBER_NUMBER_CALCULATION_OFFSET)
+      expect(person).not_to be_valid
 
-      expect(person.member_number).to be_nil
-
-      person.save!
-      person.reload
-
-      expect(person.member_number).to eq(300_002)
-    end
-
-    it 'does not overwrite manually set member number' do
-      person = Person.new(first_name: 'Klaus', member_number: 1)
-
-      expect(person.member_number).to eq(1)
-
-      person.save!
-
-      expect(person.member_number).to eq(1)
-    end
-
-    it 'has to be unique if bigger than init value for new records' do
-      person = Person.new(first_name: 'Klaus', member_number: 300_000)
-
-      expect(person).to_not be_valid
-
-      person.member_number = 300_002
-
+      person.manual_member_number -= 1
       expect(person).to be_valid
+
+      person.manual_member_number = nil
+      expect(person).to be_valid
+    end
+
+    it 'can be blank' do
+      person = Fabricate.build(:person, manual_member_number: nil)
+      person.validate
+      expect(person.errors[:manual_member_number]).to be_empty
     end
   end
 
+  describe '#member_number' do
+    it 'returns number calculated from #id and offset' do
+      person = Fabricate(:person)
+      expect(person.member_number).to eq person.id + described_class::MEMBER_NUMBER_CALCULATION_OFFSET
+    end
+
+    it 'returns nil for unpersisted instance' do
+      person = Fabricate.build(:person)
+      expect(person).not_to be_persisted
+      expect(person.member_number).to eq nil
+    end
+
+    it 'returns #manual_member_number if present' do
+      manual_member_number = 42
+      person = Fabricate.build(:person, manual_member_number: manual_member_number)
+      expect(person.member_number).to eq manual_member_number
+    end
+  end
 end

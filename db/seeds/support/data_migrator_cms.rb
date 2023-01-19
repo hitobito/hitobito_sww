@@ -13,7 +13,7 @@ class DataMigratorCms
     def person_attrs_from_import_row(import_row)
       person_hash = {}
       person_hash[:sww_cms_profile_id] = import_row[:profile_id]
-      person_hash[:member_number] = import_row[:membernumber]
+      person_hash[:manual_member_number] = import_row[:membernumber]
       person_hash[:first_name] = import_row[:profile_prename]
       person_hash[:last_name] = import_row[:profile_lastname]
       person_hash[:birthday] = import_row[:birthdate]

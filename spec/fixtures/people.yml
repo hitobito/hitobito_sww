@@ -1,4 +1,4 @@
- #  Copyright (c) 2012-2022, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2012-2022, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -10,7 +10,7 @@ berner_wanderer:
   town: Bern
   additional_information: bla bla
   contact_data_visible: true
-  member_number: 42421
+  manual_member_number: 42421
   sww_cms_profile_id: 1337
 
 zuercher_wanderer:
@@ -20,18 +20,8 @@ zuercher_wanderer:
   town: Zürich
   zip_code: 8001
   address: Belpstrasse 37
-  member_number: 42431
+  manual_member_number: 42431
   sww_cms_profile_id: 1001
-
-zuercher_leiter:
-  first_name: Charlie
-  last_name: Baz
-  email: charlie@example.com
-  town: Zürich
-  zip_code: 8001
-  address: Bahnsteig 37
-  member_number: 42441
-  sww_cms_profile_id: 42
 
 zuercher_leiter:
   first_name: Charlie

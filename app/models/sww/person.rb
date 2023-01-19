@@ -8,40 +8,23 @@
 module Sww::Person
   extend ActiveSupport::Concern
 
+  MEMBER_NUMBER_CALCULATION_OFFSET = 300_000
+
   included do
     add_public_attrs = [:custom_salutation, :magazin_abo_number, :title, :name_add_on,
                         :sww_cms_profile_id]
     Person::PUBLIC_ATTRS.push(*add_public_attrs)
-    Person::INTERNAL_ATTRS << :alabus_id << :member_number
+    Person::INTERNAL_ATTRS << :alabus_id << :member_number << :manual_member_number
 
-    # member number is already present in legacy system (alabus)
-    # and is imported
-    # start numbering from this value for people created in hitobito
-    INIT_MEMBER_NUMBER = 300_000
-
-    before_validation :set_incremented_member_number,
-                      unless: :member_number
-
-    validates :member_number,
-              uniqueness: true,
-              if: -> { member_number >= INIT_MEMBER_NUMBER }
-
-    attr_readonly :member_number
     attr_readonly :alabus_id
+    
+    validates :manual_member_number,
+              uniqueness: true,
+              allow_nil: true,
+              numericality: { less_than: MEMBER_NUMBER_CALCULATION_OFFSET }
   end
 
-  private
-
-  def set_incremented_member_number
-    self.member_number = next_member_number
-  end
-
-  def next_member_number
-    max_nr = Person.maximum(:member_number) || 1
-    if max_nr < INIT_MEMBER_NUMBER
-      INIT_MEMBER_NUMBER
-    else
-      max_nr.succ
-    end
+  def member_number
+    manual_member_number || id &.+(MEMBER_NUMBER_CALCULATION_OFFSET)
   end
 end
