@@ -51,8 +51,6 @@ module HitobitoSww
       Groups::SelfRegistrationController.prepend Sww::Groups::SelfRegistrationController
 
       JsonApiController.include Sww::JsonApiController
-      JsonApi::PeopleController.prepend Sww::JsonApi::PeopleController
-      # TODO: remove method after core branch `feature/json-api-finis` is merged
 
       PersonResource.include Sww::PersonResource
       Oauth::ProfilesController.prepend Sww::Oauth::ProfilesController
