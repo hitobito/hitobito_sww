@@ -15,6 +15,11 @@ it:
         many: ''
         other: ''
 
+      group/benutzerkonten:
+        one: ''
+        many: ''
+        other: ''
+
       group/fachorganisation:
         one: ''
         many: ''
@@ -50,6 +55,11 @@ it:
       group/schweizer_wanderwege/mitarbeitende:
         one: ""
       group/schweizer_wanderwege/support:
+        one: ""
+
+      group/benutzerkonten/benutzerkonto:
+        one: ""
+      group/benutzerkonten/verwalter:
         one: ""
 
       group/kontakte/kontakt:
@@ -136,3 +146,8 @@ it:
     messages:
       cannot_be_later_than_today: ""
       cannot_be_later_than_deleted_at: ""
+
+  event:
+    application_market:
+      popover_waiting_list:
+        waiting_list_info: ""

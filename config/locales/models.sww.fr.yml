@@ -15,6 +15,11 @@ fr:
         many: Suisse Rando
         other: Suisse Rando
 
+      group/benutzerkonten:
+        one: ''
+        many: ''
+        other: ''
+
       group/fachorganisation:
         one: Associations de randonnée
         many: Associations de randonnée
@@ -51,6 +56,11 @@ fr:
         one: Collaborateurs
       group/schweizer_wanderwege/support:
         one: Support
+
+      group/benutzerkonten/benutzerkonto:
+        one: ""
+      group/benutzerkonten/verwalter:
+        one: ""
 
       group/kontakte/kontakt:
         one: Contact
@@ -136,3 +146,8 @@ fr:
     messages:
       cannot_be_later_than_today: ne peut pas être plus tard qu'aujourd'hui
       cannot_be_later_than_deleted_at: doit avoir lieu avant ou le même jour que la sortie
+
+  event:
+    application_market:
+      popover_waiting_list:
+        waiting_list_info: ""
