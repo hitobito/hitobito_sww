@@ -14,5 +14,11 @@ module Sww::PersonResource
     attribute :name_add_on, :string
     attribute :magazin_abo_number, :integer
     attribute :sww_cms_profile_id, :integer, writable: false
+    attribute :updated_at, :datetime, writable: false
+
+    belongs_to :updated_by,
+               foreign_key: :updater_id,
+               resource: PersonResource,
+               writable: false
   end
 end

@@ -22,6 +22,8 @@ module Sww::Person
               uniqueness: true,
               allow_nil: true,
               numericality: { less_than: MEMBER_NUMBER_CALCULATION_OFFSET }
+
+    belongs_to :updated_by, class_name: 'Person', foreign_key: :updater_id
   end
 
   def member_number

@@ -40,6 +40,8 @@ module HitobitoSww
       TagListsHelper.include Sww::TagListsHelper
       StandardFormBuilder.include Sww::StandardFormBuilder
 
+      JsonApi::PeopleController.prepend Sww::JsonApi::PeopleController # TODO: remove method after core branch `feature/json-api-finis` is merged
+
       PersonResource.include Sww::PersonResource
       Oauth::ProfilesController.prepend Sww::Oauth::ProfilesController
       PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
