@@ -1,0 +1,20 @@
+# frozen_string_literal: true
+
+#  Copyright (c) 2023, Schweizer Wanderwege. This file is part of
+#  hitobito and licensed under the Affero General Public License version 3
+#  or later. See the COPYING file at the top-level directory or at
+#  https://github.com/hitobito/hitobito.
+
+permitted_top_layer_token:
+  layer: schweizer_wanderwege
+  name: Permitted
+  description: MyText
+  token: PermittedToken
+  last_access: 2018-11-01 11:11:11
+  permission: layer_and_below_full
+  people: true
+  groups: true
+  events: true
+  invoices: true
+  event_participations: true
+  mailing_lists: true
