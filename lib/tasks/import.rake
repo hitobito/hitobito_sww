@@ -8,7 +8,7 @@
 require Wagons.find('sww').root.join('db/seeds/support/data_migrator.rb')
 require Wagons.find('sww').root.join('db/seeds/support/data_migrator_cms.rb')
 
-# rubocop:disable Metrics/BlockLength, Metrics/LineLength
+# rubocop:disable Metrics/BlockLength, Metrics/LineLength, Rails/SkipsModelValidations
 namespace :import do
   desc 'Import people'
   task people_sww: [:environment] do
@@ -50,7 +50,7 @@ namespace :import do
       'Kombi-Abo': { name: 'abo:kombi' },
       'Newsletter': { name: 'Newsletter' }
     }
-    tag_mappings.values.each do |tag|
+    tag_mappings.each_value do |tag|
       ActsAsTaggableOn::Tag.upsert(name: tag[:name])
 
       tag.merge!(id: ActsAsTaggableOn::Tag.find_by(name: tag[:name]).id)
@@ -148,8 +148,8 @@ namespace :import do
           ActsAsTaggableOn::Tagging.upsert(tagging_attrs.merge(tag_id: tag.id))
         end
 
-        [:abo1, :primarycommchannel].each do |tag|
-          tag_id = tag_mappings[import_row[tag]&.to_sym].try(:[], :id)
+        [:abo1, :primarycommchannel].each do |tag_col|
+          tag_id = tag_mappings[import_row[tag_col]&.to_sym].try(:[], :id)
 
           next unless tag_id
 
@@ -170,11 +170,13 @@ namespace :import do
       successful_count = total_count - failed_import_rows.size
       puts "Successfully imported #{successful_count}/#{total_count} rows"
       if failed_import_rows.any?
-        puts "FAILED ROWS:"
-        puts failed_import_rows.map { |row| ["first_name: #{row[:firstname]}",
-                                             "last_name: #{row[:lastname]}",
-                                             "email: #{row[:email]}",
-                                             "alabus_id: #{row[:id]}"].join(', ') }.join("\n")
+        puts 'FAILED ROWS:'
+        puts failed_import_rows.map { |row|
+               ["first_name: #{row[:firstname]}",
+                "last_name: #{row[:lastname]}",
+                "email: #{row[:email]}",
+                "alabus_id: #{row[:id]}"].join(', ')
+             }.join("\n")
         puts "\nnothing was imported due to errors. Please fix import source file and try again."
         raise ActiveRecord::Rollback
       end
@@ -204,14 +206,14 @@ namespace :import do
           next
         end
 
-        unless import_row[:id].present?
+        if import_row[:id].blank?
           failed_import_rows << import_row.to_h.merge(failing_note: :'id not present')
           next
         end
 
         person = Person.find_by(alabus_id: import_row[:id])
 
-        unless person.present?
+        if person.blank?
           failed_import_rows << import_row.to_h.merge(failing_note: :'person not found')
           next
         end
@@ -239,7 +241,7 @@ namespace :import do
 
         invoice.reload
 
-        unless invoice.present?
+        if invoice.blank?
           failed_import_rows << import_row.to_h.merge(failing_note: :'invoice not found after reload')
         end
 
@@ -262,14 +264,14 @@ namespace :import do
       end
 
       if failed_import_rows.any?
-        puts "FAILED ROWS:"
+        puts 'FAILED ROWS:'
         puts failed_import_rows.map { |row|
           ["esr_number: #{row[:esr]}",
            "sent_at: #{row[:billdate]}",
            "created_at: #{row[:createdon]}",
            "alabus_id: #{row[:id]}",
            "amount: #{row[:amount]}",
-           "failing_note: #{row[:failing_note].to_s}"].join(', ')
+           "failing_note: #{row[:failing_note]}"].join(', ')
         }.join("\n")
 
         puts "\nnothing was imported due to errors. Please fix import source file and try again."
@@ -320,14 +322,17 @@ namespace :import do
       successful_count = total_count - failed_import_rows.size
       puts "Successfully imported #{successful_count}/#{total_count} rows"
       if failed_import_rows.any?
-        puts "FAILED ROWS:"
-        puts failed_import_rows.map { |row| ["first_name: #{row[:profile_prename]}",
-                                             "last_name: #{row[:profile_lastname]}",
-                                             "email: #{row[:profile_email]}",
-                                             "cms_profile_id: #{row[:profile_id]}"].join(', ') }.join("\n")
+        puts 'FAILED ROWS:'
+        puts failed_import_rows.map { |row|
+          ["first_name: #{row[:profile_prename]}",
+           "last_name: #{row[:profile_lastname]}",
+           "email: #{row[:profile_email]}",
+           "cms_profile_id: #{row[:profile_id]}"].join(', ')
+        }.join("\n")
         puts "\nnothing was imported due to errors. Please fix import source file and try again."
         raise ActiveRecord::Rollback
       end
     end
   end
 end
+# rubocop:enable Metrics/BlockLength, Metrics/LineLength, Rails/SkipsModelValidations
