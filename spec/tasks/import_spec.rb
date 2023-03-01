@@ -173,7 +173,9 @@ describe 'import:invoices_fo' do
         .root
         .join('spec/fixtures/files/invoices_fo.csv'))
 
-      groups(:berner_wanderwege).create_invoice_config!
+      groups(:berner_wanderwege)
+        .tap { |g| g.send :create_invoice_config }
+        .save!
     end
 
     it "raises if given no argument" do
