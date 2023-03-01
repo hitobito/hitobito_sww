@@ -289,7 +289,7 @@ namespace :import do
 
     if duplicate_profile_ids.any?
       raise ['Duplicate sww_cms_profile_id found in database:',
-             duplicate_profile_ids].flatten.join("\n")
+             duplicate_profile_ids.sort].flatten.join("\n")
     end
 
     ActiveRecord::Base.transaction do
