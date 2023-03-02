@@ -301,7 +301,7 @@ describe 'import:invoices_fo' do
       expect(Invoice).to receive(:create!).with(hash_including(recipient_id: recipient.id)).exactly(:once).and_call_original
       expect(after_reload_gone_double).to receive(:update!)
       expect(after_reload_gone_double).to receive(:reload)
-      expect(after_reload_gone_double).to receive(:present?).and_return(false)
+      expect(after_reload_gone_double).to receive(:blank?).and_return(true)
 
       expect do
         Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
