@@ -23,6 +23,12 @@ de:
       membership_card_caption: Mitgliederausweis mit drucken
 
   invoices:
+    export:
+      tabular:
+        evaluation_list:
+          daterange_label: Kriterium (von-bis)
+          print_date: Druckdatum
+          printed_by: Gedruckt von
     form_sww:
       membership_card_caption: Mitgliederausweis mit drucken
 

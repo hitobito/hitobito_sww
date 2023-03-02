@@ -21,6 +21,7 @@ module HitobitoSww
     ]
 
     config.to_prepare do
+      # rubocop:disable Metrics/LineLength
       # extend application classes here
       Event.include Sww::Event
       GroupSetting.include Sww::GroupSetting
@@ -33,6 +34,7 @@ module HitobitoSww
       Export::Pdf::Invoice::ReceiverAddress.prepend Sww::Export::Pdf::Invoice::ReceiverAddress
       Export::Pdf::Invoice::InvoiceInformation.prepend Sww::Export::Pdf::Invoice::InvoiceInformation
       Export::Pdf::Invoice::Articles.prepend Sww::Export::Pdf::Invoice::Articles
+      Export::Tabular::Invoices::EvaluationList.include Sww::Export::Tabular::Invoices::EvaluationList
 
       Export::Tabular::People::PeopleFull.prepend Sww::Export::Tabular::People::PeopleFull
       Export::Pdf::Messages::Letter.prepend Sww::Export::Pdf::Messages::Letter
@@ -41,6 +43,8 @@ module HitobitoSww
 
       TagListsHelper.include Sww::TagListsHelper
       StandardFormBuilder.include Sww::StandardFormBuilder
+
+      Invoices::EvaluationsController.prepend Sww::Invoices::EvaluationsController
 
       JsonApiController.include Sww::JsonApiController
       JsonApi::PeopleController.prepend Sww::JsonApi::PeopleController
@@ -63,6 +67,7 @@ module HitobitoSww
                                                      :membership_expires_on]
       MessagesController::PERMITTED_INVOICE_LETTER_ATTRS += [:membership_card,
                                                              :membership_expires_on]
+      # rubocop:enable Metrics/LineLength
     end
 
     initializer 'sww.add_settings' do |_app|
