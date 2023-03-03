@@ -11,9 +11,7 @@ RSpec.describe RoleResource, type: :resource do
   describe 'serialization' do
     let!(:role) { roles(:zuercher_mitglied) }
 
-    before do
-      params[:filter] = { id: role.id }
-    end
+    before { params[:filter] = { id: role.id } }
 
     it 'works' do
       render
