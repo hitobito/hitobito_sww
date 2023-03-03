@@ -15,8 +15,12 @@ module Sww::PersonResource
     attribute :magazin_abo_number, :integer
     attribute :sww_cms_profile_id, :integer, writable: false
     attribute :updated_at, :datetime, writable: false
-    attribute :layer_group_name, :string, writable: false do
+
+    extra_attribute :layer_group_name, :string, writable: false do
       @object.layer_group&.display_name
+    end
+    on_extra_attribute :layer_group_name do |scope|
+      scope.includes(:primary_group)
     end
 
     belongs_to :updated_by,

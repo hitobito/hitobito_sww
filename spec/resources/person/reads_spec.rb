@@ -32,8 +32,7 @@ RSpec.describe PersonResource, type: :resource do
   end
 
   describe 'serialization' do
-    let!(:person) { Fabricate(:person, birthday: Date.today, gender: 'm', primary_group_id: groups(:berner_mitglieder).id) }
-
+    let!(:person) { Fabricate(:person, birthday: Date.today, gender: 'm') }
     before { params[:filter] = { id: person.id } }
 
     def sww_simple_attrs
@@ -52,12 +51,6 @@ RSpec.describe PersonResource, type: :resource do
       ]
     end
 
-    def sww_custom_attrs
-      [
-        :layer_group_name
-      ]
-    end
-
     it 'works' do
       set_ability { can :manage, :all }
 
@@ -65,7 +58,7 @@ RSpec.describe PersonResource, type: :resource do
 
       data = jsonapi_data[0]
 
-      expect(data.attributes.symbolize_keys.keys).to include *(sww_custom_attrs + sww_datetime_attrs + sww_datetime_attrs)
+      expect(data.attributes.symbolize_keys.keys).to include *(sww_simple_attrs + sww_datetime_attrs)
 
       expect(data.id).to eq(person.id)
       expect(data.jsonapi_type).to eq('people')
@@ -77,8 +70,30 @@ RSpec.describe PersonResource, type: :resource do
       sww_datetime_attrs.each do |attr|
         expect(Time.zone.parse data.public_send(attr)).to eq(person.public_send(attr))
       end
+    end
+  end
 
-      expect(data.layer_group_name).to eq person.layer_group.display_name
+  context 'extra attributes' do
+    let!(:person) { Fabricate(:person, birthday: Date.today, gender: 'm', primary_group_id: groups(:berner_mitglieder).id) }
+
+    before do
+      params[:filter] = { id: person.id }
+      params[:extra_fields] = { people: [:layer_group_name] }
+    end
+
+    context 'layer_group_name' do
+      it 'works' do
+        set_ability { can :manage, :all }
+
+        render
+
+        data = jsonapi_data[0]
+
+        expect(data.attributes.symbolize_keys.keys).to include :layer_group_name
+        expect(data.id).to eq(person.id)
+        expect(data.jsonapi_type).to eq('people')
+        expect(data.layer_group_name).to eq person.layer_group.display_name
+      end
     end
   end
 
