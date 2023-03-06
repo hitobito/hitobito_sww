@@ -37,9 +37,12 @@ module HitobitoSww
       Export::Tabular::People::PeopleFull.prepend Sww::Export::Tabular::People::PeopleFull
       Export::Pdf::Messages::Letter.prepend Sww::Export::Pdf::Messages::Letter
 
+      PaperTrail::VersionDecorator.prepend Sww::PaperTrail::VersionDecorator
+
       TagListsHelper.include Sww::TagListsHelper
       StandardFormBuilder.include Sww::StandardFormBuilder
 
+      JsonApiController.include Sww::JsonApiController
       JsonApi::PeopleController.prepend Sww::JsonApi::PeopleController
       # TODO: remove method after core branch `feature/json-api-finis` is merged
 
