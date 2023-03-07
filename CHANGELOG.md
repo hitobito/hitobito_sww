@@ -2,6 +2,7 @@
 
 ## Version 1.28
 - Personen mit Support Rolle im Dachverband können sämtliche Abos in allen Gruppen sehen (hitobito_sww#94)
+- Personen mit Support Rolle im Dachverband können sämtliche Rechnungen und Komponenten des Rechnungsmoduls in allen Ebenen verwalten (hitobito_sww#30)
 
 ## Version 1.28
 - Drucken eines Mitgliederausweises mittels Sammelrechnung (hitobito_sww#63)

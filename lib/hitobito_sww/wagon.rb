@@ -23,6 +23,8 @@ module HitobitoSww
     config.to_prepare do
       # rubocop:disable Metrics/LineLength
       # extend application classes here
+      InvoiceAbility.include Sww::InvoiceAbility
+
       Event.include Sww::Event
       GroupSetting.include Sww::GroupSetting
       Group.include Sww::Group
@@ -71,8 +73,8 @@ module HitobitoSww
                                                      :membership_expires_on]
       MessagesController::PERMITTED_INVOICE_LETTER_ATTRS += [:membership_card,
                                                              :membership_expires_on]
-
-      Role::Permissions << :support
+      Role::Permissions << :support << :complete_finance
+      # rubocop:enable Metrics/LineLength
     end
 
     initializer 'sww.add_settings' do |_app|
