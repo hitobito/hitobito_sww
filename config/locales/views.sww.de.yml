@@ -29,9 +29,13 @@ de:
           daterange_label: Kriterium (von-bis)
           print_date: Druckdatum
           printed_by: Gedruckt von
-    form_sww:
+    form:
       membership_card_caption: Mitgliederausweis mit drucken
 
     evaluations:
       show:
         excess: Spenden
+
+    pdf:
+      subtotal: Subtotal
+      donation: Spende

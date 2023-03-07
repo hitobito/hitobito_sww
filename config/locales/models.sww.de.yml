@@ -119,6 +119,7 @@ de:
         membership_card: Mitgliederausweis
         membership_expires_on: Mitgliedschaft gültig bis
       invoice:
+        hide_total: Spende
         membership_card: Mitgliederausweis
         membership_expires_on: Mitgliedschaft gültig bis
       group_setting:

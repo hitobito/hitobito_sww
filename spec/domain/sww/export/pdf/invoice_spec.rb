@@ -22,6 +22,10 @@ describe Export::Pdf::Invoice do
     end
   end
 
+  def rows_at_position(pos)
+    text_with_position.select { _2 == pos }
+  end
+
   context 'rendered left' do
     before do
       invoice.group.settings(:messages_letter).address_position = :left
@@ -177,7 +181,34 @@ describe Export::Pdf::Invoice do
     expect(text_with_position).to include([57, 497, "Rechnungsnummer: 636980692-2"])
   end
 
-  it 'renders invoice due at bellow articles table' do
+  it 'renders invoice due at below articles table' do
     expect(text_with_position).to include([57, 468, "Fällig bis:      01.08.2022"])
+  end
+
+  context do
+    let(:invoice) do
+      invoices(:invoice).tap { InvoiceItem.create(invoice: _1, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10) }
+    end
+
+    it 'renders total when hide_total=false' do
+      invoice.hide_total = false
+      expect(rows_at_position(454)).to eq [
+        [431, 454, "Gesamtbetrag"],
+        [501, 454, "11.00 CHF"]
+      ]
+      full_text = subject.show_text.join("\n")
+      expect(full_text).not_to include("Subtotal")
+      expect(full_text).not_to include("Spende")
+    end
+
+    it 'renders subtotal and donation row when hide_total=true' do
+      invoice.hide_total = true
+      expect(rows_at_position(454)).to eq [
+        [431, 454, "Subtotal"],
+        [501, 454, "11.00 CHF"]
+      ]
+      expect(rows_at_position(434)).to eq [[431, 434, "Spende"]]
+      expect(rows_at_position(415)).to eq [[431, 415, "Gesamtbetrag"]]
+    end
   end
 end
