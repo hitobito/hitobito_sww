@@ -8,8 +8,6 @@
 require 'spec_helper'
 
 RSpec.describe PersonResource, type: :resource do
-  before { Person.delete_all }
-
   # TODO: remove method after core branch `feature/json-api-finis` is merged
   def set_ability(&block)
     ability = Class.new do
@@ -35,15 +33,15 @@ RSpec.describe PersonResource, type: :resource do
 
   describe 'serialization' do
     let!(:person) { Fabricate(:person, birthday: Date.today, gender: 'm') }
+    before { params[:filter] = { id: person.id } }
 
-    def serialized_sww_attrs
+    def sww_simple_attrs
       [
         :title,
         :custom_salutation,
         :name_add_on,
         :magazin_abo_number,
-        :sww_cms_profile_id,
-        :updated_at
+        :sww_cms_profile_id
       ]
     end
 
@@ -60,17 +58,41 @@ RSpec.describe PersonResource, type: :resource do
 
       data = jsonapi_data[0]
 
-      expect(data.attributes.symbolize_keys.keys).to include *serialized_sww_attrs
+      expect(data.attributes.symbolize_keys.keys).to include *(sww_simple_attrs + sww_datetime_attrs)
 
       expect(data.id).to eq(person.id)
       expect(data.jsonapi_type).to eq('people')
 
-      (serialized_sww_attrs - sww_datetime_attrs).each do |attr|
+      sww_simple_attrs.each do |attr|
         expect(data.public_send(attr)).to eq(person.public_send(attr))
       end
 
       sww_datetime_attrs.each do |attr|
         expect(Time.zone.parse data.public_send(attr)).to eq(person.public_send(attr))
+      end
+    end
+  end
+
+  context 'extra attributes' do
+    let!(:person) { Fabricate(:person, birthday: Date.today, gender: 'm', primary_group_id: groups(:berner_mitglieder).id) }
+
+    before do
+      params[:filter] = { id: person.id }
+      params[:extra_fields] = { people: [:layer_group_name] }
+    end
+
+    context 'layer_group_name' do
+      it 'works' do
+        set_ability { can :manage, :all }
+
+        render
+
+        data = jsonapi_data[0]
+
+        expect(data.attributes.symbolize_keys.keys).to include :layer_group_name
+        expect(data.id).to eq(person.id)
+        expect(data.jsonapi_type).to eq('people')
+        expect(data.layer_group_name).to eq person.layer_group.display_name
       end
     end
   end
