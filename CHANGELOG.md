@@ -1,5 +1,8 @@
 # Hitobito SWW Changelog
 
+## unreleased
+- Personen mit Support Rolle im Dachverband können sämtliche Abos in allen Gruppen sehen (hitobito_sww#94)
+
 ## Version 1.28
 - Drucken eines Mitgliederausweises mittels Sammelrechnung (hitobito_sww#63)
 - Neu ist es möglich in den Gruppeneinstellungen die Position der Addresse und Mitgliederausweisen beim Brief- und Rechnungsdruck zu definieren (hitobito_sww#68)

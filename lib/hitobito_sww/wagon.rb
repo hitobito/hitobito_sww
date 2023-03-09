@@ -64,11 +64,14 @@ module HitobitoSww
       invoice_lists_invoice_permitted_attrs_hash.merge!(invoice: invoice_lists_invoice_permitted_attrs + [:membership_card, :membership_expires_on])
       # rubocop:enable Metrics/LineLength
 
+      MailingListAbility.include Sww::MailingListAbility
+
       MessagesController::PERMITTED_LETTER_ATTRS += [:membership_card,
                                                      :membership_expires_on]
       MessagesController::PERMITTED_INVOICE_LETTER_ATTRS += [:membership_card,
                                                              :membership_expires_on]
-      # rubocop:enable Metrics/LineLength
+
+      Role::Permissions << :support
     end
 
     initializer 'sww.add_settings' do |_app|
