@@ -73,30 +73,6 @@ RSpec.describe PersonResource, type: :resource do
     end
   end
 
-  context 'extra attributes' do
-    let!(:person) { Fabricate(:person, birthday: Date.today, gender: 'm', primary_group_id: groups(:berner_mitglieder).id) }
-
-    before do
-      params[:filter] = { id: person.id }
-      params[:extra_fields] = { people: [:layer_group_name] }
-    end
-
-    context 'layer_group_name' do
-      it 'works' do
-        set_ability { can :manage, :all }
-
-        render
-
-        data = jsonapi_data[0]
-
-        expect(data.attributes.symbolize_keys.keys).to include :layer_group_name
-        expect(data.id).to eq(person.id)
-        expect(data.jsonapi_type).to eq('people')
-        expect(data.layer_group_name).to eq person.layer_group.display_name
-      end
-    end
-  end
-
   describe 'sideloading' do
     describe 'updated_by' do
       let!(:updater_person) { Fabricate(:person) }

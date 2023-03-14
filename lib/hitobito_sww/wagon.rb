@@ -29,7 +29,6 @@ module HitobitoSww
       Person.include Sww::Person
 
       PersonResource.include Sww::PersonResource
-      RoleResource.include Sww::RoleResource
 
       Export::Pdf::AddressRenderers.include Sww::Export::Pdf::AddressRenderers
       Export::Pdf::Invoice.prepend Sww::Export::Pdf::Invoice
