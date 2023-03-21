@@ -10,7 +10,7 @@
 # as the data migration is a one off task.
 class MigrateToGeneratedMemberNumber2 < ActiveRecord::Migration[6.1]
   def up
-    say "clearing member numbers >= 300'000 and all those of people without active role".cyan
+    say "clearing member numbers >= 300'000 and all those of people without active role"
     execute <<~SQL
       UPDATE people
         LEFT OUTER JOIN (
@@ -25,7 +25,7 @@ class MigrateToGeneratedMemberNumber2 < ActiveRecord::Migration[6.1]
         OR manual_member_number >= 300000
     SQL
 
-    say "clearing duplicate member numbers, keeping only the first occurrance".cyan
+    say "clearing duplicate member numbers, keeping only the first occurrance"
     execute <<~SQL
       UPDATE people
         JOIN (SELECT MIN(id) AS ID, manual_member_number FROM people GROUP BY manual_member_number HAVING COUNT(*) > 1) lowest_duplicate

@@ -8,31 +8,19 @@
 require 'spec_helper'
 
 RSpec.describe PersonResource, type: :resource do
-  # TODO: remove method after core branch `feature/json-api-finis` is merged
-  def set_ability(&block)
-    ability = Class.new do
-      include CanCan::Ability
-      attr_reader :user
+  let(:user) { user_role.person }
+  let!(:user_role) { Fabricate(Group::GremiumProjektgruppe::Leitung.name, person: Fabricate(:person), group: groups(:berner_gremium)) }
 
-      define_method(:initialize) do
-        @user = Fabricate(:person)
-        @self_before_instance_eval = eval "self", block.binding
-        instance_eval(&block)
-      end
-
-      def method_missing(method, *args, &block)
-        @self_before_instance_eval.send method, *args, &block
-      end
-    end
-
-    Graphiti.context[:object].current_ability = ability.new
-    allow(Graphiti.context[:object]).to receive(:can?) do |*args|
-      Graphiti.context[:object].current_ability.can?(*args)
+  around do |example|
+    RSpec::Mocks.with_temporary_scope do
+      Graphiti.with_context(double({ current_ability: Ability.new(user) })) { example.run }
     end
   end
 
   describe 'serialization' do
     let!(:person) { Fabricate(:person, birthday: Date.today, gender: 'm') }
+    let!(:role) { Fabricate(Group::GremiumProjektgruppe::Mitglied.name, person: person, group: groups(:berner_gremium)) }
+
     before { params[:filter] = { id: person.id } }
 
     def sww_simple_attrs
@@ -52,8 +40,6 @@ RSpec.describe PersonResource, type: :resource do
     end
 
     it 'works' do
-      set_ability { can :manage, :all }
-
       render
 
       data = jsonapi_data[0]
@@ -77,6 +63,7 @@ RSpec.describe PersonResource, type: :resource do
     describe 'updated_by' do
       let!(:updater_person) { Fabricate(:person) }
       let!(:updated_person) { Fabricate(:person, updater_id: updater_person.id) }
+      let!(:role) { Fabricate(Group::GremiumProjektgruppe::Mitglied.name, person: updated_person, group: groups(:berner_gremium)) }
 
       before do
         params[:filter] = { id: updated_person.id.to_s }
@@ -84,8 +71,6 @@ RSpec.describe PersonResource, type: :resource do
       end
 
       it 'it works' do
-        set_ability { can :manage, :all }
-
         render
 
         sl = d[0].sideload(:updated_by)
