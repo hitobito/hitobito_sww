@@ -22,6 +22,12 @@ de:
     form_invoice_fields_sww:
       membership_card_caption: Mitgliederausweis mit drucken
 
+  groups:
+    self_registration:
+      form:
+        street_house_nr: Strasse/Hausnummer
+        email: E-Mail
+        salutation: Anrede
   invoices:
     export:
       tabular:
