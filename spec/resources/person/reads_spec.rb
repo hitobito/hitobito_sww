@@ -62,6 +62,7 @@ RSpec.describe PersonResource, type: :resource do
   describe 'sideloading' do
     describe 'updated_by' do
       let!(:updater_person) { Fabricate(:person) }
+      let!(:updater_person) { Fabricate(Group::GremiumProjektgruppe::Mitglied.name, group: groups(:berner_gremium)).person }
       let!(:updated_person) { Fabricate(:person, updater_id: updater_person.id) }
       let!(:role) { Fabricate(Group::GremiumProjektgruppe::Mitglied.name, person: updated_person, group: groups(:berner_gremium)) }
 
