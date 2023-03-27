@@ -66,8 +66,10 @@ describe JsonApiController do
     end
 
     context 'on request with regular login' do
+      let!(:mitarbeiter) { Fabricate(Group::SchweizerWanderwege::Support.name, group: groups(:schweizer_wanderwege)).person }
+
       before do
-        sign_in(people(:zuercher_leiter))
+        sign_in(mitarbeiter)
         # mock check for user since sign_in devise helper is not setting any cookies
         allow_any_instance_of(described_class)
           .to receive(:user_session?).and_return(true)
@@ -80,7 +82,7 @@ describe JsonApiController do
         end.to change { person.reload.versions.size }.by(1)
 
         version = person.versions.last
-        expect(version.perpetrator).to eq people(:zuercher_leiter)
+        expect(version.perpetrator).to eq mitarbeiter
         expect(version.specific_author).to eq nil
       end
     end
