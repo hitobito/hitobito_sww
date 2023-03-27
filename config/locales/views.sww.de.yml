@@ -24,7 +24,7 @@ de:
 
   groups:
     self_registration:
-      form:
+      fields:
         street_house_nr: Strasse/Hausnummer
         email: E-Mail
         salutation: Anrede
