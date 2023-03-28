@@ -1,6 +1,6 @@
 # Hitobito SWW Changelog
 
-## unreleased
+## Version 1.28
 - Personen mit Support Rolle im Dachverband können sämtliche Abos in allen Gruppen sehen (hitobito_sww#94)
 
 ## Version 1.28
