@@ -17,6 +17,13 @@ de:
       fields_sww:
         membership_card_caption: Mitgliederausweis mit drucken
 
+  devise:
+    registrations:
+      signed_up: 'Sie haben sich erfolgreich registriert.'
+      signed_up_but_unconfirmed: 'Sie haben sich erfolgreich registriert. Sie erhalten in Kürze eine E-Mail mit der Anleitung, wie Sie Ihren Account freischalten können.'
+      signed_up_but_inactive: 'Sie haben sich erfolgreich registriert. Wir konnten Sie noch nicht anmelden, da Ihr Account inaktiv ist.'
+      signed_up_but_locked: 'Sie haben sich erfolgreich registriert. Wir konnten Sie noch nicht anmelden, da Ihr Account gesperrt ist.'
+      signed_up_but_no_email: 'Sie haben sich erfolgreich registriert. Wir konnten Sie nicht anmelden, da Sie keine Mailadresse angegeben haben.'
 
   invoice_lists:
     form_invoice_fields_sww:
