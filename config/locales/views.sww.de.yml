@@ -31,11 +31,11 @@ de:
       conditions_sww:
         terms_of_use_title: Nutzungsbestimmungen
         terms_of_use_text: Indem Sie auf «Registrieren» klicken, stimmen Sie den %{link} der Schweizer Wanderwege zu.
-        terms_of_use_link: https://www.schweizer-wanderwege.ch/nutzungsbedingungen/de
+        terms_of_use_link: https://www.schweizer-wanderwege.ch/de/nutzungsbedingungen
         terms_of_use_link_name: Nutzungsbestimmungen
         privacy_title: Datenschutz
         privacy_text: Weitere Informationen darüber, wie die Schweizer Wanderwege Ihre personenbezogenen Daten erfassen, verwenden, weitergeben und schützen, finden Sie in der %{link} der Schweizer Wanderwege.
-        privacy_link: https://www.schweizer-wanderwege.ch/datenschutz/de
+        privacy_link: https://www.schweizer-wanderwege.ch/de/datenschutz
         privacy_link_name: Datenschutzrichtlinie
   invoices:
     export:
