@@ -46,6 +46,7 @@ module HitobitoSww
       StandardFormBuilder.include Sww::StandardFormBuilder
 
       Invoices::EvaluationsController.prepend Sww::Invoices::EvaluationsController
+      Groups::SelfRegistrationController.prepend Sww::Groups::SelfRegistrationController
 
       JsonApiController.include Sww::JsonApiController
       JsonApi::PeopleController.prepend Sww::JsonApi::PeopleController

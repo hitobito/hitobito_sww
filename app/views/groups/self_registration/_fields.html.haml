@@ -1,0 +1,14 @@
+= fields.labeled(:gender, t('.salutation')) do
+  = fields.collection_select :gender, [[:w, 'Frau'], [:m, 'Herr'], [nil, 'Andere']], :first, :last
+= fields.labeled_input_field :first_name, required: true
+= fields.labeled_input_field :last_name, required: true
+= fields.labeled_input_fields :company_name, :company
+= fields.labeled(:email, t('.email')) do
+  = fields.input_field :email, help_inline: t('people.email_field.used_as_login'), required: true
+= fields.labeled(:street, t('.street_house_nr'), nil, class: 'controls-row') do
+  = text_field_tag('role[new_person][street]', nil, class: 'span5', required: true)
+  = text_field_tag('role[new_person][house_number]', nil, class: 'span1', required: true)
+= fields.labeled(:zip_code, t('contactable.fields.zip_town'), nil, class: 'controls-row') do
+  = fields.string_field(:zip_code, class: 'span2', maxlength: 10)
+  = fields.string_field(:town, class: 'span4')
+= fields.labeled_input_field :birthday
