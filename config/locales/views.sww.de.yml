@@ -28,6 +28,11 @@ de:
         street_house_nr: Strasse/Hausnummer
         email: E-Mail
         salutation: Anrede
+      sww_conditions:
+        terms_of_use_title: Nutzungsbestimmungen
+        terms_of_use_text: Indem Sie auf «Registrieren» klicken, stimmen Sie den Nutzungsbedingungen der Schweizer Wanderwege zu.
+        privacy_title: Datenschutz
+        privacy_text: Weitere Informationen darüber, wie die Schweizer Wanderwege Ihre personenbezogenen Daten erfassen, verwenden, weitergeben und schützen, finden Sie in der Datenschutzrichtlinie der Schweizer Wanderwege.
   invoices:
     export:
       tabular:
