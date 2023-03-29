@@ -6,17 +6,16 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 module Sww::Groups::SelfRegistrationController
-
   def person_attrs
     attrs = super
     attrs&.merge(address_from_params)
   end
 
   def address_from_params
-    street = model_params&.require(:new_person)&.delete(:street)
-    number = model_params&.require(:new_person)&.delete(:house_number)
+    @street = model_params&.require(:new_person)&.delete(:street)
+    @house_number = model_params&.require(:new_person)&.delete(:house_number)
     {
-      address: [street, number].join(' ')
+      address: [@street, @house_number].join(' ')
     }
   end
 end
