@@ -44,6 +44,7 @@ module HitobitoSww
 
       PaperTrail::VersionDecorator.prepend Sww::PaperTrail::VersionDecorator
 
+      LayoutHelper.prepend Sww::LayoutHelper
       TagListsHelper.include Sww::TagListsHelper
       StandardFormBuilder.include Sww::StandardFormBuilder
 
