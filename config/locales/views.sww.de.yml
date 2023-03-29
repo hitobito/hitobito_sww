@@ -36,9 +36,10 @@ de:
   groups:
     self_registration:
       fields:
-        street_house_nr: Strasse/Hausnummer
+        birthday: Geburtsdatum
         email: E-Mail
         salutation: Anrede
+        street_house_nr: Strasse/Hausnummer
       conditions_sww:
         terms_of_use_title: Nutzungsbestimmungen
         terms_of_use_text: Indem Sie auf «Registrieren» klicken, stimmen Sie den %{link} der Schweizer Wanderwege zu.
