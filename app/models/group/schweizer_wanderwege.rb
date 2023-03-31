@@ -20,7 +20,8 @@ class Group::SchweizerWanderwege < ::Group
   end
 
   class Support < ::Role
-    self.permissions = [:layer_and_below_full, :admin, :finance, :impersonation, :support, :complete_finance]
+    self.permissions = [:layer_and_below_full, :admin, :finance, :impersonation, :support,
+                        :complete_finance]
   end
 
   roles Mitarbeitende, Support
