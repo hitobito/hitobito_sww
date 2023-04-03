@@ -35,6 +35,8 @@ de:
 
   groups:
     self_registration:
+      create:
+        email_taken: E-Mail wird bereits verwendet. Melden Sie sich an oder registrieren Sie sich mit einer anderen E-Mail-Adresse.
       fields:
         birthday: Geburtsdatum
         email: E-Mail
