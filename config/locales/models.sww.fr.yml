@@ -123,6 +123,7 @@ fr:
         member_number: Numéro de membre
         name_add_on: Complément de nom
         title: Titre
+        email: Adresse e-mail
       message:
         membership_card: Carte de membre
         membership_expires_on: Adhésion valide jusqu'au

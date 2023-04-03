@@ -123,6 +123,7 @@ it:
         member_number: ""
         name_add_on: ""
         title: ""
+        email: "Email"
       message:
         membership_card: ""
         membership_expires_on: ""
