@@ -24,6 +24,10 @@ de:
       signed_up_but_inactive: 'Sie haben sich erfolgreich registriert. Wir konnten Sie noch nicht anmelden, da Ihr Account inaktiv ist.'
       signed_up_but_locked: 'Sie haben sich erfolgreich registriert. Wir konnten Sie noch nicht anmelden, da Ihr Account gesperrt ist.'
       signed_up_but_no_email: 'Sie haben sich erfolgreich registriert. Wir konnten Sie nicht anmelden, da Sie keine Mailadresse angegeben haben.'
+    sessions:
+      oauth_info:
+        sign_in: 'Anmelden'
+        info: 'Bitte melden Sie sich an, um weiter zu den Schweizer Wanderwegen zu gelangen.'
 
   invoice_lists:
     form_invoice_fields_sww:
