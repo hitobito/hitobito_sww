@@ -1,4 +1,4 @@
-= fields.labeled_collection_select :gender, [[:w, 'Frau'], [:m, 'Herr'], [nil, 'Andere']], :first, :last, label: t('.salutation'), required: true
+= fields.labeled_collection_select :gender, gender_options, :first, :last, label: t('.salutation'), required: true
 = fields.labeled_input_field :first_name, required: true
 = fields.labeled_input_field :last_name, required: true
 = fields.labeled_input_fields :company_name, :company

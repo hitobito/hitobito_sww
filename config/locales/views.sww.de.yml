@@ -35,6 +35,11 @@ de:
 
   groups:
     self_registration:
+      new:
+        gender:
+          m: Herr
+          w: Frau
+          other: Andere
       create:
         email_taken: E-Mail wird bereits verwendet. Melden Sie sich an oder registrieren Sie sich mit einer anderen E-Mail-Adresse.
       fields:
