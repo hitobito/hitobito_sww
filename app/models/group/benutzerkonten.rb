@@ -17,6 +17,7 @@ class Group::Benutzerkonten < ::Group
 
   class Benutzerkonto < ::Role
     self.visible_from_above = false
+    self.basic_permissions_only = true
 
     self.permissions = []
   end
