@@ -1,6 +1,6 @@
 # Hitobito SWW Changelog
 
-## unreleased
+## Version 1.28
 - Umbennenen von Person Haupt-E-Mail zu E-Mail. Beim CSV Export wird die Spalte ebenfalls renamed! (hitobito_sww#126)
 
 ## Version 1.28
