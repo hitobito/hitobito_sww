@@ -6,6 +6,11 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 module Sww::Groups::SelfRegistrationController
+  extend ActiveSupport::Concern
+
+  prepended do
+    helper_method :gender_options
+  end
 
   def person_attrs
     attrs = super
@@ -13,10 +18,14 @@ module Sww::Groups::SelfRegistrationController
   end
 
   def address_from_params
-    street = model_params&.require(:new_person)&.delete(:street)
-    number = model_params&.require(:new_person)&.delete(:house_number)
+    @street = model_params&.require(:new_person)&.delete(:street)
+    @house_number = model_params&.require(:new_person)&.delete(:house_number)
     {
-      address: [street, number].join(' ')
+      address: [@street, @house_number].join(' ')
     }
+  end
+
+  def gender_options
+    [[:w, t('.gender.w')], [:m, t('.gender.m')], [nil, t('.gender.other')]]
   end
 end
