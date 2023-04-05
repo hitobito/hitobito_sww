@@ -17,15 +17,59 @@ it:
       fields_sww:
         membership_card_caption: ""
 
+  devise:
+    registrations:
+      signed_up: 'La registrazione è avvenuta con successo.'
+      signed_up_but_unconfirmed: 'La registrazione è avvenuta con successo. Riceverete a breve un''e-mail con le istruzioni su come attivare il vostro account.'
+      signed_up_but_inactive: 'La registrazione è avvenuta con successo. Non è stato possibile registrarla perché il suo account è inattivo.'
+      signed_up_but_locked: 'La registrazione è avvenuta con successo. Non è stato possibile registrarla perché il suo account è bloccato.'
+      signed_up_but_no_email: 'La registrazione è avvenuta con successo. Non è stato possibile registrarla perché non ha inserito un indirizzo e-mail.'
+    sessions:
+      oauth_info:
+        sign_in: 'Login'
+        info: 'Effettua il login per accedere ai Sentieri Svizzeri.'
 
   invoice_lists:
     form_invoice_fields_sww:
       membership_card_caption: ""
 
+  groups:
+    self_registration:
+      new:
+        gender:
+          m: Signor
+          w: Signora
+          other: Altro
+      create:
+        email_taken: L'e-mail è già in uso. Accedere o registrarsi con un altro indirizzo e-mail.
+      fields:
+        birthday: Data di nascita
+        email: E-mail
+        salutation: Saluto
+        street_house_nr: "Via, n."
+      conditions_sww:
+        terms_of_use_title: Condizioni generali
+        terms_of_use_text: "Cliccando su «Crea un account», accetti le %{link} dei Sentieri Svizzeri."
+        terms_of_use_link: "https://www.sentieri-svizzeri.ch/it/condizioniduso"
+        terms_of_use_link_name: Condizioni generali
+        privacy_title: Protezione dei dati
+        privacy_text: "Ulteriori informazioni su come i Sentieri Svizzeri raccolgono, utilizzano, divulganoe proteggono i tuoi dati personali sono disponibili nella sezione «%{link}» dei Sentieri Svizzeri."
+        privacy_link: "https://www.sentieri-svizzeri.ch/it/protezionideidati"
+        privacy_link_name: Protezione dei dati
   invoices:
-    form_sww:
+    export:
+      tabular:
+        evaluation_list:
+          daterange_label: ""
+          print_date: ""
+          printed_by: ""
+    form:
       membership_card_caption: ""
 
     evaluations:
       show:
         excess: ""
+
+    pdf:
+      subtotal: ""
+      donation: Donazione

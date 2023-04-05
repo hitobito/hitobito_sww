@@ -123,11 +123,12 @@ it:
         member_number: ""
         name_add_on: ""
         title: ""
-        email: "Email"
+        email: E-mail
       message:
         membership_card: ""
         membership_expires_on: ""
       invoice:
+        hide_total: Donazione
         membership_card: ""
         membership_expires_on: ""
       group_setting:

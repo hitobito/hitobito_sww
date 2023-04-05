@@ -17,15 +17,59 @@ fr:
       fields_sww:
         membership_card_caption: Carte de membre avec impression
 
+  devise:
+    registrations:
+      signed_up: 'Vous vous êtes enregistré(e) avec succès.'
+      signed_up_but_unconfirmed: 'Vous vous êtes enregistré(e) avec succès. Vous recevrez sous peu un e-mail contenant les instructions pour activer votre compte.'
+      signed_up_but_inactive: 'Vous vous êtes enregistré(e) avec succès. Nous n''avons pas encore pu vous inscrire car votre compte est inactif.'
+      signed_up_but_locked: 'Vous vous êtes enregistré(e) avec succès. Nous n''avons pas encore pu vous inscrire car votre compte est bloqué.'
+      signed_up_but_no_email: 'Vous vous êtes enregistré(e) avec succès. Nous n''avons pas pu vous inscrire car vous n''avez pas indiqué d''adresse e-mail.'
+    sessions:
+      oauth_info:
+        sign_in: 'Connexion'
+        info: 'Veuillez vous connecter pour accéder a Suisse Rando.'
 
   invoice_lists:
     form_invoice_fields_sww:
       membership_card_caption: Carte de membre avec impression
 
+  groups:
+    self_registration:
+      new:
+        gender:
+          m: Monsieur
+          w: Madame
+          other: Autre
+      create:
+        email_taken: L'e-mail est déjà utilisé. Connectez-vous ou enregistrez-vous avec une autre adresse e-mail.
+      fields:
+        birthday: Date de naissance
+        email: E-mail
+        salutation: Formule d'appel
+        street_house_nr: "Rue, n°"
+      conditions_sww:
+        terms_of_use_title: Conditions générales
+        terms_of_use_text: "En cliquant sur «Créer un compte», vous acceptez les %{link} de Suisse Rando."
+        terms_of_use_link: "https://www.suisse-rando.ch/fr/cgp"
+        terms_of_use_link_name: Conditions générales
+        privacy_title: Confidentialité
+        privacy_text: "Pour en savoir plus sur la manière dont Suisse Rando collecte, utilise, divulgue et protège vos données personnelles, veuillez consulter la %{link} de Suisse Rando."
+        privacy_link: "http://www.suisse-rando.ch/fr/confidentialite"
+        privacy_link_name: "Politique de confidentialité "
   invoices:
-    form_sww:
+    export:
+      tabular:
+        evaluation_list:
+          daterange_label: Critère (de-à)
+          print_date: Date d'impression
+          printed_by: Imprimé par
+    form:
       membership_card_caption: Carte de membre avec impression
 
     evaluations:
       show:
         excess: Dons
+
+    pdf:
+      subtotal: Sous-total
+      donation: Donation

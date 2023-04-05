@@ -16,9 +16,9 @@ fr:
         other: Suisse Rando
 
       group/benutzerkonten:
-        one: ''
-        many: ''
-        other: ''
+        one: Comptes d'utilisateurs
+        many: Comptes d'utilisateurs
+        other: Comptes d'utilisateurs
 
       group/fachorganisation:
         one: Associations de randonnée
@@ -58,9 +58,9 @@ fr:
         one: Support
 
       group/benutzerkonten/benutzerkonto:
-        one: ""
+        one: Compte d'utilisateur
       group/benutzerkonten/verwalter:
-        one: ""
+        one: Support
 
       group/kontakte/kontakt:
         one: Contact
@@ -110,11 +110,11 @@ fr:
               w: Bonjour
               other: Bonjour
           sehr_geehrte:
-            label: ""
+            label: "Madame/Monsieur [nom de famille]"
             value:
               m: "Cher Monsieur %{last_name}"
               w: "Chère Madame %{last_name}"
-              other: ""
+              other: "Cher*e %{first_name} %{last_name}"
 
     attributes:
       person:
@@ -123,11 +123,12 @@ fr:
         member_number: Numéro de membre
         name_add_on: Complément de nom
         title: Titre
-        email: Adresse e-mail
+        email: E-mail
       message:
         membership_card: Carte de membre
         membership_expires_on: Adhésion valide jusqu'au
       invoice:
+        hide_total: Donation
         membership_card: Carte de membre
         membership_expires_on: Adhésion valide jusqu'au
       group_setting:
@@ -151,4 +152,4 @@ fr:
   event:
     application_market:
       popover_waiting_list:
-        waiting_list_info: ""
+        waiting_list_info: Ajoute cette personne à la liste d'attente.
