@@ -47,3 +47,7 @@ puts "The following duplicates do not have an email: #{@duplicates_with_no_email
     p.destroy!
   end
 end
+
+@duplicate_entries = duplicate_entries
+
+puts "There are #{@duplicate_entries.count} Person entries with duplicate sww_cms_profile_id"
