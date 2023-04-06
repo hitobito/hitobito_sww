@@ -32,3 +32,18 @@ duplicate_profile_ids.each do |id|
 end
 
 puts "The following duplicates do not have an email: #{@duplicates_with_no_email_person_ids}"
+
+@duplicates_with_no_email_person_ids.each do |ids|
+  people = Person.where(id: ids.split(','))
+  people.each do |p|
+    # make sure only Benutzerkonten
+    unless p.roles.all?{|r| r.type == 'Group::Benutzerkonten::Benutzerkonto'}
+      puts p
+      raise 'Person without email does not only have Benutzerkonten role. Check manually.'
+    end
+  end
+  people.drop(1)
+  people.each do |p|
+    p.destroy!
+  end
+end
