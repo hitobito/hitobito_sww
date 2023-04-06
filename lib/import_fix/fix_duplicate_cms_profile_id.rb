@@ -1,4 +1,10 @@
+ActiveRecord::Base.logger = nil
+
 @duplicates_with_no_email_person_ids = []
+
+def log(person, msg)
+  p "Person: #{person.id}: #{msg}"
+end
 
 def duplicate_entries
   columns_that_make_record_distinct = [:sww_cms_profile_id]
@@ -17,6 +23,7 @@ def compare_person_entries(cms_profile_id)
 
   duplicates.each do |p|
     if p.email.nil?
+      log(p, 'Deleting duplicate person entry since no email present.')
       p.destroy!
     end
   end
@@ -44,6 +51,7 @@ puts "The following duplicates do not have an email: #{@duplicates_with_no_email
   end
   people.drop(1)
   people.each do |p|
+    log(p, 'Deleting duplicate person entry with no email at all.')
     p.destroy!
   end
 end
