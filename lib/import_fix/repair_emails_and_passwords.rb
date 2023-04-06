@@ -5,8 +5,7 @@ ActiveRecord::Base.logger = nil
 # TODO SWW CMS PROFILE ID 42918, 49308 in CSV hat keinen Namen, löschen oder anders bereinigen
 # TODO Scheinbar ist beim ersten Import eine fehlerhafte PLZ reingerutscht und bei den Callbacks geht jetzt aufgrund alles kaputt: Person.find(79555).update_column(:zip_code, nil)
 
-people_csv = Wagons.find('sww').root.join('tmp/people_cms.csv')
-all_people_cms = CSV.parse(people_csv.read, headers: true, col_sep: ';', header_converters: :symbol)
+all_people_cms = CSV.parse(File.read("/tmp/all_people_cms.csv"), headers: true, col_sep: ';', header_converters: :symbol)
 
 missing_person_creation_errors = []
 taken_email_for_new_person_errors = []

@@ -7,8 +7,7 @@ def valid_pw_hashes?(row)
   hash.present? && hash.start_with?('$2y$', '$2a$') && salt.present?
 end
 
-people_csv = Wagons.find('sww').root.join('tmp/people_cms.csv')
-all_people_cms = CSV.parse(people_csv.read, headers: true, col_sep: ';', header_converters: :symbol)
+all_people_cms = CSV.parse(File.read("/tmp/all_people_cms.csv"), headers: true, col_sep: ';', header_converters: :symbol)
 puts "Number of entries in total: #{all_people_cms.count}"
 
 # exist in hitobito by cms_profile_id
