@@ -36,13 +36,13 @@ hitobito_cms_profile_id_people.find_each do |person|
 
   unless person.encrypted_password.present?
     password = row[:profile_password]
-    if password.present? && password.start_with?('$2y$', '$2a$')
+    if password.present? && password.start_with?('$2y$')
       puts "Setting password for hitobito id: #{person.id}"
       person.encrypted_password = password
     end
   end
 
-  if person.encrypted_password.present? && person.encrypted_password.start_with?('$2y$', '$2a$')
+  if person.encrypted_password.present? && person.encrypted_password.start_with?('$2y$')
     if person.sww_cms_legacy_password_salt.blank?
       if row[:profile_password_salt].present?
         puts "Setting cms legacy password salt for hitobito id: #{person.id}"
