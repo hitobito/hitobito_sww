@@ -40,6 +40,7 @@ class DataMigratorCms
       # only save bcrypt passwords
       return unless password && password.start_with?('$2y$', '$2a$')
 
+      person_hash[:confirmed_at] = Time.now.utc
       person_hash[:encrypted_password] = password
     end
 

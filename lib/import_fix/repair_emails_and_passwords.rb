@@ -27,10 +27,6 @@ hitobito_cms_profile_id_people.find_each do |person|
   if person.email.nil? && row[:profile_email].present? && Truemail.valid?(row[:profile_email])
     puts "Setting mail #{row[:profile_email]} for hitobito id: #{person.id}"
     person.email = row[:profile_email]
-
-    person.confirm
-    person.skip_reconfirmation!
-    person.skip_confirmation!
   end
 
   unless person.encrypted_password.present?
@@ -39,6 +35,10 @@ hitobito_cms_profile_id_people.find_each do |person|
       puts "Setting password for hitobito id: #{person.id}"
       person.encrypted_password = password
     end
+  end
+
+  if person.encrypted_password.present? && person.encrypted_password.start_with?('$2y$', '$2a$')
+    person.sww_cms_legacy_password_salt = row[:profile_password_salt]
   end
 
   unless person.valid?
@@ -57,9 +57,12 @@ hitobito_cms_profile_id_people.find_each do |person|
     end
   end
 
-  if person.changed?
-    person.save!
-  end
+  person.confirmed_at = Time.now.utc
+
+  person.skip_reconfirmation!
+  person.skip_confirmation!
+  puts "Updating person hitobito id: #{person.id}"
+  person.save!
 end
 
 non_existing_cms_profile_ids_in_hitobito.each do |cms_profile_id|
