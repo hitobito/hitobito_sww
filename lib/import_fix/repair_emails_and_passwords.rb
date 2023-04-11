@@ -3,6 +3,7 @@ require Wagons.find('sww').root.join('db/seeds/support/data_migrator_cms.rb')
 ActiveRecord::Base.logger = nil
 
 # TODO SWW CMS PROFILE ID 42918, 49308 in CSV hat keinen Namen, löschen oder anders bereinigen
+IGNORE_CMS_ID=[42918, 49308]
 # TODO Scheinbar ist beim ersten Import eine fehlerhafte PLZ reingerutscht und bei den Callbacks geht jetzt aufgrund alles kaputt: Person.find(79555).update_column(:zip_code, nil)
 
 @all_people_cms = CSV.parse(File.read("/tmp/all_people_cms.csv"), headers: true, col_sep: ';', header_converters: :symbol)
@@ -22,6 +23,8 @@ hitobito_cms_profile_id_people = Person.where(sww_cms_profile_id: all_cms_profil
 non_existing_cms_profile_ids_in_hitobito = all_cms_profile_ids.map(&:to_i) - hitobito_cms_profile_id_people.pluck(:sww_cms_profile_id)
 
 hitobito_cms_profile_id_people.find_each do |person|
+  next if IGNORE_CMS_ID.include?(person.sww_cms_profile_id.to_i)
+
   row = row_by_cms_id(person.sww_cms_profile_id)
 
   if person.email.nil? && row[:profile_email].present? && Truemail.valid?(row[:profile_email])
@@ -38,7 +41,12 @@ hitobito_cms_profile_id_people.find_each do |person|
   end
 
   if person.encrypted_password.present? && person.encrypted_password.start_with?('$2y$', '$2a$')
-    person.sww_cms_legacy_password_salt = row[:profile_password_salt]
+    if person.sww_cms_legacy_password_salt.blank?
+      if row[:profile_password_salt].present?
+        puts "Setting cms legacy password salt for hitobito id: #{person.id}"
+        person.sww_cms_legacy_password_salt = row[:profile_password_salt]
+      end
+    end
   end
 
   unless person.valid?
@@ -57,12 +65,16 @@ hitobito_cms_profile_id_people.find_each do |person|
     end
   end
 
-  person.confirmed_at = Time.now.utc
+  if person.email.present?
+    person.confirm
+  end
 
-  person.skip_reconfirmation!
-  person.skip_confirmation!
-  puts "Updating person hitobito id: #{person.id}"
-  person.save!
+  if person.changed?
+    person.skip_reconfirmation!
+    person.skip_confirmation!
+    puts "Updating person hitobito id: #{person.id}"
+    person.save!
+  end
 end
 
 non_existing_cms_profile_ids_in_hitobito.each do |cms_profile_id|
