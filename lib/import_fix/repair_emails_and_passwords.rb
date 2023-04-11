@@ -23,78 +23,78 @@ all_cms_profile_ids = @all_people_cms.collect{|r| r[:profile_id]}.compact
 hitobito_cms_profile_id_people = Person.where(sww_cms_profile_id: all_cms_profile_ids)
 non_existing_cms_profile_ids_in_hitobito = all_cms_profile_ids.map(&:to_i) - hitobito_cms_profile_id_people.pluck(:sww_cms_profile_id)
 
-#hitobito_cms_profile_id_people.find_each do |person|
-  #puts "Person: #{person.id}"
-  #next if IGNORE_CMS_ID.include?(person.sww_cms_profile_id.to_i)
+hitobito_cms_profile_id_people.find_each do |person|
+  puts "Person: #{person.id}"
+  next if IGNORE_CMS_ID.include?(person.sww_cms_profile_id.to_i)
 
-  #row = row_by_cms_id(person.sww_cms_profile_id)
+  row = row_by_cms_id(person.sww_cms_profile_id)
 
-  #if person.email.blank? && row[:profile_email].present? && Truemail.valid?(row[:profile_email])
-    #puts "Setting mail #{row[:profile_email]} for hitobito id: #{person.id}"
-    #person.email = row[:profile_email]
-  #end
+  if person.email.blank? && row[:profile_email].present? && Truemail.valid?(row[:profile_email])
+    puts "Setting mail #{row[:profile_email]} for hitobito id: #{person.id}"
+    person.email = row[:profile_email]
+  end
 
-  #unless person.encrypted_password.present?
-    #password = row[:profile_password]
-    #if password.present? && password.start_with?('$2y$', '$2a$')
-      #puts "Setting password for hitobito id: #{person.id}"
-      #person.encrypted_password = password
-    #end
-  #end
+  unless person.encrypted_password.present?
+    password = row[:profile_password]
+    if password.present? && password.start_with?('$2y$', '$2a$')
+      puts "Setting password for hitobito id: #{person.id}"
+      person.encrypted_password = password
+    end
+  end
 
-  #if person.encrypted_password.present? && person.encrypted_password.start_with?('$2y$', '$2a$')
-    #if person.sww_cms_legacy_password_salt.blank?
-      #if row[:profile_password_salt].present?
-        #puts "Setting cms legacy password salt for hitobito id: #{person.id}"
-        #person.sww_cms_legacy_password_salt = row[:profile_password_salt]
-      #end
-    #end
-  #end
+  if person.encrypted_password.present? && person.encrypted_password.start_with?('$2y$', '$2a$')
+    if person.sww_cms_legacy_password_salt.blank?
+      if row[:profile_password_salt].present?
+        puts "Setting cms legacy password salt for hitobito id: #{person.id}"
+        person.sww_cms_legacy_password_salt = row[:profile_password_salt]
+      end
+    end
+  end
 
-  #person.zip_code&.strip!
+  person.zip_code&.strip!
 
-  #unless person.valid?
-    #if person.errors.errors.map(&:attribute).include?(:country)
-      #person.country = nil
-      #invalid_country_people << person.id
-    #end
-    #person.validate
-    #if person.errors.errors.map(&:attribute).include?(:zip_code)
-      #person.zip_code = nil
-      #invalid_zip_people << person.id
-    #end
-    #if person.errors.errors.map(&:attribute).include?(:language)
-      #person.language = :de
-      #invalid_language_people << person.id
-    #end
+  unless person.valid?
+    if person.errors.errors.map(&:attribute).include?(:country)
+      person.country = nil
+      invalid_country_people << person.id
+    end
+    person.validate
+    if person.errors.errors.map(&:attribute).include?(:zip_code)
+      person.zip_code = nil
+      invalid_zip_people << person.id
+    end
+    if person.errors.errors.map(&:attribute).include?(:language)
+      person.language = :de
+      invalid_language_people << person.id
+    end
 
-    #if person.errors.errors.map(&:attribute).include?(:email)
-      #puts "Email not valid: #{person.email}: #{person.id}"
-      #person.email = nil
-    #end
-  #end
+    if person.errors.errors.map(&:attribute).include?(:email)
+      puts "Email not valid: #{person.email}: #{person.id}"
+      person.email = nil
+    end
+  end
 
-  #if person.encrypted_password.present? && person.encrypted_password.start_with?('$2y$', '$2a$')
-    #unless person.confirmed?
-      #person.confirm
-    #end
+  if person.encrypted_password.present? && person.encrypted_password.start_with?('$2y$', '$2a$')
+    unless person.confirmed?
+      person.confirm
+    end
 
-    #raise "person not confirmed: #{person.id}" unless person.confirmed?
-  #end
+    raise "person not confirmed: #{person.id}" unless person.confirmed?
+  end
 
-  #if EXPECTED_CHANGED_ATTRS.any?{|a| person.changes.keys.include?(a)}
-    #puts "Updating person hitobito id: #{person.id}"
-    #puts person.changes
-    #person.skip_confirmation!
-    #person.skip_reconfirmation!
-    #person.update!(email: person.email,
-                   #country: person.country,
-                   #zip_code: person.zip_code,
-                   #language: person.language,
-                   #sww_cms_legacy_password_salt: person.sww_cms_legacy_password_salt,
-                   #encrypted_password: person.encrypted_password)
-  #end
-#end
+  if EXPECTED_CHANGED_ATTRS.any?{|a| person.changes.keys.include?(a)}
+    puts "Updating person hitobito id: #{person.id}"
+    puts person.changes
+    person.skip_confirmation!
+    person.skip_reconfirmation!
+    person.update!(email: person.email,
+                   country: person.country,
+                   zip_code: person.zip_code,
+                   language: person.language,
+                   sww_cms_legacy_password_salt: person.sww_cms_legacy_password_salt,
+                   encrypted_password: person.encrypted_password)
+  end
+end
 
 non_existing_cms_profile_ids_in_hitobito.each do |cms_profile_id|
   row = row_by_cms_id(cms_profile_id)
