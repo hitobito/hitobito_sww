@@ -1,6 +1,7 @@
 require 'csv'
 require Wagons.find('sww').root.join('db/seeds/support/data_migrator_cms.rb')
 ActiveRecord::Base.logger = nil
+EXPECTED_CHANGED_ATTRS = %w(profile_email sww_cms_legacy_password_salt encrypted_password country zip_code language)
 
 # TODO SWW CMS PROFILE ID 42918, 49308 in CSV hat keinen Namen, löschen oder anders bereinigen
 IGNORE_CMS_ID=[42918, 49308]
@@ -27,14 +28,14 @@ hitobito_cms_profile_id_people.find_each do |person|
 
   row = row_by_cms_id(person.sww_cms_profile_id)
 
-  if person.email.nil? && row[:profile_email].present? && Truemail.valid?(row[:profile_email])
+  if person.email.blank? && row[:profile_email].present? && Truemail.valid?(row[:profile_email])
     puts "Setting mail #{row[:profile_email]} for hitobito id: #{person.id}"
     person.email = row[:profile_email]
   end
 
   unless person.encrypted_password.present?
-    password = DataMigratorCms.set_password!({}, row)
-    if password.present?
+    password = row[:profile_password]
+    if password.present? && password.start_with?('$2y$', '$2a$')
       puts "Setting password for hitobito id: #{person.id}"
       person.encrypted_password = password
     end
@@ -65,15 +66,12 @@ hitobito_cms_profile_id_people.find_each do |person|
     end
   end
 
-  if person.email.present?
-    person.confirm
-  end
-
-  if person.changed?
-    person.skip_reconfirmation!
-    person.skip_confirmation!
+  if EXPECTED_CHANGED_ATTRS.any?{|a| person.changes.keys.include?(a)}
     puts "Updating person hitobito id: #{person.id}"
+    puts person.changes
+    person.confirm
     person.save!
+    raise 'person not confirmed' unless person.confirmed?
   end
 end
 
