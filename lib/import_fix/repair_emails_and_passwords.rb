@@ -1,7 +1,7 @@
 require 'csv'
 require Wagons.find('sww').root.join('db/seeds/support/data_migrator_cms.rb')
 ActiveRecord::Base.logger = nil
-EXPECTED_CHANGED_ATTRS = %w(profile_email sww_cms_legacy_password_salt encrypted_password country zip_code language)
+EXPECTED_CHANGED_ATTRS = %w(email sww_cms_legacy_password_salt encrypted_password country zip_code language)
 
 # TODO SWW CMS PROFILE ID 42918, 49308 in CSV hat keinen Namen, löschen oder anders bereinigen
 IGNORE_CMS_ID=[42918, 49308]
@@ -14,7 +14,7 @@ def row_by_cms_id(cms_profile_id)
 end
 
 missing_person_creation_errors = []
-taken_email_for_new_person_errors = []
+taken_email_for_person_errors = []
 invalid_zip_people = []
 invalid_country_people = []
 invalid_language_people = []
@@ -64,6 +64,14 @@ hitobito_cms_profile_id_people.find_each do |person|
       person.language = :de
       invalid_language_people << person.id
     end
+    if Person.exists?(email: person.email)
+      taken_email_for_person_errors << "Person with cms_profile_id #{row[:profile_id]} could not set email #{person.email} due to it already existing"
+      person.email = nil
+    end
+  end
+
+  if person.encrypted_password.present? && person.encrypted_password.start_with?('$2y$', '$2a$')
+    person.confirm unless person.confirmed?
   end
 
   if EXPECTED_CHANGED_ATTRS.any?{|a| person.changes.keys.include?(a)}
@@ -71,7 +79,6 @@ hitobito_cms_profile_id_people.find_each do |person|
     puts person.changes
     person.confirm
     person.save!
-    raise 'person not confirmed' unless person.confirmed?
   end
 end
 
@@ -119,7 +126,7 @@ end
 puts "FAILED DURING CREATION:"
 puts missing_person_creation_errors.join("\n")
 puts "FAILED SETTING MAIL DURING CREATION DUE TO IT ALREADY BEING TAKEN:"
-puts taken_email_for_new_person_errors.join("\n")
+puts taken_email_for_person_errors.join("\n")
 puts "HITOBITO PERSON ID'S WITH INVALID ZIP CODE FIXED BY SETTING NIL:"
 puts invalid_zip_people.join(',')
 puts "HITOBITO PERSON ID'S WITH INVALID COUNTRY FIXED BY SETTING NIL:"
