@@ -87,12 +87,7 @@ hitobito_cms_profile_id_people.find_each do |person|
     puts person.changes
     person.skip_confirmation!
     person.skip_reconfirmation!
-    person.update!(email: person.email,
-                   country: person.country,
-                   zip_code: person.zip_code,
-                   language: person.language,
-                   sww_cms_legacy_password_salt: person.sww_cms_legacy_password_salt,
-                   encrypted_password: person.encrypted_password)
+    person.save!
   end
 end
 
