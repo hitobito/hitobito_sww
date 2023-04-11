@@ -24,6 +24,7 @@ hitobito_cms_profile_id_people = Person.where(sww_cms_profile_id: all_cms_profil
 non_existing_cms_profile_ids_in_hitobito = all_cms_profile_ids.map(&:to_i) - hitobito_cms_profile_id_people.pluck(:sww_cms_profile_id)
 
 hitobito_cms_profile_id_people.find_each do |person|
+  puts "Person: #{person.id}"
   next if IGNORE_CMS_ID.include?(person.sww_cms_profile_id.to_i)
 
   row = row_by_cms_id(person.sww_cms_profile_id)
@@ -50,6 +51,8 @@ hitobito_cms_profile_id_people.find_each do |person|
     end
   end
 
+  person.zip_code&.strip!
+
   unless person.valid?
     if person.errors.errors.map(&:attribute).include?(:country)
       person.country = nil
@@ -64,20 +67,26 @@ hitobito_cms_profile_id_people.find_each do |person|
       person.language = :de
       invalid_language_people << person.id
     end
-    if Person.exists?(email: person.email)
-      taken_email_for_person_errors << "Person with cms_profile_id #{row[:profile_id]} could not set email #{person.email} due to it already existing"
+
+    if person.errors.errors.map(&:attribute).include?(:email)
+      puts "Email not valid: #{person.email}: #{person.id}"
       person.email = nil
     end
   end
 
   if person.encrypted_password.present? && person.encrypted_password.start_with?('$2y$', '$2a$')
-    person.confirm unless person.confirmed?
+    unless person.confirmed?
+      person.confirm
+    end
+
+    raise "person not confirmed: #{person.id}" unless person.confirmed?
   end
 
   if EXPECTED_CHANGED_ATTRS.any?{|a| person.changes.keys.include?(a)}
     puts "Updating person hitobito id: #{person.id}"
     puts person.changes
-    person.confirm
+    person.skip_confirmation!
+    person.skip_reconfirmation!
     person.save!
   end
 end
