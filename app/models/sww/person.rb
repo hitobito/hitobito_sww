@@ -22,6 +22,10 @@ module Sww::Person
               uniqueness: true,
               allow_nil: true,
               numericality: { less_than: MEMBER_NUMBER_CALCULATION_OFFSET }
+    
+    validates :sww_cms_profile_id,
+              uniqueness: true,
+              allow_nil: true
 
     belongs_to :updated_by, class_name: 'Person', foreign_key: :updater_id
 
