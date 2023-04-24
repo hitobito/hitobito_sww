@@ -14,8 +14,8 @@ module Sww::Export::Pdf::AddressRenderers
       x_coords = left.to_f.cm - page.margins[:left] if left.present?
 
       x_coords ||= {
-        left: self.class::LEFT_ADDRESS_X,
-        right: self.class::RIGHT_ADDRESS_X
+        left: left_address_x,
+        right: right_address_x
       }[group.settings(:messages_letter).address_position&.to_sym]
       x_coords ||= 0
 
