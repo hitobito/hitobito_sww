@@ -8,8 +8,8 @@
 module Sww::Export::Pdf::Messages::Letter
   class MembershipCard < Export::Pdf::Section
     include Export::Pdf::AddressRenderers
-    LEFT_ADDRESS_X = 10.2.cm
-    RIGHT_ADDRESS_X = 0
+    self.left_address_x = 10.2.cm
+    self.right_address_x = 0
 
     def render(message_recipient = nil, _options = {})
       recipient = fetch_recipient(message_recipient)
