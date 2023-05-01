@@ -1,3 +1,4 @@
+# rubocop:disable all
 ActiveRecord::Base.logger = nil
 
 @duplicates_with_no_email_person_ids = []
@@ -59,3 +60,4 @@ end
 @duplicate_entries = duplicate_entries
 
 puts "There are #{@duplicate_entries.count} Person entries with duplicate sww_cms_profile_id"
+# rubocop:enable all

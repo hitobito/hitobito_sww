@@ -1,3 +1,4 @@
+# rubocop:disable all
 require 'csv'
 require Wagons.find('sww').root.join('db/seeds/support/data_migrator_cms.rb')
 ActiveRecord::Base.logger = nil
@@ -149,3 +150,4 @@ puts "HITOBITO PERSON ID'S WITH INVALID COUNTRY FIXED BY SETTING NIL:"
 puts invalid_country_people.join(',')
 puts "HITOBITO PERSON ID'S WITH INVALID LANGUAGE FIXED BY SETTING de:"
 puts invalid_language_people.join(',')
+# rubocop:enable all

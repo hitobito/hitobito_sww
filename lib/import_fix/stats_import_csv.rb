@@ -1,3 +1,4 @@
+# rubocop:disable all
 require 'csv'
 ActiveRecord::Base.logger = nil
 
@@ -32,3 +33,4 @@ puts "Number of entries in CMS export with valid E-Mails: #{valid_email_entries.
 # valid e-mail addresses and valid password hashes
 valid_email_and_pw_hash_entries = valid_email_entries.select{|r| valid_pw_hashes?(r)}
 puts "Number of entries in CMS export with valid E-Mail and valid Password Hash: #{valid_email_and_pw_hash_entries.count}"
+# rubocop:enable all
