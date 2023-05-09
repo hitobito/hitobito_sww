@@ -11,6 +11,7 @@ inherit_from: ../hitobito/rubocop-must.yml
 
 AllCops:
   Exclude:
+    - lib/import_fix/**/*
     - db/**/*
     - config/**/*
     - bin/**/*
