@@ -14,7 +14,9 @@ module Sww::Person
     add_public_attrs = [:custom_salutation, :magazin_abo_number, :title, :name_add_on,
                         :sww_cms_profile_id]
     Person::PUBLIC_ATTRS.push(*add_public_attrs)
-    Person::INTERNAL_ATTRS << :alabus_id << :member_number << :manual_member_number
+
+    Person::INTERNAL_ATTRS += [:alabus_id, :member_number, :manual_member_number,
+                               :sww_cms_profile_id, :sww_cms_legacy_password_salt]
 
     attr_readonly :alabus_id
     

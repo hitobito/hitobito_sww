@@ -116,6 +116,7 @@ de:
         name_add_on: Namenszusatz
         title: Titel
         email: E-Mail
+        sww_salutation: Anrede
       message:
         membership_card: Mitgliederausweis
         membership_expires_on: Mitgliedschaft gültig bis
