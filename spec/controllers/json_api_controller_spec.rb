@@ -26,12 +26,21 @@ describe JsonApiController do
     end
 
     before do
+      request.headers.merge!(jsonapi_headers)
+    end
+
+    around do |example|
+      previous_endpoint = PersonResource.endpoint
       PersonResource.class_eval do
         self.endpoint_namespace = ''
         primary_endpoint('/json_api')
       end
 
-      request.headers.merge!(jsonapi_headers)
+      example.run
+
+      PersonResource.class_eval do
+        self.endpoint = previous_endpoint
+      end
     end
     
     let(:payload) do
