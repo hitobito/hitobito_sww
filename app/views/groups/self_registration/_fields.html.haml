@@ -9,4 +9,16 @@
 = fields.labeled(:zip_code, t('contactable.fields.zip_town'), nil, class: 'controls-row') do
   = fields.string_field(:zip_code, class: 'span2', maxlength: 10)
   = fields.string_field(:town, class: 'span4')
+= fields.labeled(:country) do
+  .span6.input-span6.shown{style: 'margin-left: 0px'}
+    = country_select('role[new_person]',
+                     'country',
+                     { priority_countries: Settings.countries.prioritized,
+                       selected: fields.object.country,
+                       include_blank: true },
+                     { class: 'chosen-select',
+                       data: { placeholder: ' ',
+                               chosen_no_results: t('global.chosen_no_results'),
+                               typeahead_supported_countries: Settings.addresses.imported_countries } })
+
 = fields.labeled_input_field :birthday, label: t('.birthday')
