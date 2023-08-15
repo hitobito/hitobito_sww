@@ -16,7 +16,7 @@ module Sww::Export::Pdf::AddressRenderers
       x_coords ||= {
         left: left_address_x,
         right: right_address_x
-      }[group.settings(:messages_letter).address_position&.to_sym]
+      }[group.letter_address_position&.to_sym]
       x_coords ||= 0
 
       top = top_position(group)
@@ -27,11 +27,11 @@ module Sww::Export::Pdf::AddressRenderers
     end
 
     def left_position(group)
-      group.settings(:messages_letter).left_address_position
+      group.letter_left_address_position
     end
 
     def top_position(group)
-      group.settings(:messages_letter).top_address_position
+      group.letter_top_address_position
     end
   end
 end

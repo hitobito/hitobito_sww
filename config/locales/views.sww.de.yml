@@ -37,6 +37,8 @@ de:
       layout: Layout
 
   groups:
+    form_tabs:
+      membership_cards: Mitgliederausweis
     self_registration:
       new:
         gender:

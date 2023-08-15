@@ -54,11 +54,11 @@ module Sww::Export::Pdf::Messages::Letter
     end
 
     def left_position(group)
-      group.settings(:membership_card).left_position
+      group.membership_card_left_position
     end
 
     def top_position(group)
-      group.settings(:membership_card).top_position
+      group.membership_card_top_position
     end
   end
 end

@@ -124,9 +124,7 @@ de:
         hide_total: Spende
         membership_card: Mitgliederausweis
         membership_expires_on: Mitgliedschaft gültig bis
-      group_setting:
-        settings:
-          membership_card: Mitgliederausweise
+      group:
         left_position: Abstand von links (cm)
         top_position: Abstand von oben (cm)
         left_address_position: Addressabstand von links (cm)

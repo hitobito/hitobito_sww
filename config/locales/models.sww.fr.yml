@@ -131,9 +131,7 @@ fr:
         hide_total: Donation
         membership_card: Carte de membre
         membership_expires_on: Adhésion valide jusqu'au
-      group_setting:
-        settings:
-          membership_card: Carte de membre
+      group:
         left_position: Distance par rapport à la gauche (cm)
         top_position: Distance à partir du haut (cm)
         left_address_position: Distance de l'adresse par rapport à la gauche (cm)
