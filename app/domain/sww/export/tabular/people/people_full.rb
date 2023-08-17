@@ -13,6 +13,6 @@ module Sww::Export::Tabular::People::PeopleFull
   end
 
   def person_attributes
-    super + [:id, :sww_salutation]
+    super + [:id, :sww_salutation, :member_number, :magazin_abo_number]
   end
 end

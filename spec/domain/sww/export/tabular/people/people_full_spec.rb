@@ -15,6 +15,12 @@ describe Sww::Export::Tabular::People::PeopleFull do
 
   subject { people_list }
 
+  its(:attributes) { should eq [:first_name, :last_name, :company_name, :nickname, :company,
+                                :email, :address, :zip_code, :town, :country, :gender, :birthday,
+                                :additional_information, :language, :custom_salutation, :magazin_abo_number,
+                                :title, :name_add_on, :layer_group, :roles, :tags, :id, :sww_salutation,
+                                :member_number] }
+
   context '#attribute_labels' do
     subject { people_list.attribute_labels }
 
