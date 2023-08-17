@@ -63,7 +63,7 @@ fr:
           daterange_label: Critère (de-à)
           print_date: Date d'impression
           printed_by: Imprimé par
-    form:
+    form_sww:
       membership_card_caption: Carte de membre avec impression
 
     evaluations:
