@@ -8,7 +8,18 @@
 require 'spec_helper'
 
 describe Export::Pdf::Invoice do
-  let(:invoice) { invoices(:invoice) }
+  let(:invoice) do
+    invoices(:invoice).tap do |i|
+      i.payment_slip = :qr
+      i.payee = "Puzzle\nBelpstrasse 37\n3007 Bern" 
+      i.iban = 'CH93 0076 2011 6238 5295 7'
+    end
+  end
+
+  let!(:invoice_config) do
+    invoice.group.layer_group.create_invoice_config!(payee: "Puzzle\nBelpstrasse 37\n3007 Bern",
+                                                     iban: 'CH93 0076 2011 6238 5295 7')
+  end
 
   subject do
     invoice.update!(issued_at: Date.parse('2022-06-15'), due_at: Date.parse('2022-08-01'))
@@ -54,24 +65,168 @@ describe Export::Pdf::Invoice do
                       [436, 467, "Gesamtbetrag"],
                       [505, 467, "0.00 CHF"],
                       [57, 468, "Fällig bis:      01.08.2022"],
-                      [72, 171, "636980692-4"],
-                      [252, 171, "636980692-4"],
-                      [352, 196, "00 00376 80338 90000 00000 00021"],
-                      [7, 116, "00 00376 80338 90000 00000 00021"],
-                      [7, 103, "Max Muster"],
-                      [7, 87, "Belpstrasse 37"],
-                      [7, 71, "3007 Bern"],
-                      [352, 147, "Max Muster"],
-                      [352, 131, "Belpstrasse 37"],
-                      [352, 115, "3007 Bern"],
-                      [220, 45, "042>000063698069200000000000022+ 636980692000004>"]]
+                      [14, 276, "Empfangsschein"],
+                      [14, 251, "Konto / Zahlbar an"],
+                      [14, 239, "CH93 0076 2011 6238 5295 7"],
+                      [14, 228, "Puzzle"],
+                      [14, 216, "Belpstrasse 37"],
+                      [14, 205, "3007 Bern"],
+                      [14, 173, "Zahlbar durch"],
+                      [14, 161, "Max Muster"],
+                      [14, 150, "Belpstrasse 37"],
+                      [14, 138, "3007 Bern"],
+                      [14, 89, "Währung"],
+                      [71, 89, "Betrag"],
+                      [14, 78, "CHF"],
+                      [105, 39, "Annahmestelle"],
+                      [190, 276, "Zahlteil"],
+                      [190, 89, "Währung"],
+                      [247, 89, "Betrag"],
+                      [190, 78, "CHF"],
+                      [346, 278, "Konto / Zahlbar an"],
+                      [346, 266, "CH93 0076 2011 6238 5295 7"],
+                      [346, 255, "Puzzle"],
+                      [346, 243, "Belpstrasse 37"],
+                      [346, 232, "3007 Bern"],
+                      [346, 211, "Referenznummer"],
+                      [346, 200, "00 00376 80338 90000 00000 00021"],
+                      [346, 178, "Zahlbar durch"],
+                      [346, 167, "Max Muster"],
+                      [346, 155, "Belpstrasse 37"],
+                      [346, 144, "3007 Bern"]]
+
       expect(text_with_position).to eq(invoice_text)
     end
+
 
     it 'renders receiver address' do
       expect(text_with_position).to include([57, 688, "Max Muster"],
                                             [57, 676, "Belpstrasse 37"],
                                             [57, 665, "3007 Bern"])
+    end
+  end
+
+  context 'with separators true' do
+    before { invoice_config.update!(separators: true) }
+
+    it 'renders separators' do
+      pdf = Prawn::Document.new(page_size: 'A4',
+                                page_layout: :portrait,
+                                margin: 2.cm)
+
+      slip = ::Export::Pdf::Invoice::PaymentSlipQr.new(pdf, invoice, {})
+      expect(::Export::Pdf::Invoice::PaymentSlipQr).to receive(:new).and_return(slip)
+      expect(slip).to receive(:separators_without_configuration)
+      subject
+    end
+
+    it 'renders everything else regardless' do
+      expect(text_with_position).to eq([[406, 530, "Rechnungsdatum: 15.06.2022"],
+                                        [57, 688, "Max Muster"],
+                                        [57, 676, "Belpstrasse 37"],
+                                        [57, 665, "3007 Bern"],
+                                        [57, 530, "Invoice"],
+                                        [57, 497, "Rechnungsnummer: 636980692-2"],
+                                        [363, 497, "Anzahl"],
+                                        [419, 497, "Preis"],
+                                        [464, 497, "Betrag"],
+                                        [515, 497, "MwSt."],
+                                        [436, 484, "Zwischenbetrag"],
+                                        [505, 484, "0.00 CHF"],
+                                        [436, 467, "Gesamtbetrag"],
+                                        [505, 467, "0.00 CHF"],
+                                        [57, 468, "Fällig bis:      01.08.2022"],
+                                        [14, 276, "Empfangsschein"],
+                                        [14, 251, "Konto / Zahlbar an"],
+                                        [14, 239, "CH93 0076 2011 6238 5295 7"],
+                                        [14, 228, "Puzzle"],
+                                        [14, 216, "Belpstrasse 37"],
+                                        [14, 205, "3007 Bern"],
+                                        [14, 173, "Zahlbar durch"],
+                                        [14, 161, "Max Muster"],
+                                        [14, 150, "Belpstrasse 37"],
+                                        [14, 138, "3007 Bern"],
+                                        [14, 89, "Währung"],
+                                        [71, 89, "Betrag"],
+                                        [14, 78, "CHF"],
+                                        [105, 39, "Annahmestelle"],
+                                        [190, 276, "Zahlteil"],
+                                        [190, 89, "Währung"],
+                                        [247, 89, "Betrag"],
+                                        [190, 78, "CHF"],
+                                        [346, 278, "Konto / Zahlbar an"],
+                                        [346, 266, "CH93 0076 2011 6238 5295 7"],
+                                        [346, 255, "Puzzle"],
+                                        [346, 243, "Belpstrasse 37"],
+                                        [346, 232, "3007 Bern"],
+                                        [346, 211, "Referenznummer"],
+                                        [346, 200, "00 00376 80338 90000 00000 00021"],
+                                        [346, 178, "Zahlbar durch"],
+                                        [346, 167, "Max Muster"],
+                                        [346, 155, "Belpstrasse 37"],
+                                        [346, 144, "3007 Bern"]])
+    end
+  end
+
+  context 'with separators false' do
+    before { invoice_config.update!(separators: false) }
+
+    it 'does not render separators' do
+      pdf = Prawn::Document.new(page_size: 'A4',
+                                page_layout: :portrait,
+                                margin: 2.cm)
+
+      slip = ::Export::Pdf::Invoice::PaymentSlipQr.new(pdf, invoice, {})
+      expect(::Export::Pdf::Invoice::PaymentSlipQr).to receive(:new).and_return(slip)
+      expect(slip).to_not receive(:separators_without_configuration)
+      subject
+    end
+
+    it 'renders everything else regardless' do
+      expect(text_with_position).to eq([[406, 530, "Rechnungsdatum: 15.06.2022"],
+                                        [57, 688, "Max Muster"],
+                                        [57, 676, "Belpstrasse 37"],
+                                        [57, 665, "3007 Bern"],
+                                        [57, 530, "Invoice"],
+                                        [57, 497, "Rechnungsnummer: 636980692-2"],
+                                        [363, 497, "Anzahl"],
+                                        [419, 497, "Preis"],
+                                        [464, 497, "Betrag"],
+                                        [515, 497, "MwSt."],
+                                        [436, 484, "Zwischenbetrag"],
+                                        [505, 484, "0.00 CHF"],
+                                        [436, 467, "Gesamtbetrag"],
+                                        [505, 467, "0.00 CHF"],
+                                        [57, 468, "Fällig bis:      01.08.2022"],
+                                        [14, 276, "Empfangsschein"],
+                                        [14, 251, "Konto / Zahlbar an"],
+                                        [14, 239, "CH93 0076 2011 6238 5295 7"],
+                                        [14, 228, "Puzzle"],
+                                        [14, 216, "Belpstrasse 37"],
+                                        [14, 205, "3007 Bern"],
+                                        [14, 173, "Zahlbar durch"],
+                                        [14, 161, "Max Muster"],
+                                        [14, 150, "Belpstrasse 37"],
+                                        [14, 138, "3007 Bern"],
+                                        [14, 89, "Währung"],
+                                        [71, 89, "Betrag"],
+                                        [14, 78, "CHF"],
+                                        [105, 39, "Annahmestelle"],
+                                        [190, 276, "Zahlteil"],
+                                        [190, 89, "Währung"],
+                                        [247, 89, "Betrag"],
+                                        [190, 78, "CHF"],
+                                        [346, 278, "Konto / Zahlbar an"],
+                                        [346, 266, "CH93 0076 2011 6238 5295 7"],
+                                        [346, 255, "Puzzle"],
+                                        [346, 243, "Belpstrasse 37"],
+                                        [346, 232, "3007 Bern"],
+                                        [346, 211, "Referenznummer"],
+                                        [346, 200, "00 00376 80338 90000 00000 00021"],
+                                        [346, 178, "Zahlbar durch"],
+                                        [346, 167, "Max Muster"],
+                                        [346, 155, "Belpstrasse 37"],
+                                        [346, 144, "3007 Bern"]])
     end
   end
 
@@ -103,17 +258,35 @@ describe Export::Pdf::Invoice do
                                         [436, 467, "Gesamtbetrag"],
                                         [505, 467, "0.00 CHF"],
                                         [57, 468, "Fällig bis:      01.08.2022"],
-                                        [72, 171, "636980692-4"],
-                                        [252, 171, "636980692-4"],
-                                        [352, 196, "00 00376 80338 90000 00000 00021"],
-                                        [7, 116, "00 00376 80338 90000 00000 00021"],
-                                        [7, 103, "Max Muster"],
-                                        [7, 87, "Belpstrasse 37"],
-                                        [7, 71, "3007 Bern"],
-                                        [352, 147, "Max Muster"],
-                                        [352, 131, "Belpstrasse 37"],
-                                        [352, 115, "3007 Bern"],
-                                        [220, 45, "042>000063698069200000000000022+ 636980692000004>"]])
+                                        [14, 276, "Empfangsschein"],
+                                        [14, 251, "Konto / Zahlbar an"],
+                                        [14, 239, "CH93 0076 2011 6238 5295 7"],
+                                        [14, 228, "Puzzle"],
+                                        [14, 216, "Belpstrasse 37"],
+                                        [14, 205, "3007 Bern"],
+                                        [14, 173, "Zahlbar durch"],
+                                        [14, 161, "Max Muster"],
+                                        [14, 150, "Belpstrasse 37"],
+                                        [14, 138, "3007 Bern"],
+                                        [14, 89, "Währung"],
+                                        [71, 89, "Betrag"],
+                                        [14, 78, "CHF"],
+                                        [105, 39, "Annahmestelle"],
+                                        [190, 276, "Zahlteil"],
+                                        [190, 89, "Währung"],
+                                        [247, 89, "Betrag"],
+                                        [190, 78, "CHF"],
+                                        [346, 278, "Konto / Zahlbar an"],
+                                        [346, 266, "CH93 0076 2011 6238 5295 7"],
+                                        [346, 255, "Puzzle"],
+                                        [346, 243, "Belpstrasse 37"],
+                                        [346, 232, "3007 Bern"],
+                                        [346, 211, "Referenznummer"],
+                                        [346, 200, "00 00376 80338 90000 00000 00021"],
+                                        [346, 178, "Zahlbar durch"],
+                                        [346, 167, "Max Muster"],
+                                        [346, 155, "Belpstrasse 37"],
+                                        [346, 144, "3007 Bern"]])
     end
 
     it 'renders receiver address' do
@@ -152,17 +325,35 @@ describe Export::Pdf::Invoice do
                                         [436, 467, "Gesamtbetrag"],
                                         [505, 467, "0.00 CHF"],
                                         [57, 468, "Fällig bis:      01.08.2022"],
-                                        [72, 171, "636980692-4"],
-                                        [252, 171, "636980692-4"],
-                                        [352, 196, "00 00376 80338 90000 00000 00021"],
-                                        [7, 116, "00 00376 80338 90000 00000 00021"],
-                                        [7, 103, "Max Muster"],
-                                        [7, 87, "Belpstrasse 37"],
-                                        [7, 71, "3007 Bern"],
-                                        [352, 147, "Max Muster"],
-                                        [352, 131, "Belpstrasse 37"],
-                                        [352, 115, "3007 Bern"],
-                                        [220, 45, "042>000063698069200000000000022+ 636980692000004>"]])
+                                        [14, 276, "Empfangsschein"],
+                                        [14, 251, "Konto / Zahlbar an"],
+                                        [14, 239, "CH93 0076 2011 6238 5295 7"],
+                                        [14, 228, "Puzzle"],
+                                        [14, 216, "Belpstrasse 37"],
+                                        [14, 205, "3007 Bern"],
+                                        [14, 173, "Zahlbar durch"],
+                                        [14, 161, "Max Muster"],
+                                        [14, 150, "Belpstrasse 37"],
+                                        [14, 138, "3007 Bern"],
+                                        [14, 89, "Währung"],
+                                        [71, 89, "Betrag"],
+                                        [14, 78, "CHF"],
+                                        [105, 39, "Annahmestelle"],
+                                        [190, 276, "Zahlteil"],
+                                        [190, 89, "Währung"],
+                                        [247, 89, "Betrag"],
+                                        [190, 78, "CHF"],
+                                        [346, 278, "Konto / Zahlbar an"],
+                                        [346, 266, "CH93 0076 2011 6238 5295 7"],
+                                        [346, 255, "Puzzle"],
+                                        [346, 243, "Belpstrasse 37"],
+                                        [346, 232, "3007 Bern"],
+                                        [346, 211, "Referenznummer"],
+                                        [346, 200, "00 00376 80338 90000 00000 00021"],
+                                        [346, 178, "Zahlbar durch"],
+                                        [346, 167, "Max Muster"],
+                                        [346, 155, "Belpstrasse 37"],
+                                        [346, 144, "3007 Bern"]])
     end
 
     it 'renders receiver address' do
