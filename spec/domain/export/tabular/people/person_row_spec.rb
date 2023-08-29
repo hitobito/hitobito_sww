@@ -7,10 +7,10 @@
 
 require 'spec_helper'
 
-describe Sww::Export::Tabular::People::PersonFullRow do
+describe Export::Tabular::People::PersonRow do
 
   let(:person) { people(:berner_wanderer) }
-  let(:row) { Sww::Export::Tabular::People::PersonFullRow.new(person) }
+  let(:row) { described_class.new(person) }
 
   subject { row }
 

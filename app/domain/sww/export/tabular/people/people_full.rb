@@ -8,10 +8,6 @@
 module Sww::Export::Tabular::People::PeopleFull
   extend ActiveSupport::Concern
 
-  prepended do
-    self.row_class = Sww::Export::Tabular::People::PersonFullRow
-  end
-
   def person_attributes
     super + [:id, :sww_salutation, :member_number, :magazin_abo_number]
   end

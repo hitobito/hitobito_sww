@@ -12,6 +12,7 @@ module Sww::Export::Pdf::Invoice::ReceiverAddress
     float do
       offset_cursor_from_top 5.1.cm
       bounding_box(address_position(invoice.group), width: bounds.width, height: 80) do
+        receiver_address_data.unshift([invoice.recipient&.sww_salutation]) if invoice.recipient&.gender.present?
         table(receiver_address_data, cell_style: { borders: [], padding: [0, 0, 0, 0] })
       end
     end
