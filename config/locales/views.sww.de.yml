@@ -66,7 +66,7 @@ de:
           daterange_label: Kriterium (von-bis)
           print_date: Druckdatum
           printed_by: Gedruckt von
-    form:
+    form_sww:
       membership_card_caption: Mitgliederausweis mit drucken
 
     evaluations:
