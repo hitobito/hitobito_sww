@@ -131,6 +131,8 @@ de:
         top_position: Abstand von oben (cm)
         left_address_position: Addressabstand von links (cm)
         top_address_position: Addressabstand von oben (cm)
+      invoice_config:
+        separators: Trennlinie
 
   tags:
     categories:

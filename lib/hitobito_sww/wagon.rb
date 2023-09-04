@@ -37,6 +37,7 @@ module HitobitoSww
       Export::Pdf::Invoice::ReceiverAddress.prepend Sww::Export::Pdf::Invoice::ReceiverAddress
       Export::Pdf::Invoice::InvoiceInformation.prepend Sww::Export::Pdf::Invoice::InvoiceInformation
       Export::Pdf::Invoice::Articles.prepend Sww::Export::Pdf::Invoice::Articles
+      Export::Pdf::Invoice::PaymentSlipQr.include Sww::Export::Pdf::Invoice::PaymentSlipQr
       Export::Tabular::Invoices::EvaluationList.include Sww::Export::Tabular::Invoices::EvaluationList
 
       Export::Tabular::People::PeopleFull.prepend Sww::Export::Tabular::People::PeopleFull
@@ -57,6 +58,7 @@ module HitobitoSww
       PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
                                            :name_add_on, :title]
       InvoicesController.permitted_attrs += [:membership_card, :membership_expires_on]
+      InvoiceConfigsController.permitted_attrs += [:separators]
 
       # Since permitted_attrs are an array, it's really hard to expand nested attrs
       # rubocop:disable Metrics/LineLength
