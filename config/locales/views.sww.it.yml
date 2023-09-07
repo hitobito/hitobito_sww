@@ -63,7 +63,7 @@ it:
           daterange_label: ""
           print_date: ""
           printed_by: ""
-    form:
+    form_sww:
       membership_card_caption: ""
 
     evaluations:
