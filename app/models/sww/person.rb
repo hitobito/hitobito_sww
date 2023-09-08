@@ -45,4 +45,8 @@ module Sww::Person
       finance_groups_without_complete_finance_permission
     end
   end
+
+  def sww_salutation
+    I18n.t("groups.self_registration.new.gender.#{gender || 'other'}")
+  end
 end

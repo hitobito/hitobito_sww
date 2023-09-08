@@ -18,7 +18,7 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
 
         pdf.move_down 0.7.cm
 
-        render_address(recipient.address)
+        render_address(recipient)
       end
     end
 
@@ -33,6 +33,13 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
         normal: 'P.P.',
         priority: 'P.P. A'
       }[letter.shipping_method.to_sym]
+    end
+
+    # Has to be overriden as to not use sww_salutation
+    def render_address(recipient, width: ADDRESS_BOX.first, height: ADDRESS_BOX.second)
+      bounding_box([0, cursor], width: width, height: height) do
+        text recipient.address
+      end
     end
   end
 end

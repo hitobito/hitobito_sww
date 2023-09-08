@@ -42,6 +42,7 @@ module HitobitoSww
 
       Export::Tabular::People::PeopleFull.prepend Sww::Export::Tabular::People::PeopleFull
       Export::Pdf::Messages::Letter.prepend Sww::Export::Pdf::Messages::Letter
+      Export::Pdf::Messages::Letter::Header.prepend Sww::Export::Pdf::Messages::Letter::Header
 
       PaperTrail::VersionDecorator.prepend Sww::PaperTrail::VersionDecorator
 
