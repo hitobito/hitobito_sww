@@ -40,9 +40,9 @@ describe Export::Pdf::Messages::Letter do
       it 'renders membership card in addition to letter' do
         expect(text_with_position).to eq([[346, 721, "Mitgliederausweis"],
                                           [346, 710, "42431"],
-                                          [346, 698, "Alice Bar"],
-                                          [511, 710, "Gültig bis"],
-                                          [517, 698, "12.2042"],
+                                          [346, 699, "Alice Bar"],
+                                          [511, 721, "Gültig bis"],
+                                          [517, 710, "12.2042"],
                                           [57, 704, "P.P.  | POST CH AG"],
                                           [57, 682, "Alice Bar"],
                                           [57, 672, "Belpstrasse 37"],
@@ -52,7 +52,6 @@ describe Export::Pdf::Messages::Letter do
                                           [57, 463, "Hallo"],
                                           [57, 442, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
                                           [57, 422, "Bis bald"]])
-
       end
     end
 
@@ -65,9 +64,9 @@ describe Export::Pdf::Messages::Letter do
       it 'renders membership card in addition to letter' do
         expect(text_with_position).to eq([[57, 721, "Mitgliederausweis"],
                                           [57, 710, "42431"],
-                                          [57, 698, "Alice Bar"],
-                                          [222, 710, "Gültig bis"],
-                                          [227, 698, "12.2042"],
+                                          [57, 699, "Alice Bar"],
+                                          [222, 721, "Gültig bis"],
+                                          [227, 710, "12.2042"],
                                           [347, 704, "P.P.  | POST CH AG"],
                                           [347, 682, "Alice Bar"],
                                           [347, 672, "Belpstrasse 37"],
@@ -94,8 +93,8 @@ describe Export::Pdf::Messages::Letter do
         expect(text_with_position).to eq([[283, 693, "Mitgliederausweis"],
                                           [283, 681, "42431"],
                                           [283, 670, "Alice Bar"],
-                                          [449, 682, "Gültig bis"],
-                                          [454, 670, "12.2042"],
+                                          [449, 693, "Gültig bis"],
+                                          [454, 681, "12.2042"],
                                           [85, 695, "P.P.  | POST CH AG"],
                                           [85, 674, "Alice Bar"],
                                           [85, 663, "Belpstrasse 37"],
@@ -105,6 +104,33 @@ describe Export::Pdf::Messages::Letter do
                                           [57, 463, "Hallo"],
                                           [57, 442, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
                                           [57, 422, "Bis bald"]])
+      end
+    end
+
+    context 'name length' do
+      it 'long name renders on lone line' do
+        people(:zuercher_wanderer).update(
+          first_name: "Michelangelo",
+          last_name: "Greiner-Petter-Memm"
+        )
+
+        expect(text_with_position.take(4)).to eq([[346, 721, "Mitgliederausweis"],
+                                                  [346, 710, "42431"],
+                                                  [346, 699, "Michelangelo Greiner-Petter-Memm"],
+                                                  [511, 721, "Gültig bis"]])
+      end
+
+      it 'extreme long name renders on two lines' do
+        people(:zuercher_wanderer).update(
+          first_name: "Captain Fantastic",
+          last_name: "Faster Than Superman Spiderman Batman Wolverine Hulk And The Flash Combined",
+        )
+
+        expect(text_with_position.take(5)).to eq([[346, 721, "Mitgliederausweis"],
+                                                  [346, 710, "42431"],
+                                                  [346, 700, "Captain Fantastic Faster Than Superman Spiderman"],
+                                                  [346, 691, "Batman Wolverine Hulk And The Flash Combined"],
+                                                  [511, 721, "Gültig bis"]])
       end
     end
   end
