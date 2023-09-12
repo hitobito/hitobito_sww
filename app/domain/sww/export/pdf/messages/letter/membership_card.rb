@@ -16,12 +16,15 @@ module Sww::Export::Pdf::Messages::Letter
       offset_cursor_from_top 4.cm
       bounding_box(address_position(model.group), width: 5.7.cm, height: 1.2.cm) do
         text_box(["<b>#{I18n.t('messages.export.pdf.letter.membership_card.title')}</b>",
-                  recipient.member_number,
-                  "<b>#{person_or_company_name(recipient)}</b>"].join("\n"),
+                  recipient.member_number].join("\n"),
                  inline_format: true, size: 10.pt)
 
-        pdf.move_down 0.4.cm
-        bounding_box([5.3.cm, cursor], width: 2.0.cm, height: 1.2.cm) do
+        bounding_box([0.cm, 0.4.cm], width: 7.3.cm, height: 0.6.cm) do
+          text_box(person_or_company_name(recipient),
+                   inline_format: true, size: 10.pt, overflow: :shrink_to_fit, min_font_size: 5.pt)
+        end
+
+        bounding_box([5.3.cm, 1.2.cm], width: 2.0.cm, height: 1.2.cm) do
           text_box([I18n.t('messages.export.pdf.letter.membership_card.valid_until'),
                     membership_expires_on].join("\n"),
           inline_format: true, size: 10.pt, align: :right)
