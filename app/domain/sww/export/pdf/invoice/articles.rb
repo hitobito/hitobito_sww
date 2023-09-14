@@ -36,18 +36,20 @@ module Sww::Export::Pdf::Invoice::Articles
     bounding_box([0, cursor], width: bounds.width) do
       font_size(8) do
         data = total_data
-        pdf.table data, position: :right, cell_style: { borders: [],
-                                                              border_color: 'CCCCCC',
-                                                              border_width: 0.5 } do
+        pdf.table data, position: :right,
+                        column_widths: { 0 => 100 },
+                        cell_style: { borders: [],
+                                      border_color: 'CCCCCC',
+                                      border_width: 0.5 } do
           
-          rows(0..1).padding = [2, 0]
-
           last_row_index = data.size.pred
+          rows(0..last_row_index).padding = [2, 0]
+
           row(last_row_index).font_style = :bold
           row(last_row_index - 2).font_style = :bold
-          row(1..last_row_index).borders = [:bottom, :top]
-          row(1..last_row_index).padding = [5, 0]
-          row(1..last_row_index).column(0).padding = [5, 15, 5, 0]
+          row(last_row_index).borders = [:bottom, :top]
+          row(last_row_index).padding = [5, 0]
+          row(last_row_index).column(0).padding = [5, 15, 5, 0]
 
           column(1).align = :right
         end
@@ -58,9 +60,12 @@ module Sww::Export::Pdf::Invoice::Articles
   def total_data
     decorated = invoice.decorate
     if invoice.hide_total?
-      super[0..super.size - 2] +
+      data = super
+      data.slice!(data.size - 4)
+      data.slice!(data.size - 1)
+      data +
         [
-          [I18n.t('invoices.pdf.subtotal'), decorated.total],
+          [I18n.t("invoices.pdf.#{invoice.payments.any? ? 'amount_open' : 'subtotal'}"), decorated.amount_open],
           [I18n.t('invoices.pdf.donation'), nil],
           [I18n.t('invoices.pdf.total'), nil]
         ]
