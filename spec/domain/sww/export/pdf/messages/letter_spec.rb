@@ -33,7 +33,7 @@ describe Export::Pdf::Messages::Letter do
 
     context 'rendered left' do
       before do
-        letter.group.settings(:messages_letter).address_position = :left
+        letter.group.letter_address_position = :left
         letter.group.save!
       end
 
@@ -57,7 +57,7 @@ describe Export::Pdf::Messages::Letter do
 
     context 'rendered right' do
       before do
-        letter.group.settings(:messages_letter).address_position = :right
+        letter.group.letter_address_position = :right
         letter.group.save!
       end
 
@@ -81,11 +81,11 @@ describe Export::Pdf::Messages::Letter do
 
     context 'rendered at custom position' do
       before do
-        letter.group.settings(:messages_letter).left_address_position = 3 # 3.cm = 85
-        letter.group.settings(:messages_letter).top_address_position = 5
+        letter.group.letter_left_address_position = 3 # 3.cm = 85
+        letter.group.letter_top_address_position = 5
 
-        letter.group.settings(:membership_card).left_position = 10
-        letter.group.settings(:membership_card).top_position = 5
+        letter.group.membership_card_left_position = 10
+        letter.group.membership_card_top_position = 5
         letter.group.save!
       end
 

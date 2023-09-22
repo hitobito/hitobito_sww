@@ -26,7 +26,6 @@ module HitobitoSww
       InvoiceAbility.include Sww::InvoiceAbility
 
       Event.include Sww::Event
-      GroupSetting.include Sww::GroupSetting
       Group.include Sww::Group
       Person.include Sww::Person
 

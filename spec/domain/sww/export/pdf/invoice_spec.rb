@@ -39,7 +39,7 @@ describe Export::Pdf::Invoice do
 
   context 'rendered left' do
     before do
-      invoice.group.settings(:messages_letter).address_position = :left
+      invoice.group.letter_address_position = :left
       invoice.group.save!
     end
 
@@ -232,7 +232,7 @@ describe Export::Pdf::Invoice do
 
   context 'rendered right' do
     before do
-      invoice.group.settings(:messages_letter).address_position = :right
+      invoice.group.letter_address_position = :right
       invoice.group.save!
     end
 
@@ -298,8 +298,8 @@ describe Export::Pdf::Invoice do
 
   context 'rendered at custom position' do
     before do
-      invoice.group.settings(:messages_letter).left_address_position = 3 # 3.cm = 85
-      invoice.group.settings(:messages_letter).top_address_position = 5
+      invoice.group.letter_left_address_position = 3 # 3.cm = 85
+      invoice.group.letter_top_address_position = 5
       invoice.group.save!
     end
 

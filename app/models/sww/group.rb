@@ -11,10 +11,17 @@ module Sww::Group
 
   included do
     # Define additional used attributes
-    # self.used_attributes += [:website, :bank_account, :description]
+    self.used_attributes += [:letter_left_address_position, :letter_top_address_position,
+                             :membership_card_left_position, :membership_card_top_position]
     # self.superior_attributes = [:bank_account]
 
     root_types Group::SchweizerWanderwege
+
+    validates :letter_left_address_position, numericality: { greater_than: 0, allow_nil: true }
+    validates :letter_top_address_position, numericality: { greater_than: 0, allow_nil: true }
+    validates :membership_card_left_position, numericality: { greater_than: 0, allow_nil: true }
+    validates :membership_card_top_position, numericality: { greater_than: 0, allow_nil: true }
+
   end
 
 end
