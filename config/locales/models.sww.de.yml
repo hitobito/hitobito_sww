@@ -130,7 +130,7 @@ de:
         letter_left_address_position: Addressabstand von links (cm)
         letter_top_address_position: Addressabstand von oben (cm)
       invoice_config:
-        separators: Trennlinie
+        separators: Trennlinie auf Einzahlungsschein anzeigen
 
   tags:
     categories:
