@@ -131,6 +131,9 @@ it:
         hide_total: Donazione
         membership_card: ""
         membership_expires_on: ""
+      invoice_config:
+        logo_positions:
+          above_payment_slip: 'Sopra la ricevuta di pagamento'
       group:
         left_position: ""
         top_position: ""

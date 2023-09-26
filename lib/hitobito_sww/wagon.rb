@@ -24,6 +24,7 @@ module HitobitoSww
       # rubocop:disable Metrics/LineLength
       # extend application classes here
       InvoiceAbility.include Sww::InvoiceAbility
+      InvoiceConfig.prepend Sww::InvoiceConfig
 
       Event.include Sww::Event
       Group.include Sww::Group

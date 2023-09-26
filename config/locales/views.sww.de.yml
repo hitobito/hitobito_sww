@@ -32,9 +32,6 @@ de:
   invoice_lists:
     form_invoice_fields_sww:
       membership_card_caption: Mitgliederausweis mit drucken
-  invoice_configs:
-    form_tabs_sww:
-      layout: Layout
 
   groups:
     form_tabs:
