@@ -8,30 +8,27 @@
 require 'spec_helper'
 
 describe Export::Pdf::Invoice do
+  include PdfHelpers
+
   let(:invoice) do
     invoices(:invoice).tap do |i|
-      i.payment_slip = :qr
-      i.payee = "Puzzle\nBelpstrasse 37\n3007 Bern" 
-      i.iban = 'CH93 0076 2011 6238 5295 7'
+      i.update!(
+        payment_slip: :qr,
+        payee: "Puzzle\nBelpstrasse 37\n3007 Bern",
+        iban: 'CH93 0076 2011 6238 5295 7',
+        issued_at: Date.parse('2022-06-15'),
+        due_at: Date.parse('2022-08-01')
+      )
     end
   end
 
-  let!(:invoice_config) do
-    invoice.group.layer_group.create_invoice_config!(payee: "Puzzle\nBelpstrasse 37\n3007 Bern",
-                                                     iban: 'CH93 0076 2011 6238 5295 7')
+  let(:invoice_config) do
+    invoice.invoice_config
   end
 
-  subject do
-    invoice.update!(issued_at: Date.parse('2022-06-15'), due_at: Date.parse('2022-08-01'))
-    pdf = described_class.render(invoice, payment_slip: true, articles: true)
-    PDF::Inspector::Text.analyze(pdf)
-  end
+  let(:pdf) { described_class.render(invoice, payment_slip: true, articles: true) }
 
-  def text_with_position
-    subject.positions.each_with_index.collect do |p, i|
-      p.collect(&:round) + [subject.show_text[i]]
-    end
-  end
+  subject { PDF::Inspector::Text.analyze(pdf) }
 
   def rows_at_position(pos)
     text_with_position.select { _2 == pos }
@@ -423,8 +420,9 @@ describe Export::Pdf::Invoice do
   end
 
   context do
-    let(:invoice) do
-      invoices(:invoice).tap { InvoiceItem.create(invoice: _1, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10) }
+    before do
+      InvoiceItem.create(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+      invoice.reload.recalculate!
     end
 
     it 'renders total when hide_total=false' do
@@ -446,6 +444,74 @@ describe Export::Pdf::Invoice do
       ]
       expect(rows_at_position(415)).to eq [[431, 415, "Spende"]]
       expect(rows_at_position(396)).to eq [[431, 396, "Gesamtbetrag"]]
+    end
+  end
+
+  context 'logo' do
+    before { invoice.invoice_config.separators = false }
+
+    context 'when invoice_config has no logo' do
+      before do
+        expect(invoice.invoice_config.logo).not_to be_attached
+      end
+
+      [:disabled, :left, :right, :above_payment_slip].each do |position|
+        it "with logo_position=#{position} it does not render logo" do
+          invoice.invoice_config.update(logo_position: position)
+          expect(image_positions).to have(1).item # only qr code
+        end
+      end
+    end
+
+    context 'when invoice_config has a logo' do
+      before do
+        invoice.invoice_config.logo.attach fixture_file_upload('images/logo.png')
+        expect(invoice.invoice_config.logo).to be_attached
+      end
+
+      it 'with logo_position=disabled it does not render logo' do
+        invoice.invoice_config.update(logo_position: :disabled)
+        expect(image_positions).to have(1).item # only qr code
+      end
+
+      it 'with logo_position=left it renders logo on the left' do
+        invoice.invoice_config.update(logo_position: :left)
+        expect(image_positions).to have(2).items # logo and qr code
+        expect(image_positions.first).to match(
+          displayed_height: 18_912.618,
+          displayed_width: 108_763.0,
+          height: 417,
+          width: 1000,
+          x: 56.693,
+          y: 739.843
+        )
+      end
+
+      it 'with logo_position=right it renders logo on the right' do
+        invoice.invoice_config.update(logo_position: :right)
+        expect(image_positions).to have(2).items # logo and qr code
+        expect(image_positions.first).to match(
+          displayed_height: 18_912.618,
+          displayed_width: 108_763.0,
+          height: 417,
+          width: 1000,
+          x: 429.824,
+          y: 739.843
+        )
+      end
+
+      it 'with logo_position=above_payment_slip it renders logo above the payment slip' do
+        invoice.invoice_config.update(logo_position: :above_payment_slip)
+        expect(image_positions).to have(2).items # logo and qr code
+        expect(image_positions.first).to match(
+          displayed_height: 18_912.618,
+          displayed_width: 108_763.0,
+          height: 417,
+          width: 1000,
+          x: 56.693,
+          y: 314.646
+        )
+      end
     end
   end
 end
