@@ -36,8 +36,7 @@ module Sww::Export::Pdf::Invoice::Articles
     bounding_box([0, cursor], width: bounds.width) do
       font_size(8) do
         data = total_data
-        pdf.table data, position: :right,
-                        column_widths: { 0 => 100 },
+        pdf.table data, position: :right, column_widths: { 0 => 100 },
                         cell_style: { borders: [],
                                       border_color: 'CCCCCC',
                                       border_width: 0.5 } do
@@ -65,7 +64,8 @@ module Sww::Export::Pdf::Invoice::Articles
       data.slice!(data.size - 1)
       data +
         [
-          [I18n.t("invoices.pdf.#{invoice.payments.any? ? 'amount_open' : 'subtotal'}"), decorated.amount_open],
+          [I18n.t("invoices.pdf.#{invoice.payments.any? ? 'amount_open' : 'subtotal'}"),
+           decorated.amount_open],
           [I18n.t('invoices.pdf.donation'), nil],
           [I18n.t('invoices.pdf.total'), nil]
         ]
