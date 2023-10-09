@@ -165,7 +165,7 @@ describe Export::Pdf::Invoice do
     end
 
     it 'renders total when hide_total=false' do
-      InvoiceItem.create(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+      InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
       invoice.hide_total = false
       expect(rows_at_position(441)).to eq [
         [431, 441, "Gesamtbetrag"],
@@ -177,7 +177,7 @@ describe Export::Pdf::Invoice do
     end
 
     it 'renders subtotal and donation row when hide_total=true' do
-      InvoiceItem.create(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+      InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
       invoice.hide_total = true
       expect(rows_at_position(435)).to eq [
         [431, 435, "Subtotal"],
@@ -250,7 +250,7 @@ describe Export::Pdf::Invoice do
     end
 
     it 'renders total when hide_total=false' do
-      InvoiceItem.create(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+      InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
       invoice.hide_total = false
       expect(rows_at_position(441)).to eq [
         [431, 441, "Gesamtbetrag"],
@@ -262,7 +262,7 @@ describe Export::Pdf::Invoice do
     end
 
     it 'renders subtotal and donation row when hide_total=true' do
-      InvoiceItem.create(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+      InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
       invoice.hide_total = true
       expect(rows_at_position(435)).to eq [
         [431, 435, "Subtotal"],
@@ -421,7 +421,7 @@ describe Export::Pdf::Invoice do
 
   context do
     before do
-      InvoiceItem.create(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+      InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
       invoice.reload.recalculate!
     end
 
