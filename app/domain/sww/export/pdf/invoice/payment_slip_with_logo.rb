@@ -9,17 +9,20 @@ module Sww
   module Export
     module Pdf
       module Invoice
-        # This class combines a payment slip with a logo. If the logo and the payment slip do not fit on the
-        # current page, a new page is created. The logo and the payment slip are always rendered together.
+        # This class combines a payment slip with a logo. If the logo and
+        # the payment slip do not fit on the current page, a new page 
+        # is created. The logo and the payment slip are always
+        # rendered together.
         class PaymentSlipWithLogo < ::Export::Pdf::Section
           attr_reader :options
 
           def render
-            # use a new page if the logo and the payment slip do not fit below the current cursor
+            # use a new page if the logo and the payment slip
+            # do not fit below the current cursor
             pdf.start_new_page if cursor < height
             render_logo
-            # manually move cursor to the bottom of the logo to ensure that the payment slip will not start
-            # on a new page
+            # manually move cursor to the bottom of the logo to ensure
+            # that the payment slip will not start on a new page
             pdf.move_cursor_to payment_slip.height
             payment_slip.render
           end
