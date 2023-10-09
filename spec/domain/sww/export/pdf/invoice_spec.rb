@@ -57,9 +57,9 @@ describe Export::Pdf::Invoice do
                       [419, 497, "Preis"],
                       [464, 497, "Betrag"],
                       [515, 497, "MwSt."],
-                      [436, 484, "Zwischenbetrag"],
+                      [404, 484, "Zwischenbetrag"],
                       [505, 484, "0.00 CHF"],
-                      [436, 467, "Gesamtbetrag"],
+                      [404, 467, "Gesamtbetrag"],
                       [505, 467, "0.00 CHF"],
                       [57, 468, "Fällig bis:      01.08.2022"],
                       [14, 276, "Empfangsschein"],
@@ -130,9 +130,9 @@ describe Export::Pdf::Invoice do
                       [419, 497, "Preis"],
                       [464, 497, "Betrag"],
                       [515, 497, "MwSt."],
-                      [436, 484, "Zwischenbetrag"],
+                      [404, 484, "Zwischenbetrag"],
                       [505, 484, "0.00 CHF"],
-                      [436, 467, "Gesamtbetrag"],
+                      [404, 467, "Gesamtbetrag"],
                       [505, 467, "0.00 CHF"],
                       [57, 468, "Fällig bis:      01.08.2022"],
                       [14, 276, "Empfangsschein"],
@@ -172,9 +172,10 @@ describe Export::Pdf::Invoice do
 
     it 'renders total when hide_total=false' do
       InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
-      invoice.hide_total = false
+      invoice.update!(hide_total: false)
+      invoice.reload.recalculate!
       expect(rows_at_position(441)).to eq [
-        [431, 441, "Gesamtbetrag"],
+        [400, 441, "Gesamtbetrag"],
         [501, 441, "11.00 CHF"]
       ]
       full_text = subject.show_text.join("\n")
@@ -184,13 +185,14 @@ describe Export::Pdf::Invoice do
 
     it 'renders subtotal and donation row when hide_total=true' do
       InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
-      invoice.hide_total = true
-      expect(rows_at_position(435)).to eq [
-        [431, 435, "Subtotal"],
-        [501, 435, "11.00 CHF"]
+      invoice.update!(hide_total: true)
+      invoice.reload.recalculate!
+      expect(rows_at_position(457)).to eq [
+        [400, 457, "Subtotal"],
+        [501, 457, "11.00 CHF"]
       ]
-      expect(rows_at_position(415)).to eq [[431, 415, "Spende"]]
-      expect(rows_at_position(396)).to eq [[431, 396, "Gesamtbetrag"]]
+      expect(rows_at_position(443)).to eq [[400, 443, "Spende"]]
+      expect(rows_at_position(427)).to eq [[400, 427, "Gesamtbetrag"]]
     end
   end
 
@@ -219,9 +221,9 @@ describe Export::Pdf::Invoice do
                       [419, 497, "Preis"],
                       [464, 497, "Betrag"],
                       [515, 497, "MwSt."],
-                      [436, 484, "Zwischenbetrag"],
+                      [404, 484, "Zwischenbetrag"],
                       [505, 484, "0.00 CHF"],
-                      [436, 467, "Gesamtbetrag"],
+                      [404, 467, "Gesamtbetrag"],
                       [505, 467, "0.00 CHF"],
                       [57, 468, "Fällig bis:      01.08.2022"],
                       [14, 276, "Empfangsschein"],
@@ -261,9 +263,10 @@ describe Export::Pdf::Invoice do
 
     it 'renders total when hide_total=false' do
       InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
-      invoice.hide_total = false
+      invoice.update!(hide_total: false)
+      invoice.reload.recalculate!
       expect(rows_at_position(441)).to eq [
-        [431, 441, "Gesamtbetrag"],
+        [400, 441, "Gesamtbetrag"],
         [501, 441, "11.00 CHF"]
       ]
       full_text = subject.show_text.join("\n")
@@ -273,13 +276,14 @@ describe Export::Pdf::Invoice do
 
     it 'renders subtotal and donation row when hide_total=true' do
       InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
-      invoice.hide_total = true
-      expect(rows_at_position(435)).to eq [
-        [431, 435, "Subtotal"],
-        [501, 435, "11.00 CHF"]
+      invoice.update!(hide_total: true)
+      invoice.reload.recalculate!
+      expect(rows_at_position(457)).to eq [
+        [400, 457, "Subtotal"],
+        [501, 457, "11.00 CHF"]
       ]
-      expect(rows_at_position(415)).to eq [[431, 415, "Spende"]]
-      expect(rows_at_position(396)).to eq [[431, 396, "Gesamtbetrag"]]
+      expect(rows_at_position(443)).to eq [[400, 443, "Spende"]]
+      expect(rows_at_position(427)).to eq [[400, 427, "Gesamtbetrag"]]
     end
   end
 
@@ -306,9 +310,9 @@ describe Export::Pdf::Invoice do
                       [419, 497, "Preis"],
                       [464, 497, "Betrag"],
                       [515, 497, "MwSt."],
-                      [436, 484, "Zwischenbetrag"],
+                      [404, 484, "Zwischenbetrag"],
                       [505, 484, "0.00 CHF"],
-                      [436, 467, "Gesamtbetrag"],
+                      [404, 467, "Gesamtbetrag"],
                       [505, 467, "0.00 CHF"],
                       [57, 468, "Fällig bis:      01.08.2022"],
                       [14, 276, "Empfangsschein"],
@@ -377,9 +381,9 @@ describe Export::Pdf::Invoice do
                       [419, 497, "Preis"],
                       [464, 497, "Betrag"],
                       [515, 497, "MwSt."],
-                      [436, 484, "Zwischenbetrag"],
+                      [404, 484, "Zwischenbetrag"],
                       [505, 484, "0.00 CHF"],
-                      [436, 467, "Gesamtbetrag"],
+                      [404, 467, "Gesamtbetrag"],
                       [505, 467, "0.00 CHF"],
                       [57, 468, "Fällig bis:      01.08.2022"],
                       [14, 276, "Empfangsschein"],
@@ -438,30 +442,182 @@ describe Export::Pdf::Invoice do
   end
 
   context do
-    before do
-      InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
-      invoice.reload.recalculate!
+    let(:invoice) do
+      invoices(:invoice).tap do |i|
+        i.update!(
+          payment_slip: :qr,
+          payee: "Puzzle\nBelpstrasse 37\n3007 Bern",
+          iban: 'CH93 0076 2011 6238 5295 7',
+          issued_at: Date.parse('2022-06-15'),
+          due_at: Date.parse('2022-08-01')
+        )
+        InvoiceItem.create(invoice: i, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+        i.reload.recalculate!
+      end
     end
 
-    it 'renders total when hide_total=false' do
-      invoice.hide_total = false
-      expect(rows_at_position(441)).to eq [
-        [431, 441, "Gesamtbetrag"],
-        [501, 441, "11.00 CHF"]
-      ]
-      full_text = subject.show_text.join("\n")
-      expect(full_text).not_to include("Subtotal")
-      expect(full_text).not_to include("Spende")
+    context 'with hide_total=false' do
+      before { invoice.update!(hide_total: false) }
+
+      it 'renders total' do
+        expect(rows_at_position(441)).to eq [
+          [400, 441, "Gesamtbetrag"],
+          [501, 441, "11.00 CHF"]
+        ]
+        full_text = subject.show_text.join("\n")
+        expect(full_text).not_to include("Subtotal")
+        expect(full_text).not_to include("Spende")
+      end
+
+      it 'renders partial payments' do
+        invoice.payments.build(amount: 5, received_at: Time.zone.yesterday)
+        invoice.payments.build(amount: 3, received_at: Time.zone.yesterday)
+        invoice.save!
+        invoice.reload.recalculate!
+        invoice_text = [[406, 530, "Rechnungsdatum: 15.06.2022"],
+                        [57, 688, "Max Muster"],
+                        [57, 676, "Belpstrasse 37"],
+                        [57, 665, "3007 Bern"],
+                        [57, 530, "Invoice"],
+                        [57, 497, "Rechnungsnummer: 636980692-2"],
+                        [363, 497, "Anzahl"],
+                        [419, 497, "Preis"],
+                        [464, 497, "Betrag"],
+                        [515, 497, "MwSt."],
+                        [57, 484, "dings"],
+                        [383, 484, "1"],
+                        [418, 484, "10.00"],
+                        [468, 484, "10.00"],
+                        [513, 484, "10.0 %"],
+                        [400, 470, "Zwischenbetrag"],
+                        [501, 470, "10.00 CHF"],
+                        [400, 457, "MwSt."],
+                        [505, 457, "1.00 CHF"],
+                        [400, 444, "Gesamtbetrag"],
+                        [501, 444, "11.00 CHF"],
+                        [400, 430, "Eingegangene Zahlung"],
+                        [505, 430, "5.00 CHF"],
+                        [400, 417, "Eingegangene Zahlung"],
+                        [505, 417, "3.00 CHF"],
+                        [400, 401, "Offener Betrag"],
+                        [505, 401, "3.00 CHF"],
+                        [57, 401, "Fällig bis:      01.08.2022"],
+                        [14, 276, "Empfangsschein"],
+                        [14, 251, "Konto / Zahlbar an"],
+                        [14, 239, "CH93 0076 2011 6238 5295 7"],
+                        [14, 228, "Puzzle"],
+                        [14, 216, "Belpstrasse 37"],
+                        [14, 205, "3007 Bern"],
+                        [14, 173, "Zahlbar durch"],
+                        [14, 161, "Max Muster"],
+                        [14, 150, "Belpstrasse 37"],
+                        [14, 138, "3007 Bern"],
+                        [14, 89, "Währung"],
+                        [71, 89, "Betrag"],
+                        [14, 78, "CHF"],
+                        [71, 78, "11.00"],
+                        [105, 39, "Annahmestelle"],
+                        [190, 276, "Zahlteil"],
+                        [190, 89, "Währung"],
+                        [247, 89, "Betrag"],
+                        [190, 78, "CHF"],
+                        [247, 78, "11.00"],
+                        [346, 278, "Konto / Zahlbar an"],
+                        [346, 266, "CH93 0076 2011 6238 5295 7"],
+                        [346, 255, "Puzzle"],
+                        [346, 243, "Belpstrasse 37"],
+                        [346, 232, "3007 Bern"],
+                        [346, 211, "Referenznummer"],
+                        [346, 200, "00 00376 80338 90000 00000 00021"],
+                        [346, 178, "Zahlbar durch"],
+                        [346, 167, "Max Muster"],
+                        [346, 155, "Belpstrasse 37"],
+                        [346, 144, "3007 Bern"]]
+
+        text_with_position.each_with_index do |l, i|
+          expect(l).to eq(invoice_text[i])
+        end
+      end
     end
 
-    it 'renders subtotal and donation row when hide_total=true' do
-      invoice.hide_total = true
-      expect(rows_at_position(435)).to eq [
-        [431, 435, "Subtotal"],
-        [501, 435, "11.00 CHF"]
-      ]
-      expect(rows_at_position(415)).to eq [[431, 415, "Spende"]]
-      expect(rows_at_position(396)).to eq [[431, 396, "Gesamtbetrag"]]
+    context 'with hide_total=true' do
+      before { invoice.update!(hide_total: true) }
+      it 'renders subtotal and donation row' do
+        expect(rows_at_position(457)).to eq [
+          [400, 457, "Subtotal"],
+          [501, 457, "11.00 CHF"]
+        ]
+        expect(rows_at_position(443)).to eq [[400, 443, "Spende"]]
+        expect(rows_at_position(427)).to eq [[400, 427, "Gesamtbetrag"]]
+      end
+
+      it 'renders partial payments' do
+        invoice.payments.build(amount: 5, received_at: Time.zone.yesterday)
+        invoice.payments.build(amount: 3, received_at: Time.zone.yesterday)
+        invoice.save!
+        invoice.reload.recalculate!
+        invoice_text = [[406, 530, "Rechnungsdatum: 15.06.2022"],
+                        [57, 688, "Max Muster"],
+                        [57, 676, "Belpstrasse 37"],
+                        [57, 665, "3007 Bern"],
+                        [57, 530, "Invoice"],
+                        [57, 497, "Rechnungsnummer: 636980692-2"],
+                        [363, 497, "Anzahl"],
+                        [419, 497, "Preis"],
+                        [464, 497, "Betrag"],
+                        [515, 497, "MwSt."],
+                        [57, 484, "dings"],
+                        [383, 484, "1"],
+                        [418, 484, "10.00"],
+                        [468, 484, "10.00"],
+                        [513, 484, "10.0 %"],
+                        [400, 470, "Zwischenbetrag"],
+                        [501, 470, "10.00 CHF"],
+                        [400, 457, "MwSt."],
+                        [505, 457, "1.00 CHF"],
+                        [400, 444, "Eingegangene Zahlung"],
+                        [505, 444, "5.00 CHF"],
+                        [400, 430, "Eingegangene Zahlung"],
+                        [505, 430, "3.00 CHF"],
+                        [400, 417, "Offener Betrag"],
+                        [505, 417, "3.00 CHF"],
+                        [400, 404, "Spende"],
+                        [400, 387, "Gesamtbetrag"],
+                        [57, 388, "Fällig bis:      01.08.2022"],
+                        [14, 276, "Empfangsschein"],
+                        [14, 251, "Konto / Zahlbar an"],
+                        [14, 239, "CH93 0076 2011 6238 5295 7"],
+                        [14, 228, "Puzzle"],
+                        [14, 216, "Belpstrasse 37"],
+                        [14, 205, "3007 Bern"],
+                        [14, 173, "Zahlbar durch"],
+                        [14, 161, "Max Muster"],
+                        [14, 150, "Belpstrasse 37"],
+                        [14, 138, "3007 Bern"],
+                        [14, 89, "Währung"],
+                        [71, 89, "Betrag"],
+                        [14, 78, "CHF"],
+                        [105, 39, "Annahmestelle"],
+                        [190, 276, "Zahlteil"],
+                        [190, 89, "Währung"],
+                        [247, 89, "Betrag"],
+                        [190, 78, "CHF"],
+                        [346, 278, "Konto / Zahlbar an"],
+                        [346, 266, "CH93 0076 2011 6238 5295 7"],
+                        [346, 255, "Puzzle"],
+                        [346, 243, "Belpstrasse 37"],
+                        [346, 232, "3007 Bern"],
+                        [346, 211, "Referenznummer"],
+                        [346, 200, "00 00376 80338 90000 00000 00021"],
+                        [346, 178, "Zahlbar durch"],
+                        [346, 167, "Max Muster"],
+                        [346, 155, "Belpstrasse 37"],
+                        [346, 144, "3007 Bern"]]
+
+        text_with_position.each_with_index do |l, i|
+          expect(l).to eq(invoice_text[i])
+        end
+      end
     end
   end
 
