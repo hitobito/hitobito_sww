@@ -35,45 +35,19 @@ module Sww::Export::Pdf::Invoice::Articles
   def sum_box_with_donation_without_total
     bounding_box([0, cursor], width: bounds.width) do
       font_size(8) do
-        pdf.table subtotal_data, position: :right, cell_style: { borders: [],
+        data = total_data
+        pdf.table data, position: :right, cell_style: { borders: [],
                                                               border_color: 'CCCCCC',
                                                               border_width: 0.5 } do
+          
           rows(0..1).padding = [2, 0]
 
-          row(1).font_style = :bold
-          row(3).font_style = :bold
-          row(1..3).borders = [:bottom, :top]
-          row(1..3).padding = [5, 0]
-          row(1..3).column(0).padding = [5, 15, 5, 0]
-
-          column(1).align = :right
-        end
-      end
-    end
-  end
-
-  def subtotal_data(total_i18n_key = 'invoices.pdf.total')
-    decorated = invoice.decorate
-    [
-      [I18n.t('invoices.pdf.cost'), decorated.cost],
-      [I18n.t('invoices.pdf.subtotal'), decorated.total],
-      [I18n.t('invoices.pdf.donation'), nil],
-      [I18n.t(total_i18n_key), nil]
-    ]
-  end
-
-  def total_box # rubocop:disable Metrics/MethodLength
-    bounding_box([0, cursor], width: bounds.width) do
-      font_size(8) do
-        pdf.table total_data, position: :right, cell_style: { borders: [],
-                                                              border_color: 'CCCCCC',
-                                                              border_width: 0.5 } do
-          rows(0..1).padding = [2, 0]
-
-          row(1).font_style = :bold
-          row(1).borders = [:bottom, :top]
-          row(1).padding = [5, 0]
-          row(1).column(0).padding = [5, 15, 5, 0]
+          last_row_index = data.size.pred
+          row(last_row_index).font_style = :bold
+          row(last_row_index - 2).font_style = :bold
+          row(1..last_row_index).borders = [:bottom, :top]
+          row(1..last_row_index).padding = [5, 0]
+          row(1..last_row_index).column(0).padding = [5, 15, 5, 0]
 
           column(1).align = :right
         end
@@ -83,10 +57,16 @@ module Sww::Export::Pdf::Invoice::Articles
 
   def total_data
     decorated = invoice.decorate
-    [
-      [I18n.t('invoices.pdf.cost'), decorated.cost],
-      [I18n.t('invoices.pdf.total'), decorated.total]
-    ]
+    if invoice.hide_total?
+      super[0..super.size - 2] +
+        [
+          [I18n.t('invoices.pdf.subtotal'), decorated.total],
+          [I18n.t('invoices.pdf.donation'), nil],
+          [I18n.t('invoices.pdf.total'), nil]
+        ]
+    else
+      super
+    end
   end
 
   private

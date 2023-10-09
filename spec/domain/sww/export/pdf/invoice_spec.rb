@@ -166,6 +166,29 @@ describe Export::Pdf::Invoice do
                                         [346, 155, "Belpstrasse 37"],
                                         [346, 144, "3007 Bern"]])
     end
+
+    it 'renders total when hide_total=false' do
+      InvoiceItem.create(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+      invoice.hide_total = false
+      expect(rows_at_position(441)).to eq [
+        [431, 441, "Gesamtbetrag"],
+        [501, 441, "11.00 CHF"]
+      ]
+      full_text = subject.show_text.join("\n")
+      expect(full_text).not_to include("Subtotal")
+      expect(full_text).not_to include("Spende")
+    end
+
+    it 'renders subtotal and donation row when hide_total=true' do
+      InvoiceItem.create(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+      invoice.hide_total = true
+      expect(rows_at_position(435)).to eq [
+        [431, 435, "Subtotal"],
+        [501, 435, "11.00 CHF"]
+      ]
+      expect(rows_at_position(415)).to eq [[431, 415, "Spende"]]
+      expect(rows_at_position(396)).to eq [[431, 396, "Gesamtbetrag"]]
+    end
   end
 
   context 'with separators false' do
@@ -227,6 +250,29 @@ describe Export::Pdf::Invoice do
                                         [346, 167, "Max Muster"],
                                         [346, 155, "Belpstrasse 37"],
                                         [346, 144, "3007 Bern"]])
+    end
+
+    it 'renders total when hide_total=false' do
+      InvoiceItem.create(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+      invoice.hide_total = false
+      expect(rows_at_position(441)).to eq [
+        [431, 441, "Gesamtbetrag"],
+        [501, 441, "11.00 CHF"]
+      ]
+      full_text = subject.show_text.join("\n")
+      expect(full_text).not_to include("Subtotal")
+      expect(full_text).not_to include("Spende")
+    end
+
+    it 'renders subtotal and donation row when hide_total=true' do
+      InvoiceItem.create(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+      invoice.hide_total = true
+      expect(rows_at_position(435)).to eq [
+        [431, 435, "Subtotal"],
+        [501, 435, "11.00 CHF"]
+      ]
+      expect(rows_at_position(415)).to eq [[431, 415, "Spende"]]
+      expect(rows_at_position(396)).to eq [[431, 396, "Gesamtbetrag"]]
     end
   end
 
@@ -383,9 +429,9 @@ describe Export::Pdf::Invoice do
 
     it 'renders total when hide_total=false' do
       invoice.hide_total = false
-      expect(rows_at_position(454)).to eq [
-        [431, 454, "Gesamtbetrag"],
-        [501, 454, "11.00 CHF"]
+      expect(rows_at_position(441)).to eq [
+        [431, 441, "Gesamtbetrag"],
+        [501, 441, "11.00 CHF"]
       ]
       full_text = subject.show_text.join("\n")
       expect(full_text).not_to include("Subtotal")
@@ -394,12 +440,12 @@ describe Export::Pdf::Invoice do
 
     it 'renders subtotal and donation row when hide_total=true' do
       invoice.hide_total = true
-      expect(rows_at_position(454)).to eq [
-        [431, 454, "Subtotal"],
-        [501, 454, "11.00 CHF"]
+      expect(rows_at_position(435)).to eq [
+        [431, 435, "Subtotal"],
+        [501, 435, "11.00 CHF"]
       ]
-      expect(rows_at_position(434)).to eq [[431, 434, "Spende"]]
-      expect(rows_at_position(415)).to eq [[431, 415, "Gesamtbetrag"]]
+      expect(rows_at_position(415)).to eq [[431, 415, "Spende"]]
+      expect(rows_at_position(396)).to eq [[431, 396, "Gesamtbetrag"]]
     end
   end
 end
