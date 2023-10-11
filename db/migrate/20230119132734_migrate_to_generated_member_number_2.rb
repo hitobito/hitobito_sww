@@ -10,13 +10,15 @@
 # as the data migration is a one off task.
 class MigrateToGeneratedMemberNumber2 < ActiveRecord::Migration[6.1]
   def up
+    return true unless ActiveRecord::Base.connection.class.to_s == 'ActiveRecord::ConnectionAdapters::Mysql2Adapter'
+
     say "clearing member numbers >= 300'000 and all those of people without active role"
     execute <<~SQL
       UPDATE people
         LEFT OUTER JOIN (
-          SELECT DISTINCT person_id 
-          FROM roles 
-          WHERE deleted_at IS NULL 
+          SELECT DISTINCT person_id
+          FROM roles
+          WHERE deleted_at IS NULL
           OR deleted_at > UTC_TIMESTAMP()
         ) active_roles
         ON people.id = active_roles.person_id
