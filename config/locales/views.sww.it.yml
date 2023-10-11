@@ -34,6 +34,8 @@ it:
       membership_card_caption: ""
 
   groups:
+    form_tabs:
+      membership_cards: ""
     self_registration:
       new:
         gender:

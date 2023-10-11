@@ -124,6 +124,7 @@ it:
         name_add_on: ""
         title: ""
         email: E-mail
+        sww_salutation: ""
       message:
         membership_card: ""
         membership_expires_on: ""
@@ -133,12 +134,13 @@ it:
         membership_expires_on: ""
       invoice_config:
         logo_positions:
-          above_payment_slip: 'Sopra la ricevuta di pagamento'
+          above_payment_slip: ""
+        separators: ""
       group:
-        left_position: ""
-        top_position: ""
-        left_address_position: ""
-        top_address_position: ""
+        membership_card_left_position: ""
+        membership_card_top_position: ""
+        letter_left_address_position: ""
+        letter_top_address_position: ""
 
   tags:
     categories:
