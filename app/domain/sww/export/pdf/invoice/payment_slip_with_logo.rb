@@ -50,7 +50,7 @@ module Sww
           end
 
           def payment_slip
-            @payment_slip ||= ::Export::Pdf::Invoice::PaymentSlipQr.new(pdf, invoice, **options)
+            @payment_slip ||= ::Export::Pdf::Invoice::PaymentSlipQr.new(pdf, invoice, options)
           end
 
           def render_logo

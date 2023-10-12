@@ -51,7 +51,7 @@ namespace :import do
       'Newsletter': { name: 'Newsletter' }
     }
     tag_mappings.each_value do |tag|
-      ActsAsTaggableOn::Tag.upsert(name: tag[:name])
+      ActsAsTaggableOn::Tag.upsert({ name: tag[:name] })
 
       tag.merge!(id: ActsAsTaggableOn::Tag.find_by(name: tag[:name]).id)
     end

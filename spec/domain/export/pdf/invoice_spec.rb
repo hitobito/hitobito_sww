@@ -62,12 +62,12 @@ describe Export::Pdf::Invoice do
         invoice.invoice_config.update(logo_position: :left)
         expect(image_positions).to have(2).items # logo and qr code
         expect(image_positions.first).to match(
-          displayed_height: 18_912.618,
-          displayed_width: 108_763.0,
+          displayed_height: 18_912.75561,
+          displayed_width: 108_763.38,
           height: 417,
           width: 1000,
-          x: 56.693,
-          y: 739.843
+          x: 56.69291,
+          y: 739.84276
         )
       end
 
@@ -75,12 +75,12 @@ describe Export::Pdf::Invoice do
         invoice.invoice_config.update(logo_position: :right)
         expect(image_positions).to have(2).items # logo and qr code
         expect(image_positions.first).to match(
-          displayed_height: 18_912.618,
-          displayed_width: 108_763.0,
+          displayed_height: 18_912.75561,
+          displayed_width: 108_763.38,
           height: 417,
           width: 1000,
-          x: 429.824,
-          y: 739.843
+          x: 429.8237,
+          y: 739.84276
         )
       end
 
@@ -88,12 +88,12 @@ describe Export::Pdf::Invoice do
         invoice.invoice_config.update(logo_position: :above_payment_slip)
         expect(image_positions).to have(2).items # logo and qr code
         expect(image_positions.first).to match(
-          displayed_height: 18_912.618,
-          displayed_width: 108_763.0,
+          displayed_height: 18_912.75561,
+          displayed_width: 108_763.38,
           height: 417,
           width: 1000,
-          x: 56.693,
-          y: 314.646
+          x: 56.69291,
+          y: 314.64567
         )
       end
     end
