@@ -35,7 +35,7 @@ fr:
 
   groups:
     form_tabs:
-      membership_cards: ""
+      membership_cards: Carte de membre
     self_registration:
       new:
         gender:
@@ -66,7 +66,7 @@ fr:
           print_date: Date d'impression
           printed_by: Imprimé par
     form_sww:
-      membership_card_caption: ""
+      membership_card_caption: Imprimer la carte de membre
 
     evaluations:
       show:

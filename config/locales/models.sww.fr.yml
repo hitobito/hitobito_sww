@@ -124,7 +124,7 @@ fr:
         name_add_on: Complément de nom
         title: Titre
         email: E-mail
-        sww_salutation: ""
+        sww_salutation: Salutation
       message:
         membership_card: Carte de membre
         membership_expires_on: Adhésion valide jusqu'au
@@ -134,13 +134,13 @@ fr:
         membership_expires_on: Adhésion valide jusqu'au
       invoice_config:
         logo_positions:
-          above_payment_slip: ""
-        separators: ""
+          above_payment_slip: Au-dessus du bulletin de versement
+        separators: Afficher la ligne de séparation sur le bulletin de versement
       group:
-        membership_card_left_position: ""
-        membership_card_top_position: ""
-        letter_left_address_position: ""
-        letter_top_address_position: ""
+        membership_card_left_position: Carte de membre Distance à partir de la gauche (cm)
+        membership_card_top_position: Carte de membre Distance du haut (cm)
+        letter_left_address_position: Distance d'Address à partir de la gauche (cm)
+        letter_top_address_position: Distance d'address depuis le haut (cm)
 
   tags:
     categories:
