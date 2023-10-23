@@ -1,6 +1,6 @@
 # Hitobito SWW Changelog
 
-## unreleased
+## Version 1.31
 - Bei der Selbstregistrierung kann neu auch das Land ausgefüllt werden (hitobito_sww#140)
 - Rechnungslogo kann über dem Einzahlungsschein gerendert werden (#hitobito_sww#144)
 
