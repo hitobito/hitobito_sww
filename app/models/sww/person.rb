@@ -47,6 +47,6 @@ module Sww::Person
   end
 
   def sww_salutation
-    I18n.t("groups.self_registration.new.gender.#{gender || 'other'}")
+    I18n.t("groups.self_registration.new.gender.#{gender || 'other'}", locale: language)
   end
 end
