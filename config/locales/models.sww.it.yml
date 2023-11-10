@@ -134,7 +134,7 @@ it:
         membership_expires_on: ""
       invoice_config:
         logo_positions:
-          above_payment_slip: Sopra la ricevuta di versamento
+          above_payment_slip: ""
         separators: ""
       group:
         membership_card_left_position: ""
