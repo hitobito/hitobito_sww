@@ -92,4 +92,88 @@ describe Person do
       expect(person.finance_groups).to be_empty
     end
   end
+
+  describe '#sww_salutation' do
+    let(:person) { people(:berner_wanderer) }
+
+    context 'with person language de' do
+      before { person.update(language: :de) }
+
+      context 'with gender other' do
+        before { person.update(gender: nil) }
+
+        it { expect(person.sww_salutation).to eq 'Andere' }
+      end
+
+      context 'with gender f' do
+        before { person.update(gender: 'w') }
+        it { expect(person.sww_salutation).to eq 'Frau' }
+      end
+
+      context 'with gender m' do
+        before { person.update(gender: 'm') }
+        it { expect(person.sww_salutation).to eq 'Herr' }
+      end
+    end
+
+    context 'with person language fr' do
+      before { person.update(language: :fr) }
+
+      context 'with gender other' do
+        before { person.update(gender: nil) }
+
+        it { expect(person.sww_salutation).to eq 'Autre' }
+      end
+
+      context 'with gender f' do
+        before { person.update(gender: 'w') }
+        it { expect(person.sww_salutation).to eq 'Madame' }
+      end
+
+      context 'with gender m' do
+        before { person.update(gender: 'm') }
+        it { expect(person.sww_salutation).to eq 'Monsieur' }
+      end
+    end
+
+    context 'with person language it' do
+      before { person.update(language: :it) }
+
+      context 'with gender other' do
+        before { person.update(gender: nil) }
+
+        it { expect(person.sww_salutation).to eq 'Altro' }
+      end
+
+      context 'with gender f' do
+        before { person.update(gender: 'w') }
+        it { expect(person.sww_salutation).to eq 'Signora' }
+      end
+
+      context 'with gender m' do
+        before { person.update(gender: 'm') }
+        it { expect(person.sww_salutation).to eq 'Signor' }
+      end
+    end
+
+    context 'with person language en' do
+      before { person.update(language: :en) }
+
+      context 'with gender other' do
+        before { person.update(gender: nil) }
+
+        it { expect(person.sww_salutation).to eq 'Andere' }
+      end
+
+      context 'with gender f' do
+        before { person.update(gender: 'w') }
+        it { expect(person.sww_salutation).to eq 'Frau' }
+      end
+
+      context 'with gender m' do
+        before { person.update(gender: 'm') }
+        it { expect(person.sww_salutation).to eq 'Herr' }
+      end
+    end
+  end
 end
