@@ -1,9 +1,0 @@
-.selfregister-conditions
-  .title
-    = t('.terms_of_use_title')
-  = sanitize(t('.terms_of_use_text', link: link_to_sww_terms_of_use), tags: ['a'], attributes: %w(target href))
-
-.selfregister-conditions
-  .title
-    = t('.privacy_title')
-  = sanitize(t('.privacy_text', link: link_to_sww_privacy), tags: ['a'], attributes: %w(target href))
