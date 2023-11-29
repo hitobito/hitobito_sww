@@ -64,6 +64,7 @@ RSpec.describe PersonResource, type: :resource do
       let!(:updater_person) { Fabricate(Group::GremiumProjektgruppe::Mitglied.name, group: groups(:berner_gremium)).person }
       let!(:updated_person) { Fabricate(:person, updater_id: updater_person.id) }
       let!(:role) { Fabricate(Group::GremiumProjektgruppe::Mitglied.name, person: updated_person, group: groups(:berner_gremium)) }
+      let(:person) { updater_person } # required by core ResourceSpecHelper which is included for resource specs
 
       before do
         params[:filter] = { id: updated_person.id.to_s }
