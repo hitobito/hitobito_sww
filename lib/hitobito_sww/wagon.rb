@@ -30,6 +30,8 @@ module HitobitoSww
       Group.include Sww::Group
       Person.include Sww::Person
 
+      SelfRegistration::MainPerson.prepend Sww::SelfRegistration::MainPerson
+
       PersonResource.include Sww::PersonResource
 
       Export::Pdf::AddressRenderers.include Sww::Export::Pdf::AddressRenderers
@@ -50,7 +52,6 @@ module HitobitoSww
       StandardFormBuilder.include Sww::StandardFormBuilder
 
       Invoices::EvaluationsController.prepend Sww::Invoices::EvaluationsController
-      Groups::SelfRegistrationController.prepend Sww::Groups::SelfRegistrationController
 
       JsonApiController.include Sww::JsonApiController
 
