@@ -44,11 +44,12 @@ fr:
           other: Autre
       create:
         email_taken: L'e-mail est déjà utilisé. Connectez-vous ou enregistrez-vous avec une autre adresse e-mail.
-      main_person:
+      fields:
         birthday: Date de naissance
         email: E-mail
         salutation: Formule d'appel
         street_house_nr: "Rue, n°"
+      conditions_sww:
         terms_of_use_title: Conditions générales
         terms_of_use_text: "En cliquant sur «Créer un compte», vous acceptez les %{link} de Suisse Rando."
         terms_of_use_link: "https://www.suisse-rando.ch/fr/cgp"

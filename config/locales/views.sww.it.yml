@@ -44,11 +44,12 @@ it:
           other: Altro
       create:
         email_taken: L'e-mail è già in uso. Accedere o registrarsi con un altro indirizzo e-mail.
-      main_person:
+      fields:
         birthday: Data di nascita
         email: E-mail
         salutation: Saluto
         street_house_nr: "Via, n."
+      conditions_sww:
         terms_of_use_title: Condizioni generali
         terms_of_use_text: "Cliccando su «Crea un account», accetti le %{link} dei Sentieri Svizzeri."
         terms_of_use_link: "https://www.sentieri-svizzeri.ch/it/condizioniduso"
