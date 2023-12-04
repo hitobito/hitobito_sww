@@ -44,20 +44,19 @@ it:
           other: Altro
       create:
         email_taken: L'e-mail è già in uso. Accedere o registrarsi con un altro indirizzo e-mail.
-      fields:
-        birthday: Data di nascita
-        email: E-mail
-        salutation: Saluto
-        street_house_nr: "Via, n."
-      conditions_sww:
-        terms_of_use_title: Condizioni generali
-        terms_of_use_text: "Cliccando su «Crea un account», accetti le %{link} dei Sentieri Svizzeri."
-        terms_of_use_link: "https://www.sentieri-svizzeri.ch/it/condizioniduso"
-        terms_of_use_link_name: Condizioni generali
-        privacy_title: Protezione dei dati
-        privacy_text: "Ulteriori informazioni su come i Sentieri Svizzeri raccolgono, utilizzano, divulganoe proteggono i tuoi dati personali sono disponibili nella sezione «%{link}» dei Sentieri Svizzeri."
-        privacy_link: "https://www.sentieri-svizzeri.ch/it/protezionideidati"
-        privacy_link_name: Protezione dei dati
+      main_person:
+        birthday: ""
+        email: ""
+        salutation: ""
+        street_house_nr: ""
+        terms_of_use_title: ""
+        terms_of_use_text: ""
+        terms_of_use_link: ""
+        terms_of_use_link_name: ""
+        privacy_title: ""
+        privacy_text: ""
+        privacy_link: ""
+        privacy_link_name: ""
   invoices:
     export:
       tabular:

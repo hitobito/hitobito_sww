@@ -44,20 +44,19 @@ fr:
           other: Autre
       create:
         email_taken: L'e-mail est déjà utilisé. Connectez-vous ou enregistrez-vous avec une autre adresse e-mail.
-      fields:
-        birthday: Date de naissance
-        email: E-mail
-        salutation: Formule d'appel
-        street_house_nr: "Rue, n°"
-      conditions_sww:
-        terms_of_use_title: Conditions générales
-        terms_of_use_text: "En cliquant sur «Créer un compte», vous acceptez les %{link} de Suisse Rando."
-        terms_of_use_link: "https://www.suisse-rando.ch/fr/cgp"
-        terms_of_use_link_name: Conditions générales
-        privacy_title: Confidentialité
-        privacy_text: "Pour en savoir plus sur la manière dont Suisse Rando collecte, utilise, divulgue et protège vos données personnelles, veuillez consulter la %{link} de Suisse Rando."
-        privacy_link: "http://www.suisse-rando.ch/fr/confidentialite"
-        privacy_link_name: "Politique de confidentialité "
+      main_person:
+        birthday: ""
+        email: ""
+        salutation: ""
+        street_house_nr: ""
+        terms_of_use_title: ""
+        terms_of_use_text: ""
+        terms_of_use_link: ""
+        terms_of_use_link_name: ""
+        privacy_title: ""
+        privacy_text: ""
+        privacy_link: ""
+        privacy_link_name: ""
   invoices:
     export:
       tabular:
