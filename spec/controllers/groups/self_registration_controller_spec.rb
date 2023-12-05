@@ -19,13 +19,13 @@ describe Groups::SelfRegistrationController do
       expect do
         post :create, params: {
           group_id: group.id,
-          role: {
-            group_id: group.id,
-            new_person: { first_name: 'Bob',
-                          last_name: 'Miller', 
-                          email: 'bob.miller@example.com',
-                          street: 'Belpstrasse',
-                          house_number: '37' }
+          self_registration: {
+            main_person_attributes: { first_name: 'Bob',
+                                      gender: 'm',
+                                      last_name: 'Miller', 
+                                      email: 'bob.miller@example.com',
+                                      street: 'Belpstrasse',
+                                      house_number: '37' }
           }
         }
       end.to change { Person.count }.by(1)

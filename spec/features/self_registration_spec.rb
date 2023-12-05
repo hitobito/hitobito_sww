@@ -72,8 +72,8 @@ describe :self_registration, js: true do
       person.password = person.password_confirmation = 'really_b4dPassw0rD'
       person.save!
 
-      fill_in 'E-Mail', with: 'max.muster@hitobito.example.com'
-      fill_in 'Passwort', with: 'really_b4dPassw0rD'
+      fill_in 'person_login_identity', with: 'max.muster@hitobito.example.com'
+      fill_in 'person_password', with: 'really_b4dPassw0rD'
 
       click_button 'Anmelden'
 

@@ -10,27 +10,28 @@ module Sww::SelfRegistration::MainPerson
   extend ActiveSupport::Concern
 
   prepended do
+    self.required_attrs = [
+      :gender, :first_name, :last_name, :email
+    ]
+
     self.attrs += [
       :first_name, :last_name, :company_name, :company,
       :birthday,
       :street, :house_number,
       :gender,
       :email,
-      :address, :zip_code, :town, :country,
+      :street, :house_number, :zip_code, :town, :country,
     ]
-
-    self.required_attrs = [
-      :gender, :first_name, :last_name, :email
-    ]
-
-    attr_accessor(*attrs) # needs to be called for new attr accessors to be created
   end
 
   def person
-    street = attributes.delete(:street)
-    house_number = attributes.delete(:house_number)
-    address = [street, house_number].compact.join(' ')
-    Person.new(attributes.merge(address: address))
+    @person ||= begin
+                  street = attributes['street']
+                  house_number = attributes['house_number']
+                  address = [street, house_number].compact.join(' ')
+                  Person.new(attributes.except('street', 'house_number')
+                                       .merge('address' => address))
+                end
   end
 
   def gender_options
@@ -38,10 +39,6 @@ module Sww::SelfRegistration::MainPerson
   end
 
   private
-
-  def attributes
-    @attributes ||= super
-  end
 
   def t(key)
     I18n.t(key, scope: 'groups.self_registration.new')
