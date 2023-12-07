@@ -1,37 +1,41 @@
 = f.fields_for(:main_person_attributes, f.object.main_person) do |fields|
   = render('shared/error_messages', errors: f.object.main_person.errors, object: f.object.main_person)
 
-  = fields.labeled_collection_select :gender, f.object.main_person.gender_options, :first, :last, label: t('.salutation'), required: true
+  = fields.labeled_collection_select :gender, f.object.main_person.gender_options, :first, :last, { label: t('.salutation'), required: true }, class: "form-select form-select-sm"
   = fields.labeled_input_field :first_name, required: true
   = fields.labeled_input_field :last_name, required: true
   = fields.labeled_input_field :company_name
   = fields.labeled_boolean_field :company
-  = fields.labeled_input_field :email, label: t('.email'), help_inline: t('people.email_field.used_as_login'), required: true
-  = fields.labeled(:street, t('.street_house_nr'), nil, class: 'controls-row') do
-    = fields.input_field(:street, class: 'span5')
-    = fields.input_field(:house_number, class: 'span1')
-  = fields.labeled(:zip_code, t('contactable.fields.zip_town'), nil, class: 'controls-row') do
-    = fields.string_field(:zip_code, class: 'span2', maxlength: 10)
-    = fields.string_field(:town, class: 'span4')
+  = fields.labeled_input_field :email, label: t('.email'), help_inline: t('people.email_field.used_as_login'), required: true, class:'d-inline'
+  = fields.labeled(:street, t('.street_house_nr'), nil, class: 'row') do
+    .col-3
+      = fields.input_field(:street)
+    .col-1
+      = fields.input_field(:house_number)
+  = fields.labeled(:zip_code, t('contactable.fields.zip_town'), nil, class: 'row') do
+    .col-1
+      = fields.string_field(:zip_code, maxlength: 10)
+    .col-3
+      = fields.string_field(:town)
   = fields.labeled(:country) do
-    .span6.input-span6.shown{style: 'margin-left: 0px'}
+    .shown.ms-0 
       = fields.country_select('country',
                       { priority_countries: Settings.countries.prioritized,
                         selected: fields.object.country,
-                        include_blank: true },
-                      { class: 'chosen-select',
+                        include_blank: "" },
+                      { class: 'form-select form-select-sm tom-select',
                         data: { placeholder: ' ',
                                 chosen_no_results: t('global.chosen_no_results'),
                                 typeahead_supported_countries: Settings.addresses.imported_countries } })
 
   = fields.labeled_date_field :birthday, label: t('.birthday')
 
-  .selfregister-conditions
+  .selfregister-conditions.allign-with-form
     .title
       = t('.terms_of_use_title')
     = sanitize(t('.terms_of_use_text', link: link_to_sww_terms_of_use), tags: ['a'], attributes: %w(target href))
 
-  .selfregister-conditions
+  .selfregister-conditions.allign-with-form
     .title
       = t('.privacy_title')
     = sanitize(t('.privacy_text', link: link_to_sww_privacy), tags: ['a'], attributes: %w(target href))
@@ -39,6 +43,6 @@
   = field_set_tag(nil, class: 'privacy-policy-fields') do
     = render('people/privacy_policy_acceptance_field', f: fields, policy_finder: policy_finder)
 
-.btn-toolbar.bottom
+.btn-toolbar.bottom.allign-with-form
   = c.next_button
 
