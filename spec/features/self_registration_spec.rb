@@ -31,9 +31,9 @@ describe :self_registration, js: true do
     fill_in 'self_registration_main_person_attributes_zip_code', with: '8000'
     fill_in 'self_registration_main_person_attributes_town', with: 'Zürich'
     fill_in 'Geburtsdatum', with: '01.01.1980'
-    country_selector = "#self_registration_main_person_attributes_country_chosen"
+    country_selector = "#self_registration_main_person_attributes_country"
     find("#{country_selector}").click
-    find("#{country_selector} ul.chosen-results li.active-result", text: 'Vereinigte Staaten').click
+    find("#{country_selector} option", text: 'Vereinigte Staaten').click
     yield if block_given?
   end
 

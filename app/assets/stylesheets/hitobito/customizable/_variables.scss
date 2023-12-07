@@ -22,84 +22,85 @@ $sww_yellow_lighter: #fff5bf;
 // Grays
 // -------------------------
 $black: $sww_black !default;
-$grayDarker: $sww_gray_dark !default;
-$grayDark: darken($sww_gray, 10%) !default;
+$gray-darker: $sww_gray_dark !default;
+$gray-dark: darken($sww_gray, 10%) !default;
 $gray: $sww_gray_dark !default;
-$grayLight: lighten($sww_gray, 10%) !default;
-$grayLighter: $sww_gray_light !default;
+$gray-light: lighten($sww_gray, 10%) !default;
+$gray-lighter: $sww_gray_light !default;
 $white: $sww_white !default;
 
 // Colors
 // ----------------------------
 $blue: $sww_black !default;
-$blueDark: darken($sww_yellow, 5%) !default;
+$blue-dark: darken($sww_yellow, 5%) !default;
 $green: #8db850 !default;
-$greenDark: darken($green, 10%) !default;
+$green-dark: darken($green, 10%) !default;
 
 $orange: lighten($sww_red_light, 10%) !default;
-$orangeDark: $sww_red_light;
+$orange-dark: $sww_red_light;
 $purple: $sww_yellow;
-$purpleDark: darken($purple, 5%) !default;
+$purple-dark: darken($purple, 5%) !default;
 
 $red: $sww_red !default;
 
-$textColor: $sww_black !default;
-$borderColor: $grayLight !default;
+$text-color: $sww_black !default;
+$border-color: $gray-light !default;
 
-$pageBackground: $sww_gray;
-$contentBackground: $grayLight;
-$footerBackground: $sww_yellow;
-$bodyBackground: $footerBackground !default;
+$page-background: $sww_gray;
+$content-background: $gray-light;
+$footer-background: $sww_yellow;
+$body-background: $footer-background !default;
 
-$focusColor: $sww_red;
-$shadowColor: darken($pageBackground, 10%);
-$linkColor: $black !default;
-$linkColorHover: $sww_red !default;
+$focus-color: $sww_red;
+$shadow-color: darken($page-background, 10%);
+$link-color: $black !default;
+$link-color-hover: $sww_red !default;
 
-$footerColor: $white;
-$footerColorHover: $white;
+$footer-color: $white;
+$footer-color-hover: $white;
 
-$tableColorHover: lighten($purple, 50%);
+$table-color-hover: lighten($purple, 50%);
 
 // Typography
 // -------------------------
-$sansFontFamily: "PT Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$headingFontFamily: $sansFontFamily !default;
-$baseFontFamily: $sansFontFamily !default;
-$headingsFontWeight: normal !default; // instead of browser default, bold
+$sans-font-family: "PT Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$heading-font-family: $sans-font-family !default;
+$base-font-family: $sans-font-family !default;
+$headings-font-weight: normal !default; // instead of browser default, bold
 
 // Decoration
 // -------------------------
-$borderRadius: 6px;
+$border-radius: 6px;
 
 // Rhythm
 // -------------------------
-$vSpace: 24px;
+$v-space: 24px;
 
 // FLUID GRID
 // --------------------------------------------------
 
 // Default
 // -------------------------
-$fluidGridColumnWidth: 6.382978723% !default;
-$fluidGridGutterWidth: 2.127659574% !default;
+$fluid-grid-column-width: 6.382978723% !default;
+$fluid-grid-gutter-width: 2.127659574% !default;
 
 // Portrait tablet to default desktop
 // -------------------------
-$fluidGridColumnWidthTablet: 5.801104972% !default;
-$fluidGridGutterWidthTablet: 2.762430939% !default;
+$fluid-grid-column-width-tablet: 5.801104972% !default;
+$fluid-grid-gutter-width-tablet: 2.762430939% !default;
 
 // Large desktop and up
 // -------------------------
-$fluidGridColumnWidthLarge: 5.982905983% !default;
-$fluidGridGutterWidthLarge: 2.564102564% !default;
+$fluid-grid-column-width-large: 5.982905983% !default;
+$fluid-grid-gutter-width-large: 2.564102564% !default;
 
 // RESPONSIVE DESIGN
 // --------------------------------------------------
 
 // Media widths
 // -------------------------
-$mediaPhone: 480px !default;
-$mediaTablet: 768px !default;
-$mediaDesktop: 980px !default;
-$mediaLarge: 1200px !default; // and upper
+$media-phone: 480px !default;
+$media-tablet: 768px !default;
+$media-desktop: 980px !default;
+$media-large: 1200px !default; // and upper
+
