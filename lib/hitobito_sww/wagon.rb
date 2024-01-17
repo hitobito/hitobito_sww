@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2012-2022, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2012-2024, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -20,7 +20,7 @@ module HitobitoSww
       #{config.root}/app/jobs
     ]
 
-    config.to_prepare do
+    config.to_prepare do # rubocop:disable Metrics/BlockLength
       # rubocop:disable Metrics/LineLength
       # extend application classes here
       InvoiceAbility.include Sww::InvoiceAbility
@@ -63,11 +63,9 @@ module HitobitoSww
       InvoiceConfigsController.permitted_attrs += [:separators]
 
       # Since permitted_attrs are an array, it's really hard to expand nested attrs
-      # rubocop:disable Metrics/LineLength
       invoice_lists_invoice_permitted_attrs_hash = InvoiceListsController.permitted_attrs.find { |attr| attr.is_a?(Hash) && attr.keys.include?(:invoice) }
       invoice_lists_invoice_permitted_attrs = invoice_lists_invoice_permitted_attrs_hash[:invoice]
       invoice_lists_invoice_permitted_attrs_hash.merge!(invoice: invoice_lists_invoice_permitted_attrs + [:membership_card, :membership_expires_on])
-      # rubocop:enable Metrics/LineLength
 
       MailingListAbility.include Sww::MailingListAbility
 
