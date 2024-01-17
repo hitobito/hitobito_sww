@@ -54,7 +54,7 @@ fr:
       create:
         email_taken: L'e-mail est déjà utilisé. Connectez-vous ou enregistrez-vous avec une autre adresse e-mail.
       form:
-        has_account: "Avez-vous déjà un compte?"
+        has_account: Avez-vous déjà un compte?
         to_login_page: Enregistrer
       main_person:
         birthday: Date de naissance
