@@ -28,6 +28,15 @@ de:
       oauth_info:
         sign_in: 'Anmelden'
         info: 'Bitte melden Sie sich an, um weiter zu den Schweizer Wanderwegen zu gelangen.'
+    mailer:
+      reset_password_instructions:
+        subject: Passwort setzen
+        body:
+          greeting: Guten Tag
+          reset_instructions:
+            with_password: 'Sie können Ihr Passwort unter folgendem Link zurücksetzen:'
+            without_password_html: 'Herzlich Willkommen! Bitte setzen Sie Ihr Passwort unter folgendem Link:'
+          ignore_information_html: 'Wenn Sie Ihr Passwort nicht ändern wollen, können Sie diese E-Mail ignorieren.<br><br>Das Passwort ändert sich nicht, ohne dass Sie auf dem obigen Link gehen und dort ein neues Passwort vergeben.'
 
   invoice_lists:
     form_invoice_fields_sww:
