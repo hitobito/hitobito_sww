@@ -65,7 +65,7 @@ it:
         terms_of_use_text: "Cliccando su «Crea un account», accetti le %{link} dei Sentieri Svizzeri."
         terms_of_use_link: "https://www.sentieri-svizzeri.ch/it/condizioniduso"
         terms_of_use_link_name: Condizioni generali
-        privacy_title: ""
+        privacy_title: Protezione dei dati
         privacy_text: "Ulteriori informazioni su come i Sentieri Svizzeri raccolgono, utilizzano, divulganoe proteggono i tuoi dati personali sono disponibili nella sezione «%{link}» dei Sentieri Svizzeri."
         privacy_link: "https://www.sentieri-svizzeri.ch/it/protezionideidati"
         privacy_link_name: Protezione dei dati

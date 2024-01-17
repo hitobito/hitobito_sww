@@ -54,8 +54,8 @@ fr:
       create:
         email_taken: L'e-mail est déjà utilisé. Connectez-vous ou enregistrez-vous avec une autre adresse e-mail.
       form:
-        has_account: ""
-        to_login_page: ""
+        has_account: Avez-vous déjà un compte?
+        to_login_page: Enregistrer
       main_person:
         birthday: Date de naissance
         email: E-mail
@@ -65,7 +65,7 @@ fr:
         terms_of_use_text: "En cliquant sur «Créer un compte», vous acceptez les %{link} de Suisse Rando."
         terms_of_use_link: "https://www.suisse-rando.ch/fr/cgp"
         terms_of_use_link_name: Conditions générales
-        privacy_title: ""
+        privacy_title: Déclaration de protection des données
         privacy_text: "Pour en savoir plus sur la manière dont Suisse Rando collecte, utilise, divulgue et protège vos données personnelles, veuillez consulter la %{link} de Suisse Rando."
         privacy_link: "http://www.suisse-rando.ch/fr/confidentialite"
         privacy_link_name: Politique de confidentialité
