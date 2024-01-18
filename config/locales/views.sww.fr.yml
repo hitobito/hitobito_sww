@@ -1,4 +1,4 @@
-#  Copyright (c) 2022, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2022-2024, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -28,6 +28,15 @@ fr:
       oauth_info:
         sign_in: 'Connexion'
         info: 'Veuillez vous connecter pour accéder a Suisse Rando.'
+    mailer:
+      reset_password_instructions:
+        subject: Initialiser mot de passe
+        body:
+          greeting: "Bonjour,"
+          reset_instructions:
+            with_password: 'Vous pouvez réinitialiser votre mot de passe en suivant le lien suivant.'
+            without_password_html: 'Bienvenue! Veuillez définir votre mot de passe en utilisant le lien suivant:'
+          ignore_information_html: 'Si vous ne souhaitez pas changer votre mot de passe, vous pouvez ignorer cet e-mail.<br><br>Le mot de passe ne sera pas modifié tant que vous n''aurez pas cliqué sur le lien ci-dessus et défini un nouveau mot de passe.'
 
   invoice_lists:
     form_invoice_fields_sww:
@@ -44,19 +53,22 @@ fr:
           other: Autre
       create:
         email_taken: L'e-mail est déjà utilisé. Connectez-vous ou enregistrez-vous avec une autre adresse e-mail.
+      form:
+        has_account: "Avez-vous déjà un compte?"
+        to_login_page: Enregistrer
       main_person:
-        birthday: ""
-        email: ""
-        salutation: ""
-        street_house_nr: ""
-        terms_of_use_title: ""
-        terms_of_use_text: ""
-        terms_of_use_link: ""
-        terms_of_use_link_name: ""
-        privacy_title: ""
-        privacy_text: ""
-        privacy_link: ""
-        privacy_link_name: ""
+        birthday: Date de naissance
+        email: E-mail
+        salutation: Formule d'appel
+        street_house_nr: "Rue, n°"
+        terms_of_use_title: Conditions générales
+        terms_of_use_text: "En cliquant sur «Créer un compte», vous acceptez les %{link} de Suisse Rando."
+        terms_of_use_link: "https://www.suisse-rando.ch/fr/cgp"
+        terms_of_use_link_name: Conditions générales
+        privacy_title: Déclaration de protection des données
+        privacy_text: "Pour en savoir plus sur la manière dont Suisse Rando collecte, utilise, divulgue et protège vos données personnelles, veuillez consulter la %{link} de Suisse Rando."
+        privacy_link: "http://www.suisse-rando.ch/fr/confidentialite"
+        privacy_link_name: Politique de confidentialité
   invoices:
     export:
       tabular:
