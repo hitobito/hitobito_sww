@@ -1,4 +1,4 @@
-#  Copyright (c) 2022, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2022-2024, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -28,6 +28,15 @@ fr:
       oauth_info:
         sign_in: 'Connexion'
         info: 'Veuillez vous connecter pour accéder a Suisse Rando.'
+    mailer:
+      reset_password_instructions:
+        subject: ""
+        body:
+          greeting: ""
+          reset_instructions:
+            with_password: ''
+            without_password_html: ''
+          ignore_information_html: ''
 
   invoice_lists:
     form_invoice_fields_sww:
@@ -44,6 +53,9 @@ fr:
           other: Autre
       create:
         email_taken: L'e-mail est déjà utilisé. Connectez-vous ou enregistrez-vous avec une autre adresse e-mail.
+      form:
+        has_account: ""
+        to_login_page: ""
       main_person:
         birthday: Date de naissance
         email: E-mail
