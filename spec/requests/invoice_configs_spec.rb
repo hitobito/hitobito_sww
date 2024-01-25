@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2023, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2023-2024, Schweizer Wanderwege. This file is part of
 #  hitobito_die_mitte and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_die_mitte.
@@ -27,7 +27,7 @@ describe "InvoiceConfigs" do
 
     it "can change separator field" do
       get group_invoice_config_path(group_id: group.id)
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(200) # might fail due to missing webpacker-compile
       expect(page.find("dl dt", text: "Trennlinie").find("+ dd").text).to eq "ja"
 
       patch group_invoice_config_path(group_id: group.id, params: { invoice_config: { separators: 0 } })
