@@ -46,6 +46,8 @@ module HitobitoSww
       Export::Pdf::Messages::Letter.prepend Sww::Export::Pdf::Messages::Letter
       Export::Pdf::Messages::Letter::Header.prepend Sww::Export::Pdf::Messages::Letter::Header
 
+      Export::Pdf::Participation::Runner.prepend Sww::Export::Pdf::Participation::Runner
+
       PaperTrail::VersionDecorator.prepend Sww::PaperTrail::VersionDecorator
 
       TagListsHelper.include Sww::TagListsHelper

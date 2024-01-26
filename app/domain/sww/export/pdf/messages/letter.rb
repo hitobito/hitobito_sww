@@ -1,6 +1,6 @@
 #  frozen_string_literal: true
 
-#  Copyright (c) 2022, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2022-2024, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -44,5 +44,12 @@ module Sww::Export::Pdf::Messages::Letter
 
   def membership_card?
     @letter.membership_card?
+  end
+
+  private
+
+  def customize
+    super
+    Sww::Export::Pdf::Font.new(pdf).customize
   end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2012-2022, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2012-2024, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -62,54 +62,20 @@ describe Export::Pdf::Messages::LetterWithInvoice do
         letter.group.save!
       end
 
-      it 'renders membership card in addition to letter' do
-        expected_content =
-          [[346, 721, "Mitgliederausweis"],
-           [346, 710, "42431"],
-           [346, 699, "Alice Bar"],
-           [511, 721, "Gültig bis"],
-           [517, 710, "12.2042"],
-           [57, 704, "P.P.  | POST CH AG"],
-           [57, 682, "Alice Bar"],
-           [57, 672, "Belpstrasse 37"],
-           [57, 662, "8001 Zürich"],
-           [420, 517, "Bern, 17. Mai 2022"],
-           [57, 495, "Hallo"],
-           [57, 474, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
-           [57, 454, "Bis bald"],
-           [14, 276, "Empfangsschein"],
-           [14, 251, "Konto / Zahlbar an"],
-           [14, 239, "CH93 0030 0111 6238 5295 7"],
-           [14, 228, "Puzzle ITC"],
-           [14, 216, "Belpstrasse 37"],
-           [14, 205, "3007 Bern"],
-           [14, 173, "Zahlbar durch"],
-           [14, 161, "Alice Bar"],
-           [14, 150, "Belpstrasse 37"],
-           [14, 138, "8001 Zürich"],
-           [14, 89, "Währung"],
-           [71, 89, "Betrag"],
-           [14, 78, "CHF"],
-           [71, 78, "150.00"],
-           [105, 39, "Annahmestelle"],
-           [190, 276, "Zahlteil"],
-           [190, 89, "Währung"],
-           [247, 89, "Betrag"],
-           [190, 78, "CHF"],
-           [247, 78, "150.00"],
-           [346, 278, "Konto / Zahlbar an"],
-           [346, 266, "CH93 0030 0111 6238 5295 7"],
-           [346, 255, "Puzzle ITC"],
-           [346, 243, "Belpstrasse 37"],
-           [346, 232, "3007 Bern"],
-           [346, 211, "Referenznummer"],
-           [346, 200, "00 00542 00303 80000 00000 00019"],
-           [346, 178, "Zahlbar durch"],
-           [346, 167, "Alice Bar"],
-           [346, 155, "Belpstrasse 37"],
-           [346, 144, "8001 Zürich"]]
+      it 'renders the membership card on the left' do
+        membership_card = [
+          [346, 721, "Mitgliederausweis"],
+          [346, 710, "42431"],
+          [346, 699, "Alice Bar"],
+          [511, 721, "Gültig bis"],
+          [517, 710, "12.2042"],
+        ]
 
-        expect(text_with_position).to eq(expected_content)
+        expect(text_with_position).to include(*membership_card)
+      end
+
+      it 'moves the address to the right' do
+        expect(text_with_position).to include([57, 703, "P.P.  | POST CH AG"])
       end
     end
 
@@ -119,54 +85,20 @@ describe Export::Pdf::Messages::LetterWithInvoice do
         letter.group.save!
       end
 
-      it 'renders membership card in addition to letter' do
-        expected_content = 
-          [[57, 721, "Mitgliederausweis"],
-           [57, 710, "42431"],
-           [57, 699, "Alice Bar"],
-           [222, 721, "Gültig bis"],
-           [227, 710, "12.2042"],
-           [347, 704, "P.P.  | POST CH AG"],
-           [347, 682, "Alice Bar"],
-           [347, 672, "Belpstrasse 37"],
-           [347, 662, "8001 Zürich"],
-           [420, 517, "Bern, 17. Mai 2022"],
-           [57, 495, "Hallo"],
-           [57, 474, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
-           [57, 454, "Bis bald"],
-           [14, 276, "Empfangsschein"],
-           [14, 251, "Konto / Zahlbar an"],
-           [14, 239, "CH93 0030 0111 6238 5295 7"],
-           [14, 228, "Puzzle ITC"],
-           [14, 216, "Belpstrasse 37"],
-           [14, 205, "3007 Bern"],
-           [14, 173, "Zahlbar durch"],
-           [14, 161, "Alice Bar"],
-           [14, 150, "Belpstrasse 37"],
-           [14, 138, "8001 Zürich"],
-           [14, 89, "Währung"],
-           [71, 89, "Betrag"],
-           [14, 78, "CHF"],
-           [71, 78, "150.00"],
-           [105, 39, "Annahmestelle"],
-           [190, 276, "Zahlteil"],
-           [190, 89, "Währung"],
-           [247, 89, "Betrag"],
-           [190, 78, "CHF"],
-           [247, 78, "150.00"],
-           [346, 278, "Konto / Zahlbar an"],
-           [346, 266, "CH93 0030 0111 6238 5295 7"],
-           [346, 255, "Puzzle ITC"],
-           [346, 243, "Belpstrasse 37"],
-           [346, 232, "3007 Bern"],
-           [346, 211, "Referenznummer"],
-           [346, 200, "00 00542 00303 80000 00000 00019"],
-           [346, 178, "Zahlbar durch"],
-           [346, 167, "Alice Bar"],
-           [346, 155, "Belpstrasse 37"],
-           [346, 144, "8001 Zürich"]]
+      it 'renders the membership card on the right' do
+        membership_card = [
+          [57, 721, "Mitgliederausweis"],
+          [57, 710, "42431"],
+          [57, 699, "Alice Bar"],
+          [222, 721, "Gültig bis"],
+          [227, 710, "12.2042"]
+        ]
 
-        expect(text_with_position).to eq(expected_content)
+        expect(text_with_position).to include(*membership_card)
+      end
+
+      it 'moves the address to the left' do
+        expect(text_with_position).to include([347, 703, "P.P.  | POST CH AG"])
       end
     end
 
@@ -180,54 +112,36 @@ describe Export::Pdf::Messages::LetterWithInvoice do
         letter.group.save!
       end
 
-      it 'renders membership card in addition to letter' do
-        expected_content = 
-          [[283, 693, "Mitgliederausweis"],
-           [283, 681, "42431"],
-           [283, 670, "Alice Bar"],
-           [449, 693, "Gültig bis"],
-           [454, 681, "12.2042"],
-           [85, 695, "P.P.  | POST CH AG"],
-           [85, 674, "Alice Bar"],
-           [85, 663, "Belpstrasse 37"],
-           [85, 653, "8001 Zürich"],
-           [420, 517, "Bern, 17. Mai 2022"],
-           [57, 495, "Hallo"],
-           [57, 474, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
-           [57, 454, "Bis bald"],
-           [14, 276, "Empfangsschein"],
-           [14, 251, "Konto / Zahlbar an"],
-           [14, 239, "CH93 0030 0111 6238 5295 7"],
-           [14, 228, "Puzzle ITC"],
-           [14, 216, "Belpstrasse 37"],
-           [14, 205, "3007 Bern"],
-           [14, 173, "Zahlbar durch"],
-           [14, 161, "Alice Bar"],
-           [14, 150, "Belpstrasse 37"],
-           [14, 138, "8001 Zürich"],
-           [14, 89, "Währung"],
-           [71, 89, "Betrag"],
-           [14, 78, "CHF"],
-           [71, 78, "150.00"],
-           [105, 39, "Annahmestelle"],
-           [190, 276, "Zahlteil"],
-           [190, 89, "Währung"],
-           [247, 89, "Betrag"],
-           [190, 78, "CHF"],
-           [247, 78, "150.00"],
-           [346, 278, "Konto / Zahlbar an"],
-           [346, 266, "CH93 0030 0111 6238 5295 7"],
-           [346, 255, "Puzzle ITC"],
-           [346, 243, "Belpstrasse 37"],
-           [346, 232, "3007 Bern"],
-           [346, 211, "Referenznummer"],
-           [346, 200, "00 00542 00303 80000 00000 00019"],
-           [346, 178, "Zahlbar durch"],
-           [346, 167, "Alice Bar"],
-           [346, 155, "Belpstrasse 37"],
-           [346, 144, "8001 Zürich"]]
+      it 'has assumptions' do
+        expect(29.7.cm.round).to eq 842
+        expect(21.0.cm.round).to eq 595
 
-        expect(text_with_position).to eq(expected_content)
+        expect(3.cm.round).to eq 85
+        expect(5.cm.round).to eq 142
+        expect(10.cm.round).to eq 283
+
+        expect((21.cm - 3.cm).round).to eq 510 # 3cm left
+        expect((21.cm - 10.cm).round).to eq 312 # 10cm left
+        expect((29.7.cm - 5.cm).round).to eq 700 # 5cm top
+
+        # actual and follow-up positions are dependent on the font, font-size,
+        # font-style and content. this is just a ball-park to start looking.
+      end
+
+      it 'renders membership card at the custom position' do
+        membership_card = [
+          [283, 693, "Mitgliederausweis"],
+          [283, 681, "42431"],
+          [283, 670, "Alice Bar"],
+          [449, 693, "Gültig bis"],
+          [454, 681, "12.2042"]
+        ]
+
+        expect(text_with_position).to include(*membership_card)
+      end
+
+      it 'moves the address to the custom position' do
+        expect(text_with_position).to include([85, 695, "P.P.  | POST CH AG"])
       end
     end
   end

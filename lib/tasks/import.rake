@@ -48,7 +48,7 @@ namespace :import do
     tag_mappings = {
       'Print-Abo': { name: 'abo:print' },
       'Kombi-Abo': { name: 'abo:kombi' },
-      'Newsletter': { name: 'Newsletter' }
+      Newsletter: { name: 'Newsletter' }
     }
     tag_mappings.each_value do |tag|
       ActsAsTaggableOn::Tag.upsert({ name: tag[:name] })
@@ -66,8 +66,8 @@ namespace :import do
         person_attrs[:title] = import_row[:title]
 
         country_mappings = {
-          'Schweiz': 'CH',
-          'Deutschland': 'DE'
+          Schweiz: 'CH',
+          Deutschland: 'DE'
         }
 
         country = country_mappings[import_row[:primaryaddresscountrylictranslated]&.to_sym]

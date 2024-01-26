@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2012-2022, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2012-2024, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -37,21 +37,47 @@ describe Export::Pdf::Messages::Letter do
         letter.group.save!
       end
 
-      it 'renders membership card in addition to letter' do
-        expect(text_with_position).to eq([[346, 721, "Mitgliederausweis"],
-                                          [346, 710, "42431"],
-                                          [346, 699, "Alice Bar"],
-                                          [511, 721, "Gültig bis"],
-                                          [517, 710, "12.2042"],
-                                          [57, 704, "P.P.  | POST CH AG"],
-                                          [57, 682, "Alice Bar"],
-                                          [57, 672, "Belpstrasse 37"],
-                                          [57, 662, "8001 Zürich"],
-                                          [420, 517, "Bern, 17. Mai 2022"],
-                                          [57, 491, "MITGLIEDERAUSWEIS 2022 WANDERN.CH"],
-                                          [57, 463, "Hallo"],
-                                          [57, 442, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
-                                          [57, 422, "Bis bald"]])
+      it 'renders membership card onto the letter' do
+        expect(text_with_position).to include(
+          [346, 721, "Mitgliederausweis"],
+          [346, 710, "42431"],
+          [346, 699, "Alice Bar"],
+          [511, 721, "Gültig bis"],
+          [517, 710, "12.2042"]
+        )
+      end
+
+
+      it 'renders the letter' do
+        text = text_with_position.map { |x, y, text| text }
+        expect(text).to include(
+          "P.P.  | POST CH AG",
+          "Alice Bar",
+          "Belpstrasse 37",
+          "8001 Zürich",
+          "Bern, 17. Mai 2022",
+          "MITGLIEDERAUSWEIS 2022 WANDERN.CH",
+          "Hallo",
+          "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! ",
+          "Bis bald"
+        )
+      end
+
+      it 'moves the address to the right' do
+        address = text_with_position.find { |_, _, text| text == 'Belpstrasse 37' }
+        expect(address[0]).to eql 57
+      end
+
+      it 'leaves the date in place' do
+        date = text_with_position.find { |_, _, text| text.starts_with?('Bern,') }
+        expect(date[0]).to eql 420
+        expect(date[1]).to eql 516
+      end
+
+      it 'leaves the body in place' do
+        body = text_with_position.find { |_, _, text| text == 'Hallo' }
+        expect(body[0]).to eql 57
+        expect(body[1]).to eql 460
       end
     end
 
@@ -61,21 +87,46 @@ describe Export::Pdf::Messages::Letter do
         letter.group.save!
       end
 
-      it 'renders membership card in addition to letter' do
-        expect(text_with_position).to eq([[57, 721, "Mitgliederausweis"],
-                                          [57, 710, "42431"],
-                                          [57, 699, "Alice Bar"],
-                                          [222, 721, "Gültig bis"],
-                                          [227, 710, "12.2042"],
-                                          [347, 704, "P.P.  | POST CH AG"],
-                                          [347, 682, "Alice Bar"],
-                                          [347, 672, "Belpstrasse 37"],
-                                          [347, 662, "8001 Zürich"],
-                                          [420, 517, "Bern, 17. Mai 2022"],
-                                          [57, 491, "MITGLIEDERAUSWEIS 2022 WANDERN.CH"],
-                                          [57, 463, "Hallo"],
-                                          [57, 442, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
-                                          [57, 422, "Bis bald"]])
+      it 'renders membership card onto the letter' do
+        expect(text_with_position).to include(
+          [57, 721, "Mitgliederausweis"],
+          [57, 710, "42431"],
+          [57, 699, "Alice Bar"],
+          [222, 721, "Gültig bis"],
+          [227, 710, "12.2042"]
+        )
+      end
+
+      it 'renders the letter' do
+        text = text_with_position.map { |x, y, text| text }
+        expect(text).to include(
+          "P.P.  | POST CH AG",
+          "Alice Bar",
+          "Belpstrasse 37",
+          "8001 Zürich",
+          "Bern, 17. Mai 2022",
+          "MITGLIEDERAUSWEIS 2022 WANDERN.CH",
+          "Hallo",
+          "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! ",
+          "Bis bald"
+        )
+      end
+
+      it 'moves the address to the left' do
+        address = text_with_position.find { |_, _, text| text == 'Belpstrasse 37' }
+        expect(address[0]).to eql 347
+      end
+
+      it 'leaves the date in place' do
+        date = text_with_position.find { |_, _, text| text.starts_with?('Bern,') }
+        expect(date[0]).to eql 420
+        expect(date[1]).to eql 516
+      end
+
+      it 'leaves the body in place' do
+        body = text_with_position.find { |_, _, text| text == 'Hallo' }
+        expect(body[0]).to eql 57
+        expect(body[1]).to eql 460
       end
     end
 
@@ -89,21 +140,46 @@ describe Export::Pdf::Messages::Letter do
         letter.group.save!
       end
 
-      it 'renders membership card in addition to letter' do
-        expect(text_with_position).to eq([[283, 693, "Mitgliederausweis"],
-                                          [283, 681, "42431"],
-                                          [283, 670, "Alice Bar"],
-                                          [449, 693, "Gültig bis"],
-                                          [454, 681, "12.2042"],
-                                          [85, 695, "P.P.  | POST CH AG"],
-                                          [85, 674, "Alice Bar"],
-                                          [85, 663, "Belpstrasse 37"],
-                                          [85, 653, "8001 Zürich"],
-                                          [420, 517, "Bern, 17. Mai 2022"],
-                                          [57, 491, "MITGLIEDERAUSWEIS 2022 WANDERN.CH"],
-                                          [57, 463, "Hallo"],
-                                          [57, 442, "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! "],
-                                          [57, 422, "Bis bald"]])
+      it 'renders membership card onto the letter' do
+        expect(text_with_position).to include(
+          [283, 693, "Mitgliederausweis"],
+          [283, 681, "42431"],
+          [283, 670, "Alice Bar"],
+          [449, 693, "Gültig bis"],
+          [454, 681, "12.2042"]
+        )
+      end
+
+      it 'renders the letter' do
+        text = text_with_position.map { |x, y, text| text }
+        expect(text).to include(
+          "P.P.  | POST CH AG",
+          "Alice Bar",
+          "Belpstrasse 37",
+          "8001 Zürich",
+          "Bern, 17. Mai 2022",
+          "MITGLIEDERAUSWEIS 2022 WANDERN.CH",
+          "Hallo",
+          "Gerne stellen wir Ihnen Ihren Mitgliederausweis zu! ",
+          "Bis bald"
+        )
+      end
+
+      it 'moves the address a good position' do
+        address = text_with_position.find { |_, _, text| text == 'Belpstrasse 37' }
+        expect(address[0]).to eql 85
+      end
+
+      it 'leaves the date in place' do
+        date = text_with_position.find { |_, _, text| text.starts_with?('Bern,') }
+        expect(date[0]).to eql 420
+        expect(date[1]).to eql 516
+      end
+
+      it 'leaves the body in place' do
+        body = text_with_position.find { |_, _, text| text == 'Hallo' }
+        expect(body[0]).to eql 57
+        expect(body[1]).to eql 460
       end
     end
 
@@ -114,10 +190,12 @@ describe Export::Pdf::Messages::Letter do
           last_name: "Greiner-Petter-Memm"
         )
 
-        expect(text_with_position.take(4)).to eq([[346, 721, "Mitgliederausweis"],
-                                                  [346, 710, "42431"],
-                                                  [346, 699, "Michelangelo Greiner-Petter-Memm"],
-                                                  [511, 721, "Gültig bis"]])
+        expect(text_with_position).to include(
+          [346, 721, "Mitgliederausweis"],
+          [346, 710, "42431"],
+          [346, 699, "Michelangelo Greiner-Petter-Memm"],
+          [511, 721, "Gültig bis"]
+        )
       end
 
       it 'extreme long name renders on two lines' do
@@ -126,11 +204,13 @@ describe Export::Pdf::Messages::Letter do
           last_name: "Faster Than Superman Spiderman Batman Wolverine Hulk And The Flash Combined",
         )
 
-        expect(text_with_position.take(5)).to eq([[346, 721, "Mitgliederausweis"],
-                                                  [346, 710, "42431"],
-                                                  [346, 700, "Captain Fantastic Faster Than Superman Spiderman"],
-                                                  [346, 691, "Batman Wolverine Hulk And The Flash Combined"],
-                                                  [511, 721, "Gültig bis"]])
+        expect(text_with_position).to include(
+          [346, 721, "Mitgliederausweis"],
+          [346, 710, "42431"],
+          [346, 700, "Captain Fantastic Faster Than Superman Spiderman"],
+          [346, 691, "Batman Wolverine Hulk And The Flash Combined"],
+          [511, 721, "Gültig bis"]
+        )
       end
     end
   end

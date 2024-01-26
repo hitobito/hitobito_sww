@@ -1,3 +1,10 @@
+# frozen_string_literal: true
+
+#  Copyright (c) 2024, Schweizer Wanderwege. This file is part of
+#  hitobito_sww and licensed under the Affero General Public License version 3
+#  or later. See the COPYING file at the top-level directory or at
+#  https://github.com/hitobito/hitobito_sww.
+
 require 'spec_helper'
 
 Rails.application.load_tasks
@@ -36,8 +43,10 @@ describe "import:people_fo" do
 
     it "imports people and companies from csv" do
       expect do
-        Rake::Task["import:people_fo"].invoke(groups(:berner_mitglieder).id)
-      end.to change { Person.count }.by(5)
+        expect do
+          Rake::Task["import:people_fo"].invoke(groups(:berner_mitglieder).id)
+        end.to change { Person.count }.by(5)
+      end.to output("Successfully imported 5/5 rows\n").to_stdout
 
       person = Person.find_by(alabus_id: '1skuw-b52nqz-g2iw4kjn-2-g21sdwqh-qa7')
       expect(person).to be_present
@@ -86,7 +95,9 @@ describe "import:people_fo" do
     end
 
     it "imports mail as additional mail if already taken" do
-      Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
+      expect do
+        Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
+      end.to output("Successfully imported 5/5 rows\n").to_stdout
 
       person = Person.find_by(alabus_id: '1s23w-b52n1x-2ciw2kjn-g-g213bwvh-1x7')
       expect(person).to be_present
@@ -97,7 +108,9 @@ describe "import:people_fo" do
     end
 
     it "sets role created_at on a day before deleted_at if not set" do
-      Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
+      expect do
+        Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
+      end.to output("Successfully imported 5/5 rows\n").to_stdout
 
       person = Person.find_by(alabus_id: 'dcwe1-vbsdw2-2cib1kbs-p-g2bnbw1h-2sd')
       expect(person).to be_present
@@ -118,7 +131,9 @@ describe "import:people_fo" do
     end
 
     it "imports role only if created_at can be set" do
-      Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
+      expect do
+        Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
+      end.to output("Successfully imported 5/5 rows\n").to_stdout
 
       person_with_two_roles = Person.find_by(alabus_id: '1skuw-b52nqz-g2iw4kjn-2-g21sdwqh-qa7')
       person_with_one_role = Person.find_by(alabus_id: '1s23w-b52n1x-2ciw2kjn-g-g213bwvh-1x7')
@@ -130,7 +145,9 @@ describe "import:people_fo" do
     end
 
     it "assigns Schweiz as fallback country" do
-      Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
+      expect do
+        Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
+      end.to output("Successfully imported 5/5 rows\n").to_stdout
 
       person = Person.find_by(alabus_id: 'bew31-axzcd1-jbhox23z-z-jtxn23wd1-k3g')
       expect(person).to be_present
@@ -204,6 +221,7 @@ describe 'import:invoices_fo' do
       expect do
         Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
       end.to change { Invoice.count }.by(2)
+        .and output(/Successfully imported 2\/2 rows/).to_stdout
 
       expect(Invoice.where(recipient: recipient).count).to eq(1)
 
@@ -226,8 +244,10 @@ describe 'import:invoices_fo' do
 
     it "does not import if recipient is not found" do
       expect do
-        Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
-      end.to change { Invoice.count }.by(0)
+        expect do
+          Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
+        end.to change { Invoice.count }.by(0)
+      end.to output(/Successfully imported 0\/2 rows.*person not found/m).to_stdout
     end
 
     it "does not import invoices with other state than 'Offen'" do
@@ -253,8 +273,10 @@ describe 'import:invoices_fo' do
       Person.create!(alabus_id: '5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1', first_name: 'Max')
 
       expect do
-        Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
-      end.to change { Invoice.count }.by(2)
+        expect do
+          Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
+        end.to change { Invoice.count }.by(2)
+      end.to output(/Successfully imported 2\/2 rows/).to_stdout
 
       expect(Invoice.where(recipient: recipient).count).to eq(1)
 
@@ -315,9 +337,10 @@ describe 'import:invoices_fo' do
       Person.create!(alabus_id: 'wi2523f-t431xg-57eww221-h-j634x6sd-ghae', first_name: 'Daniel')
 
       expect do
-        Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
-      end.to_not change { Invoice.count }
-
+        expect do
+          Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
+        end.to_not change { Invoice.count }
+      end.to output(/Successfully imported 2\/4 rows.*failing_note.*nothing was imported/m).to_stdout
     end
   end
 end
@@ -340,8 +363,10 @@ describe "import:people_cms" do
 
     it "imports people and companies from csv" do
       expect do
-        Rake::Task["import:people_cms"].invoke
-      end.to change { Person.count }.by(2)
+        expect do
+          Rake::Task["import:people_cms"].invoke
+        end.to change { Person.count }.by(2)
+      end.to output(/Successfully imported 2\/2 rows/).to_stdout
 
       person = Person.find_by(sww_cms_profile_id: 1)
       expect(person).to be_present
@@ -378,7 +403,9 @@ describe "import:people_cms" do
     end
 
     it "assigns Schweiz as fallback country" do
-      Rake::Task["import:people_cms"].invoke
+      expect do
+        Rake::Task["import:people_cms"].invoke
+      end.to output(/Successfully imported 2\/2 rows/).to_stdout
 
       person = Person.find_by(sww_cms_profile_id: 42)
       expect(person).to be_present
@@ -387,7 +414,9 @@ describe "import:people_cms" do
     end
 
     it "assigns Deutsch as fallback language" do
-      Rake::Task["import:people_cms"].invoke
+      expect do
+        Rake::Task["import:people_cms"].invoke
+      end.to output(/Successfully imported 2\/2 rows/).to_stdout
 
       person = Person.find_by(sww_cms_profile_id: 42)
       expect(person).to be_present
@@ -401,8 +430,10 @@ describe "import:people_cms" do
       Fabricate(Group::Mitglieder::Aktivmitglied.to_s, person: existing, group: groups(:berner_mitglieder))
 
       expect do
-        Rake::Task["import:people_cms"].invoke
-      end.to change { existing.roles.count }.by(1)
+        expect do
+          Rake::Task["import:people_cms"].invoke
+        end.to change { existing.roles.count }.by(1)
+      end.to output(/Successfully imported 2\/2 rows/).to_stdout
 
       existing.reload
 
