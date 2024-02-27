@@ -25,6 +25,7 @@ module HitobitoSww
       # extend application classes here
       InvoiceAbility.include Sww::InvoiceAbility
       InvoiceConfig.prepend Sww::InvoiceConfig
+      Invoice::STATES_PAYABLE << :payed << :excess
 
       Event.include Sww::Event
       Group.include Sww::Group
