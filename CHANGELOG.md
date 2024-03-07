@@ -2,6 +2,7 @@
 
 ## unreleased
 - Cardo als Schriftart für alle PDFs (hitobito_sww#142)
+- Rückzahlungen können erfasst werden (hitobito_sww#151)
 
 ## Version 1.31
 - Bei der Selbstregistrierung kann neu auch das Land ausgefüllt werden (hitobito_sww#140)
