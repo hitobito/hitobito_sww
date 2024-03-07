@@ -9,10 +9,10 @@ require 'spec_helper'
 
 describe Invoice do
   it 'allows payments even if it is paid' do
-    expect(described_class::STATES_PAYABLE).to include(:payed)
+    expect(described_class::STATES_PAYABLE).to include('payed')
   end
 
   it 'allows payement if it is overpaid' do
-    expect(described_class::STATES_PAYABLE).to include(:excess)
+    expect(described_class::STATES_PAYABLE).to include('excess')
   end
 end
