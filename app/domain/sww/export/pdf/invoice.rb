@@ -45,9 +45,7 @@ module Sww::Export::Pdf::Invoice
     private
 
     def customize(pdf)
-      Sww::Export::Pdf::Font
-        .new(super(pdf))
-        .customize
+      ::Export::Pdf::Font.new(super(pdf)).customize
     end
   end
 

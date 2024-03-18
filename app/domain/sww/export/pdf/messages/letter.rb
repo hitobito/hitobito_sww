@@ -50,6 +50,6 @@ module Sww::Export::Pdf::Messages::Letter
 
   def customize
     super
-    Sww::Export::Pdf::Font.new(pdf).customize
+    ::Export::Pdf::Font.new(pdf).customize
   end
 end
