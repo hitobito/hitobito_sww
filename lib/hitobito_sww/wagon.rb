@@ -58,6 +58,8 @@ module HitobitoSww
 
       JsonApiController.include Sww::JsonApiController
 
+      Event::ParticipationsController.prepend Sww::Event::ParticipationsController
+
       PersonResource.include Sww::PersonResource
       Oauth::ProfilesController.prepend Sww::Oauth::ProfilesController
       PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
