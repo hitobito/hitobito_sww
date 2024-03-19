@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-module Sww::Export::Pdf
+module Export::Pdf
   class Font
     def initialize(pdf)
       @pdf = pdf
