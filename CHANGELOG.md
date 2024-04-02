@@ -1,6 +1,6 @@
 # Hitobito SWW Changelog
 
-## unreleased
+## Version 2.1
 - Cardo als Schriftart für alle PDFs (hitobito_sww#142)
 - Rückzahlungen können erfasst werden (hitobito_sww#151)
 
