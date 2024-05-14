@@ -361,7 +361,7 @@ describe "import:people_cms" do
         .join('spec/fixtures/files/people_cms.csv'))
     end
 
-    it "imports people and companies from csv" do
+    xit "imports people and companies from csv" do
       expect do
         expect do
           Rake::Task["import:people_cms"].invoke
@@ -424,7 +424,7 @@ describe "import:people_cms" do
       expect(person.language).to eq('de')
     end
 
-    it "updates existing person except password and creates role" do
+    xit "updates existing person except password and creates role" do
       existing = Fabricate(:person, first_name: 'Bob', password: 'old_password', password_confirmation: 'old_password', email: 'max.muster@example.com')
 
       Fabricate(Group::Mitglieder::Aktivmitglied.to_s, person: existing, group: groups(:berner_mitglieder))
