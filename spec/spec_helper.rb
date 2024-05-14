@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2012-2022, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2012-2024, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
+
+ENV['RAILS_STRUCTURED_ADDRESSES'] = '1'
+ENV['RAILS_ADDRESS_MIGRATION'] = '0'
 
 load File.expand_path('../../app_root.rb', __FILE__)
 ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)

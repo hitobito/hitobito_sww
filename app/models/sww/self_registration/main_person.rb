@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2012-2023, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2012-2024, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -17,21 +17,13 @@ module Sww::SelfRegistration::MainPerson
     self.attrs += [
       :first_name, :last_name, :company_name, :company,
       :birthday,
-      :street, :house_number,
+      :address_care_of,
+      :street, :housenumber,
+      :postbox,
       :gender,
       :email,
-      :street, :house_number, :zip_code, :town, :country,
+      :zip_code, :town, :country
     ]
-  end
-
-  def person
-    @person ||= begin
-                  street = attributes['street']
-                  house_number = attributes['house_number']
-                  address = [street, house_number].compact.join(' ')
-                  Person.new(attributes.except('street', 'house_number')
-                                       .merge('address' => address))
-                end
   end
 
   def gender_options
