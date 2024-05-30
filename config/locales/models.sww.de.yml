@@ -1,4 +1,4 @@
-#  Copyright (c) 2012-2022, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2012-2024, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -148,3 +148,18 @@ de:
     application_market:
       popover_waiting_list:
         waiting_list_info: Setze diese Person auf die Warteliste.
+
+  doorkeeper:
+    scopes:
+      email: Lesen Ihrer E-Mail-Adresse. Damit das Login korrekt abgewickelt werden kann, benötigen wir Ihre E-Mail-Adresse.
+      name: Lesen Ihres Namens. Damit das Login korrekt abgewickelt werden kann, benötigen wir Ihren Namen.
+      with_roles: Lesen Ihrer Adressstammdaten und Berechtigungen. Damit die Berechtigungen Ihres Kontos korrekt hinterlegt werden können, überprüft unser System Berechtigung und Adressstammdaten, welche keine weitere persönliche Information beinhaltet.
+      openid: Lesen Ihres OpenID Connect (OIDC) Identity Tokens. Das ist eine Information, welche zur Authentifizierung Ihres Benutzers verwendet wird. So kann unser System die Identität Ihres Kontos bestätigen und sicherstellen, dass keine unautorisierten Zugriffe erfolgen.
+
+      api: Lesen aller Personen, Gruppen, Events, Abos und Rechnungen auf die Sie Zugriff haben, via die JSON-Schnittstellen
+      events: Lesen aller Events, auf die Sie Zugriff haben
+      groups: Lesen aller Gruppen, auf die Sie Zugriff haben
+      people: Lesen aller Personen, auf die Sie Zugriff haben
+      invoices: Lesen aller Rechnungen, auf die Sie Zugriff haben
+      mailing_lists: Lesen aller Abos, auf die Sie Zugriff haben
+      nextcloud: Lesen Ihrer Nextcloud-Gruppen und Ihres Anzeigenamens
