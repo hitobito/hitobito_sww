@@ -29,7 +29,7 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
 
     def date_location_text
       bounding_box([SUBJECT_WIDTH, cursor], width: bounds.width - SUBJECT_WIDTH, height: 0.5.cm) do
-        text_box("<font size='10pt'>#{letter.date_location_text}</font>",
+        text_box("<font size='10'>#{letter.date_location_text}</font>",
                  inline_format: true)
       end
     end
