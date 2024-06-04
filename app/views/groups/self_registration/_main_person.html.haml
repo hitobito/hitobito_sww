@@ -11,14 +11,14 @@
     .col-8.col-lg-9
       = fields.input_field(:street)
     .col-3.col-lg-2.offset-1
-      = fields.input_field(:house_number)
+      = fields.input_field(:housenumber)
   = fields.labeled(:zip_code, t('contactable.fields.zip_town'), nil, class: 'd-flex') do
     .col-5.col-md-4.col-lg-3
       = fields.input_field(:zip_code, maxlength: 10)
     .col-6.col-md-7.col-lg-8.offset-1
       = fields.input_field(:town)
   = fields.labeled(:country) do
-    .shown.ms-0 
+    .shown.ms-0
       = fields.country_select('country',
                       { priority_countries: Settings.countries.prioritized,
                         selected: fields.object.country,

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2012-2023, Schweizer Alpen-Club. This file is part of
+#  Copyright (c) 2012-2024, Schweizer Alpen-Club. This file is part of
 #  hitobito_sac_cas and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sac_cas.
@@ -27,7 +27,7 @@ describe :self_registration, js: true do
     fill_in 'Nachname', with: 'Muster'
     fill_in 'E-Mail', with: 'max.muster@hitobito.example.com'
     fill_in 'self_registration_main_person_attributes_street', with: 'Musterplatz'
-    fill_in 'self_registration_main_person_attributes_house_number', with: '1'
+    fill_in 'self_registration_main_person_attributes_housenumber', with: '1'
     fill_in 'self_registration_main_person_attributes_zip_code', with: '8000'
     fill_in 'self_registration_main_person_attributes_town', with: 'Zürich'
     fill_in 'Geburtsdatum', with: '01.01.1980'

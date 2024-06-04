@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2023, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2023-2024, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -15,17 +15,17 @@ describe Groups::SelfRegistrationController do
   end
 
   context 'POST create' do
-    it 'builds address using street and house_number' do
+    it 'builds address using street and housenumber' do
       expect do
         post :create, params: {
           group_id: group.id,
           self_registration: {
             main_person_attributes: { first_name: 'Bob',
                                       gender: 'm',
-                                      last_name: 'Miller', 
+                                      last_name: 'Miller',
                                       email: 'bob.miller@example.com',
                                       street: 'Belpstrasse',
-                                      house_number: '37' }
+                                      housenumber: '37' }
           }
         }
       end.to change { Person.count }.by(1)
