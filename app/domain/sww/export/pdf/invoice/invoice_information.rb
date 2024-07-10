@@ -7,7 +7,7 @@
 
 module Sww::Export::Pdf::Invoice::InvoiceInformation
   def render
-    return unless invoice.issued_at.present?
+    return if invoice.issued_at.blank?
 
     bounding_box([303, 480], width: 180, height: 20) do
       text information, align: :right

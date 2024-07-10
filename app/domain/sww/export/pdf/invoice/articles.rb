@@ -81,7 +81,7 @@ module Sww::Export::Pdf::Invoice::Articles
   end
 
   def render_due_at
-    return unless invoice.due_at.present?
+    return if invoice.due_at.blank?
 
     pdf.move_up 15
     text I18n.t("invoices.pdf.due_at") + ":      #{I18n.l(invoice.due_at)}"
