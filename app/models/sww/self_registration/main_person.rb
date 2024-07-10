@@ -5,7 +5,6 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
 module Sww::SelfRegistration::MainPerson
   extend ActiveSupport::Concern
 
@@ -27,12 +26,12 @@ module Sww::SelfRegistration::MainPerson
   end
 
   def gender_options
-    [[:w, t('.gender.w')], [:m, t('.gender.m')], [nil, t('.gender.other')]]
+    [[:w, t(".gender.w")], [:m, t(".gender.m")], [nil, t(".gender.other")]]
   end
 
   private
 
   def t(key)
-    I18n.t(key, scope: 'groups.self_registration.new')
+    I18n.t(key, scope: "groups.self_registration.new")
   end
 end

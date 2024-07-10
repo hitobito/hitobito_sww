@@ -9,6 +9,6 @@ module Sww::Export::Pdf::Participation::Runner
   private
 
   def customize(pdf)
-    ::Export::Pdf::Font.new(super(pdf)).customize
+    ::Export::Pdf::Font.new(super).customize
   end
 end

@@ -10,7 +10,7 @@ module Sww
     module Pdf
       module Invoice
         # This class combines a payment slip with a logo. If the logo and
-        # the payment slip do not fit on the current page, a new page 
+        # the payment slip do not fit on the current page, a new page
         # is created. The logo and the payment slip are always
         # rendered together.
         class PaymentSlipWithLogo < ::Export::Pdf::Section
@@ -42,7 +42,7 @@ module Sww
               image_width: ::Export::Pdf::Invoice::LOGO_WIDTH,
               image_height: ::Export::Pdf::Invoice::LOGO_HEIGHT,
               position: :left,
-              **options,
+              **options
             ).with_padding(
               top: LOGO_PADDING_TOP,
               bottom: LOGO_PADDING_BOTTOM

@@ -5,9 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
 module Sww::Export::Pdf::Invoice::Articles
-
   def render # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     reminder = invoice.payment_reminders.last
 
@@ -36,11 +34,10 @@ module Sww::Export::Pdf::Invoice::Articles
     bounding_box([0, cursor], width: bounds.width) do
       font_size(8) do
         data = total_data
-        pdf.table data, position: :right, column_widths: { 0 => 100 },
-                        cell_style: { borders: [],
-                                      border_color: 'CCCCCC',
-                                      border_width: 0.5 } do
-          
+        pdf.table data, position: :right, column_widths: {0 => 100},
+          cell_style: {borders: [],
+                       border_color: "CCCCCC",
+                       border_width: 0.5} do
           last_row_index = data.size.pred
           rows(0..last_row_index).padding = [2, 0]
 
@@ -64,10 +61,10 @@ module Sww::Export::Pdf::Invoice::Articles
       data.slice!(data.size - 1)
       data +
         [
-          [I18n.t("invoices.pdf.#{invoice.payments.any? ? 'amount_open' : 'subtotal'}"),
-           decorated.amount_open],
-          [I18n.t('invoices.pdf.donation'), nil],
-          [I18n.t('invoices.pdf.total'), nil]
+          [I18n.t("invoices.pdf.#{invoice.payments.any? ? "amount_open" : "subtotal"}"),
+            decorated.amount_open],
+          [I18n.t("invoices.pdf.donation"), nil],
+          [I18n.t("invoices.pdf.total"), nil]
         ]
     else
       super
@@ -78,8 +75,8 @@ module Sww::Export::Pdf::Invoice::Articles
 
   def articles
     articles = super
-    articles[0][0] = 
-      I18n.t('invoices.pdf.invoice_number') + ": #{invoice.sequence_number}"
+    articles[0][0] =
+      I18n.t("invoices.pdf.invoice_number") + ": #{invoice.sequence_number}"
     articles
   end
 
@@ -87,7 +84,6 @@ module Sww::Export::Pdf::Invoice::Articles
     return unless invoice.due_at.present?
 
     pdf.move_up 15
-    text I18n.t('invoices.pdf.due_at') + ":      #{I18n.l(invoice.due_at)}"
+    text I18n.t("invoices.pdf.due_at") + ":      #{I18n.l(invoice.due_at)}"
   end
-
 end

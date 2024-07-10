@@ -14,4 +14,3 @@ module Sww::MailingListAbility
     end
   end
 end
-

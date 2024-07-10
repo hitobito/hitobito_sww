@@ -11,7 +11,7 @@ module Export::Pdf
       private
 
       def setup_pdf
-        Prawn::Document.new(page_size: 'A4', page_layout: :landscape, margin: 1.cm)
+        Prawn::Document.new(page_size: "A4", page_layout: :landscape, margin: 1.cm)
       end
 
       def sections

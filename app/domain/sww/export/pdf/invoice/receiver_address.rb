@@ -5,9 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
 module Sww::Export::Pdf::Invoice::ReceiverAddress
-
   private
 
   def receiver_address_data
@@ -15,5 +13,4 @@ module Sww::Export::Pdf::Invoice::ReceiverAddress
       addr.unshift([invoice.recipient&.sww_salutation]) if invoice.recipient&.gender.present?
     end
   end
-
 end

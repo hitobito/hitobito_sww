@@ -12,31 +12,31 @@ module Sww::Person
 
   included do
     add_public_attrs = [:custom_salutation, :magazin_abo_number, :title,
-                        :name_add_on, :sww_cms_profile_id]
+      :name_add_on, :sww_cms_profile_id]
     Person::PUBLIC_ATTRS.push(*add_public_attrs)
 
     add_internal_attrs = [:alabus_id, :member_number, :manual_member_number,
-                          :sww_cms_profile_id, :sww_cms_legacy_password_salt]
+      :sww_cms_profile_id, :sww_cms_legacy_password_salt]
     Person::INTERNAL_ATTRS.push(*add_internal_attrs)
 
     attr_readonly :alabus_id
 
     validates :manual_member_number,
-              uniqueness: true,
-              allow_nil: true,
-              numericality: { less_than: MEMBER_NUMBER_CALCULATION_OFFSET }
+      uniqueness: true,
+      allow_nil: true,
+      numericality: {less_than: MEMBER_NUMBER_CALCULATION_OFFSET}
 
     validates :sww_cms_profile_id,
-              uniqueness: true,
-              allow_nil: true
+      uniqueness: true,
+      allow_nil: true
 
-    belongs_to :updated_by, class_name: 'Person', foreign_key: :updater_id
+    belongs_to :updated_by, class_name: "Person", foreign_key: :updater_id
 
     alias_method_chain :finance_groups, :complete_finance_permission
   end
 
   def member_number
-    manual_member_number || id &.+(MEMBER_NUMBER_CALCULATION_OFFSET)
+    manual_member_number || id&.+(MEMBER_NUMBER_CALCULATION_OFFSET)
   end
 
   def finance_groups_with_complete_finance_permission
@@ -48,6 +48,6 @@ module Sww::Person
   end
 
   def sww_salutation
-    I18n.t("groups.self_registration.new.gender.#{gender || 'other'}", locale: language)
+    I18n.t("groups.self_registration.new.gender.#{gender || "other"}", locale: language)
   end
 end

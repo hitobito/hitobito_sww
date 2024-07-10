@@ -8,9 +8,9 @@
 module Sww::InvoiceConfig
   extend ActiveSupport::Concern
 
-  LOGO_POSITION_ABOVE_PAYMENT_SLIP = 'above_payment_slip'
+  LOGO_POSITION_ABOVE_PAYMENT_SLIP = "above_payment_slip"
 
   prepended do
-    self.logo_positions << LOGO_POSITION_ABOVE_PAYMENT_SLIP
+    logo_positions << LOGO_POSITION_ABOVE_PAYMENT_SLIP
   end
 end

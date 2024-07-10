@@ -5,14 +5,14 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-require Wagons.find('sww').root.join('db/seeds/support/data_migrator.rb')
-require Wagons.find('sww').root.join('db/seeds/support/data_migrator_cms.rb')
+require Wagons.find("sww").root.join("db/seeds/support/data_migrator.rb")
+require Wagons.find("sww").root.join("db/seeds/support/data_migrator_cms.rb")
 
 # rubocop:disable Metrics/BlockLength, Metrics/LineLength, Rails/SkipsModelValidations
 namespace :import do
-  desc 'Import people'
+  desc "Import people"
   task people_sww: [:environment] do
-    person_csv = Wagons.find('sww').root.join('db/seeds/production/people_sww.csv')
+    person_csv = Wagons.find("sww").root.join("db/seeds/production/people_sww.csv")
     raise unless person_csv.exist?
 
     CSV.parse(person_csv.read, headers: true, header_converters: :symbol).each do |import_row|
@@ -35,23 +35,23 @@ namespace :import do
     end
   end
 
-  desc 'Import people for FO'
+  desc "Import people for FO"
   task :people_fo, [:group_id] => :environment do |_t, args|
-    person_csv = Wagons.find('sww').root.join('db/seeds/production/people_fo.csv')
+    person_csv = Wagons.find("sww").root.join("db/seeds/production/people_fo.csv")
     raise unless person_csv.exist?
 
-    raise 'group id must be passed as first argument' unless args[:group_id]
+    raise "group id must be passed as first argument" unless args[:group_id]
 
     group = Group.find(args[:group_id])
     raise unless group
 
     tag_mappings = {
-      'Print-Abo': { name: 'abo:print' },
-      'Kombi-Abo': { name: 'abo:kombi' },
-      Newsletter: { name: 'Newsletter' }
+      "Print-Abo": {name: "abo:print"},
+      "Kombi-Abo": {name: "abo:kombi"},
+      Newsletter: {name: "Newsletter"}
     }
     tag_mappings.each_value do |tag|
-      ActsAsTaggableOn::Tag.upsert({ name: tag[:name] })
+      ActsAsTaggableOn::Tag.upsert({name: tag[:name]})
 
       tag.merge!(id: ActsAsTaggableOn::Tag.find_by(name: tag[:name]).id)
     end
@@ -66,12 +66,12 @@ namespace :import do
         person_attrs[:title] = import_row[:title]
 
         country_mappings = {
-          Schweiz: 'CH',
-          Deutschland: 'DE'
+          Schweiz: "CH",
+          Deutschland: "DE"
         }
 
         country = country_mappings[import_row[:primaryaddresscountrylictranslated]&.to_sym]
-        person_attrs[:country] = country || 'CH'
+        person_attrs[:country] = country || "CH"
         person_attrs[:name_add_on] = import_row[:nameaddon]
         person_attrs[:primary_group_id] = group.id
 
@@ -98,7 +98,7 @@ namespace :import do
             contactable_type: Person.sti_name,
             contactable_id: person.id,
             email: import_row[:email],
-            label: 'Privat'
+            label: "Privat"
           }
 
           AdditionalEmail.upsert(additional_mail_attrs)
@@ -139,7 +139,7 @@ namespace :import do
           Role.with_deleted.last.update(attrs)
         end
 
-        tagging_attrs = { taggable_id: person.id, taggable_type: Person.sti_name, context: 'tags' }
+        tagging_attrs = {taggable_id: person.id, taggable_type: Person.sti_name, context: "tags"}
 
         if import_row[:primarycategory].present?
           tag_name = "category:#{import_row[:primarycategory]}"
@@ -153,7 +153,7 @@ namespace :import do
 
           next unless tag_id
 
-          attrs = tagging_attrs.merge({ tag_id: tag_id })
+          attrs = tagging_attrs.merge({tag_id: tag_id})
 
           ActsAsTaggableOn::Tagging.upsert(attrs)
         end
@@ -161,7 +161,6 @@ namespace :import do
         DataMigrator.insert_phone_numbers!(person, import_row)
         DataMigrator.insert_social_account!(person, import_row)
         DataMigrator.insert_note!(person, import_row)
-
       rescue ActiveRecord::RecordInvalid, ActiveRecord::StatementInvalid
         failed_import_rows << import_row
       end
@@ -170,57 +169,55 @@ namespace :import do
       successful_count = total_count - failed_import_rows.size
       puts "Successfully imported #{successful_count}/#{total_count} rows"
       if failed_import_rows.any?
-        puts 'FAILED ROWS:'
+        puts "FAILED ROWS:"
         puts failed_import_rows.map { |row|
                ["first_name: #{row[:firstname]}",
-                "last_name: #{row[:lastname]}",
-                "email: #{row[:email]}",
-                "alabus_id: #{row[:id]}"].join(', ')
+                 "last_name: #{row[:lastname]}",
+                 "email: #{row[:email]}",
+                 "alabus_id: #{row[:id]}"].join(", ")
              }.join("\n")
         puts "\nnothing was imported due to errors. Please fix import source file and try again."
         raise ActiveRecord::Rollback
       end
-
     end
   end
 
-  desc 'Import invoices for FO'
+  desc "Import invoices for FO"
   task :invoices_fo, [:layer_id] => :environment do |_t, args|
-    invoice_csv = Wagons.find('sww').root.join('db/seeds/production/invoices_fo.csv')
+    invoice_csv = Wagons.find("sww").root.join("db/seeds/production/invoices_fo.csv")
 
     raise "#{invoice_csv} must be present" unless invoice_csv.exist?
 
-    raise 'group id must be passed as first argument' unless args[:layer_id]
+    raise "group id must be passed as first argument" unless args[:layer_id]
 
     layer = Group.find(args[:layer_id])
     raise unless layer
 
     ActiveRecord::Base.transaction do
-
       failed_import_rows = []
       non_open_import_rows = []
 
       CSV.parse(invoice_csv.read, headers: true, header_converters: :symbol).each do |import_row|
-        unless import_row[:status] == 'Offen'
+        unless import_row[:status] == "Offen"
           non_open_import_rows << import_row.to_h
           next
         end
 
         if import_row[:id].blank?
-          failed_import_rows << import_row.to_h.merge(failing_note: :'id not present')
+          failed_import_rows << import_row.to_h.merge(failing_note: :"id not present")
           next
         end
 
         person = Person.find_by(alabus_id: import_row[:id])
 
         if person.blank?
-          failed_import_rows << import_row.to_h.merge(failing_note: :'person not found')
+          failed_import_rows << import_row.to_h.merge(failing_note: :"person not found")
           next
         end
 
         invoice_attrs = {}
 
-        invoice_attrs[:title] = ['Rechnung Alabus', import_row[:primarycategory]].compact.join(' ')
+        invoice_attrs[:title] = ["Rechnung Alabus", import_row[:primarycategory]].compact.join(" ")
         invoice_attrs[:state] = :issued
         invoice_attrs[:esr_number] = import_row[:esr]
         invoice_attrs[:sent_at] = DateTime.parse(import_row[:billdate]) if import_row[:billdate]
@@ -229,7 +226,7 @@ namespace :import do
         invoice_attrs[:recipient_id] = person.id
 
         invoice_attrs[:invoice_items_attributes] = [
-          { name: import_row[:primarycategory], unit_cost: import_row[:amount] || 0, count: 1 }
+          {name: import_row[:primarycategory], unit_cost: import_row[:amount] || 0, count: 1}
         ]
 
         invoice_attrs[:group_id] = layer.id
@@ -242,9 +239,8 @@ namespace :import do
         invoice.reload
 
         if invoice.blank?
-          failed_import_rows << import_row.to_h.merge(failing_note: :'invoice not found after reload')
+          failed_import_rows << import_row.to_h.merge(failing_note: :"invoice not found after reload")
         end
-
       rescue ActiveRecord::RecordInvalid, ActiveRecord::StatementInvalid, Mysql2::Error => e
         failed_import_rows << import_row.to_h.merge(failing_note: e.message)
       end
@@ -256,22 +252,22 @@ namespace :import do
         puts 'ROWS WITH STATUS OTHER THAN "Offen":'
         puts non_open_import_rows.map { |row|
           ["esr_number: #{row[:esr]}",
-           "sent_at: #{row[:billdate]}",
-           "created_at: #{row[:createdon]}",
-           "alabus_id: #{row[:id]}",
-           "amount: #{row[:amount]}"].join(', ')
+            "sent_at: #{row[:billdate]}",
+            "created_at: #{row[:createdon]}",
+            "alabus_id: #{row[:id]}",
+            "amount: #{row[:amount]}"].join(", ")
         }.join("\n")
       end
 
       if failed_import_rows.any?
-        puts 'FAILED ROWS:'
+        puts "FAILED ROWS:"
         puts failed_import_rows.map { |row|
           ["esr_number: #{row[:esr]}",
-           "sent_at: #{row[:billdate]}",
-           "created_at: #{row[:createdon]}",
-           "alabus_id: #{row[:id]}",
-           "amount: #{row[:amount]}",
-           "failing_note: #{row[:failing_note]}"].join(', ')
+            "sent_at: #{row[:billdate]}",
+            "created_at: #{row[:createdon]}",
+            "alabus_id: #{row[:id]}",
+            "amount: #{row[:amount]}",
+            "failing_note: #{row[:failing_note]}"].join(", ")
         }.join("\n")
 
         puts "\nnothing was imported due to errors. Please fix import source file and try again."
@@ -280,22 +276,22 @@ namespace :import do
     end
   end
 
-  desc 'Imports people from CMS'
+  desc "Imports people from CMS"
   task people_cms: [:environment] do
-    person_csv = Wagons.find('sww').root.join('db/seeds/production/people_cms.csv')
+    person_csv = Wagons.find("sww").root.join("db/seeds/production/people_cms.csv")
     raise unless person_csv.exist?
 
     duplicate_profile_ids = Person.group(:sww_cms_profile_id).count.select { |_k, v| v > 1 }.keys
 
     if duplicate_profile_ids.any?
-      raise ['Duplicate sww_cms_profile_id found in database:',
-             duplicate_profile_ids.sort].flatten.join("\n")
+      raise ["Duplicate sww_cms_profile_id found in database:",
+        duplicate_profile_ids.sort].flatten.join("\n")
     end
 
     ActiveRecord::Base.transaction do
       failed_import_rows = []
 
-      CSV.parse(person_csv.read, headers: true, header_converters: :symbol, col_sep: ';').each do |import_row|
+      CSV.parse(person_csv.read, headers: true, header_converters: :symbol, col_sep: ";").each do |import_row|
         person_attrs = DataMigratorCms.person_attrs_from_import_row(import_row)
 
         person_attrs[:primary_group_id] = DataMigratorCms.default_user_group_id
@@ -313,7 +309,6 @@ namespace :import do
         person.confirm
 
         DataMigratorCms.insert_role!(person)
-
       rescue ActiveRecord::RecordInvalid, ActiveRecord::StatementInvalid
         failed_import_rows << import_row
       end
@@ -322,12 +317,12 @@ namespace :import do
       successful_count = total_count - failed_import_rows.size
       puts "Successfully imported #{successful_count}/#{total_count} rows"
       if failed_import_rows.any?
-        puts 'FAILED ROWS:'
+        puts "FAILED ROWS:"
         puts failed_import_rows.map { |row|
           ["first_name: #{row[:profile_prename]}",
-           "last_name: #{row[:profile_lastname]}",
-           "email: #{row[:profile_email]}",
-           "cms_profile_id: #{row[:profile_id]}"].join(', ')
+            "last_name: #{row[:profile_lastname]}",
+            "email: #{row[:profile_email]}",
+            "cms_profile_id: #{row[:profile_id]}"].join(", ")
         }.join("\n")
         puts "\nnothing was imported due to errors. Please fix import source file and try again."
         raise ActiveRecord::Rollback

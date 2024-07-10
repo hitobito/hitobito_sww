@@ -6,7 +6,6 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 class Group::GremiumProjektgruppe < ::Group
-
   children Group::GremiumProjektgruppe
 
   ### ROLES
@@ -20,5 +19,4 @@ class Group::GremiumProjektgruppe < ::Group
   end
 
   roles Leitung, Mitglied
-
 end

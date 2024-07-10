@@ -5,20 +5,17 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
 class Group::Fachorganisation < ::Group
-
   self.layer = true
 
   children Group::Vorstand,
-           Group::Geschaeftsstelle,
-           Group::GremiumProjektgruppe,
-           Group::Mitglieder,
-           Group::Kontakte
+    Group::Geschaeftsstelle,
+    Group::GremiumProjektgruppe,
+    Group::Mitglieder,
+    Group::Kontakte
 
   self.default_children = [
     Group::Vorstand,
     Group::Geschaeftsstelle
   ]
-
 end

@@ -12,13 +12,13 @@ module Sww::TagListsHelper
     def format_tag_category(category)
       case category
       when :other
-        t('tags.categories.other')
+        t("tags.categories.other")
       when :category_validation
-        t('tags.categories.validation')
+        t("tags.categories.validation")
       when :abo
-        t('tags.categories.abo')
+        t("tags.categories.abo")
       when :category
-        t('tags.categories.category')
+        t("tags.categories.category")
       else
         category
       end
