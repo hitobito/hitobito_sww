@@ -7,7 +7,6 @@
 
 module Sww::Export::Pdf::Messages::Letter::MembershipCards
   class Content < Export::Pdf::Messages::Letter::Content
-
     SUBJECT_WIDTH = 12.8.cm
 
     def render(recipient, _options)
@@ -30,7 +29,7 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
     def date_location_text
       bounding_box([SUBJECT_WIDTH, cursor], width: bounds.width - SUBJECT_WIDTH, height: 0.5.cm) do
         text_box("<font size='10'>#{letter.date_location_text}</font>",
-                 inline_format: true)
+          inline_format: true)
       end
     end
 

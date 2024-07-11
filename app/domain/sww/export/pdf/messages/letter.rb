@@ -12,10 +12,10 @@ module Sww::Export::Pdf::Messages::Letter
 
   def sections
     @sections ||= if membership_card?
-                    membership_card_sections
-                  else
-                    super
-                  end
+      membership_card_sections
+    else
+      super
+    end
   end
 
   def membership_card_sections
@@ -25,8 +25,8 @@ module Sww::Export::Pdf::Messages::Letter
       ::Sww::Export::Pdf::Messages::Letter::MembershipCards::Content
     ].collect do |section|
       section.new(pdf,
-                  @letter,
-                  @options.slice(:debug, :stamped))
+        @letter,
+        @options.slice(:debug, :stamped))
     end
   end
 

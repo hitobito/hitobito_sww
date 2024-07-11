@@ -15,19 +15,19 @@ module Sww::Export::Pdf::Messages::Letter
       recipient = fetch_recipient(message_recipient)
       offset_cursor_from_top 4.cm
       bounding_box(address_position(model.group), width: 5.7.cm, height: 1.2.cm) do
-        pdf.font('Helvetica') do
+        pdf.font("Helvetica") do
           text_box(card_title(recipient),
-                   inline_format: true, size: 10.pt)
+            inline_format: true, size: 10.pt)
 
           bounding_box([0.cm, 0.4.cm], width: 7.3.cm, height: 0.6.cm) do
             text_box(person_or_company_name(recipient),
-                     inline_format: true, size: 10.pt,
-                     overflow: :shrink_to_fit, min_font_size: 5.pt)
+              inline_format: true, size: 10.pt,
+              overflow: :shrink_to_fit, min_font_size: 5.pt)
           end
 
           bounding_box([5.3.cm, 1.2.cm], width: 2.0.cm, height: 1.2.cm) do
             text_box(valid_until(membership_expires_on),
-                     inline_format: true, size: 10.pt, align: :right)
+              inline_format: true, size: 10.pt, align: :right)
           end
         end
       end
@@ -45,20 +45,20 @@ module Sww::Export::Pdf::Messages::Letter
 
     def valid_until(membership_expires_on)
       [
-        I18n.t('messages.export.pdf.letter.membership_card.valid_until'),
+        I18n.t("messages.export.pdf.letter.membership_card.valid_until"),
         membership_expires_on
       ].join("\n")
     end
 
     def card_title(person)
       [
-        "<b>#{I18n.t('messages.export.pdf.letter.membership_card.title')}</b>",
+        "<b>#{I18n.t("messages.export.pdf.letter.membership_card.title")}</b>",
         person.member_number
       ].join("\n")
     end
 
     def membership_expires_on
-      model.membership_expires_on.try(:strftime, '%m.%Y')
+      model.membership_expires_on.try(:strftime, "%m.%Y")
     end
 
     def fetch_recipient(message_recipient)

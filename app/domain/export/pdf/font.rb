@@ -12,8 +12,8 @@ module Export::Pdf
     end
 
     def customize
-      @pdf.font_families.update('cardo' => cardo_font_family)
-      @pdf.font 'cardo'
+      @pdf.font_families.update("cardo" => cardo_font_family)
+      @pdf.font "cardo"
       @pdf.font_size 10
 
       @pdf
@@ -21,14 +21,14 @@ module Export::Pdf
 
     def cardo_font_family
       {
-        normal: { file: font_path.join('cardo-regular-104s.ttf') },
-        italic: { file: font_path.join('cardo-italic-099.ttf') },
-        bold: { file: font_path.join('cardo-bold-101.ttf') }
+        normal: {file: font_path.join("cardo-regular-104s.ttf")},
+        italic: {file: font_path.join("cardo-italic-099.ttf")},
+        bold: {file: font_path.join("cardo-bold-101.ttf")}
       }
     end
 
     def font_path
-      @font_path ||= HitobitoSww::Wagon.root.join('app', 'javascript', 'fonts')
+      @font_path ||= HitobitoSww::Wagon.root.join("app", "javascript", "fonts")
     end
   end
 end

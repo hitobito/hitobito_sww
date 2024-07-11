@@ -6,7 +6,6 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 class Group::Benutzerkonten < ::Group
-
   self.layer = true
 
   ### ROLES
@@ -23,5 +22,4 @@ class Group::Benutzerkonten < ::Group
   end
 
   roles Benutzerkonto, Verwalter
-
 end

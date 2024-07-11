@@ -6,7 +6,6 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 class Group::Mitglieder < ::Group
-
   children Group::Mitglieder
 
   ### ROLES
@@ -40,6 +39,5 @@ class Group::Mitglieder < ::Group
   end
 
   roles Aktivmitglied, Passivmitglied, Freimitglied, Organisationen,
-        Partner, Spender, MagazinAbonnent
-
+    Partner, Spender, MagazinAbonnent
 end

@@ -15,5 +15,4 @@ module Sww::Export::Pdf::Invoice::PaymentSlipQr
   def separators_with_configuration
     separators_without_configuration if invoice.invoice_config&.separators?
   end
-
 end

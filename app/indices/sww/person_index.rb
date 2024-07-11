@@ -8,9 +8,9 @@
 module Sww::PersonIndex; end
 
 ThinkingSphinx::Index.define_partial :person do
-  indexes '`people`.`magazin_abo_number`', as: :magazin_abo_number
+  indexes "`people`.`magazin_abo_number`", as: :magazin_abo_number
   indexes "CASE WHEN `people`.`manual_member_number` IS NOT NULL " +
-          "THEN `people`.`manual_member_number` " +
-            "ELSE `people`.`id` + #{Sww::Person::MEMBER_NUMBER_CALCULATION_OFFSET} END",
-          as: :member_number
+    "THEN `people`.`manual_member_number` " +
+    "ELSE `people`.`id` + #{Sww::Person::MEMBER_NUMBER_CALCULATION_OFFSET} END",
+    as: :member_number
 end

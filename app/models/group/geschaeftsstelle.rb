@@ -6,7 +6,6 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 class Group::Geschaeftsstelle < ::Group
-
   ### ROLES
 
   class Geschaeftsfuehrer < ::Role
@@ -26,5 +25,4 @@ class Group::Geschaeftsstelle < ::Group
   end
 
   roles Geschaeftsfuehrer, Kassier, TechnischerLeiter, Mitarbeiter
-
 end

@@ -19,16 +19,15 @@ module Sww::Export::Tabular::Invoices::EvaluationList
   end
 
   def add_header_rows
-    header_rows << [I18n.t(:'invoices.evaluations.show.title')]
+    header_rows << [I18n.t(:"invoices.evaluations.show.title")]
     header_rows << [Group.human_attribute_name(:layer_group),
-                    @metadata[:layer]]
-    header_rows << [I18n.t('invoices.export.tabular.evaluation_list.daterange_label'),
-                    "#{@metadata[:from]&.strftime('%d.%m.%Y')}-" \
-                    "#{@metadata[:to]&.strftime('%d.%m.%Y')}"]
-    header_rows << [I18n.t('invoices.export.tabular.evaluation_list.print_date'),
-                    (@metadata[:execution_date] || Time.zone.today).strftime('%d.%m.%Y')]
-    header_rows << [I18n.t('invoices.export.tabular.evaluation_list.printed_by'),
-                    @metadata[:printed_by]]
+      @metadata[:layer]]
+    header_rows << [I18n.t("invoices.export.tabular.evaluation_list.daterange_label"),
+      "#{@metadata[:from]&.strftime("%d.%m.%Y")}-" \
+      "#{@metadata[:to]&.strftime("%d.%m.%Y")}"]
+    header_rows << [I18n.t("invoices.export.tabular.evaluation_list.print_date"),
+      (@metadata[:execution_date] || Time.zone.today).strftime("%d.%m.%Y")]
+    header_rows << [I18n.t("invoices.export.tabular.evaluation_list.printed_by"),
+      @metadata[:printed_by]]
   end
-
 end

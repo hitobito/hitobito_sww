@@ -10,11 +10,11 @@ module Sww::Invoices::EvaluationsController
 
   def render_tabular(format)
     exported_data = case format
-                    when :csv then Export::Tabular::Invoices::EvaluationList.csv(table_rows,
-                                                                                 tabular_metadata)
-                    when :xlsx then Export::Tabular::Invoices::EvaluationList.xlsx(table_rows,
-                                                                                   tabular_metadata)
-                    end
+    when :csv then Export::Tabular::Invoices::EvaluationList.csv(table_rows,
+      tabular_metadata)
+    when :xlsx then Export::Tabular::Invoices::EvaluationList.xlsx(table_rows,
+      tabular_metadata)
+    end
     send_data exported_data, type: format, filename: "invoices_evaluation_#{from}-#{to}.#{format}"
   end
 

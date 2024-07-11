@@ -6,12 +6,11 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 class Group::SchweizerWanderwege < ::Group
-
   self.layer = true
 
   children Group::Benutzerkonten,
-           Group::Kontakte,
-           Group::Fachorganisation
+    Group::Kontakte,
+    Group::Fachorganisation
 
   ### ROLES
 
@@ -21,9 +20,8 @@ class Group::SchweizerWanderwege < ::Group
 
   class Support < ::Role
     self.permissions = [:layer_and_below_full, :admin, :finance, :impersonation, :support,
-                        :complete_finance]
+      :complete_finance]
   end
 
   roles Mitarbeitende, Support
-
 end

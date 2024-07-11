@@ -19,9 +19,8 @@ module Sww::Export::Pdf::Invoice
 
     def sections
       sections = [Export::Pdf::Invoice::InvoiceInformation,
-                  Export::Pdf::Invoice::ReceiverAddress,
-                  Export::Pdf::Invoice::Articles]
-
+        Export::Pdf::Invoice::ReceiverAddress,
+        Export::Pdf::Invoice::Articles]
 
       if membership_card?
         [Sww::Export::Pdf::Messages::Letter::MembershipCard] + sections
@@ -45,7 +44,7 @@ module Sww::Export::Pdf::Invoice
     private
 
     def customize(pdf)
-      ::Export::Pdf::Font.new(super(pdf)).customize
+      ::Export::Pdf::Font.new(super).customize
     end
   end
 

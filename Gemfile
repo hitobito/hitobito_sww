@@ -1,6 +1,6 @@
-load File.expand_path('app_root.rb', __dir__)
+load File.expand_path("app_root.rb", __dir__)
 
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 # Declare your gem's dependencies in hitobito_sww.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -8,7 +8,7 @@ source 'https://rubygems.org'
 gemspec
 
 # Load application Gemfile for all application dependencies.
-eval File.read(File.expand_path('Gemfile', ENV['APP_ROOT']))
+eval File.read(File.expand_path("Gemfile", ENV["APP_ROOT"]))
 
 group :development, :test do
   # Explicitly define the path for dependencies on other wagons.

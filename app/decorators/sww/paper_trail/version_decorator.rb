@@ -8,7 +8,7 @@
 module Sww::PaperTrail
   module VersionDecorator
     def author_service_token_label(token)
-      return super unless specific_author.present?
+      return super if specific_author.blank?
 
       "#{specific_author.inspect} via #{ServiceToken.model_name.human}: #{token}"
     end

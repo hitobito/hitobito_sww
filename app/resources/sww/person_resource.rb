@@ -17,8 +17,8 @@ module Sww::PersonResource
     attribute :updated_at, :datetime, writable: false
 
     belongs_to :updated_by,
-               foreign_key: :updater_id,
-               resource: PersonResource,
-               writable: false
+      foreign_key: :updater_id,
+      resource: PersonResource,
+      writable: false
   end
 end

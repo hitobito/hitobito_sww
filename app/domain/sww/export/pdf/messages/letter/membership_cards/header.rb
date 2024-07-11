@@ -24,14 +24,14 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
 
     def shipping_text
       text_box("<font size='7'>#{shipping_method} #{letter.pp_post&.upcase} | POST CH AG</font>",
-               inline_format: true, single_line: true)
+        inline_format: true, single_line: true)
     end
 
     def shipping_method
       @shipping_method ||= {
-        own: '',
-        normal: 'P.P.',
-        priority: 'P.P. A'
+        own: "",
+        normal: "P.P.",
+        priority: "P.P. A"
       }[letter.shipping_method.to_sym]
     end
 

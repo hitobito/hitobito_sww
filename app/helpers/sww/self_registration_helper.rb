@@ -6,19 +6,19 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 module Sww::SelfRegistrationHelper
-
   def link_to_sww_privacy
     link_to(
-      t('.privacy_link_name'),
-      t('.privacy_link'),
-      target: '_blank')
+      t(".privacy_link_name"),
+      t(".privacy_link"),
+      target: "_blank", rel: "noopener"
+    )
   end
 
   def link_to_sww_terms_of_use
     link_to(
-      t('.terms_of_use_link_name'),
-      t('.terms_of_use_link'),
-      target: '_blank')
+      t(".terms_of_use_link_name"),
+      t(".terms_of_use_link"),
+      target: "_blank", rel: "noopener"
+    )
   end
-
 end

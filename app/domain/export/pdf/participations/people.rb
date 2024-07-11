@@ -11,7 +11,7 @@ module Export::Pdf::Participations
 
     def table_header
       super + [
-        I18n.t('activerecord.attributes.event/participation.additional_information')
+        I18n.t("activerecord.attributes.event/participation.additional_information")
       ]
     end
 

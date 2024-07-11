@@ -6,7 +6,6 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 class Group::Vorstand < ::Group
-
   ### ROLES
 
   class Praesident < ::Role
@@ -22,5 +21,4 @@ class Group::Vorstand < ::Group
   end
 
   roles Praesident, Vizepraesident, Vorstandsmitglied
-
 end

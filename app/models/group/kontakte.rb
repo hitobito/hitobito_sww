@@ -6,7 +6,6 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 class Group::Kontakte < ::Group
-
   children Group::Kontakte
 
   ### ROLES
@@ -16,5 +15,4 @@ class Group::Kontakte < ::Group
   end
 
   roles Kontakt
-
 end
