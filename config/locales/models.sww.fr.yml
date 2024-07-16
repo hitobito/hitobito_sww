@@ -159,15 +159,15 @@ fr:
 
   doorkeeper:
     scopes:
-      email: ""
-      name: ""
-      with_roles: ""
-      openid: ""
+      email: "Lire votre adresse e-mail. Pour que le login puisse se dérouler correctement, nous avons besoin de votre adresse e-mail."
+      name: "Lire votre nom. Pour que le login puisse se dérouler correctement, nous avons besoin de votre nom."
+      with_roles: "Lire vos données de base d'adresses et vos autorisations. Afin que les autorisations de votre compte puissent être enregistrées correctement, notre système vérifie l'autorisation et les données de base de l'adresse, qui ne contiennent aucune autre information personnelle."
+      openid: Lire votre jeton d'identité OpenID Connect (OIDC). Il s'agit d'une information qui est utilisée pour authentifier votre utilisateur. Notre système peut ainsi confirmer l'identité de votre compte et s'assurer qu'aucun accès non autorisé n'a lieu.
 
-      api: ""
-      events: ""
-      groups: ""
-      people: ""
-      invoices: ""
-      mailing_lists: ""
-      nextcloud: ""
+      api: "Lire toutes les personnes, groupes, événements, abonnements et factures auxquels vous avez accès, via les interfaces JSON."
+      events: Lire tous les événements auxquels vous avez accès
+      groups: Lire tous les groupes auxquels vous avez accès
+      people: Lire toutes les personnes auxquelles vous avez accès
+      invoices: Lire toutes les factures auxquelles vous avez accès
+      mailing_lists: Lire tous les abonnements auxquels vous avez accès
+      nextcloud: Lire vos groupes Nextcloud et votre nom d'affichage

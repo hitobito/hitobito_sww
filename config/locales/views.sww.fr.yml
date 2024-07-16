@@ -30,13 +30,13 @@ fr:
         info: 'Veuillez vous connecter pour accéder a Suisse Rando.'
     mailer:
       reset_password_instructions:
-        subject: ""
+        subject: Définir un mot de passe
         body:
-          greeting: ""
+          greeting: Bonjour
           reset_instructions:
-            with_password: ''
-            without_password_html: ''
-          ignore_information_html: ''
+            with_password: 'Vous pouvez réinitialiser votre mot de passe en cliquant sur le lien suivant:'
+            without_password_html: 'Bienvenue sur notre site! Veuillez définir votre mot de passe en cliquant sur le lien suivant:'
+          ignore_information_html: 'Si vous ne souhaitez pas modifier votre mot de passe, vous pouvez ignorer cet e-mail. <br><br>Le mot de passe ne changera pas sans que vous alliez sur le lien ci-dessus et que vous y attribuiez un nouveau mot de passe.'
 
   invoice_lists:
     form_invoice_fields_sww:

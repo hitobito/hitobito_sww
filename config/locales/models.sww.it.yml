@@ -11,9 +11,9 @@ it:
       ### GROUPS
 
       group/schweizer_wanderwege:
-        one: ''
-        many: ''
-        other: ''
+        one: Sentieri Svizzeri
+        many: Sentieri Svizzeri
+        other: Sentieri Svizzeri
 
       group/benutzerkonten:
         one: ''
@@ -159,12 +159,12 @@ it:
 
   doorkeeper:
     scopes:
-      email: ""
-      name: ""
-      with_roles: ""
-      openid: ""
+      email: Leggete il vostro indirizzo e-mail. Abbiamo bisogno del vostro indirizzo e-mail per poter elaborare correttamente il login.
+      name: Leggi il tuo nome. Abbiamo bisogno del vostro nome per poter elaborare correttamente il login.
+      with_roles: "Lettura dei dati anagrafici e delle autorizzazioni del vostro indirizzo. Per garantire che le autorizzazioni del vostro conto siano memorizzate correttamente, il nostro sistema controlla i dati anagrafici delle autorizzazioni e degli indirizzi, che non contengono altre informazioni personali."
+      openid: Leggere il token di identità OpenID Connect (OIDC). Si tratta di informazioni utilizzate per autenticare l'utente. Ciò consente al nostro sistema di confermare l'identità del vostro account e di garantire che non si verifichino accessi non autorizzati.
 
-      api: ""
+      api: "Leggere tutte le persone, i gruppi, gli eventi, gli abbonamenti e le fatture a cui si ha accesso tramite le interfacce JSON."
       events: ""
       groups: ""
       people: ""
