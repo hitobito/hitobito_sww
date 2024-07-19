@@ -165,9 +165,9 @@ it:
       openid: Leggere il token di identità OpenID Connect (OIDC). Si tratta di informazioni utilizzate per autenticare l'utente. Ciò consente al nostro sistema di confermare l'identità del vostro account e di garantire che non vi siano accessi non autorizzati.
 
       api: "Leggere tutte le persone, i gruppi, gli eventi, gli abbonamenti e le fatture a cui si ha accesso tramite le interfacce JSON."
-      events: ""
-      groups: ""
-      people: ""
-      invoices: ""
-      mailing_lists: ""
-      nextcloud: ""
+      events: Leggere tutti gli eventi a cui si ha accesso
+      groups: Leggere tutti i gruppi a cui si ha accesso
+      people: Leggere tutte le persone a cui si ha accesso
+      invoices: Leggere tutte le fatture a cui si ha accesso
+      mailing_lists: Leggere tutti gli abbonamenti a cui avete accesso
+      nextcloud: Leggere i vostri gruppi Nextcloud e il vostro nome visualizzato
