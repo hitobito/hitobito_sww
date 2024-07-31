@@ -30,7 +30,7 @@ module HitobitoSww
       Group.include Sww::Group
       Person.include Sww::Person
 
-      SelfRegistration::MainPerson.prepend Sww::SelfRegistration::MainPerson
+      Wizards::Steps::NewUserForm.prepend  Sww::Wizards::Steps::NewUserForm
 
       PersonResource.include Sww::PersonResource
 

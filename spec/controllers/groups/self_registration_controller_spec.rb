@@ -14,25 +14,27 @@ describe Groups::SelfRegistrationController do
     group.update!(self_registration_role_type: Group::Mitglieder::Aktivmitglied.sti_name)
   end
 
-  context 'POST create' do
-    it 'builds address using street and housenumber' do
+  context "POST#create" do
+    it "builds address using street and housenumber" do
       expect do
         post :create, params: {
           group_id: group.id,
-          self_registration: {
-            main_person_attributes: { first_name: 'Bob',
-                                      gender: 'm',
-                                      last_name: 'Miller',
-                                      email: 'bob.miller@example.com',
-                                      street: 'Belpstrasse',
-                                      housenumber: '37' }
+          wizards_register_new_user_wizard: {
+            new_user_form: {
+              first_name: "Bob",
+              gender: "m",
+              last_name: "Miller",
+              email: "bob.miller@example.com",
+              street: "Belpstrasse",
+              housenumber: "37"
+            }
           }
         }
       end.to change { Person.count }.by(1)
 
-      person = Person.find_by(email: 'bob.miller@example.com')
+      person = Person.find_by(email: "bob.miller@example.com")
 
-      expect(person.address).to eq('Belpstrasse 37')
+      expect(person.address).to eq("Belpstrasse 37")
     end
   end
 end
