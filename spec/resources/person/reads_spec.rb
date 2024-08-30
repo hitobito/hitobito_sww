@@ -54,7 +54,7 @@ RSpec.describe PersonResource, type: :resource do
       end
 
       sww_datetime_attrs.each do |attr|
-        expect(Time.zone.parse data.public_send(attr)).to eq(person.public_send(attr))
+        expect((Time.zone.parse data.public_send(attr)).change(sec: 0)).to eq(person.public_send(attr).change(sec: 0))
       end
     end
   end

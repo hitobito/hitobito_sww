@@ -14,7 +14,7 @@ describe InvoiceAbility do
     let(:role) { Fabricate(Group::SchweizerWanderwege::Support.sti_name.to_sym,
                            group: groups(:schweizer_wanderwege)) }
 
-    Group.where(type: Group.all_types.select(&:layer)).each do |layer|
+    Group.where(type: Group.all_types.select(&:layer).map(&:sti_name)).each do |layer|
       before do
         layer.send(:create_invoice_config)
         layer.invoice_config.update(sequence_number: '1')
