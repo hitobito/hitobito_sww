@@ -20,8 +20,7 @@ module Sww::Person
       :sww_cms_profile_id, :sww_cms_legacy_password_salt]
     Person::INTERNAL_ATTRS.push(*add_internal_attrs)
 
-    add_searchable_attrs = [:magazin_abo_number, :manual_member_number]
-    SEARCHABLE_ATTRS.push(*add_searchable_attrs)
+    SEARCHABLE_ATTRS = [:magazin_abo_number, :manual_member_number] # rubocop:disable Lint/ConstantDefinitionInBlock
 
     attr_readonly :alabus_id
 
