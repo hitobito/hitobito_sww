@@ -12,9 +12,6 @@ module Sww::Person
 
   included do
     include PgSearchable
-    SEARCHABLE_ATTRS = [
-      :magazin_abo_number, :manual_member_number
-    ]
     add_public_attrs = [:custom_salutation, :magazin_abo_number, :title,
       :name_add_on, :sww_cms_profile_id]
     Person::PUBLIC_ATTRS.push(*add_public_attrs)
@@ -22,6 +19,9 @@ module Sww::Person
     add_internal_attrs = [:alabus_id, :member_number, :manual_member_number,
       :sww_cms_profile_id, :sww_cms_legacy_password_salt]
     Person::INTERNAL_ATTRS.push(*add_internal_attrs)
+
+    add_searchable_attrs = [:magazin_abo_number, :manual_member_number]
+    SEARCHABLE_ATTRS.push(*add_searchable_attrs)
 
     attr_readonly :alabus_id
 
