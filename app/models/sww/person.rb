@@ -11,6 +11,10 @@ module Sww::Person
   MEMBER_NUMBER_CALCULATION_OFFSET = 300_000
 
   included do
+    include PgSearchable
+    SEARCHABLE_ATTRS = [
+      :magazin_abo_number, :manual_member_number
+    ]
     add_public_attrs = [:custom_salutation, :magazin_abo_number, :title,
       :name_add_on, :sww_cms_profile_id]
     Person::PUBLIC_ATTRS.push(*add_public_attrs)
