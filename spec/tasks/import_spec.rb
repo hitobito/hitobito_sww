@@ -57,18 +57,18 @@ describe "import:people_fo" do
       expect(person.magazin_abo_number).to eq(1000)
       expect(person.name_add_on).to eq('Mustermann')
       expect(person.email).to eq('max.muster@example.com')
-      expect(person.roles.with_deleted.count).to eq(2)
+      expect(person.roles.with_inactive.count).to eq(2)
 
       mitglied = person.roles.first
-      magazin_abo = person.roles.with_deleted.last
+      magazin_abo = person.roles.with_inactive.last
 
       expect(mitglied.type).to eq(Group::Mitglieder::Aktivmitglied.sti_name)
-      expect(mitglied.created_at).to eq(DateTime.new(1977, 1, 1))
-      expect(mitglied.deleted_at).to be_nil
+      expect(mitglied.start_on).to eq(DateTime.new(1977, 1, 1))
+      expect(mitglied.end_on).to be_nil
 
       expect(magazin_abo.type).to eq(Group::Mitglieder::MagazinAbonnent.sti_name)
-      expect(magazin_abo.created_at).to eq(DateTime.new(1990, 10, 12))
-      expect(magazin_abo.deleted_at).to eq(DateTime.new(2006, 2, 12))
+      expect(magazin_abo.start_on).to eq(DateTime.new(1990, 10, 12))
+      expect(magazin_abo.end_on).to eq(DateTime.new(2006, 2, 12))
 
       expect(person.taggings.count).to eq(3)
 
@@ -107,7 +107,7 @@ describe "import:people_fo" do
       expect(person.additional_emails.first.email).to eq('max.muster@example.com')
     end
 
-    it "sets role created_at on a day before deleted_at if not set" do
+    it "sets role start_on on a day before end_on if not set" do
       expect do
         Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
       end.to output("Successfully imported 5/5 rows\n").to_stdout
@@ -115,22 +115,22 @@ describe "import:people_fo" do
       person = Person.find_by(alabus_id: 'dcwe1-vbsdw2-2cib1kbs-p-g2bnbw1h-2sd')
       expect(person).to be_present
 
-      expect(person.roles.without_deleted.count).to eq(0)
-      expect(person.roles.with_deleted.count).to eq(2)
+      expect(person.roles.active.count).to eq(0)
+      expect(person.roles.with_inactive.count).to eq(2)
 
-      mitglied = person.roles.with_deleted.first
-      magazin_abo = person.roles.with_deleted.last
+      mitglied = person.roles.with_inactive.first
+      magazin_abo = person.roles.with_inactive.last
 
       expect(mitglied.type).to eq(Group::Mitglieder::Aktivmitglied.sti_name)
-      expect(mitglied.created_at).to eq(DateTime.new(2002, 11, 29))
-      expect(mitglied.deleted_at).to eq(DateTime.new(2002, 11, 30))
+      expect(mitglied.start_on).to eq(DateTime.new(2002, 11, 29))
+      expect(mitglied.end_on).to eq(DateTime.new(2002, 11, 30))
 
       expect(magazin_abo.type).to eq(Group::Mitglieder::MagazinAbonnent.sti_name)
-      expect(magazin_abo.created_at).to eq(DateTime.new(1998, 12, 31))
-      expect(magazin_abo.deleted_at).to eq(DateTime.new(1999, 1, 1))
+      expect(magazin_abo.start_on).to eq(DateTime.new(1998, 12, 31))
+      expect(magazin_abo.end_on).to eq(DateTime.new(1999, 1, 1))
     end
 
-    it "imports role only if created_at can be set" do
+    it "imports role only if start_on can be set" do
       expect do
         Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
       end.to output("Successfully imported 5/5 rows\n").to_stdout
@@ -139,9 +139,9 @@ describe "import:people_fo" do
       person_with_one_role = Person.find_by(alabus_id: '1s23w-b52n1x-2ciw2kjn-g-g213bwvh-1x7')
       person_without_roles = Person.find_by(alabus_id: 'bew31-axzcd1-jbhox23z-z-jtxn23wd1-k3g')
 
-      expect(person_with_two_roles.roles.with_deleted.count).to eq(2)
-      expect(person_with_one_role.roles.with_deleted.count).to eq(1)
-      expect(person_without_roles.roles.with_deleted.count).to eq(0)
+      expect(person_with_two_roles.roles.with_inactive.count).to eq(2)
+      expect(person_with_one_role.roles.with_inactive.count).to eq(1)
+      expect(person_without_roles.roles.with_inactive.count).to eq(0)
     end
 
     it "assigns Schweiz as fallback country" do
@@ -381,7 +381,7 @@ describe "import:people_cms" do
       expect(person.language).to eq('fr')
       expect(person.valid_password?('great_password')).to eq(true)
 
-      expect(person.roles.with_deleted.count).to eq(1)
+      expect(person.roles.with_inactive.count).to eq(1)
 
       role = Group::Benutzerkonten::Benutzerkonto.find_by(person_id: person.id,
                                                           group_id: benutzerkonten_group.id)
