@@ -241,7 +241,7 @@ namespace :import do
         if invoice.blank?
           failed_import_rows << import_row.to_h.merge(failing_note: :"invoice not found after reload")
         end
-      rescue ActiveRecord::RecordInvalid, ActiveRecord::StatementInvalid, Mysql2::Error => e
+      rescue ActiveRecord::RecordInvalid, ActiveRecord::StatementInvalid, PG::Error => e
         failed_import_rows << import_row.to_h.merge(failing_note: e.message)
       end
 

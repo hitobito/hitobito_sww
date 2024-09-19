@@ -10,30 +10,33 @@
 # as the data migration is a one off task.
 class MigrateToGeneratedMemberNumber2 < ActiveRecord::Migration[6.1]
   def up
-    return true unless ActiveRecord::Base.connection.class.to_s == 'ActiveRecord::ConnectionAdapters::Mysql2Adapter'
-
     say "clearing member numbers >= 300'000 and all those of people without active role"
     execute <<~SQL
       UPDATE people
-        LEFT OUTER JOIN (
+        SET manual_member_number = NULL
+        FROM (
           SELECT DISTINCT person_id
           FROM roles
           WHERE deleted_at IS NULL
-          OR deleted_at > UTC_TIMESTAMP()
+          OR deleted_at > NOW()
         ) active_roles
-        ON people.id = active_roles.person_id
-        SET manual_member_number = NULL
-        WHERE active_roles.person_id IS NULL
+        WHERE people.id = active_roles.person_id
         OR manual_member_number >= 300000
+        AND active_roles.person_id IS NULL;
     SQL
 
     say "clearing duplicate member numbers, keeping only the first occurrance"
     execute <<~SQL
       UPDATE people
-        JOIN (SELECT MIN(id) AS ID, manual_member_number FROM people GROUP BY manual_member_number HAVING COUNT(*) > 1) lowest_duplicate
-        ON people.manual_member_number = lowest_duplicate.manual_member_number
-        SET people.manual_member_number = NULL
-        WHERE people.id <> lowest_duplicate.id
+        SET manual_member_number = NULL
+        FROM (
+          SELECT MIN(id) AS id, manual_member_number
+          FROM people
+          GROUP BY manual_member_number
+          HAVING COUNT(*) > 1
+        ) AS lowest_duplicate
+        WHERE people.manual_member_number = lowest_duplicate.manual_member_number
+        AND people.id <> lowest_duplicate.id;
     SQL
   end
 end

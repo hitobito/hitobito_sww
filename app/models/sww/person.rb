@@ -11,6 +11,7 @@ module Sww::Person
   MEMBER_NUMBER_CALCULATION_OFFSET = 300_000
 
   included do
+    include PgSearchable
     add_public_attrs = [:custom_salutation, :magazin_abo_number, :title,
       :name_add_on, :sww_cms_profile_id]
     Person::PUBLIC_ATTRS.push(*add_public_attrs)
@@ -18,6 +19,8 @@ module Sww::Person
     add_internal_attrs = [:alabus_id, :member_number, :manual_member_number,
       :sww_cms_profile_id, :sww_cms_legacy_password_salt]
     Person::INTERNAL_ATTRS.push(*add_internal_attrs)
+
+    SEARCHABLE_ATTRS = [:magazin_abo_number, :manual_member_number] # rubocop:disable Lint/ConstantDefinitionInBlock
 
     attr_readonly :alabus_id
 
