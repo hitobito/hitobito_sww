@@ -108,8 +108,8 @@ namespace :import do
           person_id: person.id,
           group_id: group.id,
           type: Group::Mitglieder::Aktivmitglied.sti_name,
-          created_at: import_row[:memberentrydate],
-          deleted_at: import_row[:memberexitdate],
+          start_on: import_row[:memberentrydate],
+          end_on: import_row[:memberexitdate],
           updated_at: Time.zone.now
         }
 
@@ -117,26 +117,26 @@ namespace :import do
           person_id: person.id,
           group_id: group.id,
           type: Group::Mitglieder::MagazinAbonnent.sti_name,
-          created_at: import_row[:abo1start],
-          deleted_at: import_row[:abo1end],
+          start_on: import_row[:abo1start],
+          end_on: import_row[:abo1end],
           updated_at: Time.zone.now
         }
 
         [mitglied_attrs, magazin_abo_attrs].each do |attrs|
-          attrs[:created_at] = DateTime.parse(attrs[:created_at]) if attrs[:created_at]
-          attrs[:deleted_at] = DateTime.parse(attrs[:deleted_at]) if attrs[:deleted_at]
+          attrs[:start_on] = DateTime.parse(attrs[:start_on]) if attrs[:start_on]
+          attrs[:end_on] = DateTime.parse(attrs[:end_on]) if attrs[:end_on]
 
-          if attrs[:deleted_at].present? && attrs[:created_at].nil?
-            attrs[:created_at] = attrs[:deleted_at].yesterday
+          if attrs[:end_on].present? && attrs[:start_on].nil?
+            attrs[:start_on] = attrs[:end_on].yesterday
           end
 
-          next unless attrs[:created_at]
+          next unless attrs[:start_on]
 
           # Because of a known issue of the acts_as_paranoid gem,
           # you can not directly create a model in a deleted state.
           # Thus we have to update it afterwards.
           Role.insert(attrs)
-          Role.with_deleted.last.update(attrs)
+          Role.with_inactive.last.update(attrs)
         end
 
         tagging_attrs = {taggable_id: person.id, taggable_type: Person.sti_name, context: "tags"}

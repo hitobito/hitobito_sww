@@ -17,8 +17,8 @@ class MigrateToGeneratedMemberNumber2 < ActiveRecord::Migration[6.1]
         FROM (
           SELECT DISTINCT person_id
           FROM roles
-          WHERE deleted_at IS NULL
-          OR deleted_at > NOW()
+          WHERE end_on IS NULL
+          OR end_on > NOW()
         ) active_roles
         WHERE people.id = active_roles.person_id
         OR manual_member_number >= 300000
