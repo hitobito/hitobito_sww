@@ -10,11 +10,8 @@ module Sww::Export::Tabular::People::PersonRow
 
   def roles
     entry.roles.map do |role|
-      role_validity = [
-        I18n.l(role.created_at.to_date),
-        role.archived_at.present? && I18n.l(role.archived_at.to_date) || ""
-      ]
-      "#{role} #{role.group.with_layer.join(" / ")} (#{role_validity.join("-")})"
+      role_validity = [I18n.l(role.start_on.to_date), role.end_on.present? && I18n.l(role.end_on.to_date) || ""]
+      "#{role.to_s(:short)} #{role.group.with_layer.join(" / ")} (#{role_validity.join("-")})"
     end.join(", ")
   end
 end
