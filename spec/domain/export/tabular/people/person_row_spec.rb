@@ -14,7 +14,7 @@ describe Export::Tabular::People::PersonRow do
 
   subject { row }
 
-  context 'sww salutation' do
+  describe 'sww salutation' do
     context 'with gender other' do
       before { person.update(gender: nil) }
 
@@ -25,10 +25,39 @@ describe Export::Tabular::People::PersonRow do
       before { person.update(gender: 'w') }
       it { expect(row.fetch(:sww_salutation)).to eq 'Frau' }
     end
-    
+
     context 'with gender m' do
       before { person.update(gender: 'm') }
       it { expect(row.fetch(:sww_salutation)).to eq 'Herr' }
+    end
+  end
+
+  describe 'roles' do
+    subject(:roles) { row.fetch(:roles) }
+    before { person.roles.first.update(created_at: Time.zone.local(2024, 10, 29, 13, 37)) }
+
+    context 'with no end date' do
+      it 'includes start' do
+        is_expected.to eq("Aktivmitglied Berner Wanderwege BWW / Mitglieder (29.10.2024-)")
+      end
+    end
+
+    context 'with end date' do
+      before { person.roles.first.update(archived_at:  Time.zone.local(2024, 12, 31, 10)) }
+      it 'includes start' do
+        is_expected.to eq("Aktivmitglied Berner Wanderwege BWW / Mitglieder (29.10.2024-31.12.2024)")
+      end
+    end
+
+    context 'with multiple roles' do
+      before do
+        Fabricate(Group::Mitglieder::Aktivmitglied.name.to_sym, person: person,
+                  group: groups(:zuercher_mitglieder), created_at: Time.zone.local(1970, 1, 1, 4))
+      end
+      it 'includes all roles' do
+        is_expected.to eq(["Aktivmitglied Berner Wanderwege BWW / Mitglieder (29.10.2024-)",
+                           "Aktivmitglied Zürcher Wanderwege / Mitglieder (01.01.1970-)"].join(", "))
+      end
     end
   end
 end
