@@ -33,12 +33,12 @@
   .selfregister-conditions.align-with-form
     .title
       = t('.terms_of_use_title')
-    = sanitize(t('.terms_of_use_text', link: link_to_sww_terms_of_use), tags: ['a'], attributes: %w(target href))
+    = sanitize(t('.terms_of_use_text'))
 
   .selfregister-conditions.align-with-form
     .title
       = t('.privacy_title')
-    = sanitize(t('.privacy_text', link: link_to_sww_privacy), tags: ['a'], attributes: %w(target href))
+    = sanitize(t('.privacy_text'))
 
   = field_set_tag(nil, class: 'privacy-policy-fields') do
     = render('people/privacy_policy_acceptance_field', f: fields, policy_finder: policy_finder)
