@@ -44,7 +44,7 @@ describe Export::Tabular::People::PersonRow do
 
     context 'with end date' do
       before { person.roles.first.update(delete_on:  Time.zone.local(2024, 12, 31, 10)) }
-      it 'includes start' do
+      it 'includes start and end date' do
         is_expected.to eq("Aktivmitglied Berner Wanderwege BWW / Mitglieder (29.10.2024-31.12.2024)")
       end
     end
