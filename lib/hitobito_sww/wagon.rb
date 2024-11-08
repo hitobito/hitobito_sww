@@ -43,6 +43,7 @@ module HitobitoSww
       Export::Tabular::Invoices::EvaluationList.include Sww::Export::Tabular::Invoices::EvaluationList
 
       Export::Tabular::People::PeopleFull.prepend Sww::Export::Tabular::People::PeopleFull
+      Export::Tabular::People::PersonRow.prepend Sww::Export::Tabular::People::PersonRow
       Export::Pdf::Messages::Letter.prepend Sww::Export::Pdf::Messages::Letter
       Export::Pdf::Messages::Letter::Header.prepend Sww::Export::Pdf::Messages::Letter::Header
 
