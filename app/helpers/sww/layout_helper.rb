@@ -14,7 +14,7 @@ module Sww::LayoutHelper
       in controller: "groups/self_registration", action: "show"
         false
       in controller: "devise/hitobito/sessions", action: "new"
-        params[:oauth].present?
+        params[:oauth].blank?
       else
         true
       end
