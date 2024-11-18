@@ -5,8 +5,4 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww
 
-[
-  Invoice,
-  InvoiceConfig,
-  Group
-].map(&:reset_column_information)
+ActiveRecord::Base.reset_column_information
