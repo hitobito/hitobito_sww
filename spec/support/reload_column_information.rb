@@ -10,6 +10,7 @@
   InvoiceArticle,
   InvoiceConfig,
   InvoiceList,
+  InvoiceItem,
   Group,
   Payment,
   PaymentReminder
