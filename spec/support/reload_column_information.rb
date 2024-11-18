@@ -7,5 +7,6 @@
 
 [
   Invoice,
-  InvoiceConfig
+  InvoiceConfig,
+  Group
 ].map(&:reset_column_information)
