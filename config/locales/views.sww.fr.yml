@@ -27,7 +27,7 @@ fr:
     sessions:
       oauth_info:
         sign_in: 'Connexion'
-        info: 'Veuillez vous connecter pour accéder a Suisse Rando.'
+        info: ''
     mailer:
       reset_password_instructions:
         subject: Définir un mot de passe
