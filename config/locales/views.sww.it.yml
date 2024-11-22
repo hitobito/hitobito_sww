@@ -27,7 +27,7 @@ it:
     sessions:
       oauth_info:
         sign_in: 'Login'
-        info: ''
+        info: 'Effettua il login per accedere ai Sentieri Svizzeri.'
     mailer:
       reset_password_instructions:
         subject: ""
