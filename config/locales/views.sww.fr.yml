@@ -27,7 +27,7 @@ fr:
     sessions:
       oauth_info:
         sign_in: 'Connexion'
-        info: 'Veuillez vous connecter pour accéder a Suisse Rando.'
+        info: ''
     mailer:
       reset_password_instructions:
         subject: Définir un mot de passe
@@ -62,12 +62,12 @@ fr:
         salutation: Formule d'appel
         street_house_nr: "Rue, n°"
         terms_of_use_title: Conditions générales
-        terms_of_use_text: "En cliquant sur «Créer un compte», vous acceptez les %{link} de Suisse Rando."
-        terms_of_use_link: "https://www.suisse-rando.ch/fr/cgp"
+        terms_of_use_text: ""
+        terms_of_use_link: 
         terms_of_use_link_name: Conditions générales
         privacy_title: Déclaration de protection des données
-        privacy_text: "Pour en savoir plus sur la manière dont Suisse Rando collecte, utilise, divulgue et protège vos données personnelles, veuillez consulter la %{link} de Suisse Rando."
-        privacy_link: "http://www.suisse-rando.ch/fr/confidentialite"
+        privacy_text: ""
+        privacy_link: 
         privacy_link_name: Politique de confidentialité
   invoices:
     export:

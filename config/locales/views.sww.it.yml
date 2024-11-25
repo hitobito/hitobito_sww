@@ -27,7 +27,7 @@ it:
     sessions:
       oauth_info:
         sign_in: 'Login'
-        info: 'Effettua il login per accedere ai Sentieri Svizzeri.'
+        info: ''
     mailer:
       reset_password_instructions:
         subject: ""
@@ -62,12 +62,12 @@ it:
         salutation: Saluto
         street_house_nr: "Via, n."
         terms_of_use_title: Condizioni generali
-        terms_of_use_text: "Cliccando su «Crea un account», accetti le %{link} dei Sentieri Svizzeri."
-        terms_of_use_link: "https://www.sentieri-svizzeri.ch/it/condizioniduso"
+        terms_of_use_text: ""
+        terms_of_use_link: 
         terms_of_use_link_name: Condizioni generali
         privacy_title: Protezione dei dati
-        privacy_text: "Ulteriori informazioni su come i Sentieri Svizzeri raccolgono, utilizzano, divulganoe proteggono i tuoi dati personali sono disponibili nella sezione «%{link}» dei Sentieri Svizzeri."
-        privacy_link: "https://www.sentieri-svizzeri.ch/it/protezionideidati"
+        privacy_text: ""
+        privacy_link: 
         privacy_link_name: Protezione dei dati
   invoices:
     export:
