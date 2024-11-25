@@ -34,7 +34,7 @@ describe Export::Tabular::People::PersonRow do
 
   describe 'roles' do
     subject(:roles) { row.fetch(:roles) }
-    before { person.roles.first.update(created_at: Time.zone.local(2024, 10, 29, 13, 37)) }
+    before { person.roles.first.update(start_on: Time.zone.local(2024, 10, 29, 13, 37)) }
 
     context 'with no end date' do
       it 'includes start' do
@@ -43,7 +43,7 @@ describe Export::Tabular::People::PersonRow do
     end
 
     context 'with end date' do
-      before { person.roles.first.update(delete_on:  Time.zone.local(2024, 12, 31, 10)) }
+      before { person.roles.first.update(end_on:  Time.zone.local(2024, 12, 31, 10)) }
       it 'includes start' do
         is_expected.to eq("Aktivmitglied Berner Wanderwege BWW / Mitglieder (29.10.2024-31.12.2024)")
       end
@@ -52,7 +52,7 @@ describe Export::Tabular::People::PersonRow do
     context 'with multiple roles' do
       before do
         Fabricate(Group::Mitglieder::Aktivmitglied.name.to_sym, person: person,
-                  group: groups(:zuercher_mitglieder), created_at: Time.zone.local(1970, 1, 1, 4))
+                  group: groups(:zuercher_mitglieder), start_on: Time.zone.local(1970, 1, 1, 4))
       end
       it 'includes all roles' do
         is_expected.to eq(["Aktivmitglied Berner Wanderwege BWW / Mitglieder (29.10.2024-)",
