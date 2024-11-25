@@ -63,11 +63,11 @@ de:
         street_house_nr: Strasse/Hausnummer
         terms_of_use_title: Nutzungsbestimmungen
         terms_of_use_text: Indem Sie auf Registrieren klicken, stimmen Sie den Nutzungsbedingungen zu.
-        terms_of_use_link: 
+        terms_of_use_link: ""
         terms_of_use_link_name: Nutzungsbestimmungen
         privacy_title: Datenschutzerklärung
         privacy_text: Weitere Informationen darüber, wie personenbezogene Daten erfasst, verwendet, weitergegeben und geschützt werden, finden Sie in der Datenschutzrichtlinie.
-        privacy_link: 
+        privacy_link: ""
         privacy_link_name: Datenschutzrichtlinie
   invoices:
     export:
