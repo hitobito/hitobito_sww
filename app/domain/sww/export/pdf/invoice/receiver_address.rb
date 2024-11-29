@@ -13,4 +13,8 @@ module Sww::Export::Pdf::Invoice::ReceiverAddress
       addr.unshift([invoice.recipient&.sww_salutation]) if invoice.recipient&.gender.present?
     end
   end
+
+  def group
+    invoice.group
+  end
 end

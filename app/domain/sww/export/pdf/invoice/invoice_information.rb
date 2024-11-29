@@ -19,4 +19,8 @@ module Sww::Export::Pdf::Invoice::InvoiceInformation
   def information
     labeled_information(:invoice_date, I18n.l(invoice.issued_at)).join(" ")
   end
+
+  def group
+    invoice.group
+  end
 end
