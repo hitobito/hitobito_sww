@@ -1,5 +1,9 @@
 # Hitobito SWW Changelog
 
+## unreleased
+
+- Personen mit Leiter Rolle in einem Gremium können den Reiter Anmeldungen auf Anlässen des Gremiums sehen (hitobito_sww#183)
+
 ## Version 2.1
 - Cardo als Schriftart für alle PDFs (hitobito_sww#142)
 - Rückzahlungen können erfasst werden (hitobito_sww#151)
