@@ -10,10 +10,6 @@ module Sww::EventAbility
 
   included do
     on(Event) do
-      # permission(:group_and_below_full).may(:index_participations, :show)
-      #   .in_same_group_or_below
-      # permission(:group_and_below_full).may(:index_invitations)
-      #   .in_same_group_or_below_and_invitations_supported
       permission(:group_and_below_full).may(:create, :update, :destroy, :manage_tags, :application_market)
         .in_same_group_or_below_if_active
     end
