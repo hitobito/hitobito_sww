@@ -63,11 +63,11 @@ fr:
         street_house_nr: "Rue, n°"
         terms_of_use_title: Conditions générales
         terms_of_use_text: ""
-        terms_of_use_link: 
+        terms_of_use_link: ""
         terms_of_use_link_name: Conditions générales
         privacy_title: Déclaration de protection des données
         privacy_text: ""
-        privacy_link: 
+        privacy_link: ""
         privacy_link_name: Politique de confidentialité
   invoices:
     export:
