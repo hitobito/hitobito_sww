@@ -18,10 +18,19 @@ describe EventAbility do
     let(:role) { Fabricate(Group::GremiumProjektgruppe::Leitung.name.to_sym, group: group) }
 
     context "on Event" do
-      it "may see application market for event in his layer" do
+      it "may create events (as with the core-ability)" do
         is_expected.to be_able_to(:create, event)
+      end
+
+      it "may edit events (as with the core-ability)" do
         is_expected.to be_able_to(:update, event)
+      end
+
+      it "may delete events (as with the core-ability)" do
         is_expected.to be_able_to(:destroy, event)
+      end
+
+      it "may see application market for event in his layer" do
         is_expected.to be_able_to(:application_market, event)
       end
     end
