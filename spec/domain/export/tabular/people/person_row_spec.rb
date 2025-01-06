@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2023, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2023-2025, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -43,9 +43,9 @@ describe Export::Tabular::People::PersonRow do
     end
 
     context 'with end date' do
-      before { person.roles.first.update(end_on:  Time.zone.local(2024, 12, 31, 10)) }
+      before { person.roles.first.update(end_on:  Time.zone.local(Date.current.year, 12, 31, 10)) }
       it 'includes start' do
-        is_expected.to eq("Aktivmitglied Berner Wanderwege BWW / Mitglieder (29.10.2024-31.12.2024)")
+        is_expected.to eq("Aktivmitglied Berner Wanderwege BWW / Mitglieder (29.10.2024-31.12.#{Date.current.year})")
       end
     end
 
