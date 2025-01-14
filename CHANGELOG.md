@@ -1,6 +1,6 @@
 # Hitobito SWW Changelog
 
-## unreleased
+## Version 2.4
 
 - Personen mit Leiter Rolle in einem Gremium können den Reiter Anmeldungen auf Anlässen des Gremiums sehen (hitobito_sww#183)
 
