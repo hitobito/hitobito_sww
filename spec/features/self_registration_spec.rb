@@ -27,7 +27,7 @@ describe :self_registration, js: true do
     fill_in 'E-Mail', with: 'max.muster@hitobito.example.com'
     fill_in 'wizards_register_new_user_wizard_new_user_form_street', with: 'Musterplatz'
     fill_in 'wizards_register_new_user_wizard_new_user_form_housenumber', with: '1'
-    fill_in 'wizards_register_new_user_wizard_new_user_form_zip_code', with: '8000'
+    fill_in 'wizards_register_new_user_wizard_new_user_form_zip_code', with: '63101'
     fill_in 'wizards_register_new_user_wizard_new_user_form_town', with: 'Zürich'
     fill_in 'Geburtsdatum', with: '01.01.1980'
     country_selector = "#self_registration_main_person_attributes_country"
@@ -61,7 +61,7 @@ describe :self_registration, js: true do
       expect(person.first_name).to eq 'Max'
       expect(person.last_name).to eq 'Muster'
       expect(person.address).to eq 'Musterplatz 1'
-      expect(person.zip_code).to eq '8000'
+      expect(person.zip_code).to eq '63101'
       expect(person.town).to eq 'Zürich'
       expect(person.country).to eq 'US'
       expect(person.birthday).to eq Date.new(1980, 1, 1)
