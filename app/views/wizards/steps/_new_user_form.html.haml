@@ -1,3 +1,4 @@
+= f.error_messages
 = f.fields_for(:new_user_form, f.object.new_user_form) do |form|
   = form.error_messages
   = form.labeled_collection_select :gender, form.object.gender_options, :first, :last, { label: t('groups.self_registration.main_person.salutation'), required: true }, class: "form-select form-select-sm"
