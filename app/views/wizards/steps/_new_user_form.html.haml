@@ -1,5 +1,4 @@
-= f.fields_for(:new_user_form, f.object.new_user_form) do |form|
-  = form.error_messages
+= c.fields_for do |form|
   = form.labeled_collection_select :gender, form.object.gender_options, :first, :last, { label: t('groups.self_registration.main_person.salutation'), required: true }, class: "form-select form-select-sm"
   = form.labeled_input_field :first_name, required: true
   = form.labeled_input_field :last_name, required: true
@@ -41,6 +40,3 @@
 
   = field_set_tag(nil, class: 'privacy-policy-form') do
     = render('people/privacy_policy_acceptance_field', f: form, policy_finder: policy_finder)
-
-.btn-toolbar.bottom.align-with-form
-  = c.next_button
