@@ -41,7 +41,7 @@ class MigrateGroupSettingsSww < ActiveRecord::Migration[6.1]
     self.table_name = 'settings'
     belongs_to :target, polymorphic: true
 
-    serialize :value, Hash
+    serialize :value, type: Hash, coder: YAML
   end
 
   private
