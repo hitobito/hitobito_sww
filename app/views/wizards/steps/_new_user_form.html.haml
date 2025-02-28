@@ -26,7 +26,7 @@
                                 chosen_no_results: t('global.chosen_no_results'),
                                 typeahead_supported_countries: Settings.addresses.imported_countries } })
 
-  = form.labeled_date_field :birthday, label: t('groups.self_registration.main_person.birthday')
+  = form.labeled_date_field :birthday, label: t('groups.self_registration.main_person.birthday'), yearRange: '-100:+0'
 
   .selfregister-conditions.align-with-form
     .title
