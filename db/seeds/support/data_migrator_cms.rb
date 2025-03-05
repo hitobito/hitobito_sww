@@ -7,9 +7,7 @@
 
 # Support for better readable migration/seed-files
 class DataMigratorCms
-
   class << self
-
     def person_attrs_from_import_row(import_row)
       person_hash = {}
       person_hash[:sww_cms_profile_id] = import_row[:profile_id]
@@ -17,17 +15,17 @@ class DataMigratorCms
       person_hash[:first_name] = import_row[:profile_prename]
       person_hash[:last_name] = import_row[:profile_lastname]
       person_hash[:birthday] = import_row[:birthdate]
-      person_hash[:address] = [import_row[:profile_address],
-                               import_row[:profile_streetnr]].join(' ')
+      person_hash[:street] = import_row[:profile_address]
+      person_hash[:housenumber] = import_row[:profile_streetnr]
       person_hash[:zip_code] = import_row[:profile_zip]
       person_hash[:town] = import_row[:profile_city]
-      person_hash[:country] = import_row[:profile_country].presence || 'CH'
+      person_hash[:country] = import_row[:profile_country].presence || "CH"
 
       if import_row[:profile_email].present? && Truemail.valid?(import_row[:profile_email])
         person_hash[:email] = import_row[:profile_email]
       end
 
-      person_hash[:language] = import_row[:profile_lang] || 'de'
+      person_hash[:language] = import_row[:profile_lang] || "de"
       person_hash[:sww_cms_legacy_password_salt] = import_row[:profile_password_salt]
 
       person_hash[:created_at] = person_hash[:updated_at] = Time.zone.now
@@ -36,9 +34,9 @@ class DataMigratorCms
 
     def set_password!(person_hash, import_row)
       password = import_row[:profile_password]
-      
+
       # only save bcrypt passwords
-      return unless password && password.start_with?('$2y$', '$2a$')
+      return unless password && password.start_with?("$2y$", "$2a$")
 
       person_hash[:confirmed_at] = Time.now.utc
       person_hash[:encrypted_password] = password
