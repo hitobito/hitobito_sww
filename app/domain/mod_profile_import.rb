@@ -34,7 +34,9 @@ module ModProfileImport
     [:profile_birthday, :birthday, ->(v) { Time.zone.at(v.to_i).to_date if v.to_i.positive? }],
     [:profile_email, :email, ->(v) { Truemail.validate(v.to_s, with: :regex).result.email }],
     [:profile_lang, :language, ->(v) { v.presence || "de" }],
-    [:profile_phone, :phone, ->(v) { Phonelib.parse(nil).sanitized.presence }]
+    [:profile_phone, :phone, ->(v) { Phonelib.parse(nil).sanitized.presence }],
+    [:profile_password, :encrypted_password],
+    [:profile_password_salt, :sww_cms_legacy_password_salt]
   ]
 
   class Row < Struct.new(*MAPPING.map(&:second), keyword_init: true)
@@ -49,6 +51,7 @@ module ModProfileImport
 
     def person
       @person ||= ::Person.find_or_initialize_by(email:).tap do |person|
+        person.skip_confirmation_notification!
         person.attributes = to_h.except(:phone)
         person.phone_numbers.build(label: "Privat", number: phone) if phone
         person.roles.find_or_initialize_by(group_id: group_id, type: Group::Benutzerkonten::Benutzerkonto.sti_name).tap do |role|
@@ -86,6 +89,7 @@ module ModProfileImport
       Person.validate_zip_code = false
       Truemail.configuration.default_validation_type = :regex
 
+      puts "Looking at #{rows.size} new emails out of #{row_candidates.size}"
       valid, invalid = rows.partition(&:valid?)
       puts "Running validations for #{rows.size} models, stand by .. "
       puts "valid: #{valid.size}, invalid: #{invalid.size}"
