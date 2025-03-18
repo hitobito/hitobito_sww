@@ -7,14 +7,11 @@
 
 module Sww::Export::Pdf::Invoice::Articles
   def render # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-    reminder = invoice.payment_reminders.last
-
     move_cursor_to 510
     pdf.move_down 1.cm
+    reminder = invoice.payment_reminders.last
     font_size(12) { text title(reminder) }
-    pdf.move_down 8
-    render_description(reminder)
-
+    render_reminder_text(reminder) if @options[:reminders]
     pdf.move_down 10
     pdf.font_size(8) { articles_table }
 
