@@ -26,7 +26,7 @@ describe Export::Pdf::Invoice do
     invoice.invoice_config
   end
 
-  let(:pdf) { described_class.render(invoice, payment_slip: true, articles: true) }
+  let(:pdf) { described_class.render(invoice, payment_slip: true, articles: true, reminders: true) }
 
   subject { PDF::Inspector::Text.analyze(pdf) }
 
