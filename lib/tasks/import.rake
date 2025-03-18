@@ -10,6 +10,17 @@ require Wagons.find("sww").root.join("db/seeds/support/data_migrator_cms.rb")
 
 # rubocop:disable Metrics/BlockLength, Metrics/LineLength, Rails/SkipsModelValidations
 namespace :import do
+  desc "Convert sww profile cms profile input file from xlsx to csv"
+  file "tmp/mod_profile.csv" => ["data/mod_profile.xlsx"] do
+    puts "Converting xlsx .."
+    `in2csv -d ';' "data/mod_profile.xlsx"  > tmp/mod_profile.csv`
+  end
+
+  desc "Import mod profile"
+  task mod_profile_import: ["tmp/mod_profile.csv", :environment] do
+    ModProfileImport::Runner.new.run
+  end
+
   desc "Import people"
   task people_sww: [:environment] do
     person_csv = Wagons.find("sww").root.join("db/seeds/production/people_sww.csv")
