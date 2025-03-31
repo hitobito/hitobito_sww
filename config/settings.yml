@@ -41,3 +41,7 @@ messages:
 
 assignments:
   enabled: true
+
+hitobito_log:
+  recipient_emails:
+    - support@schweizer-wanderwege.ch
