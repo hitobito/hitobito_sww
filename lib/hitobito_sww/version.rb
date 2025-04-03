@@ -6,5 +6,5 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 module HitobitoSww
-  VERSION = "2.5.2"
+  VERSION = "2.5.3"
 end
