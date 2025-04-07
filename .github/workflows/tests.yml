@@ -19,10 +19,9 @@ on:
         description: Use a specific version of the core for the workflow run. Defaults to master.
         type: string
         default: 'master'
-
 jobs:
   wagon_tests:
-    uses: hitobito/hitobito/.github/workflows/wagon-tests.yml@master
+    uses: hitobito/hitobito/.github/workflows/wagon-tests.yml@task/generate-patches
     with:
       wagon_repository: ${{ github.event.repository.name }}
       core_ref: ${{ inputs.core_ref }}
