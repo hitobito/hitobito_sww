@@ -16,9 +16,21 @@ module Sww::Group
 
     root_types Group::SchweizerWanderwege
 
+    validate :assert_valid_event_sender_email
+
     validates :letter_left_address_position, numericality: {greater_than: 0, allow_nil: true}
     validates :letter_top_address_position, numericality: {greater_than: 0, allow_nil: true}
     validates :membership_card_left_position, numericality: {greater_than: 0, allow_nil: true}
     validates :membership_card_top_position, numericality: {greater_than: 0, allow_nil: true}
+
+    private
+
+    def assert_valid_event_sender_email
+      return if event_sender_email.blank?
+
+      unless Truemail.valid?(event_sender_email.to_s)
+        errors.add(:event_sender_email, :invalid)
+      end
+    end
   end
 end
