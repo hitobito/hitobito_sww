@@ -8,7 +8,21 @@
 module Sww::Event::RegisterMailer
   private
 
-  def custom_sender
-    @event.groups.first.then { _1.event_sender || _1.layer.event_sender }
+  def localize_email_sender(message)
+    super
+
+    if custom_sender_name.present?
+      message.from = custom_sender(message)
+    end
+
+    message
+  end
+
+  def custom_sender(message)
+    "#{custom_sender_name} <#{message.from.first}>"
+  end
+
+  def custom_sender_name
+    @event.groups.first.then { _1.event_sender || _1.layer_group.event_sender }
   end
 end
