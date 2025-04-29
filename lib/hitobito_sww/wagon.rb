@@ -64,7 +64,7 @@ module HitobitoSww
 
       PersonResource.include Sww::PersonResource
       Oauth::ProfilesController.prepend Sww::Oauth::ProfilesController
-      GroupsController.permitted_attrs += [:event_sender_email]
+      GroupsController.permitted_attrs += [:event_sender]
       PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
         :name_add_on, :title]
       InvoicesController.permitted_attrs += [:membership_card, :membership_expires_on]

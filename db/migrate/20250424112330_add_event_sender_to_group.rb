@@ -3,8 +3,8 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-class AddEventSenderEmailToGroup < ActiveRecord::Migration[7.1]
+class AddEventSenderToGroup < ActiveRecord::Migration[7.1]
   def change
-    add_column :groups, :event_sender_email, :string
+    add_column :groups, :event_sender, :string
   end
 end

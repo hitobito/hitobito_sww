@@ -47,7 +47,7 @@ de:
     form_tabs_sww:
       email: E-Mail
     tab_content_sww:
-      help_event_sender_email: Anlass E-Mails werden unter diesem Namen versendet.
+      help_event_sender: Anlass E-Mails werden unter diesem Namen versendet.
     self_registration:
       new:
         gender:

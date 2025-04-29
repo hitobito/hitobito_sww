@@ -11,20 +11,4 @@ describe Group do
   let(:group) { groups(:schweizer_wanderwege) }
 
   include_examples 'group types'
-
-  describe "#validations" do
-    before do
-      allow(Truemail).to receive(:valid?).and_call_original
-    end
-
-    it "event_sender_email is valid when email" do
-      group.event_sender_email = "validemail@hitobito.ch"
-      expect(group).to be_valid
-    end
-
-    it "event_sender_email is invalid when no email" do
-      group.event_sender_email = "nomailformat"
-      expect(group).not_to be_valid
-    end
-  end
 end

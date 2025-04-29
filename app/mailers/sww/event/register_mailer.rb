@@ -8,7 +8,7 @@
 module Sww::Event::RegisterMailer
   private
 
-  def custom_sender_email
-    @event.groups.first.event_sender_email
+  def custom_sender
+    @event.groups.first.then { _1.event_sender || _1.layer.event_sender }
   end
 end
