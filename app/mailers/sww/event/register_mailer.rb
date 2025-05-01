@@ -6,23 +6,9 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 module Sww::Event::RegisterMailer
-  private
+  include ::Sww::Event::CustomEventSender
 
-  def localize_email_sender(message)
-    super
-
-    if custom_sender_name.present?
-      message.from = custom_sender(message)
-    end
-
-    message
-  end
-
-  def custom_sender(message)
-    "#{custom_sender_name} <#{message.from.first}>"
-  end
-
-  def custom_sender_name
-    @event.groups.first.then { _1.event_sender || _1.layer_group.event_sender }
+  def event
+    @event
   end
 end

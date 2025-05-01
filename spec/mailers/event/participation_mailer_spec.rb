@@ -20,9 +20,7 @@ describe Event::ParticipationMailer do
   let(:group) { groups(:berner_mitglieder) }
   let(:layer) { groups(:berner_wanderwege) }
 
-  describe "#confirmation" do
-    let(:mail) { Event::ParticipationMailer.confirmation(participation) }
-
+  shared_examples "custom event sender" do
     context "with event sender defined on layer" do
       before { layer.update!(event_sender: "Berner Wanderwege") }
 
@@ -47,32 +45,17 @@ describe Event::ParticipationMailer do
     end
   end
 
+  describe "#confirmation" do
+    let(:mail) { Event::ParticipationMailer.confirmation(participation) }
+
+    it_behaves_like "custom event sender"
+  end
+
   describe "#notify_contact" do
     let(:recipient) { Fabricate(:person) }
     let(:mail) { Event::ParticipationMailer.notify_contact(participation, recipient) }
 
-    context "with event sender defined on layer" do
-      before { layer.update!(event_sender: "Berner Wanderwege") }
-
-      it "renders layer event sender" do
-        expect(mail[:from].value).to eq("Berner Wanderwege <noreply@localhost>")
-        expect(mail.from).to eq(["noreply@localhost"])
-      end
-
-      context "with event sender defined on group" do
-        before { group.update!(event_sender: "Berner Mitglieder") }
-
-        it "renders group event sender" do
-          expect(mail[:from].value).to eq("Berner Mitglieder <noreply@localhost>")
-          expect(mail.from).to eq(["noreply@localhost"])
-        end
-      end
-    end
-
-    it "renders default sender without event sender defined" do
-      expect(mail[:from].value).to eq("Schweizer Wanderwege - Suisse Rando <noreply@localhost>")
-      expect(mail.from).to eq(["noreply@localhost"])
-    end
+    it_behaves_like "custom event sender"
   end
 
   describe "#approval" do
@@ -82,54 +65,12 @@ describe Event::ParticipationMailer do
     end
     let(:mail) { Event::ParticipationMailer.approval(participation, approvers) }
 
-    context "with event sender defined on layer" do
-      before { layer.update!(event_sender: "Berner Wanderwege") }
-
-      it "renders layer event sender" do
-        expect(mail[:from].value).to eq("Berner Wanderwege <noreply@localhost>")
-        expect(mail.from).to eq(["noreply@localhost"])
-      end
-
-      context "with event sender defined on group" do
-        before { group.update!(event_sender: "Berner Mitglieder") }
-
-        it "renders group event sender" do
-          expect(mail[:from].value).to eq("Berner Mitglieder <noreply@localhost>")
-          expect(mail.from).to eq(["noreply@localhost"])
-        end
-      end
-    end
-
-    it "renders default sender without event sender defined" do
-      expect(mail[:from].value).to eq("Schweizer Wanderwege - Suisse Rando <noreply@localhost>")
-      expect(mail.from).to eq(["noreply@localhost"])
-    end
+    it_behaves_like "custom event sender"
   end
 
   describe "#cancel" do
     let(:mail) { Event::ParticipationMailer.cancel(event, person) }
 
-    context "with event sender defined on layer" do
-      before { layer.update!(event_sender: "Berner Wanderwege") }
-
-      it "renders layer event sender" do
-        expect(mail[:from].value).to eq("Berner Wanderwege <noreply@localhost>")
-        expect(mail.from).to eq(["noreply@localhost"])
-      end
-
-      context "with event sender defined on group" do
-        before { group.update!(event_sender: "Berner Mitglieder") }
-
-        it "renders group event sender" do
-          expect(mail[:from].value).to eq("Berner Mitglieder <noreply@localhost>")
-          expect(mail.from).to eq(["noreply@localhost"])
-        end
-      end
-    end
-
-    it "renders default sender without event sender defined" do
-      expect(mail[:from].value).to eq("Schweizer Wanderwege - Suisse Rando <noreply@localhost>")
-      expect(mail.from).to eq(["noreply@localhost"])
-    end
+    it_behaves_like "custom event sender"
   end
 end
