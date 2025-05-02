@@ -28,3 +28,4 @@ jobs:
     secrets:
       HEARTBEAT_URL: ${{ secrets.HEARTBEAT_URL }}
       HEARTBEAT_TOKEN: ${{ secrets.HEARTBEAT_TOKEN }}
+      RELEASE_PREPARATION_TOKEN: ${{ secrets.RELEASE_PREPARATION_TOKEN }}
