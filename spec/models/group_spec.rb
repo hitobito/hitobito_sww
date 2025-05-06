@@ -8,7 +8,5 @@
 require 'spec_helper'
 
 describe Group do
-  let(:group) { groups(:schweizer_wanderwege) }
-
   include_examples 'group types'
 end
