@@ -4,7 +4,6 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 de:
-
   messages:
     export:
       pdf:
@@ -45,6 +44,10 @@ de:
   groups:
     form_tabs:
       membership_cards: Mitgliederausweis
+    form_tabs_sww:
+      email: E-Mail
+    tab_content_sww:
+      help_event_sender: Anlass E-Mails werden unter diesem Namen versendet.
     self_registration:
       new:
         gender:

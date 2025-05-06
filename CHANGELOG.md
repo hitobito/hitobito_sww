@@ -1,5 +1,9 @@
 # Hitobito SWW Changelog
 
+## unreleased
+
+- Es kann neu pro Gruppe ein Mailabsendername für Anlass E-Mails gesetzt werden (hitobito_sww#195)
+
 ## Version 2.4
 
 - Personen mit Leiter Rolle in einem Gremium können den Reiter Anmeldungen auf Anlässen des Gremiums sehen (hitobito_sww#183)

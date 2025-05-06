@@ -64,10 +64,14 @@ module HitobitoSww
 
       PersonResource.include Sww::PersonResource
       Oauth::ProfilesController.prepend Sww::Oauth::ProfilesController
+      GroupsController.permitted_attrs += [:event_sender]
       PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
         :name_add_on, :title]
       InvoicesController.permitted_attrs += [:membership_card, :membership_expires_on]
       InvoiceConfigsController.permitted_attrs += [:separators]
+
+      Event::ParticipationMailer.prepend Sww::Event::ParticipationMailer
+      Event::RegisterMailer.prepend Sww::Event::RegisterMailer
 
       # Since permitted_attrs are an array, it's really hard to expand nested attrs
       invoice_lists_invoice_permitted_attrs_hash = InvoiceListsController.permitted_attrs.find { |attr| attr.is_a?(Hash) && attr.keys.include?(:invoice) }

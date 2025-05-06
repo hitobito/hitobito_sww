@@ -129,6 +129,7 @@ de:
           above_payment_slip: Über dem Einzahlungsschein
         separators: Trennlinie auf Einzahlungsschein anzeigen
       group:
+        event_sender: Anlass E-Mail Absendername
         membership_card_left_position: Mitgliederausweis Abstand von links (cm)
         membership_card_top_position: Mitgliederausweis Abstand von oben (cm)
         letter_left_address_position: Addressabstand von links (cm)
