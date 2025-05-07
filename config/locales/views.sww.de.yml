@@ -72,7 +72,7 @@ de:
         privacy_text: Weitere Informationen darüber, wie personenbezogene Daten erfasst, verwendet, weitergegeben und geschützt werden, finden Sie in der Datenschutzrichtlinie.
         privacy_link: ""
         privacy_link_name: Datenschutzrichtlinie
-  invoices:
+  invoices:      
     export:
       tabular:
         evaluation_list:
@@ -89,3 +89,5 @@ de:
     pdf:
       subtotal: Subtotal
       donation: Spende
+      invoice_date: Datum
+      from: vom %{date}
