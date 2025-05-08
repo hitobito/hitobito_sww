@@ -137,6 +137,7 @@ it:
           above_payment_slip: Sopra la ricevuta di versamento
         separators: ""
       group:
+        event_sender: ""
         membership_card_left_position: ""
         membership_card_top_position: ""
         letter_left_address_position: ""

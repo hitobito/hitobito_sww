@@ -137,6 +137,7 @@ fr:
           above_payment_slip: Au-dessus du bulletin de versement
         separators: Afficher la ligne de séparation sur le bulletin de versement
       group:
+        event_sender: ""
         membership_card_left_position: Carte de membre Distance à partir de la gauche (cm)
         membership_card_top_position: Carte de membre Distance du haut (cm)
         letter_left_address_position: Distance d'Address à partir de la gauche (cm)

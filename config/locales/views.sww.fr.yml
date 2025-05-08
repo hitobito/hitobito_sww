@@ -4,7 +4,6 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 fr:
-
   messages:
     export:
       pdf:
@@ -45,6 +44,10 @@ fr:
   groups:
     form_tabs:
       membership_cards: Carte de membre
+    form_tabs_sww:
+      email: ""
+    tab_content_sww:
+      help_event_sender: ""
     self_registration:
       new:
         gender:
