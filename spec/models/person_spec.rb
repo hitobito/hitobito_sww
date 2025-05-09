@@ -103,6 +103,7 @@ describe Person do
         before { person.update(gender: nil) }
 
         it { expect(person.sww_salutation).to eq 'Andere' }
+        it { expect(person.sww_salutation(skip_other: true)).to be_nil }
       end
 
       context 'with gender f' do
@@ -123,6 +124,7 @@ describe Person do
         before { person.update(gender: nil) }
 
         it { expect(person.sww_salutation).to eq 'Autre' }
+        it { expect(person.sww_salutation(skip_other: true)).to be_nil }
       end
 
       context 'with gender f' do
@@ -143,6 +145,7 @@ describe Person do
         before { person.update(gender: nil) }
 
         it { expect(person.sww_salutation).to eq 'Altro' }
+        it { expect(person.sww_salutation(skip_other: true)).to be_nil }
       end
 
       context 'with gender f' do
