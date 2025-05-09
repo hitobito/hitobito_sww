@@ -49,7 +49,8 @@ module Sww::Person
     end
   end
 
-  def sww_salutation
-    I18n.t("groups.self_registration.new.gender.#{gender || "other"}", locale: language)
+  def sww_salutation(skip_other: false)
+    key = skip_other ? gender : (gender || "other")
+    I18n.t("groups.self_registration.new.gender.#{key}", locale: language) if key
   end
 end
