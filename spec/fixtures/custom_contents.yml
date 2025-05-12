@@ -1,2 +1,7 @@
 login_info:
   key: 'views/devise/sessions/info'
+
+content_invoice_notification:
+  key: content_invoice_notification
+  placeholders_required: invoice-items, invoice-total, payment-information
+  placeholders_optional: recipient-name, group-name, group-address, invoice-number
