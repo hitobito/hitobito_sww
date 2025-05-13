@@ -129,6 +129,24 @@ describe Export::Pdf::Invoice do
       expect(text_with_position).to include(*membership_card)
     end
 
+    it "does not render membership card when invoice has reminder" do
+      invoice.update!(membership_card: true, membership_expires_on: Date.new(2022, 1, 1), due_at: 10.days.ago, state: "reminded")
+      Fabricate(:payment_reminder, invoice: invoice, due_at: 3.day.ago, created_at: 5.days.ago)
+
+      expect(text_with_position).not_to include([346, 721, "Mitgliederausweis"])
+    end
+
+    context "reminders false" do
+      let(:pdf) { described_class.render(invoice, payment_slip: true, articles: true, reminders: false) }
+
+      it "renders membership card when reminders false" do
+        invoice.update!(membership_card: true, membership_expires_on: Date.new(2022, 1, 1), due_at: 10.days.ago, state: "reminded")
+        Fabricate(:payment_reminder, invoice: invoice, due_at: 3.day.ago, created_at: 5.days.ago)
+
+        expect(text_with_position).to include([346, 721, "Mitgliederausweis"])
+      end
+    end
+
     it 'renders receiver address' do
       expect(text_with_position).to include(
         [57, 687, "Max Muster"],
