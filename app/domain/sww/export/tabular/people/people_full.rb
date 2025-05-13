@@ -9,6 +9,11 @@ module Sww::Export::Tabular::People::PeopleFull
   extend ActiveSupport::Concern
 
   def person_attributes
-    super + [:id, :sww_salutation, :member_number, :magazin_abo_number]
+    super + [:id, :sww_salutation, :member_number, :magazin_abo_number, :household_member_numbers]
+  end
+
+  def association_attributes
+    Person.where(id: people_ids).map(&:household_people).map { |h| h.map(&:member_number) }
+    super.merge(qualification_kinds)
   end
 end

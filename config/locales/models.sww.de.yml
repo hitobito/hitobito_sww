@@ -118,6 +118,7 @@ de:
         title: Titel
         email: E-Mail
         sww_salutation: Anrede
+        household_member_numbers: Mitgliedernummern Haushaltsmitglieder
       message:
         membership_card: Mitgliederausweis
         membership_expires_on: Mitgliedschaft gültig bis
