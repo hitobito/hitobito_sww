@@ -1,31 +1,52 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2024, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2025, Schweizer Wanderwege. This file is part of
 #  hitobito and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito.
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Export::Pdf::Participations::People do
-  let(:runner) { Export::Pdf::Participations::Runner.new }
-  let(:people) { [participation] }
-  let(:group) { nil }
+  include PdfHelpers
 
-  subject { described_class.new(runner.send(:setup_pdf), people, group) }
+  let(:participation) { Fabricate(:event_participation, additional_information: "Ich mag kein Gemüse!!!", person: person) }
+  let(:person) { people(:berner_wanderer) }
+  let(:group) { groups(:schweizer_wanderwege) }
+  let(:contactables) { [top_leader.tap { |u| u.update(nickname: "Funny Name") }] }
+  let(:pdf) { Export::Pdf::Participations::Runner.new.render([participation], group, participation.event) }
 
-  it 'builds upon people-list export' do
-    is_expected.to be_a Export::Pdf::List::People
+  subject { PDF::Inspector::Text.analyze(pdf) }
+
+  before do
+    Fabricate(Event::Role::Leader.sti_name, participation: participation)
+    Fabricate(Event::Role::Cook.sti_name, participation: participation)
   end
 
-  it 'has a header for the "additional information"-column' do
-    expect(subject.send(:table_header)).to include 'Bemerkungen'
+  it "renders event name as title" do
+    expect(subject.show_text).to include "Eventus"
   end
 
-  let(:participation) { Fabricate(:event_participation, additional_information: comment) }
-  let(:comment) { "Mag Blørbaël, aber keine Rüebli, allergisch auf Menschen" }
+  it "renders pdf list with comments and event roles" do
+    pdf_text = [
+      [28, 546, "Eventus"],
+      [33, 515, "Name"],
+      [74, 515, "Adresse"],
+      [116, 515, "E-Mail"],
+      [203, 515, "Privat"],
+      [236, 515, "Mobil"],
+      [267, 515, "Bemerkungen"],
+      [372, 515, "Anlass Rollen"],
+      [33, 501, "Foo Bob"],
+      [74, 501, ",  Bern"],
+      [116, 501, "bob@example.com"],
+      [267, 501, "Ich mag kein Gemüse!!!"],
+      [372, 501, "Hauptleitung, Küche"],
+      [760, 19, "Seite 1 von 1"]
+    ]
 
-  it 'displays the "additional information"' do
-    expect(subject.send(:person_row, participation)).to include comment
+    pdf_text.each_with_index do |text, i|
+      expect(text_with_position[i]).to eq(text)
+    end
   end
 end
