@@ -15,6 +15,6 @@ module Sww::Event::ParticipationsController
   def generate_pdf(participations, group)
     super(participations.map(&:person)) if params[:label_format_id]
 
-    Export::Pdf::Participations.render(participations, group)
+    Export::Pdf::Participations.render(participations, group, event)
   end
 end
