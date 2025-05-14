@@ -1,8 +1,3 @@
-#  Copyright (c) 2022-2024, Schweizer Wanderwege. This file is part of
-#  hitobito_sww and licensed under the Affero General Public License version 3
-#  or later. See the COPYING file at the top-level directory or at
-#  https://github.com/hitobito/hitobito_sww.
-
 fr:
   messages:
     export:
@@ -11,11 +6,9 @@ fr:
           membership_card:
             title: Carte de membre
             valid_until: Validité
-
     letter:
       fields_sww:
         membership_card_caption: Carte de membre avec impression
-
   devise:
     registrations:
       signed_up: 'Vous vous êtes enregistré(e) avec succès.'
@@ -26,7 +19,6 @@ fr:
     sessions:
       oauth_info:
         sign_in: 'Connexion'
-        info: ''
     mailer:
       reset_password_instructions:
         subject: Définir un mot de passe
@@ -36,18 +28,12 @@ fr:
             with_password: 'Vous pouvez réinitialiser votre mot de passe en cliquant sur le lien suivant:'
             without_password_html: 'Bienvenue sur notre site! Veuillez définir votre mot de passe en cliquant sur le lien suivant:'
           ignore_information_html: 'Si vous ne souhaitez pas modifier votre mot de passe, vous pouvez ignorer cet e-mail. <br><br>Le mot de passe ne changera pas sans que vous alliez sur le lien ci-dessus et que vous y attribuiez un nouveau mot de passe.'
-
   invoice_lists:
     form_invoice_fields_sww:
       membership_card_caption: Carte de membre avec impression
-
   groups:
     form_tabs:
       membership_cards: Carte de membre
-    form_tabs_sww:
-      email: ""
-    tab_content_sww:
-      help_event_sender: ""
     self_registration:
       new:
         gender:
@@ -57,20 +43,18 @@ fr:
       create:
         email_taken: L'e-mail est déjà utilisé. Connectez-vous ou enregistrez-vous avec une autre adresse e-mail.
       form:
-        has_account: "Avez-vous déjà un compte?"
+        has_account: Avez-vous déjà un compte?
         to_login_page: Enregistrer
       main_person:
         birthday: Date de naissance
         email: E-mail
         salutation: Formule d'appel
-        street_house_nr: "Rue, n°"
+        street_house_nr: Rue, n°
         terms_of_use_title: Conditions générales
-        terms_of_use_text: "En cliquant sur s'inscrire, vous acceptez les conditions d'utilisation."
-        terms_of_use_link: ""
+        terms_of_use_text: En cliquant sur s'inscrire, vous acceptez les conditions d'utilisation.
         terms_of_use_link_name: Conditions générales
         privacy_title: Déclaration de protection des données
-        privacy_text: "Pour en savoir plus sur la manière dont les données personnelles sont collectées, utilisées, divulguées et protégées, veuillez consulter la politique de confidentialité."
-        privacy_link: ""
+        privacy_text: Pour en savoir plus sur la manière dont les données personnelles sont collectées, utilisées, divulguées et protégées, veuillez consulter la politique de confidentialité.
         privacy_link_name: Politique de confidentialité
   invoices:
     export:
@@ -81,11 +65,9 @@ fr:
           printed_by: Imprimé par
     form_sww:
       membership_card_caption: Imprimer la carte de membre
-
     evaluations:
       show:
         excess: Dons
-
     pdf:
       subtotal: Sous-total
       donation: Donation

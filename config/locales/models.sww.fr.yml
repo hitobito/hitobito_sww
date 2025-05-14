@@ -1,171 +1,46 @@
-#  Copyright (c) 2012-2024, Schweizer Wanderwege. This file is part of
-#  hitobito_sww and licensed under the Affero General Public License version 3
-#  or later. See the COPYING file at the top-level directory or at
-#  https://github.com/hitobito/hitobito_sww.
-
-
 fr:
   activerecord:
     models:
-
-      ### GROUPS
-
-      group/schweizer_wanderwege:
-        one: Suisse Rando
-        many: Suisse Rando
-        other: Suisse Rando
-
       group/benutzerkonten:
         one: Comptes d'utilisateurs
         many: Comptes d'utilisateurs
         other: Comptes d'utilisateurs
-
-      group/fachorganisation:
-        one: Associations de randonnée
-        many: Associations de randonnée
-        other: Associations de randonnée
-
-      group/kontakte:
-        one: Contacts
-        many: Contacts
-        other: Contacts
-
-      group/vorstand:
-        one: Comité
-        many: Comité
-        other: Comité
-
-      group/geschaeftsstelle:
-        one: Direction
-        many: Direction
-        other: Direction
-
-      group/gremium_projektgruppe:
-        one: Comité/groupe de projet
-        many: Comité/groupe de projet
-        other: Comité/groupe de projet
-
-      group/mitglieder:
-        one: Membre
-        many: Membres
-        other: Membres
-
-      ### ROLES
-
-      group/schweizer_wanderwege/mitarbeitende:
-        one: Collaborateurs
-      group/schweizer_wanderwege/support:
-        one: Support
-
       group/benutzerkonten/benutzerkonto:
         one: Compte d'utilisateur
       group/benutzerkonten/verwalter:
         one: Support
-
-      group/kontakte/kontakt:
-        one: Contact
-
-      group/vorstand/praesident:
-        one: Président
-      group/vorstand/vizepraesident:
-        one: Vice-président
-      group/vorstand/vorstandsmitglied:
-        one: Membre du conseil
-
-      group/geschaeftsstelle/geschaeftsfuehrer:
-        one: Directeur
-      group/geschaeftsstelle/kassier:
-        one: Caissier
-      group/geschaeftsstelle/technischer_leiter:
-        one: Responsable technique
-      group/geschaeftsstelle/mitarbeiter:
-        one: Collaborateur
-
-      group/gremium_projektgruppe/leitung:
-        one: Direction
-      group/gremium_projektgruppe/mitglied:
-        one: Membre
-
-      group/mitglieder/aktivmitglied:
-        one: Membre actif
-      group/mitglieder/passivmitglied:
-        one: Membre passif
-      group/mitglieder/freimitglied:
-        one: Membre libre
-      group/mitglieder/organisationen:
-        one: Organisations
-      group/mitglieder/partner:
-        one: Partenaire
-      group/mitglieder/spender:
-        one: Donateur
-      group/mitglieder/magazin_abonnent:
-        one: Abonnement Magazine
-
       salutation:
         available:
-          guten_tag:
-            label: Bonjour
-            value:
-              m: Bonjour
-              w: Bonjour
-              other: Bonjour
           sehr_geehrte:
-            label: "Madame/Monsieur [nom de famille]"
+            label: Madame/Monsieur [nom de famille]
             value:
-              m: "Cher Monsieur %{last_name}"
-              w: "Chère Madame %{last_name}"
-              other: "Cher*e %{first_name} %{last_name}"
-
+              other: Cher*e %{first_name} %{last_name}
     attributes:
       person:
-        custom_salutation: Formule d'appel personnalisée
-        magazin_abo_number: 'Numéro d''abonnement au magazine'
-        member_number: Numéro de membre
-        name_add_on: Complément de nom
-        title: Titre
         email: E-mail
         sww_salutation: Salutation
-      message:
-        membership_card: Carte de membre
-        membership_expires_on: Adhésion valide jusqu'au
       invoice:
         hide_total: Donation
-        membership_card: Carte de membre
-        membership_expires_on: Adhésion valide jusqu'au
       invoice_config:
         logo_positions:
           above_payment_slip: Au-dessus du bulletin de versement
         separators: Afficher la ligne de séparation sur le bulletin de versement
       group:
-        event_sender: ""
         membership_card_left_position: Carte de membre Distance à partir de la gauche (cm)
         membership_card_top_position: Carte de membre Distance du haut (cm)
         letter_left_address_position: Distance d'Address à partir de la gauche (cm)
         letter_top_address_position: Distance d'address depuis le haut (cm)
-
-  tags:
-    categories:
-      abo: Abonnement
-      category: Catégorie
-
-  errors:
-    messages:
-      cannot_be_later_than_today: ne peut pas être plus tard qu'aujourd'hui
-      cannot_be_later_than_deleted_at: doit avoir lieu avant ou le même jour que la sortie
-
   event:
     application_market:
       popover_waiting_list:
         waiting_list_info: Ajoute cette personne à la liste d'attente.
-
   doorkeeper:
     scopes:
-      email: "Lecture de votre adresse e-mail. Pour que le login puisse se dérouler correctement, nous avons besoin de votre adresse e-mail."
-      name: "Lecture de votre nom. Pour que le login puisse se dérouler correctement, nous avons besoin de votre nom."
-      with_roles: "Lecture de vos données de base d'adresse et des permissions. Pour que les autorisations de votre compte puissent être enregistrées correctement, notre système vérifie les autorisations et les données de base de l'adresse, qui ne contiennent aucune autre information personnelle."
+      email: Lecture de votre adresse e-mail. Pour que le login puisse se dérouler correctement, nous avons besoin de votre adresse e-mail.
+      name: Lecture de votre nom. Pour que le login puisse se dérouler correctement, nous avons besoin de votre nom.
+      with_roles: Lecture de vos données de base d'adresse et des permissions. Pour que les autorisations de votre compte puissent être enregistrées correctement, notre système vérifie les autorisations et les données de base de l'adresse, qui ne contiennent aucune autre information personnelle.
       openid: Lecture de votre OpenID Connect (OIDC) Identity Tokens. Il s'agit d'une information utilisée pour authentifier votre utilisateur. Cela permet à notre système de confirmer l'identité de votre compte et de s'assurer qu'aucun accès non autorisé n'a lieu.
-
-      api: "Lire toutes les personnes, groupes, événements, abonnements et factures auxquels vous avez accès, via les interfaces JSON."
+      api: Lire toutes les personnes, groupes, événements, abonnements et factures auxquels vous avez accès, via les interfaces JSON.
       events: Lire tous les événements auxquels vous avez accès
       groups: Lire tous les groupes auxquels vous avez accès
       people: Lire toutes les personnes auxquelles vous avez accès

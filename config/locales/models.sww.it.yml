@@ -1,171 +1,25 @@
-#  Copyright (c) 2012-2024, Schweizer Wanderwege. This file is part of
-#  hitobito_sww and licensed under the Affero General Public License version 3
-#  or later. See the COPYING file at the top-level directory or at
-#  https://github.com/hitobito/hitobito_sww.
-
-
 it:
   activerecord:
     models:
-
-      ### GROUPS
-
       group/schweizer_wanderwege:
         one: Sentieri Svizzeri
         many: Sentieri Svizzeri
         other: Sentieri Svizzeri
-
-      group/benutzerkonten:
-        one: ''
-        many: ''
-        other: ''
-
-      group/fachorganisation:
-        one: ''
-        many: ''
-        other: ''
-
-      group/kontakte:
-        one: ''
-        many: ''
-        other: ''
-
-      group/vorstand:
-        one: ''
-        many: ''
-        other: ''
-
-      group/geschaeftsstelle:
-        one: ''
-        many: ''
-        other: ''
-
-      group/gremium_projektgruppe:
-        one: ''
-        many: ''
-        other: ''
-
-      group/mitglieder:
-        one: ''
-        many: ''
-        other: ''
-
-      ### ROLES
-
-      group/schweizer_wanderwege/mitarbeitende:
-        one: ""
-      group/schweizer_wanderwege/support:
-        one: ""
-
-      group/benutzerkonten/benutzerkonto:
-        one: ""
-      group/benutzerkonten/verwalter:
-        one: ""
-
-      group/kontakte/kontakt:
-        one: ""
-
-      group/vorstand/praesident:
-        one: ""
-      group/vorstand/vizepraesident:
-        one: ""
-      group/vorstand/vorstandsmitglied:
-        one: ""
-
-      group/geschaeftsstelle/geschaeftsfuehrer:
-        one: ""
-      group/geschaeftsstelle/kassier:
-        one: ""
-      group/geschaeftsstelle/technischer_leiter:
-        one: ""
-      group/geschaeftsstelle/mitarbeiter:
-        one: ""
-
-      group/gremium_projektgruppe/leitung:
-        one: ""
-      group/gremium_projektgruppe/mitglied:
-        one: ""
-
-      group/mitglieder/aktivmitglied:
-        one: ""
-      group/mitglieder/passivmitglied:
-        one: ""
-      group/mitglieder/freimitglied:
-        one: ""
-      group/mitglieder/organisationen:
-        one: ""
-      group/mitglieder/partner:
-        one: ""
-      group/mitglieder/spender:
-        one: ""
-      group/mitglieder/magazin_abonnent:
-        one: ""
-
-      salutation:
-        available:
-          guten_tag:
-            label: ""
-            value:
-              m: ""
-              w: ""
-              other: ""
-          sehr_geehrte:
-            label: ""
-            value:
-              m: ""
-              w: ""
-              other: ""
-
     attributes:
       person:
-        custom_salutation: ""
-        magazin_abo_number: ''
-        member_number: ""
-        name_add_on: ""
-        title: ""
         email: E-mail
-        sww_salutation: ""
-      message:
-        membership_card: ""
-        membership_expires_on: ""
       invoice:
         hide_total: Donazione
-        membership_card: ""
-        membership_expires_on: ""
       invoice_config:
         logo_positions:
           above_payment_slip: Sopra la ricevuta di versamento
-        separators: ""
-      group:
-        event_sender: ""
-        membership_card_left_position: ""
-        membership_card_top_position: ""
-        letter_left_address_position: ""
-        letter_top_address_position: ""
-
-  tags:
-    categories:
-      abo: ""
-      category: ""
-
-  errors:
-    messages:
-      cannot_be_later_than_today: ""
-      cannot_be_later_than_deleted_at: ""
-
-  event:
-    application_market:
-      popover_waiting_list:
-        waiting_list_info: ""
-
   doorkeeper:
     scopes:
       email: Leggere il vostro indirizzo e-mail. Abbiamo bisogno del vostro indirizzo e-mail per poter elaborare correttamente il login.
       name: Lettura del nome. Abbiamo bisogno del vostro nome per poter elaborare correttamente il login.
-      with_roles: "Lettura dei dati anagrafici e delle autorizzazioni dell'utente. Per garantire che le autorizzazioni del vostro account possano essere memorizzate correttamente, il nostro sistema controlla i vostri dati anagrafici di autorizzazione e indirizzo, che non contengono altre informazioni personali."
+      with_roles: Lettura dei dati anagrafici e delle autorizzazioni dell'utente. Per garantire che le autorizzazioni del vostro account possano essere memorizzate correttamente, il nostro sistema controlla i vostri dati anagrafici di autorizzazione e indirizzo, che non contengono altre informazioni personali.
       openid: Leggere il token di identità OpenID Connect (OIDC). Si tratta di informazioni utilizzate per autenticare l'utente. Ciò consente al nostro sistema di confermare l'identità del vostro account e di garantire che non vi siano accessi non autorizzati.
-
-      api: "Leggere tutte le persone, i gruppi, gli eventi, gli abbonamenti e le fatture a cui si ha accesso tramite le interfacce JSON."
+      api: Leggere tutte le persone, i gruppi, gli eventi, gli abbonamenti e le fatture a cui si ha accesso tramite le interfacce JSON.
       events: Leggere tutti gli eventi a cui si ha accesso
       groups: Leggere tutti i gruppi a cui si ha accesso
       people: Leggere tutte le persone a cui si ha accesso

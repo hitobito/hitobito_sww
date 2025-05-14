@@ -1,21 +1,4 @@
-#  Copyright (c) 2022-2024, Schweizer Wanderwege. This file is part of
-#  hitobito_sww and licensed under the Affero General Public License version 3
-#  or later. See the COPYING file at the top-level directory or at
-#  https://github.com/hitobito/hitobito_sww.
-
 it:
-  messages:
-    export:
-      pdf:
-        letter:
-          membership_card:
-            title: ""
-            valid_until: ""
-
-    letter:
-      fields_sww:
-        membership_card_caption: ""
-
   devise:
     registrations:
       signed_up: 'La registrazione è avvenuta con successo.'
@@ -26,28 +9,7 @@ it:
     sessions:
       oauth_info:
         sign_in: 'Login'
-        info: ''
-    mailer:
-      reset_password_instructions:
-        subject: ""
-        body:
-          greeting: ""
-          reset_instructions:
-            with_password: ''
-            without_password_html: ''
-          ignore_information_html: ''
-
-  invoice_lists:
-    form_invoice_fields_sww:
-      membership_card_caption: ""
-
   groups:
-    form_tabs:
-      membership_cards: ""
-    form_tabs_sww:
-      email: ""
-    tab_content_sww:
-      help_event_sender: ""
     self_registration:
       new:
         gender:
@@ -56,36 +18,15 @@ it:
           other: Altro
       create:
         email_taken: L'e-mail è già in uso. Accedere o registrarsi con un altro indirizzo e-mail.
-      form:
-        has_account: ""
-        to_login_page: ""
       main_person:
         birthday: Data di nascita
         email: E-mail
         salutation: Saluto
-        street_house_nr: "Via, n."
+        street_house_nr: Via, n.
         terms_of_use_title: Condizioni generali
-        terms_of_use_text: ""
-        terms_of_use_link: ""
         terms_of_use_link_name: Condizioni generali
         privacy_title: Protezione dei dati
-        privacy_text: ""
-        privacy_link: ""
         privacy_link_name: Protezione dei dati
   invoices:
-    export:
-      tabular:
-        evaluation_list:
-          daterange_label: ""
-          print_date: ""
-          printed_by: ""
-    form_sww:
-      membership_card_caption: ""
-
-    evaluations:
-      show:
-        excess: ""
-
     pdf:
-      subtotal: ""
       donation: Donazione
