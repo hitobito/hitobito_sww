@@ -68,8 +68,11 @@ module Sww::Export::Pdf::Invoice::Articles
 
   def articles
     articles = super
-    articles[0][0] =
-      I18n.t("invoices.pdf.invoice_number") + ": #{invoice.sequence_number}"
+
+    invoice_info = "#{I18n.t("invoices.pdf.invoice_number")}: #{invoice.sequence_number}"
+    invoice_info += " #{I18n.t("invoices.pdf.from", date: I18n.l(invoice.issued_at))}" if invoice.issued_at.present?
+
+    articles[0][0] = invoice_info
     articles
   end
 
