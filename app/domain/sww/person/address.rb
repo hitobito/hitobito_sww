@@ -10,28 +10,31 @@ module Sww::Person::Address
     return super unless addressable.is_a?(Person)
 
     [
-      company_name_or_sww_gender_infered_salutation,
-      (person.nickname if print_nickname?(nickname)),
-      person_name(name).presence,
+      (print_company? ? build_company_block : build_person_block),
       short_address(country_as: :country_label)
     ].compact.join("\n")
   end
 
   private
 
-  # NOTE:: re-evaluate when refactoring core, passing name from Export::Tabular::People::HouseholdRow
-  # passing company_name as name feels rather strange and forces us to customize here
-  def person_name(name)
-    return name unless name == person.company_name
+  def build_company_block
+    [
+      person.to_s,
+      person.full_name.presence
+    ].compact.join("\n")
+  end
 
-    person.full_name
+  def build_person_block
+    [
+      person.sww_salutation(skip_other: true),
+      person.to_s,
+      person.nickname
+    ].compact.join("\n")
   end
 
   def print_company?
-    person.company? && person.company_name.present? && person.company_name != person.full_name
-  end
-
-  def company_name_or_sww_gender_infered_salutation
-    print_company? ? person.company_name : person.sww_salutation(skip_other: true)
+    person.company? &&
+      person.company_name.present? &&
+      person.company_name != person.full_name
   end
 end
