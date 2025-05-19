@@ -19,7 +19,7 @@ module Sww::Person
       :sww_cms_profile_id, :sww_cms_legacy_password_salt]
     Person::INTERNAL_ATTRS.push(*add_internal_attrs)
 
-    Person::SEARCHABLE_ATTRS << :magazin_abo_number << :manual_member_number
+    Person::SEARCHABLE_ATTRS << :magazin_abo_number << :manual_member_number << :id
 
     attr_readonly :alabus_id
 

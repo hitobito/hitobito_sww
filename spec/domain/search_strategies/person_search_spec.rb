@@ -16,15 +16,21 @@ describe SearchStrategies::PersonSearch do
     end
 
     it "finds accessible person by magazin_abo_number" do
-      result = search_class(people(:zuercher_wanderer).magazin_abo_number.to_s).search_fulltext
+      result = search_class(user.magazin_abo_number.to_s).search_fulltext
 
-      expect(result).to include(people(:zuercher_wanderer))
+      expect(result).to include(user)
     end
 
     it "finds accessible person by manual_member_number" do
-      result = search_class(people(:zuercher_wanderer).manual_member_number.to_s).search_fulltext
+      result = search_class(user.manual_member_number.to_s).search_fulltext
 
-      expect(result).to include(people(:zuercher_wanderer))
+      expect(result).to include(user)
+    end
+
+    it "finds accessible person by id" do
+      result = search_class(user.id.to_s).search_fulltext
+
+      expect(result).to include(user)
     end
   end
 
