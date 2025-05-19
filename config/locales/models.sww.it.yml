@@ -16,147 +16,140 @@ it:
         other: Sentieri Svizzeri
 
       group/benutzerkonten:
-        one: ''
-        many: ''
-        other: ''
+        one: Benutzerkonten
+        other: Benutzerkonten
 
       group/fachorganisation:
-        one: ''
-        many: ''
-        other: ''
+        one: Fachorganisation
+        other: Fachorganisation
 
       group/kontakte:
-        one: ''
-        many: ''
-        other: ''
+        one: Kontakte
+        other: Kontakte
 
       group/vorstand:
-        one: ''
-        many: ''
-        other: ''
+        one: Vorstand
+        other: Vorstand
 
       group/geschaeftsstelle:
-        one: ''
-        many: ''
-        other: ''
+        one: Geschäftsleitung
+        other: Geschäftsleitung
 
       group/gremium_projektgruppe:
-        one: ''
-        many: ''
-        other: ''
+        one: Gremium/Projektgruppe
+        other: Gremium/Projektgruppe
 
       group/mitglieder:
-        one: ''
-        many: ''
-        other: ''
+        one: Mitglieder
+        other: Mitglieder
 
       ### ROLES
 
       group/schweizer_wanderwege/mitarbeitende:
-        one: ""
+        one: Mitarbeitende
       group/schweizer_wanderwege/support:
-        one: ""
+        one: Support
 
       group/benutzerkonten/benutzerkonto:
-        one: ""
+        one: Benutzerkonto
       group/benutzerkonten/verwalter:
-        one: ""
+        one: Support
 
       group/kontakte/kontakt:
-        one: ""
+        one: Kontakt
 
       group/vorstand/praesident:
-        one: ""
+        one: Präsident
       group/vorstand/vizepraesident:
-        one: ""
+        one: Vizepräsident
       group/vorstand/vorstandsmitglied:
-        one: ""
+        one: Vorstandsmitglied
 
       group/geschaeftsstelle/geschaeftsfuehrer:
-        one: ""
+        one: Geschäftsführer
       group/geschaeftsstelle/kassier:
-        one: ""
+        one: Kassier
       group/geschaeftsstelle/technischer_leiter:
-        one: ""
+        one: Technischer Leiter
       group/geschaeftsstelle/mitarbeiter:
-        one: ""
+        one: Mitarbeiter
 
       group/gremium_projektgruppe/leitung:
-        one: ""
+        one: Leitung
       group/gremium_projektgruppe/mitglied:
-        one: ""
+        one: Mitglied
 
       group/mitglieder/aktivmitglied:
-        one: ""
+        one: Aktivmitglied
       group/mitglieder/passivmitglied:
-        one: ""
+        one: Passivmitglied
       group/mitglieder/freimitglied:
-        one: ""
+        one: Freimitglied
       group/mitglieder/organisationen:
-        one: ""
+        one: Organisationen
       group/mitglieder/partner:
-        one: ""
+        one: Partner
       group/mitglieder/spender:
-        one: ""
+        one: Spender
       group/mitglieder/magazin_abonnent:
-        one: ""
+        one: Magazin Abonnent
 
       salutation:
         available:
           guten_tag:
-            label: ""
+            label: Guten Tag
             value:
-              m: ""
-              w: ""
-              other: ""
+              m: Guten Tag
+              w: Guten Tag
+              other: Guten Tag
           sehr_geehrte:
-            label: ""
+            label: "Sehr geehrte*r Frau/Herr [Nachname]"
             value:
-              m: ""
-              w: ""
-              other: ""
+              m: "Sehr geehrter Herr %{last_name}"
+              w: "Sehr geehrte Frau %{last_name}"
+              other: "Sehr geehrte*r %{first_name} %{last_name}"
 
     attributes:
       person:
-        custom_salutation: ""
-        magazin_abo_number: ''
-        member_number: ""
-        name_add_on: ""
-        title: ""
+        custom_salutation: Benutzerdefinierte Anrede
+        magazin_abo_number: 'Abo # Magazin'
+        member_number: Mitgliedernummer
+        name_add_on: Namenszusatz
+        title: Titel
         email: E-mail
-        sww_salutation: ""
+        sww_salutation: Anrede
       message:
-        membership_card: ""
-        membership_expires_on: ""
+        membership_card: Mitgliederausweis
+        membership_expires_on: Mitgliedschaft gültig bis
       invoice:
         hide_total: Donazione
-        membership_card: ""
-        membership_expires_on: ""
+        membership_card: Mitgliederausweis
+        membership_expires_on: Mitgliedschaft gültig bis
       invoice_config:
         logo_positions:
           above_payment_slip: Sopra la ricevuta di versamento
-        separators: ""
+        separators: Trennlinie auf Einzahlungsschein anzeigen
       group:
-        event_sender: ""
-        membership_card_left_position: ""
-        membership_card_top_position: ""
-        letter_left_address_position: ""
-        letter_top_address_position: ""
+        event_sender: Anlass E-Mail Absendername
+        membership_card_left_position: Mitgliederausweis Abstand von links (cm)
+        membership_card_top_position: Mitgliederausweis Abstand von oben (cm)
+        letter_left_address_position: Addressabstand von links (cm)
+        letter_top_address_position: Addressabstand von oben (cm)
 
   tags:
     categories:
-      abo: ""
-      category: ""
+      abo: Abonnement
+      category: Kategorie
 
   errors:
     messages:
-      cannot_be_later_than_today: ""
-      cannot_be_later_than_deleted_at: ""
+      cannot_be_later_than_today: kann nicht später als heute sein
+      cannot_be_later_than_deleted_at: muss vor oder am selben Tag wie der Austritt sein
 
   event:
     application_market:
       popover_waiting_list:
-        waiting_list_info: ""
+        waiting_list_info: Setze diese Person auf die Warteliste.
 
   doorkeeper:
     scopes:
