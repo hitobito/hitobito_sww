@@ -12,12 +12,14 @@ module Sww::Person
 
   included do
     add_public_attrs = [:custom_salutation, :magazin_abo_number, :title,
-      :name_add_on, :sww_cms_profile_id]
+      :name_add_on]
     Person::PUBLIC_ATTRS.push(*add_public_attrs)
 
     add_internal_attrs = [:alabus_id, :member_number, :manual_member_number,
       :sww_cms_profile_id, :sww_cms_legacy_password_salt]
     Person::INTERNAL_ATTRS.push(*add_internal_attrs)
+
+    Person::MERGABLE_ATTRS << :manual_member_number
 
     Person::SEARCHABLE_ATTRS << :magazin_abo_number << :manual_member_number
 
