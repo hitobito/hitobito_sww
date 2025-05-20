@@ -89,3 +89,5 @@ de:
     pdf:
       subtotal: Subtotal
       donation: Spende
+      invoice_date: Datum
+      from: vom %{date}

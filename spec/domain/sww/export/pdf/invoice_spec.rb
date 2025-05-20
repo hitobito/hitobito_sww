@@ -30,6 +30,8 @@ describe Export::Pdf::Invoice do
 
   subject { PDF::Inspector::Text.analyze(pdf) }
 
+  before { invoice.invoice_config.update!(separators: false) }
+
   def rows_at_position(pos)
     text_with_position.select { _2 == pos }
   end
@@ -38,6 +40,75 @@ describe Export::Pdf::Invoice do
     text_with_position.select { |x, y, content| content == text }
   end
 
+  it "is a SWW::Export::Pdf::Invoice" do
+    expect(described_class.ancestors).to include(Sww::Export::Pdf::Invoice)
+  end
+
+  context 'logo' do
+    context 'when invoice_config has no logo' do
+      before do
+        expect(invoice.invoice_config.logo).not_to be_attached
+      end
+
+      [:disabled, :left, :right, :above_payment_slip].each do |position|
+        it "with logo_position=#{position} it does not render logo" do
+          invoice.invoice_config.update(logo_position: position)
+          expect(image_positions).to have(1).item # only qr code
+        end
+      end
+    end
+
+    context 'when invoice_config has a logo' do
+      before do
+        invoice.invoice_config.logo.attach fixture_file_upload('images/logo.png')
+        expect(invoice.invoice_config.logo).to be_attached
+      end
+
+      it 'with logo_position=disabled it does not render logo' do
+        invoice.invoice_config.update(logo_position: :disabled)
+        expect(image_positions).to have(1).item # only qr code
+      end
+
+      it 'with logo_position=left it renders logo on the left' do
+        invoice.invoice_config.update(logo_position: :left)
+        expect(image_positions).to have(2).items # logo and qr code
+        expect(image_positions.first).to match(
+          displayed_height: 18_912.75561,
+          displayed_width: 108_763.38,
+          height: 417,
+          width: 1000,
+          x: 56.69291,
+          y: 739.84276
+        )
+      end
+
+      it 'with logo_position=right it renders logo on the right' do
+        invoice.invoice_config.update(logo_position: :right)
+        expect(image_positions).to have(2).items # logo and qr code
+        expect(image_positions.first).to match(
+          displayed_height: 18_912.75561,
+          displayed_width: 108_763.38,
+          height: 417,
+          width: 1000,
+          x: 429.8237,
+          y: 739.84276
+        )
+      end
+
+      it 'with logo_position=above_payment_slip it renders logo above the payment slip' do
+        invoice.invoice_config.update(logo_position: :above_payment_slip)
+        expect(image_positions).to have(2).items # logo and qr code
+        expect(image_positions.first).to match(
+          displayed_height: 18_912.75561,
+          displayed_width: 108_763.38,
+          height: 417,
+          width: 1000,
+          x: 56.69291,
+          y: 314.64567
+        )
+      end
+    end
+  end
 
   context 'rendered left' do
     before do
@@ -83,62 +154,64 @@ describe Export::Pdf::Invoice do
 
     it 'renders the whole text' do
       invoice_text = [
-        "Rechnungsdatum: 15.06.2022",
-        "Max Muster",
-        "Belpstrasse 37",
-        "3007 Bern",
-        "Invoice",
-        "Rechnungsnummer: 636980692-2",
-        "Anzahl",
-        "Preis",
-        "Betrag",
-        "Zwischenbetrag",
-        "0.00 CHF",
-        "Gesamtbetrag",
-        "0.00 CHF",
-        "Fällig bis:      01.08.2022",
-        "Empfangsschein",
-        "Konto / Zahlbar an",
-        "CH93 0076 2011 6238 5295 7",
-        "Puzzle",
-        "Belpstrasse 37",
-        "3007 Bern",
-        "Zahlbar durch",
-        "Max Muster",
-        "Belpstrasse 37",
-        "3007 Bern",
-        "Währung",
-        "Betrag",
-        "CHF",
-        "Annahmestelle",
-        "Zahlteil",
-        "Währung",
-        "Betrag",
-        "CHF",
-        "Konto / Zahlbar an",
-        "CH93 0076 2011 6238 5295 7",
-        "Puzzle",
-        "Belpstrasse 37",
-        "3007 Bern",
-        "Referenznummer",
-        "00 00376 80338 90000 00000 00021",
-        "Zahlbar durch",
-        "Max Muster",
-        "Belpstrasse 37",
-        "3007 Bern"
+        [459, 529, "Datum: 15.06.2022"],
+        [57, 687, "Max Muster"],
+        [57, 674, "Belpstrasse 37"],
+        [57, 661, "3007 Bern"],
+        [57, 529, "Invoice"],
+        [57, 494, "Rechnungsnummer: 636980692-2 vom 15.06.2022"],
+        [414, 494, "Anzahl"],
+        [472, 494, "Preis"],
+        [515, 494, "Betrag"],
+        [404, 480, "Zwischenbetrag"],
+        [506, 480, "0.00 CHF"],
+        [404, 462, "Gesamtbetrag"],
+        [505, 462, "0.00 CHF"],
+        [57, 463, "Fällig bis:      01.08.2022"],
+        [14, 276, "Empfangsschein"],
+        [14, 251, "Konto / Zahlbar an"],
+        [14, 239, "CH93 0076 2011 6238 5295 7"],
+        [14, 228, "Puzzle"],
+        [14, 216, "Belpstrasse 37"],
+        [14, 205, "3007 Bern"],
+        [14, 173, "Zahlbar durch"],
+        [14, 161, "Max Muster"],
+        [14, 150, "Belpstrasse 37"],
+        [14, 138, "3007 Bern"],
+        [14, 89, "Währung"],
+        [71, 89, "Betrag"],
+        [14, 78, "CHF"],
+        [105, 39, "Annahmestelle"],
+        [190, 276, "Zahlteil"],
+        [190, 89, "Währung"],
+        [247, 89, "Betrag"],
+        [190, 78, "CHF"],
+        [346, 278, "Konto / Zahlbar an"],
+        [346, 266, "CH93 0076 2011 6238 5295 7"],
+        [346, 255, "Puzzle"],
+        [346, 243, "Belpstrasse 37"],
+        [346, 232, "3007 Bern"],
+        [346, 211, "Referenznummer"],
+        [346, 200, "00 00376 80338 90000 00000 00021"],
+        [346, 178, "Zahlbar durch"],
+        [346, 167, "Max Muster"],
+        [346, 155, "Belpstrasse 37"],
+        [346, 144, "3007 Bern"]
       ]
 
-      expect(text_with_position.map { _3 }).to eql invoice_text
+      invoice_text.each_with_index do |text, i|
+        expect(text_with_position[i]).to eq(text)
+      end
     end
 
 
     it 'renders everything else regardless' do
-      invoice_text = [[415, 529, "Rechnungsdatum: 15.06.2022"],
+      invoice_text = [[459, 529, "Datum: 15.06.2022"],
                       [57, 687, "Max Muster"],
                       [57, 674, "Belpstrasse 37"],
                       [57, 661, "3007 Bern"],
                       [57, 529, "Invoice"],
-                      [57, 494, "Rechnungsnummer: 636980692-2"],
+                      [57, 494, "Rechnungsnummer: 636980692-2 vom 15.06.2022"],
                       [414, 494, "Anzahl"],
                       [472, 494, "Preis"],
                       [515, 494, "Betrag"],
@@ -179,6 +252,189 @@ describe Export::Pdf::Invoice do
 
       text_with_position.each_with_index do |l, i|
         expect(l).to eq(invoice_text[i])
+      end
+    end
+
+    it "does not render issued_at behind_sequence_number when issued_at is not set" do
+      invoice.update!(issued_at: nil)
+      invoice_text = [
+        [57, 687, "Max Muster"],
+        [57, 674, "Belpstrasse 37"],
+        [57, 661, "3007 Bern"],
+        [57, 529, "Invoice"],
+        [57, 494, "Rechnungsnummer: 636980692-2"],
+        [414, 494, "Anzahl"],
+        [472, 494, "Preis"],
+        [515, 494, "Betrag"],
+        [404, 480, "Zwischenbetrag"],
+        [506, 480, "0.00 CHF"],
+        [404, 462, "Gesamtbetrag"],
+        [505, 462, "0.00 CHF"],
+        [57, 463, "Fällig bis:      01.08.2022"],
+        [14, 276, "Empfangsschein"],
+        [14, 251, "Konto / Zahlbar an"],
+        [14, 239, "CH93 0076 2011 6238 5295 7"],
+        [14, 228, "Puzzle"],
+        [14, 216, "Belpstrasse 37"],
+        [14, 205, "3007 Bern"],
+        [14, 173, "Zahlbar durch"],
+        [14, 161, "Max Muster"],
+        [14, 150, "Belpstrasse 37"],
+        [14, 138, "3007 Bern"],
+        [14, 89, "Währung"],
+        [71, 89, "Betrag"],
+        [14, 78, "CHF"],
+        [105, 39, "Annahmestelle"],
+        [190, 276, "Zahlteil"],
+        [190, 89, "Währung"],
+        [247, 89, "Betrag"],
+        [190, 78, "CHF"],
+        [346, 278, "Konto / Zahlbar an"],
+        [346, 266, "CH93 0076 2011 6238 5295 7"],
+        [346, 255, "Puzzle"],
+        [346, 243, "Belpstrasse 37"],
+        [346, 232, "3007 Bern"],
+        [346, 211, "Referenznummer"],
+        [346, 200, "00 00376 80338 90000 00000 00021"],
+        [346, 178, "Zahlbar durch"],
+        [346, 167, "Max Muster"],
+        [346, 155, "Belpstrasse 37"],
+        [346, 144, "3007 Bern"]
+      ]
+      invoice_text.each_with_index do |text, i|
+        expect(text_with_position[i]).to eq(text)
+      end
+    end
+
+    it "renders created at of latest reminder when reminder exists as invoice date" do
+      invoice.invoice_items.build(name: "pens", unit_cost: 10, vat_rate: 10, count: 2, invoice: invoice)
+      invoice.update!(issued_at: Date.new(2025, 01, 01), due_at: 5.days.from_now, state: "sent")
+      PaymentReminder.create!(level: 1, due_at: Date.new(2025, 06, 06), invoice: invoice, title: "Reminder 1", created_at: Date.new(2025, 06, 06))
+      invoice_text = [
+        [459, 529, "Datum: 06.06.2025"],
+        [57, 687, "Max Muster"],
+        [57, 674, "Belpstrasse 37"],
+        [57, 661, "3007 Bern"],
+        [57, 529, "Reminder 1 - Invoice"],
+        [57, 486, "Rechnungsnummer: 636980692-2 vom 01.01.2025"],
+        [364, 486, "Anzahl"],
+        [422, 486, "Preis"],
+        [465, 486, "Betrag"],
+        [515, 486, "MwSt."],
+        [57, 471, "pens"],
+        [384, 472, "2"],
+        [419, 472, "10.00"],
+        [469, 472, "20.00"],
+        [514, 472, "10.0 %"],
+        [400, 458, "Zwischenbetrag"],
+        [502, 458, "20.00 CHF"],
+        [400, 443, "MwSt."],
+        [506, 443, "2.00 CHF"],
+        [400, 425, "Gesamtbetrag"],
+        [501, 425, "22.00 CHF"],
+        [57, 426, "Fällig bis:      06.06.2025"],
+        [14, 276, "Empfangsschein"],
+        [14, 251, "Konto / Zahlbar an"],
+        [14, 239, "CH93 0076 2011 6238 5295 7"],
+        [14, 228, "Puzzle"],
+        [14, 216, "Belpstrasse 37"],
+        [14, 205, "3007 Bern"],
+        [14, 173, "Zahlbar durch"],
+        [14, 161, "Max Muster"],
+        [14, 150, "Belpstrasse 37"],
+        [14, 138, "3007 Bern"],
+        [14, 89, "Währung"],
+        [71, 89, "Betrag"],
+        [14, 78, "CHF"],
+        [71, 78, "22.00"],
+        [105, 39, "Annahmestelle"],
+        [190, 276, "Zahlteil"],
+        [190, 89, "Währung"],
+        [247, 89, "Betrag"],
+        [190, 78, "CHF"],
+        [247, 78, "22.00"],
+        [346, 278, "Konto / Zahlbar an"],
+        [346, 266, "CH93 0076 2011 6238 5295 7"],
+        [346, 255, "Puzzle"],
+        [346, 243, "Belpstrasse 37"],
+        [346, 232, "3007 Bern"],
+        [346, 211, "Referenznummer"],
+        [346, 200, "00 00376 80338 90000 00000 00021"],
+        [346, 178, "Zahlbar durch"],
+        [346, 167, "Max Muster"],
+        [346, 155, "Belpstrasse 37"],
+        [346, 144, "3007 Bern"]
+      ]
+      invoice_text.each_with_index do |text, i|
+        expect(text_with_position[i]).to eq(text)
+      end
+    end
+
+    context "without reminders" do
+      let(:pdf) { described_class.render(invoice, payment_slip: true, articles: true, reminders: false) }
+
+      it "does not render reminder and reminder date" do
+        invoice.invoice_items.build(name: "pens", unit_cost: 10, vat_rate: 10, count: 2, invoice: invoice)
+        invoice.update!(issued_at: Date.new(2025, 01, 01), due_at: 5.days.from_now, state: "sent")
+        PaymentReminder.create!(level: 1, due_at: Date.new(2025, 06, 06), invoice: invoice, title: "Reminder 1", created_at: Date.new(2025, 06, 06))
+        invoice_text = [
+          [459, 529, "Datum: 01.01.2025"],
+          [57, 687, "Max Muster"],
+          [57, 674, "Belpstrasse 37"],
+          [57, 661, "3007 Bern"],
+          [57, 529, "Invoice"],
+          [57, 494, "Rechnungsnummer: 636980692-2 vom 01.01.2025"],
+          [364, 494, "Anzahl"],
+          [422, 494, "Preis"],
+          [465, 494, "Betrag"],
+          [515, 494, "MwSt."],
+          [57, 479, "pens"],
+          [384, 480, "2"],
+          [419, 480, "10.00"],
+          [469, 480, "20.00"],
+          [514, 480, "10.0 %"],
+          [400, 466, "Zwischenbetrag"],
+          [502, 466, "20.00 CHF"],
+          [400, 451, "MwSt."],
+          [506, 451, "2.00 CHF"],
+          [400, 433, "Gesamtbetrag"],
+          [501, 433, "22.00 CHF"],
+          [57, 434, "Fällig bis:      06.06.2025"],
+          [14, 276, "Empfangsschein"],
+          [14, 251, "Konto / Zahlbar an"],
+          [14, 239, "CH93 0076 2011 6238 5295 7"],
+          [14, 228, "Puzzle"],
+          [14, 216, "Belpstrasse 37"],
+          [14, 205, "3007 Bern"],
+          [14, 173, "Zahlbar durch"],
+          [14, 161, "Max Muster"],
+          [14, 150, "Belpstrasse 37"],
+          [14, 138, "3007 Bern"],
+          [14, 89, "Währung"],
+          [71, 89, "Betrag"],
+          [14, 78, "CHF"],
+          [71, 78, "22.00"],
+          [105, 39, "Annahmestelle"],
+          [190, 276, "Zahlteil"],
+          [190, 89, "Währung"],
+          [247, 89, "Betrag"],
+          [190, 78, "CHF"],
+          [247, 78, "22.00"],
+          [346, 278, "Konto / Zahlbar an"],
+          [346, 266, "CH93 0076 2011 6238 5295 7"],
+          [346, 255, "Puzzle"],
+          [346, 243, "Belpstrasse 37"],
+          [346, 232, "3007 Bern"],
+          [346, 211, "Referenznummer"],
+          [346, 200, "00 00376 80338 90000 00000 00021"],
+          [346, 178, "Zahlbar durch"],
+          [346, 167, "Max Muster"],
+          [346, 155, "Belpstrasse 37"],
+          [346, 144, "3007 Bern"]
+        ]
+        invoice_text.each_with_index do |text, i|
+          expect(text_with_position[i]).to eq(text)
+        end
       end
     end
 
@@ -223,52 +479,54 @@ describe Export::Pdf::Invoice do
 
     it 'renders everything else regardless' do
       invoice_text = [
-        "Rechnungsdatum: 15.06.2022",
-        "Max Muster",
-        "Belpstrasse 37",
-        "3007 Bern",
-        "Invoice",
-        "Rechnungsnummer: 636980692-2",
-        "Anzahl",
-        "Preis",
-        "Betrag",
-        "Zwischenbetrag",
-        "0.00 CHF",
-        "Gesamtbetrag",
-        "0.00 CHF",
-        "Fällig bis:      01.08.2022",
-        "Empfangsschein",
-        "Konto / Zahlbar an",
-        "CH93 0076 2011 6238 5295 7",
-        "Puzzle",
-        "Belpstrasse 37",
-        "3007 Bern",
-        "Zahlbar durch",
-        "Max Muster",
-        "Belpstrasse 37",
-        "3007 Bern",
-        "Währung",
-        "Betrag",
-        "CHF",
-        "Annahmestelle",
-        "Zahlteil",
-        "Währung",
-        "Betrag",
-        "CHF",
-        "Konto / Zahlbar an",
-        "CH93 0076 2011 6238 5295 7",
-        "Puzzle",
-        "Belpstrasse 37",
-        "3007 Bern",
-        "Referenznummer",
-        "00 00376 80338 90000 00000 00021",
-        "Zahlbar durch",
-        "Max Muster",
-        "Belpstrasse 37",
-        "3007 Bern",
+        [459, 529, "Datum: 15.06.2022"],
+        [57, 687, "Max Muster"],
+        [57, 674, "Belpstrasse 37"],
+        [57, 661, "3007 Bern"],
+        [57, 529, "Invoice"],
+        [57, 494, "Rechnungsnummer: 636980692-2 vom 15.06.2022"],
+        [414, 494, "Anzahl"],
+        [472, 494, "Preis"],
+        [515, 494, "Betrag"],
+        [404, 480, "Zwischenbetrag"],
+        [506, 480, "0.00 CHF"],
+        [404, 462, "Gesamtbetrag"],
+        [505, 462, "0.00 CHF"],
+        [57, 463, "Fällig bis:      01.08.2022"],
+        [14, 276, "Empfangsschein"],
+        [14, 251, "Konto / Zahlbar an"],
+        [14, 239, "CH93 0076 2011 6238 5295 7"],
+        [14, 228, "Puzzle"],
+        [14, 216, "Belpstrasse 37"],
+        [14, 205, "3007 Bern"],
+        [14, 173, "Zahlbar durch"],
+        [14, 161, "Max Muster"],
+        [14, 150, "Belpstrasse 37"],
+        [14, 138, "3007 Bern"],
+        [14, 89, "Währung"],
+        [71, 89, "Betrag"],
+        [14, 78, "CHF"],
+        [105, 39, "Annahmestelle"],
+        [190, 276, "Zahlteil"],
+        [190, 89, "Währung"],
+        [247, 89, "Betrag"],
+        [190, 78, "CHF"],
+        [346, 278, "Konto / Zahlbar an"],
+        [346, 266, "CH93 0076 2011 6238 5295 7"],
+        [346, 255, "Puzzle"],
+        [346, 243, "Belpstrasse 37"],
+        [346, 232, "3007 Bern"],
+        [346, 211, "Referenznummer"],
+        [346, 200, "00 00376 80338 90000 00000 00021"],
+        [346, 178, "Zahlbar durch"],
+        [346, 167, "Max Muster"],
+        [346, 155, "Belpstrasse 37"],
+        [346, 144, "3007 Bern"]
       ]
 
-      expect(text_with_position.map { _3 }).to eq invoice_text
+      text_with_position.each_with_index do |l, i|
+        expect(l).to eq(invoice_text[i])
+      end
     end
 
     it 'renders total when hide_total=false' do
@@ -349,11 +607,11 @@ describe Export::Pdf::Invoice do
 
 
   it 'renders invoice information to the right' do
-    expect(text_with_position.find { _3 == 'Rechnungsdatum: 15.06.2022' }).to start_with(415, 529)
+    expect(text_with_position.find { _3 == 'Datum: 15.06.2022' }).to start_with(459, 529)
   end
 
   it 'renders invoice number as column label' do
-    expect(text_with_position.find { _3.starts_with?('Rechnungsnummer') }).to end_with(["Rechnungsnummer: 636980692-2"])
+    expect(text_with_position.find { _3.starts_with?('Rechnungsnummer') }).to end_with(["Rechnungsnummer: 636980692-2 vom 15.06.2022"])
   end
 
   it 'renders invoice due at below articles table' do
@@ -451,74 +709,6 @@ describe Export::Pdf::Invoice do
           [506, 437, "5.00 CHF"],
           [506, 422, "3.00 CHF"],
           [505, 407, "3.00 CHF"]
-        )
-      end
-    end
-  end
-
-  context 'logo' do
-    before { invoice.invoice_config.separators = false }
-
-    context 'when invoice_config has no logo' do
-      before do
-        expect(invoice.invoice_config.logo).not_to be_attached
-      end
-
-      [:disabled, :left, :right, :above_payment_slip].each do |position|
-        it "with logo_position=#{position} it does not render logo" do
-          invoice.invoice_config.update(logo_position: position)
-          expect(image_positions).to have(1).item # only qr code
-        end
-      end
-    end
-
-    context 'when invoice_config has a logo' do
-      before do
-        invoice.invoice_config.logo.attach fixture_file_upload('images/logo.png')
-        expect(invoice.invoice_config.logo).to be_attached
-      end
-
-      it 'with logo_position=disabled it does not render logo' do
-        invoice.invoice_config.update(logo_position: :disabled)
-        expect(image_positions).to have(1).item # only qr code
-      end
-
-      it 'with logo_position=left it renders logo on the left' do
-        invoice.invoice_config.update(logo_position: :left)
-        expect(image_positions).to have(2).items # logo and qr code
-        expect(image_positions.first).to match(
-          displayed_height: 18_912.75561,
-          displayed_width: 108_763.38,
-          height: 417,
-          width: 1000,
-          x: 56.69291,
-          y: 739.84276
-        )
-      end
-
-      it 'with logo_position=right it renders logo on the right' do
-        invoice.invoice_config.update(logo_position: :right)
-        expect(image_positions).to have(2).items # logo and qr code
-        expect(image_positions.first).to match(
-          displayed_height: 18_912.75561,
-          displayed_width: 108_763.38,
-          height: 417,
-          width: 1000,
-          x: 429.8237,
-          y: 739.84276
-        )
-      end
-
-      it 'with logo_position=above_payment_slip it renders logo above the payment slip' do
-        invoice.invoice_config.update(logo_position: :above_payment_slip)
-        expect(image_positions).to have(2).items # logo and qr code
-        expect(image_positions.first).to match(
-          displayed_height: 18_912.75561,
-          displayed_width: 108_763.38,
-          height: 417,
-          width: 1000,
-          x: 56.69291,
-          y: 314.64567
         )
       end
     end

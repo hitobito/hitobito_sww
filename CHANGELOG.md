@@ -3,6 +3,7 @@
 ## unreleased
 
 - Es kann neu pro Gruppe ein Mailabsendername für Anlass E-Mails gesetzt werden (hitobito_sww#195)
+- Auf Rechnungen wird neu das Datum der Mahnung verwendet, sobald diese eine Mahnung hat (hitobito_sww#200)
 
 ## Version 2.4
 
