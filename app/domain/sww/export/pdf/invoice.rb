@@ -14,6 +14,7 @@ module Sww::Export::Pdf::Invoice
   class RunnerSww < Export::Pdf::Invoice::Runner
     def invoice_page(pdf, invoice, options)
       @page_invoice = invoice
+      @options = options
       super
     end
 
@@ -37,11 +38,15 @@ module Sww::Export::Pdf::Invoice
       super
     end
 
+    private
+
     def membership_card?
-      @page_invoice.membership_card?
+      @page_invoice.membership_card? && !render_reminders?
     end
 
-    private
+    def render_reminders?
+      @page_invoice.payment_reminders.exists? && @options[:reminders]
+    end
 
     def customize(pdf)
       ::Export::Pdf::Font.new(super).customize
