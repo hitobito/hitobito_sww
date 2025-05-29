@@ -89,3 +89,5 @@ it:
     pdf:
       subtotal: Subtotal
       donation: Donazione
+      invoice_date: Datum
+      from: "vom %{date}"
