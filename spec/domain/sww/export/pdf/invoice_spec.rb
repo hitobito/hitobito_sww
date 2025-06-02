@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Export::Pdf::Invoice do
   include PdfHelpers
@@ -15,9 +15,9 @@ describe Export::Pdf::Invoice do
       i.update!(
         payment_slip: :qr,
         payee: "Puzzle\nBelpstrasse 37\n3007 Bern",
-        iban: 'CH93 0076 2011 6238 5295 7',
-        issued_at: Date.parse('2022-06-15'),
-        due_at: Date.parse('2022-08-01')
+        iban: "CH93 0076 2011 6238 5295 7",
+        issued_at: Date.parse("2022-06-15"),
+        due_at: Date.parse("2022-08-01")
       )
     end
   end
@@ -44,8 +44,8 @@ describe Export::Pdf::Invoice do
     expect(described_class.ancestors).to include(Sww::Export::Pdf::Invoice)
   end
 
-  context 'logo' do
-    context 'when invoice_config has no logo' do
+  context "logo" do
+    context "when invoice_config has no logo" do
       before do
         expect(invoice.invoice_config.logo).not_to be_attached
       end
@@ -58,18 +58,18 @@ describe Export::Pdf::Invoice do
       end
     end
 
-    context 'when invoice_config has a logo' do
+    context "when invoice_config has a logo" do
       before do
-        invoice.invoice_config.logo.attach fixture_file_upload('images/logo.png')
+        invoice.invoice_config.logo.attach fixture_file_upload("images/logo.png")
         expect(invoice.invoice_config.logo).to be_attached
       end
 
-      it 'with logo_position=disabled it does not render logo' do
+      it "with logo_position=disabled it does not render logo" do
         invoice.invoice_config.update(logo_position: :disabled)
         expect(image_positions).to have(1).item # only qr code
       end
 
-      it 'with logo_position=left it renders logo on the left' do
+      it "with logo_position=left it renders logo on the left" do
         invoice.invoice_config.update(logo_position: :left)
         expect(image_positions).to have(2).items # logo and qr code
         expect(image_positions.first).to match(
@@ -82,7 +82,7 @@ describe Export::Pdf::Invoice do
         )
       end
 
-      it 'with logo_position=right it renders logo on the right' do
+      it "with logo_position=right it renders logo on the right" do
         invoice.invoice_config.update(logo_position: :right)
         expect(image_positions).to have(2).items # logo and qr code
         expect(image_positions.first).to match(
@@ -95,7 +95,7 @@ describe Export::Pdf::Invoice do
         )
       end
 
-      it 'with logo_position=above_payment_slip it renders logo above the payment slip' do
+      it "with logo_position=above_payment_slip it renders logo above the payment slip" do
         invoice.invoice_config.update(logo_position: :above_payment_slip)
         expect(image_positions).to have(2).items # logo and qr code
         expect(image_positions.first).to match(
@@ -110,14 +110,14 @@ describe Export::Pdf::Invoice do
     end
   end
 
-  context 'rendered left' do
+  context "rendered left" do
     before do
       invoice.group.letter_address_position = :left
       invoice.group.save!
     end
 
-    it 'renders membership_card when true' do
-      invoice.update!(membership_card: true, membership_expires_on: Date.parse('2022-10-01'))
+    it "renders membership_card when true" do
+      invoice.update!(membership_card: true, membership_expires_on: Date.parse("2022-10-01"))
       membership_card = [
         [346, 721, "Mitgliederausweis"],
         [346, 710, "42421"],
@@ -136,7 +136,7 @@ describe Export::Pdf::Invoice do
       expect(text_with_position).not_to include([346, 721, "Mitgliederausweis"])
     end
 
-    it 'renders receiver address' do
+    it "renders receiver address" do
       expect(text_with_position).to include(
         [57, 687, "Max Muster"],
         [57, 674, "Belpstrasse 37"],
@@ -145,13 +145,13 @@ describe Export::Pdf::Invoice do
     end
   end
 
-  context 'with separators true' do
+  context "with separators true" do
     before { invoice_config.update!(separators: true) }
 
-    it 'renders separators' do
-      pdf = Prawn::Document.new(page_size: 'A4',
-                                page_layout: :portrait,
-                                margin: 2.cm)
+    it "renders separators" do
+      pdf = Prawn::Document.new(page_size: "A4",
+        page_layout: :portrait,
+        margin: 2.cm)
 
       slip = ::Export::Pdf::Invoice::PaymentSlipQr.new(pdf, invoice, {})
       expect(::Export::Pdf::Invoice::PaymentSlipQr).to receive(:new).and_return(slip)
@@ -159,7 +159,7 @@ describe Export::Pdf::Invoice do
       subject
     end
 
-    it 'renders the whole text' do
+    it "renders the whole text" do
       invoice_text = [
         [459, 529, "Datum: 15.06.2022"],
         [57, 687, "Max Muster"],
@@ -211,51 +211,50 @@ describe Export::Pdf::Invoice do
       end
     end
 
-
-    it 'renders everything else regardless' do
+    it "renders everything else regardless" do
       invoice_text = [[459, 529, "Datum: 15.06.2022"],
-                      [57, 687, "Max Muster"],
-                      [57, 674, "Belpstrasse 37"],
-                      [57, 661, "3007 Bern"],
-                      [57, 529, "Invoice"],
-                      [57, 494, "Rechnungsnummer: 636980692-2 vom 15.06.2022"],
-                      [414, 494, "Anzahl"],
-                      [472, 494, "Preis"],
-                      [515, 494, "Betrag"],
-                      [404, 480, "Zwischenbetrag"],
-                      [506, 480, "0.00 CHF"],
-                      [404, 462, "Gesamtbetrag"],
-                      [505, 462, "0.00 CHF"],
-                      [57, 463, "Fällig bis:      01.08.2022"],
-                      [14, 276, "Empfangsschein"],
-                      [14, 251, "Konto / Zahlbar an"],
-                      [14, 239, "CH93 0076 2011 6238 5295 7"],
-                      [14, 228, "Puzzle"],
-                      [14, 216, "Belpstrasse 37"],
-                      [14, 205, "3007 Bern"],
-                      [14, 173, "Zahlbar durch"],
-                      [14, 161, "Max Muster"],
-                      [14, 150, "Belpstrasse 37"],
-                      [14, 138, "3007 Bern"],
-                      [14, 89, "Währung"],
-                      [71, 89, "Betrag"],
-                      [14, 78, "CHF"],
-                      [105, 39, "Annahmestelle"],
-                      [190, 276, "Zahlteil"],
-                      [190, 89, "Währung"],
-                      [247, 89, "Betrag"],
-                      [190, 78, "CHF"],
-                      [346, 278, "Konto / Zahlbar an"],
-                      [346, 266, "CH93 0076 2011 6238 5295 7"],
-                      [346, 255, "Puzzle"],
-                      [346, 243, "Belpstrasse 37"],
-                      [346, 232, "3007 Bern"],
-                      [346, 211, "Referenznummer"],
-                      [346, 200, "00 00376 80338 90000 00000 00021"],
-                      [346, 178, "Zahlbar durch"],
-                      [346, 167, "Max Muster"],
-                      [346, 155, "Belpstrasse 37"],
-                      [346, 144, "3007 Bern"]]
+        [57, 687, "Max Muster"],
+        [57, 674, "Belpstrasse 37"],
+        [57, 661, "3007 Bern"],
+        [57, 529, "Invoice"],
+        [57, 494, "Rechnungsnummer: 636980692-2 vom 15.06.2022"],
+        [414, 494, "Anzahl"],
+        [472, 494, "Preis"],
+        [515, 494, "Betrag"],
+        [404, 480, "Zwischenbetrag"],
+        [506, 480, "0.00 CHF"],
+        [404, 462, "Gesamtbetrag"],
+        [505, 462, "0.00 CHF"],
+        [57, 463, "Fällig bis:      01.08.2022"],
+        [14, 276, "Empfangsschein"],
+        [14, 251, "Konto / Zahlbar an"],
+        [14, 239, "CH93 0076 2011 6238 5295 7"],
+        [14, 228, "Puzzle"],
+        [14, 216, "Belpstrasse 37"],
+        [14, 205, "3007 Bern"],
+        [14, 173, "Zahlbar durch"],
+        [14, 161, "Max Muster"],
+        [14, 150, "Belpstrasse 37"],
+        [14, 138, "3007 Bern"],
+        [14, 89, "Währung"],
+        [71, 89, "Betrag"],
+        [14, 78, "CHF"],
+        [105, 39, "Annahmestelle"],
+        [190, 276, "Zahlteil"],
+        [190, 89, "Währung"],
+        [247, 89, "Betrag"],
+        [190, 78, "CHF"],
+        [346, 278, "Konto / Zahlbar an"],
+        [346, 266, "CH93 0076 2011 6238 5295 7"],
+        [346, 255, "Puzzle"],
+        [346, 243, "Belpstrasse 37"],
+        [346, 232, "3007 Bern"],
+        [346, 211, "Referenznummer"],
+        [346, 200, "00 00376 80338 90000 00000 00021"],
+        [346, 178, "Zahlbar durch"],
+        [346, 167, "Max Muster"],
+        [346, 155, "Belpstrasse 37"],
+        [346, 144, "3007 Bern"]]
 
       text_with_position.each_with_index do |l, i|
         expect(l).to eq(invoice_text[i])
@@ -315,8 +314,8 @@ describe Export::Pdf::Invoice do
 
     it "renders created at of latest reminder when reminder exists as invoice date" do
       invoice.invoice_items.build(name: "pens", unit_cost: 10, vat_rate: 10, count: 2, invoice: invoice)
-      invoice.update!(issued_at: Date.new(2025, 01, 01), due_at: 5.days.from_now, state: "sent")
-      PaymentReminder.create!(level: 1, due_at: Date.new(2025, 06, 06), invoice: invoice, title: "Reminder 1", created_at: Date.new(2025, 06, 06))
+      invoice.update!(issued_at: Date.new(2025, 1, 1), due_at: 5.days.from_now, state: "sent")
+      PaymentReminder.create!(level: 1, due_at: Date.new(2025, 6, 6), invoice: invoice, title: "Reminder 1", created_at: Date.new(2025, 6, 6))
       invoice_text = [
         [459, 529, "Datum: 06.06.2025"],
         [57, 687, "Max Muster"],
@@ -382,8 +381,8 @@ describe Export::Pdf::Invoice do
 
       it "does not render reminder and reminder date" do
         invoice.invoice_items.build(name: "pens", unit_cost: 10, vat_rate: 10, count: 2, invoice: invoice)
-        invoice.update!(issued_at: Date.new(2025, 01, 01), due_at: 5.days.from_now, state: "sent")
-        PaymentReminder.create!(level: 1, due_at: Date.new(2025, 06, 06), invoice: invoice, title: "Reminder 1", created_at: Date.new(2025, 06, 06))
+        invoice.update!(issued_at: Date.new(2025, 1, 1), due_at: 5.days.from_now, state: "sent")
+        PaymentReminder.create!(level: 1, due_at: Date.new(2025, 6, 6), invoice: invoice, title: "Reminder 1", created_at: Date.new(2025, 6, 6))
         invoice_text = [
           [459, 529, "Datum: 01.01.2025"],
           [57, 687, "Max Muster"],
@@ -452,11 +451,11 @@ describe Export::Pdf::Invoice do
       end
     end
 
-    it 'renders total when hide_total=false' do
-      InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+    it "renders total when hide_total=false" do
+      InvoiceItem.create!(invoice: invoice, name: "dings", count: 1, unit_cost: 10, vat_rate: 10)
       invoice.update!(hide_total: false)
       invoice.reload.recalculate!
-      expect(rows_with_text('Gesamtbetrag')).to include([400, 433, "Gesamtbetrag"])
+      expect(rows_with_text("Gesamtbetrag")).to include([400, 433, "Gesamtbetrag"])
       expect(rows_at_position(433)).to include([501, 433, "11.00 CHF"])
 
       full_text = subject.show_text.join("\n")
@@ -464,26 +463,26 @@ describe Export::Pdf::Invoice do
       expect(full_text).not_to include("Spende")
     end
 
-    it 'renders subtotal and donation row when hide_total=true' do
-      InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+    it "renders subtotal and donation row when hide_total=true" do
+      InvoiceItem.create!(invoice: invoice, name: "dings", count: 1, unit_cost: 10, vat_rate: 10)
       invoice.update!(hide_total: true)
       invoice.reload.recalculate!
 
-      expect(rows_with_text('Subtotal')).to include([400, 451, 'Subtotal'])
+      expect(rows_with_text("Subtotal")).to include([400, 451, "Subtotal"])
       expect(rows_at_position(451)).to include([501, 451, "11.00 CHF"])
 
-      expect(rows_with_text('Spende')).to include([400, 437, "Spende"])
-      expect(rows_with_text('Gesamtbetrag')).to include([400, 419, "Gesamtbetrag"])
+      expect(rows_with_text("Spende")).to include([400, 437, "Spende"])
+      expect(rows_with_text("Gesamtbetrag")).to include([400, 419, "Gesamtbetrag"])
     end
   end
 
-  context 'with separators false' do
+  context "with separators false" do
     before { invoice_config.update!(separators: false) }
 
-    it 'does not render separators' do
-      pdf = Prawn::Document.new(page_size: 'A4',
-                                page_layout: :portrait,
-                                margin: 2.cm)
+    it "does not render separators" do
+      pdf = Prawn::Document.new(page_size: "A4",
+        page_layout: :portrait,
+        margin: 2.cm)
 
       slip = ::Export::Pdf::Invoice::PaymentSlipQr.new(pdf, invoice, {})
       expect(::Export::Pdf::Invoice::PaymentSlipQr).to receive(:new).and_return(slip)
@@ -491,7 +490,7 @@ describe Export::Pdf::Invoice do
       subject
     end
 
-    it 'renders everything else regardless' do
+    it "renders everything else regardless" do
       invoice_text = [
         [459, 529, "Datum: 15.06.2022"],
         [57, 687, "Max Muster"],
@@ -543,11 +542,11 @@ describe Export::Pdf::Invoice do
       end
     end
 
-    it 'renders total when hide_total=false' do
-      InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+    it "renders total when hide_total=false" do
+      InvoiceItem.create!(invoice: invoice, name: "dings", count: 1, unit_cost: 10, vat_rate: 10)
       invoice.update!(hide_total: false)
       invoice.reload.recalculate!
-      expect(rows_with_text('Gesamtbetrag')).to include([400, 433, "Gesamtbetrag"])
+      expect(rows_with_text("Gesamtbetrag")).to include([400, 433, "Gesamtbetrag"])
       expect(rows_at_position(433)).to include([501, 433, "11.00 CHF"])
 
       full_text = subject.show_text.join("\n")
@@ -555,26 +554,26 @@ describe Export::Pdf::Invoice do
       expect(full_text).not_to include("Spende")
     end
 
-    it 'renders subtotal and donation row when hide_total=true' do
-      InvoiceItem.create!(invoice: invoice, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+    it "renders subtotal and donation row when hide_total=true" do
+      InvoiceItem.create!(invoice: invoice, name: "dings", count: 1, unit_cost: 10, vat_rate: 10)
       invoice.update!(hide_total: true)
       invoice.reload.recalculate!
-      expect(rows_with_text('Subtotal')).to include([400, 451, 'Subtotal'])
+      expect(rows_with_text("Subtotal")).to include([400, 451, "Subtotal"])
       expect(rows_at_position(451)).to include([501, 451, "11.00 CHF"])
 
-      expect(rows_with_text('Spende')).to eq [[400, 437, "Spende"]]
-      expect(rows_with_text('Gesamtbetrag')).to eq [[400, 419, "Gesamtbetrag"]]
+      expect(rows_with_text("Spende")).to eq [[400, 437, "Spende"]]
+      expect(rows_with_text("Gesamtbetrag")).to eq [[400, 419, "Gesamtbetrag"]]
     end
   end
 
-  context 'rendered right' do
+  context "rendered right" do
     before do
       invoice.group.letter_address_position = :right
       invoice.group.save!
     end
 
-    it 'renders membership_card when true' do
-      invoice.update!(membership_card: true, membership_expires_on: Date.parse('2022-10-01'))
+    it "renders membership_card when true" do
+      invoice.update!(membership_card: true, membership_expires_on: Date.parse("2022-10-01"))
       membership_card = [
         [57, 721, "Mitgliederausweis"],
         [57, 710, "42421"],
@@ -585,22 +584,22 @@ describe Export::Pdf::Invoice do
       expect(text_with_position).to include(*membership_card)
     end
 
-    it 'renders receiver address' do
+    it "renders receiver address" do
       expect(text_with_position).to include([347, 687, "Max Muster"],
-                                            [347, 674, "Belpstrasse 37"],
-                                            [347, 661, "3007 Bern"])
+        [347, 674, "Belpstrasse 37"],
+        [347, 661, "3007 Bern"])
     end
   end
 
-  context 'rendered at custom position' do
+  context "rendered at custom position" do
     before do
       invoice.group.letter_left_address_position = 3 # 3.cm = 85
       invoice.group.letter_top_address_position = 5
       invoice.group.save!
     end
 
-    it 'renders membership_card when true' do
-      invoice.update!(membership_card: true, membership_expires_on: Date.parse('2022-10-01'))
+    it "renders membership_card when true" do
+      invoice.update!(membership_card: true, membership_expires_on: Date.parse("2022-10-01"))
       membership_card = [
         [346, 721, "Mitgliederausweis"],
         [346, 710, "42421"],
@@ -612,27 +611,26 @@ describe Export::Pdf::Invoice do
       expect(text_with_position).to include(*membership_card)
     end
 
-    it 'renders receiver address' do
+    it "renders receiver address" do
       expect(text_with_position).to include([85, 690, "Max Muster"],
-                                            [85, 677, "Belpstrasse 37"],
-                                            [85, 664, "3007 Bern"])
+        [85, 677, "Belpstrasse 37"],
+        [85, 664, "3007 Bern"])
     end
   end
 
-
-  it 'renders invoice information to the right' do
-    expect(text_with_position.find { _3 == 'Datum: 15.06.2022' }).to start_with(459, 529)
+  it "renders invoice information to the right" do
+    expect(text_with_position.find { _3 == "Datum: 15.06.2022" }).to start_with(459, 529)
   end
 
-  it 'renders invoice number as column label' do
-    expect(text_with_position.find { _3.starts_with?('Rechnungsnummer') }).to end_with(["Rechnungsnummer: 636980692-2 vom 15.06.2022"])
+  it "renders invoice number as column label" do
+    expect(text_with_position.find { _3.starts_with?("Rechnungsnummer") }).to end_with(["Rechnungsnummer: 636980692-2 vom 15.06.2022"])
   end
 
-  it 'renders invoice due at below articles table' do
-    due_at = text_with_position.find { _3.starts_with?('Fällig bis') }
+  it "renders invoice due at below articles table" do
+    due_at = text_with_position.find { _3.starts_with?("Fällig bis") }
 
     expect(due_at).to start_with(57, 463)
-    expect(invoice.due_at).to eql Date.parse('2022-08-01')
+    expect(invoice.due_at).to eql Date.parse("2022-08-01")
     expect(due_at).to end_with "Fällig bis:      01.08.2022"
   end
 
@@ -642,20 +640,20 @@ describe Export::Pdf::Invoice do
         i.update!(
           payment_slip: :qr,
           payee: "Puzzle\nBelpstrasse 37\n3007 Bern",
-          iban: 'CH93 0076 2011 6238 5295 7',
-          issued_at: Date.parse('2022-06-15'),
-          due_at: Date.parse('2022-08-01')
+          iban: "CH93 0076 2011 6238 5295 7",
+          issued_at: Date.parse("2022-06-15"),
+          due_at: Date.parse("2022-08-01")
         )
-        InvoiceItem.create(invoice: i, name: 'dings', count: 1, unit_cost: 10, vat_rate: 10)
+        InvoiceItem.create(invoice: i, name: "dings", count: 1, unit_cost: 10, vat_rate: 10)
         i.reload.recalculate!
       end
     end
 
-    context 'with hide_total=false' do
+    context "with hide_total=false" do
       before { invoice.update!(hide_total: false) }
 
-      it 'renders total' do
-        expect(rows_with_text('Gesamtbetrag')).to include([400, 433, "Gesamtbetrag"])
+      it "renders total" do
+        expect(rows_with_text("Gesamtbetrag")).to include([400, 433, "Gesamtbetrag"])
         expect(rows_at_position(433)).to include([501, 433, "11.00 CHF"])
 
         full_text = subject.show_text.join("\n")
@@ -663,7 +661,7 @@ describe Export::Pdf::Invoice do
         expect(full_text).not_to include("Spende")
       end
 
-      it 'renders partial payments' do
+      it "renders partial payments" do
         invoice.payments.build(amount: 5, received_at: Time.zone.yesterday)
         invoice.payments.build(amount: 3, received_at: Time.zone.yesterday)
         invoice.save!
@@ -691,17 +689,18 @@ describe Export::Pdf::Invoice do
       end
     end
 
-    context 'with hide_total=true' do
+    context "with hide_total=true" do
       before { invoice.update!(hide_total: true) }
-      it 'renders subtotal and donation row' do
-        expect(rows_with_text('Subtotal')).to include([400, 451, 'Subtotal'])
+
+      it "renders subtotal and donation row" do
+        expect(rows_with_text("Subtotal")).to include([400, 451, "Subtotal"])
         expect(rows_at_position(451)).to include([501, 451, "11.00 CHF"])
 
-        expect(rows_with_text('Spende')).to include([400, 437, "Spende"])
-        expect(rows_with_text('Gesamtbetrag')).to include([400, 419, "Gesamtbetrag"])
+        expect(rows_with_text("Spende")).to include([400, 437, "Spende"])
+        expect(rows_with_text("Gesamtbetrag")).to include([400, 419, "Gesamtbetrag"])
       end
 
-      it 'renders partial payments' do
+      it "renders partial payments" do
         invoice.payments.build(amount: 5, received_at: Time.zone.yesterday)
         invoice.payments.build(amount: 3, received_at: Time.zone.yesterday)
         invoice.save!
