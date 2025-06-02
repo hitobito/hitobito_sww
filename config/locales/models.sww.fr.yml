@@ -121,6 +121,7 @@ fr:
         custom_salutation: Formule d'appel personnalisée
         magazin_abo_number: 'Numéro d''abonnement au magazine'
         member_number: Numéro de membre
+        manual_member_number: Mitgliedernummer
         name_add_on: Complément de nom
         title: Titre
         email: E-mail
