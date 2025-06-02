@@ -314,7 +314,7 @@ describe Export::Pdf::Invoice do
 
     it "renders created at of latest reminder when reminder exists as invoice date" do
       invoice.invoice_items.build(name: "pens", unit_cost: 10, vat_rate: 10, count: 2, invoice: invoice)
-      invoice.update!(issued_at: Date.new(2025, 1, 1), due_at: 5.days.from_now, state: "sent")
+      invoice.update!(issued_at: Date.new(2025, 1, 1), due_at: Date.new(2025, 6, 1), state: "sent")
       PaymentReminder.create!(level: 1, due_at: Date.new(2025, 6, 6), invoice: invoice, title: "Reminder 1", created_at: Date.new(2025, 6, 6))
       invoice_text = [
         [459, 529, "Datum: 06.06.2025"],
@@ -381,7 +381,7 @@ describe Export::Pdf::Invoice do
 
       it "does not render reminder and reminder date" do
         invoice.invoice_items.build(name: "pens", unit_cost: 10, vat_rate: 10, count: 2, invoice: invoice)
-        invoice.update!(issued_at: Date.new(2025, 1, 1), due_at: 5.days.from_now, state: "sent")
+        invoice.update!(issued_at: Date.new(2025, 1, 1), due_at: Date.new(2025, 6, 1), state: "sent")
         PaymentReminder.create!(level: 1, due_at: Date.new(2025, 6, 6), invoice: invoice, title: "Reminder 1", created_at: Date.new(2025, 6, 6))
         invoice_text = [
           [459, 529, "Datum: 01.01.2025"],
