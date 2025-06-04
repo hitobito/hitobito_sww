@@ -43,14 +43,27 @@ describe Sww::Export::Tabular::People::PeopleFull do
       :tags,
       :id,
       :sww_salutation,
-      :member_number
+      :member_number,
+      :household_member_numbers
     ]
   end
 
-  context '#attribute_labels' do
+  context "#attribute_labels" do
     subject { people_list.attribute_labels }
 
-    its([:sww_salutation]) { should eq 'Anrede' }
+    its([:sww_salutation]) { should eq "Anrede" }
+    its([:household_member_numbers]) { should eq "Mitgliedernummern Haushaltsmitglieder" }
   end
 
+  context "household_member_numbers" do
+    before do
+      person.household.add(people(:zuercher_leiter))
+      person.household.add(people(:zuercher_wanderer))
+      person.household.save!
+    end
+
+    it "exports all household people member numbers" do
+      expect(people_list.data_rows.to_a.flatten).to include "#{people(:zuercher_leiter).member_number}, #{people(:zuercher_wanderer).member_number}"
+    end
+  end
 end

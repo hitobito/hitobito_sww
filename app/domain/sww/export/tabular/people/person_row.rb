@@ -15,4 +15,8 @@ module Sww::Export::Tabular::People::PersonRow
       "#{role.to_s(:short)} #{role.group.with_layer.join(" / ")} (#{[start_on, end_on].join("-")})"
     end.join(", ")
   end
+
+  def household_member_numbers
+    entry.household_people.map(&:member_number).join(", ")
+  end
 end
