@@ -126,6 +126,7 @@ fr:
         title: Titre
         email: E-mail
         sww_salutation: Salutation
+        household_member_numbers: Mitgliedernummern Haushaltsmitglieder
       message:
         membership_card: Carte de membre
         membership_expires_on: Adhésion valide jusqu'au
