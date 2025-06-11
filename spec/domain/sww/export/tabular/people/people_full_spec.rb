@@ -63,7 +63,7 @@ describe Sww::Export::Tabular::People::PeopleFull do
     end
 
     it "exports all household people member numbers" do
-      expect(people_list.data_rows.to_a.flatten).to include "#{people(:zuercher_leiter).member_number}, #{people(:zuercher_wanderer).member_number}"
+      expect(people_list.data_rows.to_a.flatten).to include "#{people(:zuercher_wanderer).member_number}, #{people(:zuercher_leiter).member_number}"
     end
   end
 end

@@ -17,6 +17,6 @@ module Sww::Export::Tabular::People::PersonRow
   end
 
   def household_member_numbers
-    entry.household_people.map(&:member_number).join(", ")
+    entry.household_people.map(&:member_number).sort.join(", ")
   end
 end
