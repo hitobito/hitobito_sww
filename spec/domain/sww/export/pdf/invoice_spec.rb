@@ -149,9 +149,9 @@ describe Export::Pdf::Invoice do
     before { invoice_config.update!(separators: true) }
 
     it "renders separators" do
-      pdf = Prawn::Document.new(page_size: "A4",
+      pdf = Export::Pdf::Document.new(page_size: "A4",
         page_layout: :portrait,
-        margin: 2.cm)
+        margin: 2.cm).pdf
 
       slip = ::Export::Pdf::Invoice::PaymentSlipQr.new(pdf, invoice, {})
       expect(::Export::Pdf::Invoice::PaymentSlipQr).to receive(:new).and_return(slip)
@@ -490,9 +490,9 @@ describe Export::Pdf::Invoice do
     before { invoice_config.update!(separators: false) }
 
     it "does not render separators" do
-      pdf = Prawn::Document.new(page_size: "A4",
+      pdf = Export::Pdf::Document.new(page_size: "A4",
         page_layout: :portrait,
-        margin: 2.cm)
+        margin: 2.cm).pdf
 
       slip = ::Export::Pdf::Invoice::PaymentSlipQr.new(pdf, invoice, {})
       expect(::Export::Pdf::Invoice::PaymentSlipQr).to receive(:new).and_return(slip)
