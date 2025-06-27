@@ -121,12 +121,12 @@ fr:
         custom_salutation: Formule d'appel personnalisée
         magazin_abo_number: 'Numéro d''abonnement au magazine'
         member_number: Numéro de membre
-        manual_member_number: Mitgliedernummer
+        manual_member_number: Numéro de membre
         name_add_on: Complément de nom
         title: Titre
         email: E-mail
         sww_salutation: Salutation
-        household_member_numbers: Mitgliedernummern Haushaltsmitglieder
+        household_member_numbers: Numéros de membre du foyer
       message:
         membership_card: Carte de membre
         membership_expires_on: Adhésion valide jusqu'au
@@ -139,7 +139,7 @@ fr:
           above_payment_slip: Au-dessus du bulletin de versement
         separators: Afficher la ligne de séparation sur le bulletin de versement
       group:
-        event_sender: Anlass E-Mail Absendername
+        event_sender: Événement E-mail de l'expéditeur
         membership_card_left_position: Carte de membre Distance à partir de la gauche (cm)
         membership_card_top_position: Carte de membre Distance du haut (cm)
         letter_left_address_position: Distance d'Address à partir de la gauche (cm)

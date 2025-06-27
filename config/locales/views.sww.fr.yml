@@ -45,9 +45,9 @@ fr:
     form_tabs:
       membership_cards: Carte de membre
     form_tabs_sww:
-      email: E-Mail
+      email: E-mail
     tab_content_sww:
-      help_event_sender: Anlass E-Mails werden unter diesem Namen versendet.
+      help_event_sender: Les e-mails événementiels sont envoyés sous ce nom.
     self_registration:
       new:
         gender:
@@ -89,5 +89,5 @@ fr:
     pdf:
       subtotal: Sous-total
       donation: Donation
-      invoice_date: Datum
-      from: "vom %{date}"
+      invoice_date: Date
+      from: "du %{date}"
