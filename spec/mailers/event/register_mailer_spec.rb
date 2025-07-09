@@ -5,6 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
+
 require "spec_helper"
 
 describe Event::RegisterMailer do
