@@ -92,3 +92,6 @@ de:
       donation: Spende
       invoice_date: Datum
       from: vom %{date}
+
+  dropdown/people_export:
+    participations: Teilnehmerliste
