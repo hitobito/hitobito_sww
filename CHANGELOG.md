@@ -1,5 +1,9 @@
 # Hitobito SWW Changelog
 
+## unreleased
+
+- Für einen Anlass kann eine Teilnehmerliste exportiert werden (hitobito_sww#243)
+
 ## Version 2.6
 
 - Es kann neu pro Gruppe ein Mailabsendername für Anlass E-Mails gesetzt werden (hitobito_sww#195)
