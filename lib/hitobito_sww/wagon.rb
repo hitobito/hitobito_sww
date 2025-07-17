@@ -53,6 +53,9 @@ module HitobitoSww
 
       Export::Pdf::Participation::Runner.prepend Sww::Export::Pdf::Participation::Runner
 
+      Dropdown::PeopleExport.prepend Sww::Dropdown::PeopleExport
+      Export::EventParticipationsExportJob.prepend Sww::Export::EventParticipationsExportJob
+
       PaperTrail::VersionDecorator.prepend Sww::PaperTrail::VersionDecorator
 
       LayoutHelper.include Sww::LayoutHelper
