@@ -9,6 +9,9 @@ berner_wanderer:
   last_name: Foo
   email: bob@example.com
   town: Bern
+  zip_code: 3007
+  street: Belpstrasse
+  housenumber: 37
   additional_information: bla bla
   contact_data_visible: true
   manual_member_number: 42421
