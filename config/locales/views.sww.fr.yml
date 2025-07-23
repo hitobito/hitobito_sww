@@ -92,3 +92,6 @@ fr:
       donation: Donation
       invoice_date: Date
       from: "du %{date}"
+
+  dropdown/people_export:
+    participations: Teilnehmerliste
