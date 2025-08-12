@@ -1,6 +1,6 @@
 # Hitobito SWW Changelog
 
-## unreleased
+## Version 2.6
 
 - Für geführte Wanderungen kann neu eine kompakte Teilnehmerliste zum Ausdrucken exportiert werden (hitobito_sww#243)
 
