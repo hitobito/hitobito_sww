@@ -10,12 +10,12 @@ it:
       pdf:
         letter:
           membership_card:
-            title: Mitgliederausweis
-            valid_until: Gültig bis
+            title: Carta socio
+            valid_until: Valido fino al
 
     letter:
       fields_sww:
-        membership_card_caption: Mitgliederausweis mit drucken
+        membership_card_caption: Stampa la carta socio
 
   devise:
     registrations:
@@ -30,25 +30,25 @@ it:
         info: ''
     mailer:
       reset_password_instructions:
-        subject: Passwort setzen
+        subject: Inizializzare la password
         body:
-          greeting: Guten Tag
+          greeting: Buongiorno
           reset_instructions:
-            with_password: 'Sie können Ihr Passwort unter folgendem Link zurücksetzen:'
-            without_password_html: 'Herzlich Willkommen! Bitte setzen Sie Ihr Passwort unter folgendem Link:'
-          ignore_information_html: 'Wenn Sie Ihr Passwort nicht ändern wollen, können Sie diese E-Mail ignorieren.<br><br>Das Passwort ändert sich nicht, ohne dass Sie auf dem obigen Link gehen und dort ein neues Passwort vergeben.'
+            with_password: 'Puoi reimpostare la tua password al seguente link:'
+            without_password_html: 'Benvenuto! Imposta la tua password utilizzando il seguente link:'
+          ignore_information_html: 'Se non desideri modificare la tua password, puoi ignorare questa e-mail.<br><br>La password non verrà modificata a meno che tu non clicchi sul link sopra indicato e ne imposti una nuova.'
 
   invoice_lists:
     form_invoice_fields_sww:
-      membership_card_caption: Mitgliederausweis mit drucken
+      membership_card_caption: Stampa la carta socio
 
   groups:
     form_tabs:
-      membership_cards: Mitgliederausweis
+      membership_cards: Carta socio
     form_tabs_sww:
-      email: E-Mail
+      email: E-mail
     tab_content_sww:
-      help_event_sender: Anlass E-Mails werden unter diesem Namen versendet.
+      help_event_sender: Le e-mail relative all'evento vengono inviate con questo nome.
     self_registration:
       new:
         gender:
@@ -58,40 +58,40 @@ it:
       create:
         email_taken: L'e-mail è già in uso. Accedere o registrarsi con un altro indirizzo e-mail.
       form:
-        has_account: "Haben Sie bereits ein Login?"
-        to_login_page: Anmelden
+        has_account: "Hai già un account?"
+        to_login_page: Login
       main_person:
         birthday: Data di nascita
         email: E-mail
         salutation: Saluto
         street_house_nr: "Via, n."
         terms_of_use_title: Condizioni generali
-        terms_of_use_text: "Indem Sie auf Registrieren klicken, stimmen Sie den Nutzungsbedingungen zu."
+        terms_of_use_text: "Cliccando su Registrati, accetti i termini e le condizioni d'uso."
         terms_of_use_link: ""
         terms_of_use_link_name: Condizioni generali
         privacy_title: Protezione dei dati
-        privacy_text: "Weitere Informationen darüber, wie personenbezogene Daten erfasst, verwendet, weitergegeben und geschützt werden, finden Sie in der Datenschutzrichtlinie."
+        privacy_text: "Per ulteriori informazioni su come vengono raccolti, utilizzati, divulgati e protetti i dati personali, consultare l'Informativa sulla privacy."
         privacy_link: ""
         privacy_link_name: Protezione dei dati
   invoices:
     export:
       tabular:
         evaluation_list:
-          daterange_label: Kriterium (von-bis)
-          print_date: Druckdatum
-          printed_by: Gedruckt von
+          daterange_label: Criterio (da-a)
+          print_date: Data di stampa
+          printed_by: Stampato da
     form_sww:
-      membership_card_caption: Mitgliederausweis mit drucken
+      membership_card_caption: Stampa la carta socio
 
     evaluations:
       show:
-        excess: Spenden
+        excess: Donazioni
 
     pdf:
-      subtotal: Subtotal
+      subtotal: Totale parziale
       donation: Donazione
-      invoice_date: Datum
-      from: "vom %{date}"
+      invoice_date: Data
+      from: "dal %{date}"
 
   dropdown/people_export:
-    participations: Teilnehmerliste
+    participations: Lista dei partecipanti

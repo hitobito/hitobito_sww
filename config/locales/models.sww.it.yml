@@ -16,142 +16,149 @@ it:
         other: Sentieri Svizzeri
 
       group/benutzerkonten:
-        one: Benutzerkonten
-        other: Benutzerkonten
+        one: Account utente
+        many: Account utente
+        other: Account utente
 
       group/fachorganisation:
-        one: Fachorganisation
-        other: Fachorganisation
+        one: Associazione cantonale per l'escursionismo
+        many: Associazione cantonale per l'escursionismo
+        other: Associazione cantonale per l'escursionismo
 
       group/kontakte:
-        one: Kontakte
-        other: Kontakte
+        one: Contatti
+        many: Contatti
+        other: Contatti
 
       group/vorstand:
-        one: Vorstand
-        other: Vorstand
+        one: Comitato
+        many: Comitato
+        other: Comitato
 
       group/geschaeftsstelle:
-        one: Geschäftsleitung
-        other: Geschäftsleitung
+        one: Direzione
+        many: Direzione
+        other: Direzione
 
       group/gremium_projektgruppe:
-        one: Gremium/Projektgruppe
-        other: Gremium/Projektgruppe
+        one: Commissione/Gruppo di progetto
+        many: Commissione/Gruppo di progetto
+        other: Commissione/Gruppo di progetto
 
       group/mitglieder:
-        one: Mitglieder
-        other: Mitglieder
+        one: Soci
+        many: Soci
+        other: Soci
 
       ### ROLES
 
       group/schweizer_wanderwege/mitarbeitende:
-        one: Mitarbeitende
+        one: Collaboratori
       group/schweizer_wanderwege/support:
-        one: Support
+        one: Assistenza
 
       group/benutzerkonten/benutzerkonto:
-        one: Benutzerkonto
+        one: Account utente
       group/benutzerkonten/verwalter:
-        one: Support
+        one: Assistenza
 
       group/kontakte/kontakt:
-        one: Kontakt
+        one: Contatti
 
       group/vorstand/praesident:
-        one: Präsident
+        one: Presidente
       group/vorstand/vizepraesident:
-        one: Vizepräsident
+        one: Vicepresidente
       group/vorstand/vorstandsmitglied:
-        one: Vorstandsmitglied
+        one: Membro del comitato
 
       group/geschaeftsstelle/geschaeftsfuehrer:
-        one: Geschäftsführer
+        one: Direttore generale
       group/geschaeftsstelle/kassier:
-        one: Kassier
+        one: Cassiere
       group/geschaeftsstelle/technischer_leiter:
-        one: Technischer Leiter
+        one: Responsabile tecnico
       group/geschaeftsstelle/mitarbeiter:
-        one: Mitarbeiter
+        one: Collaboratori
 
       group/gremium_projektgruppe/leitung:
-        one: Leitung
+        one: Direzione
       group/gremium_projektgruppe/mitglied:
-        one: Mitglied
+        one: Membro
 
       group/mitglieder/aktivmitglied:
-        one: Aktivmitglied
+        one: Socio attivo
       group/mitglieder/passivmitglied:
-        one: Passivmitglied
+        one: Socio passivo
       group/mitglieder/freimitglied:
-        one: Freimitglied
+        one: Membro libero
       group/mitglieder/organisationen:
-        one: Organisationen
+        one: Organizzazioni
       group/mitglieder/partner:
-        one: Partner
+        one: Collaboratore
       group/mitglieder/spender:
-        one: Spender
+        one: Donatore
       group/mitglieder/magazin_abonnent:
-        one: Magazin Abonnent
+        one: Abbonato alla rivista
 
       salutation:
         available:
           guten_tag:
-            label: Guten Tag
+            label: Buongiorno
             value:
-              m: Guten Tag
-              w: Guten Tag
-              other: Guten Tag
+              m: Buongiorno
+              w: Buongiorno
+              other: Buongiorno
           sehr_geehrte:
-            label: "Sehr geehrte*r Frau/Herr [Nachname]"
+            label: "Gentile Signora/Signor [Cognome]"
             value:
-              m: "Sehr geehrter Herr %{last_name}"
-              w: "Sehr geehrte Frau %{last_name}"
-              other: "Sehr geehrte*r %{first_name} %{last_name}"
+              m: "Egregio Signor %{last_name}"
+              w: "Egregia Signora %{last_name}"
+              other: "Gentile %{first_name} %{last_name}"
 
     attributes:
       person:
-        custom_salutation: Benutzerdefinierte Anrede
-        magazin_abo_number: 'Abo # Magazin'
-        member_number: Mitgliedernummer
-        manual_member_number: Mitgliedernummer
-        name_add_on: Namenszusatz
-        title: Titel
+        custom_salutation: Saluto personalizzato
+        magazin_abo_number: 'Abo # Rivista'
+        member_number: Numero socio
+        manual_member_number: Numero socio
+        name_add_on: Suffisso del nome
+        title: Titolo
         email: E-mail
-        sww_salutation: Anrede
-        household_member_numbers: Mitgliedernummern Haushaltsmitglieder
+        sww_salutation: Appellativo
+        household_member_numbers: Numeri dei soci Membri del nucleo familiare
       message:
-        membership_card: Mitgliederausweis
-        membership_expires_on: Mitgliedschaft gültig bis
+        membership_card: Carta socio
+        membership_expires_on: Socio valido fino al
       invoice:
         hide_total: Donazione
-        membership_card: Mitgliederausweis
-        membership_expires_on: Mitgliedschaft gültig bis
+        membership_card: Carta socio
+        membership_expires_on: Socio valido fino al
       invoice_config:
         logo_positions:
           above_payment_slip: Sopra la ricevuta di versamento
-        separators: Trennlinie auf Einzahlungsschein anzeigen
+        separators: Visualizza linea di separazione sulla bollettino di versamento
       group:
-        event_sender: Anlass E-Mail Absendername
-        membership_card_left_position: Mitgliederausweis Abstand von links (cm)
-        membership_card_top_position: Mitgliederausweis Abstand von oben (cm)
-        letter_left_address_position: Addressabstand von links (cm)
-        letter_top_address_position: Addressabstand von oben (cm)
+        event_sender: "Occasione: Nome del mittente E-mail"
+        membership_card_left_position: Carta socio Distanza da sinistra (cm)
+        membership_card_top_position: Carta socio Distanza dall'alto (cm)
+        letter_left_address_position: Distanza dell'indirizzo dalla sinistra (cm)
+        letter_top_address_position: Distanza dall'indirizzo dall'alto (cm)
 
   tags:
     categories:
-      abo: Abonnement
-      category: Kategorie
+      abo: Abbonamento
+      category: Categoria
 
   errors:
     messages:
-      cannot_be_later_than_today: kann nicht später als heute sein
-      cannot_be_later_than_deleted_at: muss vor oder am selben Tag wie der Austritt sein
+      cannot_be_later_than_today: non può essere più tardi di oggi
+      cannot_be_later_than_deleted_at: deve essere prima o lo stesso giorno della dimissione
 
   event:
     application_market:
       popover_waiting_list:
-        waiting_list_info: Setze diese Person auf die Warteliste.
+        waiting_list_info: Metti questa persona in lista d'attesa.
 
   doorkeeper:
     scopes:

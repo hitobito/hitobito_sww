@@ -94,4 +94,4 @@ fr:
       from: "du %{date}"
 
   dropdown/people_export:
-    participations: Teilnehmerliste
+    participations: Liste des participants
