@@ -31,18 +31,18 @@ describe Export::Pdf::Participations::People do
   it "renders pdf list with comments and event roles" do
     pdf_text = [
       [28, 546, "Eventus"],
-      [33, 515, "Name"],
-      [74, 515, "Adresse"],
-      [189, 515, "E-Mail"],
-      [277, 515, "Privat"],
-      [310, 515, "Mobil"],
-      [341, 515, "Bemerkungen"],
-      [446, 515, "Anlass Rollen"],
-      [33, 501, "Foo Bob"],
-      [74, 501, "Belpstrasse 37, 3007 Bern"],
-      [189, 501, "bob@example.com"],
-      [341, 501, "Ich mag kein Gemüse!!!"],
-      [446, 501, "Hauptleitung, Küche"],
+      [28, 515, "Name"],
+      [68, 515, "Adresse"],
+      [182, 515, "E-Mail"],
+      [269, 515, "Privat"],
+      [301, 515, "Mobil"],
+      [331, 515, "Bemerkungen"],
+      [435, 515, "Anlass Rollen"],
+      [28, 501, "Foo Bob"],
+      [68, 501, "Belpstrasse 37, 3007 Bern"],
+      [182, 501, "bob@example.com"],
+      [331, 501, "Ich mag kein Gemüse!!!"],
+      [435, 501, "Hauptleitung, Küche"],
       [760, 19, "Seite 1 von 1"]
     ]
 
