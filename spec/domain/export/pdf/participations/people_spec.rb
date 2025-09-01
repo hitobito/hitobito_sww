@@ -11,7 +11,7 @@ require "spec_helper"
 describe Export::Pdf::Participations::People do
   include PdfHelpers
 
-  let(:participation) { Fabricate(:event_participation, additional_information: "Ich mag kein Gemüse!!!", person: person) }
+  let(:participation) { Fabricate(:event_participation, additional_information: "Ich mag kein Gemüse!!!", participant: person) }
   let(:person) { people(:berner_wanderer) }
   let(:group) { groups(:schweizer_wanderwege) }
   let(:contactables) { [top_leader.tap { |u| u.update(nickname: "Funny Name") }] }
