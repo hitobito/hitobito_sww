@@ -5,9 +5,8 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
-require 'spec_helper'
-require_relative '../../db/migrate/20230119132734_migrate_to_generated_member_number_2.rb'
+require "spec_helper"
+require_relative "../../db/migrate/20230119132734_migrate_to_generated_member_number_2"
 
 describe MigrateToGeneratedMemberNumber2 do
   let(:migration) { described_class.new.tap { |m| m.verbose = false } }
@@ -18,10 +17,10 @@ describe MigrateToGeneratedMemberNumber2 do
   def build_person(manual_member_number, role_deleted_at: nil)
     Fabricate.build(:person, manual_member_number: manual_member_number, roles: [
       Fabricate.build(some_role_type, group: Group.first, created_at: Time.now, deleted_at: role_deleted_at)
-    ]).tap {|person| person.save(validate: false) }
+    ]).tap { |person| person.save(validate: false) }
   end
 
-  xit '#up works correctly' do
+  xit "#up works correctly" do
     migration.instance_exec do
       remove_index :people, :manual_member_number, unique: true, if_exists: true
     end
@@ -71,7 +70,7 @@ describe MigrateToGeneratedMemberNumber2 do
 
     # People with id >= offset should not have manual_member_number
     expect(person_with_high_member_number.reload.manual_member_number).to eq nil
-    expect(duplicate_people_high_member_number.map {|p| p.reload.manual_member_number }).to eq [nil,nil]
+    expect(duplicate_people_high_member_number.map { |p| p.reload.manual_member_number }).to eq [nil, nil]
 
     # Person with unique low member number < offset should have manual_member_number
     expect(person_with_low_member_number.reload.manual_member_number).to eq unique_low_member_number

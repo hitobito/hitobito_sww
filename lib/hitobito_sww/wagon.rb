@@ -86,10 +86,8 @@ module HitobitoSww
 
       MailingListAbility.include Sww::MailingListAbility
 
-      MessagesController::PERMITTED_LETTER_ATTRS.push(:membership_card,
-        :membership_expires_on)
-      MessagesController::PERMITTED_INVOICE_LETTER_ATTRS.push(:membership_card,
-        :membership_expires_on)
+      MessagesController::PERMITTED_LETTER_ATTRS.push(:membership_card, :membership_expires_on)
+      MessagesController::PERMITTED_INVOICE_LETTER_ATTRS.push(:membership_card, :membership_expires_on)
       Role::Permissions << :support << :complete_finance
       # rubocop:enable Metrics/LineLength
     end

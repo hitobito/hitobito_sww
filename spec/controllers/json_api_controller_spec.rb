@@ -5,11 +5,10 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
-require 'spec_helper'
+require "spec_helper"
 
 describe JsonApiController do
-  context 'paper_trail' do
+  context "paper_trail" do
     before { PaperTrail.enabled = true }
     after { PaperTrail.enabled = false }
 
@@ -20,7 +19,7 @@ describe JsonApiController do
       before_action { params.permit! }
 
       def update
-        PersonResource.find(params).update_attributes and return render(plain: 'OK')
+        PersonResource.find(params).update_attributes and return render(plain: "OK")
 
         render status: 500, plain: "ERROR"
       end
@@ -33,8 +32,8 @@ describe JsonApiController do
     around do |example|
       previous_endpoint = PersonResource.endpoint
       PersonResource.class_eval do
-        self.endpoint_namespace = ''
-        primary_endpoint('/json_api')
+        self.endpoint_namespace = ""
+        primary_endpoint("/json_api")
       end
 
       example.run
@@ -43,27 +42,27 @@ describe JsonApiController do
         self.endpoint = previous_endpoint
       end
     end
-    
+
     let(:payload) do
       {
         id: person.id,
         data: {
           id: person.id.to_s,
-          type: 'people',
+          type: "people",
           attributes: {
-            last_name: 'JustMarried'
+            last_name: "JustMarried"
           }
         },
-        donman_update_by: 'Donman was here'
+        donman_update_by: "Donman was here"
       }
     end
     let(:params) { payload }
 
-    context 'on request with ServiceToken' do
+    context "on request with ServiceToken" do
       let(:permitted_service_token) { service_tokens(:permitted_top_layer_token) }
       let(:params) { payload.merge(token: permitted_service_token.token) }
 
-      it 'sets Version#specific_author' do
+      it "sets Version#specific_author" do
         expect do
           patch :update, params: params
           expect(response).to have_http_status(200)
@@ -71,11 +70,11 @@ describe JsonApiController do
 
         version = person.versions.last
         expect(version.perpetrator).to eq permitted_service_token
-        expect(version.specific_author).to eq 'Donman was here'
+        expect(version.specific_author).to eq "Donman was here"
       end
     end
 
-    context 'on request with regular login' do
+    context "on request with regular login" do
       let!(:mitarbeiter) { Fabricate(Group::SchweizerWanderwege::Support.name, group: groups(:schweizer_wanderwege)).person }
 
       before do
@@ -85,7 +84,7 @@ describe JsonApiController do
           .to receive(:user_session?).and_return(true)
       end
 
-      it 'does not set Version#specific_author' do
+      it "does not set Version#specific_author" do
         expect do
           patch :update, params: params
           expect(response).to have_http_status(200)

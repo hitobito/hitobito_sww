@@ -5,11 +5,9 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
-require 'spec_helper'
+require "spec_helper"
 
 describe Sww::Export::Tabular::People::PeopleFull do
-
   let(:person) { people(:berner_wanderer) }
   let(:list) { [person] }
   let(:people_list) { Export::Tabular::People::PeopleFull.new(list) }

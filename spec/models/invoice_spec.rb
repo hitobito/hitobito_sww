@@ -5,15 +5,14 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
-require 'spec_helper'
+require "spec_helper"
 
 describe Invoice do
-  it 'allows payments even if it is paid' do
-    expect(described_class::STATES_PAYABLE).to include('payed')
+  it "allows payments even if it is paid" do
+    expect(described_class::STATES_PAYABLE).to include("payed")
   end
 
-  it 'allows payement if it is overpaid' do
-    expect(described_class::STATES_PAYABLE).to include('excess')
+  it "allows payement if it is overpaid" do
+    expect(described_class::STATES_PAYABLE).to include("excess")
   end
 end

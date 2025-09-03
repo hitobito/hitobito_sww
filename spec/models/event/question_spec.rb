@@ -5,13 +5,12 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
 require "spec_helper"
 
 describe Event::Question do
-
   describe "::list" do
-    let(:event) { Fabricate(:event, groups: [groups(:schweizer_wanderwege)])}
+    let(:event) { Fabricate(:event, groups: [groups(:schweizer_wanderwege)]) }
+
     it "orders by id not by question" do
       Fabricate(:event_question, event:, question: "2. we come first")
       Fabricate(:event_question, event:, question: "1. we are second")

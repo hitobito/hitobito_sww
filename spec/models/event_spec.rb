@@ -5,11 +5,11 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
 require "spec_helper"
 
 describe Event do
   subject(:event) { described_class.new }
+
   subject(:event_without_waiting_list) { described_class.new(waiting_list: false) }
 
   before do

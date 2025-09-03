@@ -5,15 +5,13 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
-require 'spec_helper'
+require "spec_helper"
 
 describe Export::Pdf::Messages::LetterWithInvoice do
   let(:options) { {} }
   let(:analyzer) { PDF::Inspector::Text.analyze(subject.render) }
 
-  describe 'membership_card' do
-
+  describe "membership_card" do
     before do
       Subscription.create!(
         subscriber: groups(:zuercher_mitglieder),
@@ -28,27 +26,26 @@ describe Export::Pdf::Messages::LetterWithInvoice do
 
     let!(:invoice_config) {
       InvoiceConfig.create!(group: letter.group,
-                            sequence_number: 1,
-                            address: "Puzzle\nBelpstrasse 37\n3007 Bern",
-                            iban: 'CH93 0030 0111 6238 5295 7',
-                            account_number: '10-5318-5',
-                            payment_slip: 'qr',
-                            payee: "Puzzle ITC\nBelpstrasse 37\n3007 Bern"
-                           )
+        sequence_number: 1,
+        address: "Puzzle\nBelpstrasse 37\n3007 Bern",
+        iban: "CH93 0030 0111 6238 5295 7",
+        account_number: "10-5318-5",
+        payment_slip: "qr",
+        payee: "Puzzle ITC\nBelpstrasse 37\n3007 Bern")
     }
 
     let(:letter) do
-      letter_attrs = messages(:membership_card_letter).attributes.except('type', 'id')
+      letter_attrs = messages(:membership_card_letter).attributes.except("type", "id")
       attrs = letter_attrs.merge(body: messages(:membership_card_letter).body,
-                                 invoice_attributes: {
-                                   'invoice_items_attributes' => {
-                                     1 => {
-                                       name: 'Mitgliederbeitrag',
-                                       unit_cost: 150,
-                                       count: 1
-                                     }
-                                   }
-                                 })
+        invoice_attributes: {
+          "invoice_items_attributes" => {
+            1 => {
+              name: "Mitgliederbeitrag",
+              unit_cost: 150,
+              count: 1
+            }
+          }
+        })
 
       Message::LetterWithInvoice.create!(attrs)
     end
@@ -57,36 +54,36 @@ describe Export::Pdf::Messages::LetterWithInvoice do
       Messages::LetterWithInvoiceDispatch.new(letter).run
     end
 
-    context 'rendered left' do
+    context "rendered left" do
       before do
         letter.group.letter_address_position = :left
         letter.group.save!
       end
 
-      it 'renders the membership card on the left' do
+      it "renders the membership card on the left" do
         membership_card = [
           [346, 721, "Mitgliederausweis"],
           [346, 710, "42431"],
           [346, 699, "Alice Bar"],
           [511, 721, "Gültig bis"],
-          [517, 710, "12.2042"],
+          [517, 710, "12.2042"]
         ]
 
         expect(text_with_position).to include(*membership_card)
       end
 
-      it 'moves the address to the right' do
+      it "moves the address to the right" do
         expect(text_with_position).to include([57, 703, "P.P.  | POST CH AG"])
       end
     end
 
-    context 'rendered right' do
+    context "rendered right" do
       before do
         letter.group.letter_address_position = :right
         letter.group.save!
       end
 
-      it 'renders the membership card on the right' do
+      it "renders the membership card on the right" do
         membership_card = [
           [57, 721, "Mitgliederausweis"],
           [57, 710, "42431"],
@@ -98,12 +95,12 @@ describe Export::Pdf::Messages::LetterWithInvoice do
         expect(text_with_position).to include(*membership_card)
       end
 
-      it 'moves the address to the left' do
+      it "moves the address to the left" do
         expect(text_with_position).to include([347, 703, "P.P.  | POST CH AG"])
       end
     end
 
-    context 'rendered at custom position' do
+    context "rendered at custom position" do
       before do
         letter.group.letter_left_address_position = 3 # 3.cm = 85
         letter.group.letter_top_address_position = 5
@@ -113,7 +110,7 @@ describe Export::Pdf::Messages::LetterWithInvoice do
         letter.group.save!
       end
 
-      it 'has assumptions' do
+      it "has assumptions" do
         expect(29.7.cm.round).to eq 842
         expect(21.0.cm.round).to eq 595
 
@@ -129,7 +126,7 @@ describe Export::Pdf::Messages::LetterWithInvoice do
         # font-style and content. this is just a ball-park to start looking.
       end
 
-      it 'renders membership card at the custom position' do
+      it "renders membership card at the custom position" do
         membership_card = [
           [283, 693, "Mitgliederausweis"],
           [283, 681, "42431"],
@@ -141,7 +138,7 @@ describe Export::Pdf::Messages::LetterWithInvoice do
         expect(text_with_position).to include(*membership_card)
       end
 
-      it 'moves the address to the custom position' do
+      it "moves the address to the custom position" do
         expect(text_with_position).to include([85, 695, "P.P.  | POST CH AG"])
       end
     end

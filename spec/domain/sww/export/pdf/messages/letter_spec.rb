@@ -5,15 +5,13 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
-require 'spec_helper'
+require "spec_helper"
 
 describe Export::Pdf::Messages::Letter do
   let(:options) { {} }
   let(:analyzer) { PDF::Inspector::Text.analyze(subject.render) }
 
-  describe 'membership_card' do
-
+  describe "membership_card" do
     before do
       Subscription.create!(
         subscriber: groups(:zuercher_mitglieder),
@@ -22,7 +20,7 @@ describe Export::Pdf::Messages::Letter do
       )
     end
 
-    let (:recipient) { people(:top_leader) }
+    let(:recipient) { people(:top_leader) }
 
     subject { Export::Pdf::Messages::Letter.new(letter, options) }
 
@@ -32,13 +30,13 @@ describe Export::Pdf::Messages::Letter do
 
     let(:letter) { messages(:membership_card_letter) }
 
-    context 'rendered left' do
+    context "rendered left" do
       before do
         letter.group.letter_address_position = :left
         letter.group.save!
       end
 
-      it 'renders membership card onto the letter' do
+      it "renders membership card onto the letter" do
         expect(text_with_position).to include(
           [346, 721, "Mitgliederausweis"],
           [346, 710, "42431"],
@@ -48,8 +46,7 @@ describe Export::Pdf::Messages::Letter do
         )
       end
 
-
-      it 'renders the letter' do
+      it "renders the letter" do
         text = text_with_position.map { |x, y, text| text }
         expect(text).to include(
           "P.P.  | POST CH AG",
@@ -64,31 +61,31 @@ describe Export::Pdf::Messages::Letter do
         )
       end
 
-      it 'moves the address to the right' do
-        address = text_with_position.find { |_, _, text| text == 'Belpstrasse 37' }
+      it "moves the address to the right" do
+        address = text_with_position.find { |_, _, text| text == "Belpstrasse 37" }
         expect(address[0]).to eql 57
       end
 
-      it 'leaves the date in place' do
-        date = text_with_position.find { |_, _, text| text.starts_with?('Bern,') }
+      it "leaves the date in place" do
+        date = text_with_position.find { |_, _, text| text.starts_with?("Bern,") }
         expect(date[0]).to eql 420
         expect(date[1]).to eql 516
       end
 
-      it 'leaves the body in place' do
-        body = text_with_position.find { |_, _, text| text == 'Hallo' }
+      it "leaves the body in place" do
+        body = text_with_position.find { |_, _, text| text == "Hallo" }
         expect(body[0]).to eql 57
         expect(body[1]).to eql 460
       end
     end
 
-    context 'rendered right' do
+    context "rendered right" do
       before do
         letter.group.letter_address_position = :right
         letter.group.save!
       end
 
-      it 'renders membership card onto the letter' do
+      it "renders membership card onto the letter" do
         expect(text_with_position).to include(
           [57, 721, "Mitgliederausweis"],
           [57, 710, "42431"],
@@ -98,7 +95,7 @@ describe Export::Pdf::Messages::Letter do
         )
       end
 
-      it 'renders the letter' do
+      it "renders the letter" do
         text = text_with_position.map { |x, y, text| text }
         expect(text).to include(
           "P.P.  | POST CH AG",
@@ -113,25 +110,25 @@ describe Export::Pdf::Messages::Letter do
         )
       end
 
-      it 'moves the address to the left' do
-        address = text_with_position.find { |_, _, text| text == 'Belpstrasse 37' }
+      it "moves the address to the left" do
+        address = text_with_position.find { |_, _, text| text == "Belpstrasse 37" }
         expect(address[0]).to eql 347
       end
 
-      it 'leaves the date in place' do
-        date = text_with_position.find { |_, _, text| text.starts_with?('Bern,') }
+      it "leaves the date in place" do
+        date = text_with_position.find { |_, _, text| text.starts_with?("Bern,") }
         expect(date[0]).to eql 420
         expect(date[1]).to eql 516
       end
 
-      it 'leaves the body in place' do
-        body = text_with_position.find { |_, _, text| text == 'Hallo' }
+      it "leaves the body in place" do
+        body = text_with_position.find { |_, _, text| text == "Hallo" }
         expect(body[0]).to eql 57
         expect(body[1]).to eql 460
       end
     end
 
-    context 'rendered at custom position' do
+    context "rendered at custom position" do
       before do
         letter.group.letter_left_address_position = 3 # 3.cm = 85
         letter.group.letter_top_address_position = 5
@@ -141,7 +138,7 @@ describe Export::Pdf::Messages::Letter do
         letter.group.save!
       end
 
-      it 'renders membership card onto the letter' do
+      it "renders membership card onto the letter" do
         expect(text_with_position).to include(
           [283, 693, "Mitgliederausweis"],
           [283, 681, "42431"],
@@ -151,7 +148,7 @@ describe Export::Pdf::Messages::Letter do
         )
       end
 
-      it 'renders the letter' do
+      it "renders the letter" do
         text = text_with_position.map { |x, y, text| text }
         expect(text).to include(
           "P.P.  | POST CH AG",
@@ -166,26 +163,26 @@ describe Export::Pdf::Messages::Letter do
         )
       end
 
-      it 'moves the address a good position' do
-        address = text_with_position.find { |_, _, text| text == 'Belpstrasse 37' }
+      it "moves the address a good position" do
+        address = text_with_position.find { |_, _, text| text == "Belpstrasse 37" }
         expect(address[0]).to eql 85
       end
 
-      it 'leaves the date in place' do
-        date = text_with_position.find { |_, _, text| text.starts_with?('Bern,') }
+      it "leaves the date in place" do
+        date = text_with_position.find { |_, _, text| text.starts_with?("Bern,") }
         expect(date[0]).to eql 420
         expect(date[1]).to eql 516
       end
 
-      it 'leaves the body in place' do
-        body = text_with_position.find { |_, _, text| text == 'Hallo' }
+      it "leaves the body in place" do
+        body = text_with_position.find { |_, _, text| text == "Hallo" }
         expect(body[0]).to eql 57
         expect(body[1]).to eql 460
       end
     end
 
-    context 'name length' do
-      it 'long name renders on lone line' do
+    context "name length" do
+      it "long name renders on lone line" do
         people(:zuercher_wanderer).update(
           first_name: "Michelangelo",
           last_name: "Greiner-Petter-Memm"
@@ -199,10 +196,10 @@ describe Export::Pdf::Messages::Letter do
         )
       end
 
-      it 'extreme long name renders on two lines' do
+      it "extreme long name renders on two lines" do
         people(:zuercher_wanderer).update(
           first_name: "Captain Fantastic",
-          last_name: "Faster Than Superman Spiderman Batman Wolverine Hulk And The Flash Combined",
+          last_name: "Faster Than Superman Spiderman Batman Wolverine Hulk And The Flash Combined"
         )
 
         expect(text_with_position).to include(
