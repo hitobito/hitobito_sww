@@ -27,7 +27,6 @@ module HitobitoSww
       Invoice::STATES_PAYABLE << "payed" << "excess"
 
       Event.include Sww::Event
-      Event::Question.include Sww::Event::Question
       EventAbility.include Sww::EventAbility
       Group.include Sww::Group
       Person.include Sww::Person
