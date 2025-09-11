@@ -71,10 +71,31 @@ describe Person do
     it "returns all layers if complete_finance permission is given" do
       all_layers = groups.select(&:layer)
 
-      person = Fabricate(Group::SchweizerWanderwege::Support.sti_name.to_sym,
-                         group: groups(:schweizer_wanderwege)).person
+      person = Fabricate(
+        Group::SchweizerWanderwege::Support.sti_name.to_sym,
+        group: groups(:schweizer_wanderwege)
+      ).person
 
-      expect(person.finance_groups).to match_array(all_layers)
+      expect(person.permission?(:complete_finance)).to be_truthy
+
+      expect(person.finance_groups.map(&:id)).to match_array(all_layers.map(&:id))
+    end
+
+    it "matches the result of the ability" do
+      person = Fabricate(
+        Group::SchweizerWanderwege::Support.sti_name.to_sym,
+        group: groups(:schweizer_wanderwege)
+      ).person
+
+      ability = Ability.new(person)
+
+      ability_finance_groups = ability.user_finance_layer_ids
+      expect(ability_finance_groups).to have(4).items
+
+      person_finance_groups = person.finance_groups.map(&:id)
+      expect(person_finance_groups).to have(4).items
+
+      expect(ability_finance_groups).to match_array person_finance_groups
     end
 
     it "returns layers of which finance permission is given" do

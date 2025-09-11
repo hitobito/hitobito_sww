@@ -36,18 +36,22 @@ module Sww::Person
 
     belongs_to :updated_by, class_name: "Person", foreign_key: :updater_id
 
-    alias_method_chain :finance_groups, :complete_finance_permission
+    alias_method_chain :groups_with_permission, :complete_finance
   end
 
   def member_number
     manual_member_number || id&.+(MEMBER_NUMBER_CALCULATION_OFFSET)
   end
 
-  def finance_groups_with_complete_finance_permission
-    if groups_with_permission(:complete_finance).any?
-      Group.where(type: Group.all_types.select(&:layer).map(&:sti_name)).to_a
+  def groups_with_permission_with_complete_finance(permission)
+    permitted_groups = groups_with_permission_without_complete_finance(permission)
+
+    if permission == :finance && groups_with_permission_without_complete_finance(:complete_finance).any?
+      layer_groups = Group.where(type: Group.all_types.select(&:layer).map(&:sti_name)).to_a
+      @groups_with_permission[:complete_finance] = layer_groups
+      @groups_with_permission[:complete_finance].dup
     else
-      finance_groups_without_complete_finance_permission
+      permitted_groups
     end
   end
 
