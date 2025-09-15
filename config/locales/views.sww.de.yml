@@ -18,6 +18,13 @@ de:
         membership_card_caption: Mitgliederausweis mit drucken
 
   devise:
+    confirmation_instructions:
+      subject: "E-Mail-Adresse bestätigen"
+      body:
+        greeting: "Guten Tag"
+        information_html: "Ihre E-Mail-Adresse wurde geändert. Bitte klicken Sie auf den untenstehenden Link, um die Änderung zu bestätigen:"
+        link_text: "%{email} bestätigen"
+        footer: "Freundliche Grüsse<br>Ihre Schweizer Wanderwege"
     registrations:
       signed_up: 'Sie haben sich erfolgreich registriert.'
       signed_up_but_unconfirmed: 'Sie haben sich erfolgreich registriert. Sie erhalten in Kürze eine E-Mail mit der Anleitung, wie Sie Ihren Account freischalten können.'

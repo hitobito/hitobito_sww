@@ -18,6 +18,13 @@ fr:
         membership_card_caption: Carte de membre avec impression
 
   devise:
+    confirmation_instructions:
+      subject: "Confirmer l'adresse e-mail"
+      body:
+        greeting: "Bonjour,"
+        information_html: "Votre adresse e-mail a été modifiée. Veuillez cliquer sur le lien ci-dessous pour confirmer cette modification:"
+        link_text: "Confirmer %{email}"
+        footer: "Cordialement,<br>Suisse Rando"
     registrations:
       signed_up: 'Vous vous êtes enregistré(e) avec succès.'
       signed_up_but_unconfirmed: 'Vous vous êtes enregistré(e) avec succès. Vous recevrez sous peu un e-mail contenant les instructions pour activer votre compte.'
