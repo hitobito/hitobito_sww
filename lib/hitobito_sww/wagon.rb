@@ -73,7 +73,7 @@ module HitobitoSww
       PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
         :name_add_on, :title]
       InvoicesController.permitted_attrs += [:membership_card, :membership_expires_on]
-      InvoiceConfigsController.permitted_attrs += [:separators]
+      InvoiceConfigsController.permitted_attrs += [:separators, :use_header, :header]
 
       Event::ParticipationMailer.prepend Sww::Event::ParticipationMailer
       Event::RegisterMailer.prepend Sww::Event::RegisterMailer

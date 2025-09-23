@@ -130,6 +130,8 @@ de:
         logo_positions:
           above_payment_slip: Über dem Einzahlungsschein
         separators: Trennlinie auf Einzahlungsschein anzeigen
+        use_header: Kopfzeile anzeigen
+        header: Kopfzeile
       group:
         event_sender: Anlass E-Mail Absendername
         membership_card_left_position: Mitgliederausweis Abstand von links (cm)
