@@ -1,5 +1,9 @@
 # Hitobito SWW Changelog
 
+## unreleased
+
+- In den Rechnungseinstellungen kann jetzt eine Kopfzeile konfiguriert werden (hitobito_sww#278)
+
 ## Version 2.6
 
 - Für geführte Wanderungen kann neu eine kompakte Teilnehmerliste zum Ausdrucken exportiert werden (hitobito_sww#243)

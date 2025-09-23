@@ -15,13 +15,24 @@ module Sww::Export::Pdf::Invoice
     def invoice_page(pdf, invoice, options)
       @page_invoice = invoice
       @options = options
+
       super
     end
 
+    def build_pdf(options)
+      pdf = super
+
+      Export::Pdf::Invoice::PageHeader.new(pdf, @invoice_config, {}).render
+
+      pdf
+    end
+
     def sections
-      sections = [Export::Pdf::Invoice::InvoiceInformation,
+      sections = [
+        Export::Pdf::Invoice::InvoiceInformation,
         Export::Pdf::Invoice::ReceiverAddress,
-        Export::Pdf::Invoice::Articles]
+        Export::Pdf::Invoice::Articles
+      ]
 
       if membership_card?
         [Sww::Export::Pdf::Messages::Letter::MembershipCard] + sections

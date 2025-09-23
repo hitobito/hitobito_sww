@@ -12,5 +12,10 @@ module Sww::InvoiceConfig
 
   prepended do
     logo_positions << LOGO_POSITION_ABOVE_PAYMENT_SLIP
+
+    has_rich_text :header
+
+    validates :header, presence: true, if: :use_header?
+    validates :header, no_attachments: true
   end
 end

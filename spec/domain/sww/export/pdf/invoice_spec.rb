@@ -736,5 +736,31 @@ describe Export::Pdf::Invoice do
         )
       end
     end
+
+    context "with use_header=true" do
+      before do
+        # We have to mock the repeat_all call, since PDF::Inspector::Text.analzye can not read repeated texts
+        # see https://github.com/prawnpdf/pdf-inspector/issues/25
+        expect_any_instance_of(Sww::Export::Pdf::Invoice::PageHeader).to receive(:repeat_all) { |&block| block.call }
+      end
+
+      it "renders header on every page" do
+        invoice_config.update!(use_header: true, header: "<p>This is a <strong>header</strong><br/>With multiple lines</p>")
+
+        header = [
+          [57, 803, "This is a "],
+          [90, 803, "header"],
+          [57, 791, "With multiple lines"]
+        ]
+
+        expect(text_with_position).to include(*header)
+      end
+
+      it "renders all lines of very heigh header" do
+        invoice_config.update!(use_header: true, header: "<p>This is a <strong>header</strong><br/>With multiple lines</p><br/>Line<br/>Line</br>Line<br/>Line<br/>Line")
+
+        expect(text_with_position.map(&:third).count("Line")).to eq 5
+      end
+    end
   end
 end
