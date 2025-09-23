@@ -5,14 +5,11 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-require "spec_helper"
+class AddHeaderToInvoiceConfig < ActiveRecord::Migration[7.1]
+  def change
+    add_column :invoice_configs, :use_header, :boolean, default: false, null: false
+    add_column :invoice_configs, :header, :string
 
-describe Invoice do
-  it "allows payments even if it is paid" do
-    expect(described_class::STATES_PAYABLE).to include("payed")
-  end
-
-  it "allows payement if it is overpaid" do
-    expect(described_class::STATES_PAYABLE).to include("excess")
+    InvoiceConfig.reset_column_information
   end
 end
