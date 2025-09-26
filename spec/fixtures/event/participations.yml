@@ -6,17 +6,20 @@
 
 top_leader:
   event: top_course
-  person: zuercher_leiter
+  participant: zuercher_leiter
+  participant_type: Person
   active: true
 
 top_course_applicant:
   event: top_course
-  person: berner_wanderer
+  participant: berner_wanderer
+  participant_type: Person
   active: false
   application: top_course_applicant
 
 top_participant:
   event: top_event
-  person: berner_wanderer
+  participant: berner_wanderer
+  participant_type: Person
   active: true
   application: top_participant
