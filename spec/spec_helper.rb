@@ -19,4 +19,8 @@ Dir[HitobitoSww::Wagon.root.join("spec/support/**/*.rb")].sort.each { |f| requir
 
 RSpec.configure do |config|
   config.fixture_paths = [File.expand_path("../fixtures", __FILE__)]
+
+  config.before do
+    default_url_options[:locale] = nil
+  end
 end
