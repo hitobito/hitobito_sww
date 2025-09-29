@@ -18,13 +18,6 @@ it:
         membership_card_caption: Stampa la carta socio
 
   devise:
-    confirmation_instructions:
-      subject: "Conferma indirizzo e-mail"
-      body:
-        greeting: "Buongiorno,"
-        information_html: "Il tuo indirizzo e-mail è stato modificato. Clicca sul link sottostante per confermare la modifica:"
-        link_text: "Confermare %{email}"
-        footer: "Cordiali saluti,<br>Sentieri Svizzeri"
     registrations:
       signed_up: 'La registrazione è avvenuta con successo.'
       signed_up_but_unconfirmed: 'La registrazione è avvenuta con successo. Riceverete a breve un''e-mail con le istruzioni su come attivare il vostro account.'
