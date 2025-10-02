@@ -4,3 +4,11 @@
 -#  https://github.com/hitobito/hitobito_sww.
 
 = f.labeled_input_field(:separators)
+
+= field_set_tag do
+  %div{data: { controller: 'form-field-toggle', 'form-field-toggle-hide-on-value': false}}
+    %div
+      = f.labeled_input_field(:use_header, data: { action: 'input->form-field-toggle#toggle'})
+
+    %div{data: { 'form-field-toggle-target': 'toggle' }, class: entry.use_header ? "" : "hidden"}
+      = f.labeled_rich_text_area :header, rows: 20
