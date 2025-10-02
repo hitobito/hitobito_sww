@@ -27,4 +27,26 @@ describe InvoiceConfig do
       expect(invoice_config).to be_valid
     end
   end
+
+  describe "logo_on_every_page validation" do
+    before { invoice_config.logo.attach(fixture_file_upload("images/logo.png")) }
+
+    it "true is valid with position bottom_left" do
+      invoice_config.logo_on_every_page = true
+      invoice_config.logo_position = "bottom_left"
+
+      invoice_config.valid?
+
+      expect(invoice_config.errors.map(&:full_message)).to eq([])
+    end
+
+    it "true is invalid with position left" do
+      invoice_config.logo_on_every_page = true
+      invoice_config.logo_position = "left"
+
+      invoice_config.valid?
+
+      expect(invoice_config.errors.map(&:full_message)).to eq(['Logo auf allen Seiten anzeigen kann nur mit der Logo Position "Unten links" aktiviert werden'])
+    end
+  end
 end

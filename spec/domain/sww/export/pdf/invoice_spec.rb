@@ -26,7 +26,9 @@ describe Export::Pdf::Invoice do
     invoice.invoice_config
   end
 
-  let(:pdf) { described_class.render(invoice, payment_slip: true, articles: true, reminders: true) }
+  let(:payment_slip) { true }
+
+  let(:pdf) { described_class.render(invoice, payment_slip: payment_slip, articles: true, reminders: true) }
 
   subject { PDF::Inspector::Text.analyze(pdf) }
 
@@ -50,10 +52,142 @@ describe Export::Pdf::Invoice do
         expect(invoice.invoice_config.logo).not_to be_attached
       end
 
-      [:disabled, :left, :right, :above_payment_slip].each do |position|
+      [:disabled, :left, :right, :bottom_left].each do |position|
         it "with logo_position=#{position} it does not render logo" do
           invoice.invoice_config.update(logo_position: position)
           expect(image_positions).to have(1).item # only qr code
+        end
+      end
+    end
+
+    context "when invoice_config has a logo" do
+      before do
+        invoice.invoice_config.logo.attach fixture_file_upload("images/logo.png")
+        expect(invoice.invoice_config.logo).to be_attached
+        invoice.invoice_config.update(logo_position: logo_position)
+      end
+
+      context "with logo_position=disabled" do
+        let(:logo_position) { :disabled }
+
+        it "does not render the logo" do
+          expect(image_positions).to have(1).item # only qr code
+        end
+      end
+
+      context "with logo_position=left" do
+        let(:logo_position) { :left }
+
+        it "renders the logo on the left" do
+          expect(image_positions).to have(2).items # logo and qr code
+          expect(image_positions.first).to match(
+            displayed_height: 18_912.75561,
+            displayed_width: 108_763.38,
+            height: 417,
+            width: 1000,
+            x: 56.69291,
+            y: 739.84276
+          )
+        end
+      end
+
+      context "with logo_position=right" do
+        let(:logo_position) { :right }
+
+        it "renders the logo on the right" do
+          expect(image_positions).to have(2).items # logo and qr code
+          expect(image_positions.first).to match(
+            displayed_height: 18_912.75561,
+            displayed_width: 108_763.38,
+            height: 417,
+            width: 1000,
+            x: 429.8237,
+            y: 739.84276
+          )
+        end
+      end
+
+      context "with logo_position=bottom_left" do
+        # For these tests we have to mock the repeat call,
+        # since PDF::Inspector::Text.analzye can not read repeated texts
+        # see https://github.com/prawnpdf/pdf-inspector/issues/25
+
+        let(:logo_position) { :bottom_left }
+
+        it "renders the logo above the payment slip" do
+          expect(image_positions).to have(2).items
+          expect(image_positions.first).to match(
+            displayed_height: 18_912.75561,
+            displayed_width: 108_763.38,
+            height: 417,
+            width: 1000,
+            x: 56.69291,
+            y: 314.64567
+          )
+        end
+
+        context "with logo_on_every_page" do
+          before do
+            invoice.invoice_config.update! logo_on_every_page: true
+          end
+
+          it "renders the logo on first page" do
+            20.times do |i|
+              invoice.invoice_items.build(name: "pen #{i}", unit_cost: 10, vat_rate: 10, count: 2)
+            end
+
+            expect_any_instance_of(Sww::Export::Pdf::Invoice::FooterLogo)
+              .to receive(:repeat_footer_logo)
+              .with([1]) do |&block|
+                block.call
+              end
+
+            pdf
+          end
+        end
+
+        context "without payment slip" do
+          let(:payment_slip) { false }
+
+          it "renders the logo at bottom left" do
+            expect_any_instance_of(Sww::Export::Pdf::Invoice::FooterLogo)
+              .to receive(:repeat_footer_logo)
+              .with([1]) do |&block|
+                block.call
+              end
+
+            expect(image_positions).to have(1).items
+            expect(image_positions.first).to match(
+              displayed_height: 18_912.75561,
+              displayed_width: 108_763.38,
+              height: 417,
+              width: 1000,
+              x: 36.69291,
+              y: 21.33858
+            )
+          end
+        end
+
+        context "without payment slip but logo_on_every_page" do
+          let(:payment_slip) { false }
+
+          before do
+            invoice.invoice_config.update! logo_on_every_page: true
+          end
+
+          it "renders the logo on every page" do
+            28.times do |i|
+              invoice.invoice_items.build(name: "pen #{i}", unit_cost: 10, vat_rate: 10, count: 2)
+            end
+
+            expect_any_instance_of(Sww::Export::Pdf::Invoice::FooterLogo)
+              .to receive(:repeat_footer_logo)
+              .with([1, 2]) do |&block|
+                block.call
+              end
+
+            expect(image_positions(2)).to have(1).items
+          end
         end
       end
     end
@@ -95,8 +229,8 @@ describe Export::Pdf::Invoice do
         )
       end
 
-      it "with logo_position=above_payment_slip it renders logo above the payment slip" do
-        invoice.invoice_config.update(logo_position: :above_payment_slip)
+      it "with logo_position=bottom_left it renders logo above the payment slip" do
+        invoice.invoice_config.update(logo_position: :bottom_left)
         expect(image_positions).to have(2).items # logo and qr code
         expect(image_positions.first).to match(
           displayed_height: 18_912.75561,
