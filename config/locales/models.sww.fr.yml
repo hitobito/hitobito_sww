@@ -138,6 +138,8 @@ fr:
         logo_positions:
           above_payment_slip: Au-dessus du bulletin de versement
         separators: Afficher la ligne de séparation sur le bulletin de versement
+        use_header: Kopfzeile anzeigen
+        header: Kopfzeile
       group:
         event_sender: Événement E-mail de l'expéditeur
         membership_card_left_position: Carte de membre Distance à partir de la gauche (cm)

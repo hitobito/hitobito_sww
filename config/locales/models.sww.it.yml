@@ -138,6 +138,8 @@ it:
         logo_positions:
           above_payment_slip: Sopra la ricevuta di versamento
         separators: Visualizza linea di separazione sulla bollettino di versamento
+        use_header: Kopfzeile anzeigen
+        header: Kopfzeile
       group:
         event_sender: "Occasione: Nome del mittente E-mail"
         membership_card_left_position: Carta socio Distanza da sinistra (cm)
