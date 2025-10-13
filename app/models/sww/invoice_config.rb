@@ -8,14 +8,28 @@
 module Sww::InvoiceConfig
   extend ActiveSupport::Concern
 
-  LOGO_POSITION_ABOVE_PAYMENT_SLIP = "above_payment_slip"
+  LOGO_POSITION_BOTTOM_LEFT = "bottom_left"
 
   prepended do
-    logo_positions << LOGO_POSITION_ABOVE_PAYMENT_SLIP
+    logo_positions << LOGO_POSITION_BOTTOM_LEFT
 
     has_rich_text :header
 
     validates :header, presence: true, if: :use_header?
     validates :header, no_attachments: true
+
+    validate :logo_on_every_page_requires_position_bottom_left
+  end
+
+  private
+
+  def logo_on_every_page_requires_position_bottom_left
+    if logo_on_every_page && logo_position != LOGO_POSITION_BOTTOM_LEFT
+      errors.add(
+        :logo_on_every_page,
+        :logo_on_every_page_only_allowed_for_position_bottom_left,
+        valid_position: InvoiceConfig.logo_position_labels[:bottom_left]
+      )
+    end
   end
 end

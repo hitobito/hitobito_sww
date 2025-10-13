@@ -23,6 +23,7 @@ module Sww::Export::Pdf::Invoice
       pdf = super
 
       Export::Pdf::Invoice::PageHeader.new(pdf, @invoice_config, {}).render
+      Export::Pdf::Invoice::FooterLogo.new(pdf, @invoice_config, {metadata: @metadata}).render
 
       pdf
     end
@@ -41,10 +42,10 @@ module Sww::Export::Pdf::Invoice
       end
     end
 
-    # override the returned class if logo_position is set to "above_payment_slip"
+    # override the returned class if logo_position is set to "bottom_left"
     def payment_slip_qr_class
       return PaymentSlipWithLogo if @page_invoice.logo_position ==
-        Sww::InvoiceConfig::LOGO_POSITION_ABOVE_PAYMENT_SLIP
+        Sww::InvoiceConfig::LOGO_POSITION_BOTTOM_LEFT
 
       super
     end
@@ -61,6 +62,13 @@ module Sww::Export::Pdf::Invoice
 
     def customize(pdf)
       ::Export::Pdf::Font.new(super).customize
+    end
+
+    def render_logo(pdf, invoice_config, **options)
+      # Rendering the logo in the bottom is handled by Sww::Export::Pdf::Invoice::FooterLogo
+      return if invoice_config.logo_position == Sww::InvoiceConfig::LOGO_POSITION_BOTTOM_LEFT
+
+      super
     end
   end
 

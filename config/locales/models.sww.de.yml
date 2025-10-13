@@ -128,10 +128,11 @@ de:
         membership_expires_on: Mitgliedschaft gültig bis
       invoice_config:
         logo_positions:
-          above_payment_slip: Über dem Einzahlungsschein
+          bottom_left: Unten links
         separators: Trennlinie auf Einzahlungsschein anzeigen
         use_header: Kopfzeile anzeigen
         header: Kopfzeile
+        logo_on_every_page: Logo auf allen Seiten anzeigen
       group:
         event_sender: Anlass E-Mail Absendername
         membership_card_left_position: Mitgliederausweis Abstand von links (cm)
@@ -148,6 +149,7 @@ de:
     messages:
       cannot_be_later_than_today: kann nicht später als heute sein
       cannot_be_later_than_deleted_at: muss vor oder am selben Tag wie der Austritt sein
+      logo_on_every_page_only_allowed_for_position_bottom_left: kann nur mit der Logo Position "%{valid_position}" aktiviert werden 
 
   event:
     application_market:
