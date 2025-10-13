@@ -21,5 +21,11 @@ class Group::Benutzerkonten < ::Group
     self.permissions = []
   end
 
-  roles Benutzerkonto, Verwalter
+  # Users with this role are excluded from the password reset of the staging sync
+  # see https://github.com/hitobito/hitobito_sww/issues/284
+  class StagingUser < ::Role
+    self.permissions = []
+  end
+
+  roles Benutzerkonto, Verwalter, StagingUser
 end

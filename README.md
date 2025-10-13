@@ -13,6 +13,7 @@ of Sww.
   * Benutzerkonten
     * Benutzerkonto: []
     * Support: [:layer_full]
+    * StagingUser: []
 * Fachorganisation
   * Vorstand
     * Präsident: [:contact_data, :layer_and_below_full]
