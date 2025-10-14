@@ -23,7 +23,8 @@ module Sww::Export::Pdf::Invoice::Articles
     font_size(8) { text invoice.payment_information }
   end
 
-  def sum_box_with_donation_without_total
+  # rubocop:todo Metrics/MethodLength
+  def sum_box_with_donation_without_total # rubocop:todo Metrics/AbcSize # rubocop:todo Metrics/MethodLength
     bounding_box([0, cursor], width: bounds.width) do
       font_size(8) do
         data = total_data
@@ -45,6 +46,7 @@ module Sww::Export::Pdf::Invoice::Articles
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def total_data
     decorated = invoice.decorate
@@ -70,7 +72,10 @@ module Sww::Export::Pdf::Invoice::Articles
     articles = super
 
     invoice_info = "#{I18n.t("invoices.pdf.invoice_number")}: #{invoice.sequence_number}"
-    invoice_info += " #{I18n.t("invoices.pdf.from", date: I18n.l(invoice.issued_at))}" if invoice.issued_at.present?
+    if invoice.issued_at.present?
+      invoice_info += " #{I18n.t("invoices.pdf.from",
+        date: I18n.l(invoice.issued_at))}"
+    end
 
     articles[0][0] = invoice_info
     articles

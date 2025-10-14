@@ -18,7 +18,7 @@ module Sww::Export::Tabular::Invoices::EvaluationList
     end
   end
 
-  def add_header_rows
+  def add_header_rows # rubocop:todo Metrics/AbcSize
     header_rows << [I18n.t(:"invoices.evaluations.show.title")]
     header_rows << [Group.human_attribute_name(:layer_group),
       @metadata[:layer]]

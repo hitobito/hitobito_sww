@@ -9,6 +9,7 @@ module Sww::Export::Pdf::AddressRenderers
   extend ActiveSupport::Concern
 
   included do
+    # rubocop:todo Metrics/CyclomaticComplexity
     def address_position(letter_address_position) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
       left = left_position
       x_coords = left.to_f.cm - page.margins[:left] if left.present?
@@ -25,6 +26,7 @@ module Sww::Export::Pdf::AddressRenderers
 
       [x_coords, y_coords]
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     def left_position
       group&.letter_left_address_position
