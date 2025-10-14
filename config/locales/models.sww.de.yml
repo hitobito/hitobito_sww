@@ -53,6 +53,8 @@ de:
         one: Benutzerkonto
       group/benutzerkonten/verwalter:
         one: Support
+      group/benutzerkonten/staging_user:
+        one: Staging Benutzer
 
       group/kontakte/kontakt:
         one: Kontakt

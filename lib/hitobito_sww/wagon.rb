@@ -56,6 +56,7 @@ module HitobitoSww
       Export::EventParticipationsExportJob.prepend Sww::Export::EventParticipationsExportJob
 
       PaperTrail::VersionDecorator.prepend Sww::PaperTrail::VersionDecorator
+      GroupDecorator.prepend Sww::GroupDecorator
 
       LayoutHelper.include Sww::LayoutHelper
       TagListsHelper.include Sww::TagListsHelper
