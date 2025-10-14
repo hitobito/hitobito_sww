@@ -14,7 +14,8 @@ module Sww::Export::Pdf::Messages::Letter
     def render(message_recipient = nil, _options = {}) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
       recipient = fetch_recipient(message_recipient)
       offset_cursor_from_top 4.cm
-      bounding_box(address_position(model.group.letter_address_position), width: 5.7.cm, height: 1.2.cm) do
+      bounding_box(address_position(model.group.letter_address_position), width: 5.7.cm,
+        height: 1.2.cm) do
         pdf.font("Helvetica") do
           text_box(card_title(recipient),
             inline_format: true, size: 10.pt)

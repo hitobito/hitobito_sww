@@ -13,7 +13,8 @@ module Sww::Export::Pdf::Messages::Letter::MembershipCards
 
     def render(recipient, _options)
       offset_cursor_from_top 4.7.cm
-      bounding_box(address_position(group.letter_address_position), width: 8.7.cm, height: 2.6.cm) do
+      bounding_box(address_position(group.letter_address_position), width: 8.7.cm,
+        height: 2.6.cm) do
         stamped(:shipping_text)
 
         pdf.move_down 0.7.cm

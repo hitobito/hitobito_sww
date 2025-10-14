@@ -14,7 +14,8 @@ module ModProfileImport
       @filter = filter
     end
 
-    def csv = @csv ||= filtered(CSV.parse(lines ? target.readlines.take(lines).join : target.read, headers: true))
+    def csv = @csv ||= filtered(CSV.parse(lines ? target.readlines.take(lines).join : target.read,
+      headers: true))
 
     def filtered(csv) = filter ? csv.select { |row| filter.call(row) } : csv
   end
@@ -54,15 +55,22 @@ module ModProfileImport
         person.skip_confirmation_notification!
         person.attributes = to_h.except(:phone)
         person.phone_numbers.build(label: "Privat", number: phone) if phone
-        person.roles.find_or_initialize_by(group_id: group_id, type: Group::Benutzerkonten::Benutzerkonto.sti_name).tap do |role|
+        person.roles.find_or_initialize_by(group_id: group_id,
+          type: Group::Benutzerkonten::Benutzerkonto.sti_name).tap do |role|
           role.created_at = role_activation_date
         end
       end
     end
 
     def to_s(details: false)
-      values = to_h.except(:first_name, :last_name, :encrypted_password, :sww_cms_legacy_password_salt).values.join(",")
-      ["#{status} #{person} (#{details ? [sww_cms_profile_id, values].join(",") : sww_cms_profile_id})", (full_error_messages if details)].compact_blank.join(": ")
+      values = to_h.except(:first_name, :last_name, :encrypted_password,
+        :sww_cms_legacy_password_salt).values.join(",")
+      [
+        # rubocop:todo Layout/ArrayAlignment
+        "#{status} #{person} (#{details ? [sww_cms_profile_id,
+values].join(",") : sww_cms_profile_id})", (full_error_messages if details)
+        # rubocop:enable Layout/ArrayAlignment
+      ].compact_blank.join(": ")
     end
 
     def status = errors.none? ? "✔" : "✖"
@@ -78,9 +86,13 @@ module ModProfileImport
       end.to_h.compact_blank
     end
 
+    # rubocop:todo Layout/LineLength
     def group_id = @@group_id ||= Group.root.children.find_by(type: Group::Benutzerkonten.sti_name).id
+    # rubocop:enable Layout/LineLength
 
+    # rubocop:todo Layout/LineLength
     def role_activation_date = (Time.zone.at(attrs[:profile_activation_date].to_i) if attrs[:profile_activation_date].to_i.positive?)
+    # rubocop:enable Layout/LineLength
   end
 
   # rubocop:disable Rails/Output

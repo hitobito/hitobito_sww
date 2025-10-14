@@ -18,7 +18,8 @@ module Sww::Export::Pdf::Invoice::InvoiceInformation
 
   def information
     if @options[:reminders] && invoice.payment_reminders.exists?
-      labeled_information(:invoice_date, I18n.l(invoice.latest_reminder.created_at.to_date)).join(" ")
+      labeled_information(:invoice_date,
+        I18n.l(invoice.latest_reminder.created_at.to_date)).join(" ")
     else
       labeled_information(:invoice_date, I18n.l(invoice.issued_at)).join(" ")
     end

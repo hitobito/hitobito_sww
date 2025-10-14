@@ -22,7 +22,10 @@ module Sww::Wizards::Steps::NewUserForm
     validates :gender, :email, :first_name, :last_name, presence: true
 
     def gender_options
-      [[:w, I18n.t("groups.self_registration.new.gender.w")], [:m, I18n.t("groups.self_registration.new..gender.m")], [nil, I18n.t("groups.self_registration.new.gender.other")]]
+      [[:w, I18n.t("groups.self_registration.new.gender.w")],
+        # rubocop:todo Layout/LineLength
+        [:m, I18n.t("groups.self_registration.new..gender.m")], [nil, I18n.t("groups.self_registration.new.gender.other")]]
+      # rubocop:enable Layout/LineLength
     end
 
     def assignable_attributes

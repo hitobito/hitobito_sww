@@ -16,7 +16,8 @@ module Sww
           if @details && params[:controller] == "event/participations"
             path = params.merge(format: format)
 
-            item.sub_items << ::Dropdown::Item.new(translate(:participations), path.merge(participations_list: true))
+            item.sub_items << ::Dropdown::Item.new(translate(:participations),
+              path.merge(participations_list: true))
           end
         end
       end
