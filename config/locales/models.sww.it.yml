@@ -136,10 +136,11 @@ it:
         membership_expires_on: Socio valido fino al
       invoice_config:
         logo_positions:
-          above_payment_slip: Sopra la ricevuta di versamento
+          bottom_left: Unten links
         separators: Visualizza linea di separazione sulla bollettino di versamento
         use_header: Kopfzeile anzeigen
         header: Kopfzeile
+        logo_on_every_page: Logo auf allen Seiten anzeigen
       group:
         event_sender: "Occasione: Nome del mittente E-mail"
         membership_card_left_position: Carta socio Distanza da sinistra (cm)
@@ -156,6 +157,7 @@ it:
     messages:
       cannot_be_later_than_today: non può essere più tardi di oggi
       cannot_be_later_than_deleted_at: deve essere prima o lo stesso giorno della dimissione
+      logo_on_every_page_only_allowed_for_position_bottom_left: "kann nur mit der Logo Position \"%{valid_position}\" aktiviert werden" 
 
   event:
     application_market:
