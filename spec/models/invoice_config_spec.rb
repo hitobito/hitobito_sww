@@ -46,7 +46,9 @@ describe InvoiceConfig do
 
       invoice_config.valid?
 
+      # rubocop:todo Layout/LineLength
       expect(invoice_config.errors.map(&:full_message)).to eq(['Logo auf allen Seiten anzeigen kann nur mit der Logo Position "Unten links" aktiviert werden'])
+      # rubocop:enable Layout/LineLength
     end
   end
 end

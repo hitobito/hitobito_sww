@@ -5,7 +5,6 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
 ENV["RAILS_STRUCTURED_ADDRESSES"] = "1"
 ENV["RAILS_ADDRESS_MIGRATION"] = "0"
 

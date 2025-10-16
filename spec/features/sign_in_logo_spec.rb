@@ -5,8 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
-require 'spec_helper'
+require "spec_helper"
 
 describe :sign_in_logo, js: false do
   context "without oauth" do

@@ -5,29 +5,27 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
-require 'spec_helper'
+require "spec_helper"
 
 Rails.application.load_tasks
 
 describe "import:people_fo" do
-
   after do
     Rake::Task["import:people_fo"].reenable
   end
 
-  context 'valid people' do
+  context "valid people" do
     before do
       allow_any_instance_of(Pathname).to receive(:join)
-        .and_return(Wagons.find('sww')
+        .and_return(Wagons.find("sww")
         .root
-        .join('spec/fixtures/files/people_fo.csv'))
+        .join("spec/fixtures/files/people_fo.csv"))
     end
 
     it "raises if given no argument" do
       expect do
         Rake::Task["import:people_fo"].invoke
-      end.to raise_error(RuntimeError, 'group id must be passed as first argument')
+      end.to raise_error(RuntimeError, "group id must be passed as first argument")
     end
 
     it "raises if group with given id does not exist" do
@@ -49,15 +47,15 @@ describe "import:people_fo" do
         end.to change { Person.count }.by(5)
       end.to output("Successfully imported 5/5 rows\n").to_stdout
 
-      person = Person.find_by(alabus_id: '1skuw-b52nqz-g2iw4kjn-2-g21sdwqh-qa7')
+      person = Person.find_by(alabus_id: "1skuw-b52nqz-g2iw4kjn-2-g21sdwqh-qa7")
       expect(person).to be_present
 
-      expect(person.country).to eq('DE')
-      expect(person.title).to eq('Dr.')
-      expect(person.gender).to eq('m')
+      expect(person.country).to eq("DE")
+      expect(person.title).to eq("Dr.")
+      expect(person.gender).to eq("m")
       expect(person.magazin_abo_number).to eq(1000)
-      expect(person.name_add_on).to eq('Mustermann')
-      expect(person.email).to eq('max.muster@example.com')
+      expect(person.name_add_on).to eq("Mustermann")
+      expect(person.email).to eq("max.muster@example.com")
       expect(person.roles.with_inactive.count).to eq(2)
 
       mitglied = person.roles.first
@@ -74,24 +72,25 @@ describe "import:people_fo" do
       expect(person.taggings.count).to eq(3)
 
       person.taggings.each do |tagging|
-        expect(['abo:kombi', 'category:Einzelmitglied mit Magazin', 'Newsletter']).to include(tagging.tag.name)
+        expect(["abo:kombi", "category:Einzelmitglied mit Magazin",
+          "Newsletter"]).to include(tagging.tag.name)
       end
 
       expect(person.phone_numbers.count).to eq(2)
 
-      mobile = person.phone_numbers.find_by(label: 'Mobil')
-      expect(mobile.number).to eq('+41 12 300 30 30')
+      mobile = person.phone_numbers.find_by(label: "Mobil")
+      expect(mobile.number).to eq("+41 12 300 30 30")
 
-      main = person.phone_numbers.find_by(label: 'Privat')
-      expect(main.number).to eq('+41 42 300 30 30')
+      main = person.phone_numbers.find_by(label: "Privat")
+      expect(main.number).to eq("+41 42 300 30 30")
 
-      expect(person.social_accounts.first.name).to eq('https://www.hitobito.com')
+      expect(person.social_accounts.first.name).to eq("https://www.hitobito.com")
 
-      expect(person.notes.first.text).to eq('GV')
+      expect(person.notes.first.text).to eq("GV")
 
-      company = Person.find_by(alabus_id: 'haw31-axzcd1-jb44x23z-z-jtxn23wd1-k42')
+      company = Person.find_by(alabus_id: "haw31-axzcd1-jb44x23z-z-jtxn23wd1-k42")
       expect(company).to be_present
-      expect(company.company_name).to eq('Hitobito AG')
+      expect(company.company_name).to eq("Hitobito AG")
       expect(company.manual_member_number).to eq(42)
     end
 
@@ -100,12 +99,12 @@ describe "import:people_fo" do
         Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
       end.to output("Successfully imported 5/5 rows\n").to_stdout
 
-      person = Person.find_by(alabus_id: '1s23w-b52n1x-2ciw2kjn-g-g213bwvh-1x7')
+      person = Person.find_by(alabus_id: "1s23w-b52n1x-2ciw2kjn-g-g213bwvh-1x7")
       expect(person).to be_present
 
       expect(person.email).to be_nil
       expect(person.additional_emails.count).to eq(1)
-      expect(person.additional_emails.first.email).to eq('max.muster@example.com')
+      expect(person.additional_emails.first.email).to eq("max.muster@example.com")
     end
 
     it "sets role start_on on a day before end_on if not set" do
@@ -113,7 +112,7 @@ describe "import:people_fo" do
         Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
       end.to output("Successfully imported 5/5 rows\n").to_stdout
 
-      person = Person.find_by(alabus_id: 'dcwe1-vbsdw2-2cib1kbs-p-g2bnbw1h-2sd')
+      person = Person.find_by(alabus_id: "dcwe1-vbsdw2-2cib1kbs-p-g2bnbw1h-2sd")
       expect(person).to be_present
 
       expect(person.roles.active.count).to eq(0)
@@ -136,9 +135,9 @@ describe "import:people_fo" do
         Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
       end.to output("Successfully imported 5/5 rows\n").to_stdout
 
-      person_with_two_roles = Person.find_by(alabus_id: '1skuw-b52nqz-g2iw4kjn-2-g21sdwqh-qa7')
-      person_with_one_role = Person.find_by(alabus_id: '1s23w-b52n1x-2ciw2kjn-g-g213bwvh-1x7')
-      person_without_roles = Person.find_by(alabus_id: 'bew31-axzcd1-jbhox23z-z-jtxn23wd1-k3g')
+      person_with_two_roles = Person.find_by(alabus_id: "1skuw-b52nqz-g2iw4kjn-2-g21sdwqh-qa7")
+      person_with_one_role = Person.find_by(alabus_id: "1s23w-b52n1x-2ciw2kjn-g-g213bwvh-1x7")
+      person_without_roles = Person.find_by(alabus_id: "bew31-axzcd1-jbhox23z-z-jtxn23wd1-k3g")
 
       expect(person_with_two_roles.roles.with_inactive.count).to eq(2)
       expect(person_with_one_role.roles.with_inactive.count).to eq(1)
@@ -150,26 +149,30 @@ describe "import:people_fo" do
         Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
       end.to output("Successfully imported 5/5 rows\n").to_stdout
 
-      person = Person.find_by(alabus_id: 'bew31-axzcd1-jbhox23z-z-jtxn23wd1-k3g')
+      person = Person.find_by(alabus_id: "bew31-axzcd1-jbhox23z-z-jtxn23wd1-k3g")
       expect(person).to be_present
 
-      expect(person.country).to eq('CH')
+      expect(person.country).to eq("CH")
     end
   end
 
-  context 'invalid people' do
+  context "invalid people" do
     before do
       allow_any_instance_of(Pathname).to receive(:join)
-        .and_return(Wagons.find('sww')
+        .and_return(Wagons.find("sww")
         .root
-        .join('spec/fixtures/files/invalid_people_fo.csv'))
+        .join("spec/fixtures/files/invalid_people_fo.csv"))
     end
 
     it "does not import person without alabus id and prints to stdout" do
-      expected_output = ['Successfully imported 5/6 rows',
-                         'FAILED ROWS:',
-                         "first_name: Daniel, last_name: Failing, email: failing@example.com, alabus_id: \n",
-                         "nothing was imported due to errors. Please fix import source file and try again.\n"].join("\n")
+      expected_output = ["Successfully imported 5/6 rows",
+        "FAILED ROWS:",
+        # rubocop:todo Layout/LineLength
+        "first_name: Daniel, last_name: Failing, email: failing@example.com, alabus_id: \n",
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
+        "nothing was imported due to errors. Please fix import source file and try again.\n"].join("\n")
+      # rubocop:enable Layout/LineLength
 
       expect do
         Rake::Task["import:people_fo"].invoke(groups(:berner_wanderwege).id)
@@ -178,18 +181,17 @@ describe "import:people_fo" do
   end
 end
 
-describe 'import:invoices_fo' do
-
+describe "import:invoices_fo" do
   after do
     Rake::Task["import:invoices_fo"].reenable
   end
 
-  context 'valid invoices' do
+  context "valid invoices" do
     before do
       allow_any_instance_of(Pathname).to receive(:join)
-        .and_return(Wagons.find('sww')
+        .and_return(Wagons.find("sww")
         .root
-        .join('spec/fixtures/files/invoices_fo.csv'))
+        .join("spec/fixtures/files/invoices_fo.csv"))
 
       groups(:berner_wanderwege)
         .tap { |g| g.send :create_invoice_config }
@@ -199,7 +201,7 @@ describe 'import:invoices_fo' do
     it "raises if given no argument" do
       expect do
         Rake::Task["import:invoices_fo"].invoke
-      end.to raise_error(RuntimeError, 'group id must be passed as first argument')
+      end.to raise_error(RuntimeError, "group id must be passed as first argument")
     end
 
     it "raises if group with given id does not exist" do
@@ -215,9 +217,10 @@ describe 'import:invoices_fo' do
     end
 
     it "imports invoices from csv" do
-      Person.create!(alabus_id: 'wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee', first_name: 'Bob')
-      Person.create!(alabus_id: 'wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje', first_name: 'Alice')
-      recipient = Person.create!(alabus_id: '5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1', first_name: 'Max')
+      Person.create!(alabus_id: "wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee", first_name: "Bob")
+      Person.create!(alabus_id: "wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje", first_name: "Alice")
+      recipient = Person.create!(alabus_id: "5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1",
+        first_name: "Max")
 
       expect do
         Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
@@ -228,9 +231,9 @@ describe 'import:invoices_fo' do
 
       invoice = Invoice.find_by(recipient: recipient)
 
-      expect(invoice.title).to eq('Rechnung Alabus Privatperson')
-      expect(invoice.state).to eq('issued')
-      expect(invoice.esr_number).to eq('00 37592 44815 05725 00000 00013')
+      expect(invoice.title).to eq("Rechnung Alabus Privatperson")
+      expect(invoice.state).to eq("issued")
+      expect(invoice.esr_number).to eq("00 37592 44815 05725 00000 00013")
       expect(invoice.sent_at).to eq(DateTime.new(2022, 3, 28))
       expect(invoice.created_at).to eq(DateTime.new(2022, 3, 28))
 
@@ -238,7 +241,7 @@ describe 'import:invoices_fo' do
 
       invoice_item = invoice.invoice_items.first
 
-      expect(invoice_item.name).to eq('Privatperson')
+      expect(invoice_item.name).to eq("Privatperson")
       expect(invoice_item.unit_cost).to eq(75)
       expect(invoice_item.count).to eq(1)
     end
@@ -252,13 +255,19 @@ describe 'import:invoices_fo' do
     end
 
     it "does not import invoices with other state than 'Offen'" do
-      Person.create!(alabus_id: 'wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee', first_name: 'Bob')
-      recipient_for_open_invoice1 = Person.create!(alabus_id: '5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1', first_name: 'Max')
-      recipient_for_non_open_invoice = Person.create!(alabus_id: 'wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje', first_name: 'Alice')
+      Person.create!(alabus_id: "wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee", first_name: "Bob")
+      recipient_for_open_invoice1 = Person.create!(
+        alabus_id: "5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1", first_name: "Max"
+      )
+      recipient_for_non_open_invoice = Person.create!(
+        alabus_id: "wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje", first_name: "Alice"
+      )
 
-      expected_output = ['Successfully imported 2/2 rows',
-                         'ROWS WITH STATUS OTHER THAN "Offen":',
-                         "esr_number: 00 34519 87043 97732 00000 00013, sent_at: 10.02.2022, created_at: 10.02.2022, alabus_id: wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje, amount: 75\n"].join("\n")
+      expected_output = ["Successfully imported 2/2 rows",
+        'ROWS WITH STATUS OTHER THAN "Offen":',
+        # rubocop:todo Layout/LineLength
+        "esr_number: 00 34519 87043 97732 00000 00013, sent_at: 10.02.2022, created_at: 10.02.2022, alabus_id: wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje, amount: 75\n"].join("\n")
+      # rubocop:enable Layout/LineLength
 
       expect do
         Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
@@ -270,8 +279,9 @@ describe 'import:invoices_fo' do
     end
 
     it "assigns 0 as fallback unit_cost" do
-      recipient = Person.create!(alabus_id: 'wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee', first_name: 'Bob')
-      Person.create!(alabus_id: '5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1', first_name: 'Max')
+      recipient = Person.create!(alabus_id: "wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee",
+        first_name: "Bob")
+      Person.create!(alabus_id: "5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1", first_name: "Max")
 
       expect do
         expect do
@@ -286,42 +296,59 @@ describe 'import:invoices_fo' do
 
       invoice_item = invoice.invoice_items.first
 
-      expect(invoice_item.name).to eq('Familienmitglied')
+      expect(invoice_item.name).to eq("Familienmitglied")
       expect(invoice_item.unit_cost).to eq(0)
     end
   end
 
-  context 'invalid invoices' do
+  context "invalid invoices" do
     before do
       allow_any_instance_of(Pathname).to receive(:join)
-        .and_return(Wagons.find('sww')
+        .and_return(Wagons.find("sww")
         .root
-        .join('spec/fixtures/files/invalid_invoices_fo.csv'))
+        .join("spec/fixtures/files/invalid_invoices_fo.csv"))
 
       groups(:berner_wanderwege)
         .tap { |g| g.send :create_invoice_config }
         .save!
     end
 
-    it 'outputs report' do
-      recipient_after_reload = Person.create!(alabus_id: 'wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee', first_name: 'Bob')
-      recipient = Person.create!(alabus_id: 'wi2523f-t431xg-57eww221-h-j634x6sd-ghae', first_name: 'Daniel')
+    it "outputs report" do
+      recipient_after_reload = Person.create!(alabus_id: "wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee",
+        first_name: "Bob")
+      recipient = Person.create!(alabus_id: "wi2523f-t431xg-57eww221-h-j634x6sd-ghae",
+        first_name: "Daniel")
 
-      expected_output = ['Successfully imported 0/4 rows',
-                         'ROWS WITH STATUS OTHER THAN "Offen":',
-                         'esr_number: 00 34519 87043 97732 00000 00013, sent_at: 10.02.2022, created_at: 10.02.2022, alabus_id: wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje, amount: 75',
-                         'FAILED ROWS:',
-                         'esr_number: 00 37592 44815 05725 00000 00013, sent_at: 28.03.2022, created_at: 28.03.2022, alabus_id: 5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1, amount: 75, failing_note: person not found',
-                         "esr_number: 00 65823 21284 96217 00000 00013, sent_at: 13.03.2022, created_at: 13.03.2022, alabus_id: wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee, amount: , failing_note: invoice not found after reload",
-                         "esr_number: 00 43914 69124 312592 00000 00013, sent_at: 25.03.2022, created_at: 25.03.2022, alabus_id: , amount: 100, failing_note: id not present",
-                         "esr_number: , sent_at: , created_at: , alabus_id: wi2523f-t431xg-57eww221-h-j634x6sd-ghae, amount: 100, failing_note: Gültigkeitsprüfung ist fehlgeschlagen: Referenz Nummer muss ausgefüllt werden\n",
-                         "nothing was imported due to errors. Please fix import source file and try again.\n"].join("\n")
-
+      expected_output = ["Successfully imported 0/4 rows",
+        'ROWS WITH STATUS OTHER THAN "Offen":',
+        # rubocop:todo Layout/LineLength
+        "esr_number: 00 34519 87043 97732 00000 00013, sent_at: 10.02.2022, created_at: 10.02.2022, alabus_id: wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje, amount: 75",
+        # rubocop:enable Layout/LineLength
+        "FAILED ROWS:",
+        # rubocop:todo Layout/LineLength
+        "esr_number: 00 37592 44815 05725 00000 00013, sent_at: 28.03.2022, created_at: 28.03.2022, alabus_id: 5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1, amount: 75, failing_note: person not found",
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
+        "esr_number: 00 65823 21284 96217 00000 00013, sent_at: 13.03.2022, created_at: 13.03.2022, alabus_id: wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee, amount: , failing_note: invoice not found after reload",
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
+        "esr_number: 00 43914 69124 312592 00000 00013, sent_at: 25.03.2022, created_at: 25.03.2022, alabus_id: , amount: 100, failing_note: id not present",
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
+        "esr_number: , sent_at: , created_at: , alabus_id: wi2523f-t431xg-57eww221-h-j634x6sd-ghae, amount: 100, failing_note: Gültigkeitsprüfung ist fehlgeschlagen: Referenz Nummer muss ausgefüllt werden\n",
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
+        "nothing was imported due to errors. Please fix import source file and try again.\n"].join("\n")
+      # rubocop:enable Layout/LineLength
 
       after_reload_gone_double = double
 
+      # rubocop:todo Layout/LineLength
       expect(Invoice).to receive(:create!).with(hash_including(recipient_id: recipient_after_reload.id)).exactly(:once).and_return(after_reload_gone_double)
+      # rubocop:enable Layout/LineLength
+      # rubocop:todo Layout/LineLength
       expect(Invoice).to receive(:create!).with(hash_including(recipient_id: recipient.id)).exactly(:once).and_call_original
+      # rubocop:enable Layout/LineLength
       expect(after_reload_gone_double).to receive(:update!)
       expect(after_reload_gone_double).to receive(:reload)
       expect(after_reload_gone_double).to receive(:blank?).and_return(true)
@@ -331,35 +358,36 @@ describe 'import:invoices_fo' do
       end.to output(expected_output).to_stdout
     end
 
-    it 'does not import anything if invalid row is present' do
-      Person.create!(alabus_id: '5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1', first_name: 'Max')
-      Person.create!(alabus_id: 'wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje', first_name: 'Alice')
-      Person.create!(alabus_id: 'wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee', first_name: 'Bob')
-      Person.create!(alabus_id: 'wi2523f-t431xg-57eww221-h-j634x6sd-ghae', first_name: 'Daniel')
+    it "does not import anything if invalid row is present" do
+      Person.create!(alabus_id: "5c2o3xc-twcwrv-js1wkcxh-h-jsax76d7-bew1", first_name: "Max")
+      Person.create!(alabus_id: "wi2bn3f-tfbw3v-js1swvzh-h-jx75x634-beje", first_name: "Alice")
+      Person.create!(alabus_id: "wi2bhef-tfcdxv-vcewwcvh-h-jx23x667-ghee", first_name: "Bob")
+      Person.create!(alabus_id: "wi2523f-t431xg-57eww221-h-j634x6sd-ghae", first_name: "Daniel")
 
       expect do
         expect do
           Rake::Task["import:invoices_fo"].invoke(groups(:berner_wanderwege).id)
         end.to_not change { Invoice.count }
+        # rubocop:todo Layout/LineLength
       end.to output(/Successfully imported 2\/4 rows.*failing_note.*nothing was imported/m).to_stdout
+      # rubocop:enable Layout/LineLength
     end
   end
 end
 
 describe "import:people_cms" do
-
   let!(:benutzerkonten_group) { groups(:benutzerkonten) }
 
   after do
     Rake::Task["import:people_cms"].reenable
   end
 
-  context 'valid people' do
+  context "valid people" do
     before do
       allow_any_instance_of(Pathname).to receive(:join)
-        .and_return(Wagons.find('sww')
+        .and_return(Wagons.find("sww")
         .root
-        .join('spec/fixtures/files/people_cms.csv'))
+        .join("spec/fixtures/files/people_cms.csv"))
     end
 
     xit "imports people and companies from csv" do
@@ -372,33 +400,34 @@ describe "import:people_cms" do
       person = Person.find_by(sww_cms_profile_id: 1)
       expect(person).to be_present
 
-      expect(person.first_name).to eq('Max')
-      expect(person.last_name).to eq('Muster')
-      expect(person.address).to eq('Musterweg 12')
-      expect(person.zip_code).to eq('3000')
-      expect(person.town).to eq('Bern')
-      expect(person.country).to eq('DE')
-      expect(person.email).to eq('max.muster@example.com')
-      expect(person.language).to eq('fr')
-      expect(person.valid_password?('great_password')).to eq(true)
+      expect(person.first_name).to eq("Max")
+      expect(person.last_name).to eq("Muster")
+      expect(person.address).to eq("Musterweg 12")
+      expect(person.zip_code).to eq("3000")
+      expect(person.town).to eq("Bern")
+      expect(person.country).to eq("DE")
+      expect(person.email).to eq("max.muster@example.com")
+      expect(person.language).to eq("fr")
+      expect(person.valid_password?("great_password")).to eq(true)
 
       expect(person.roles.with_inactive.count).to eq(1)
 
       role = Group::Benutzerkonten::Benutzerkonto.find_by(person_id: person.id,
-                                                          group_id: benutzerkonten_group.id)
+        group_id: benutzerkonten_group.id)
 
       expect(role).to be_present
 
       company = Person.find_by(sww_cms_profile_id: 42)
       expect(company).to be_present
-      expect(company.company_name).to eq('Hitobito AG')
-      expect(company.address).to eq('Belpstrasse 37')
-      expect(company.zip_code).to eq('3007')
-      expect(company.town).to eq('Bern')
-      expect(company.email).to eq('info@hitobito.com')
+      expect(company.company_name).to eq("Hitobito AG")
+      expect(company.address).to eq("Belpstrasse 37")
+      expect(company.zip_code).to eq("3007")
+      expect(company.town).to eq("Bern")
+      expect(company.email).to eq("info@hitobito.com")
       expect(company.encrypted_password).to be_nil
 
-      role = Group::Benutzerkonten::Benutzerkonto.find_by(person_id: company.id, group_id: benutzerkonten_group)
+      role = Group::Benutzerkonten::Benutzerkonto.find_by(person_id: company.id,
+        group_id: benutzerkonten_group)
 
       expect(role).to be_present
     end
@@ -411,7 +440,7 @@ describe "import:people_cms" do
       person = Person.find_by(sww_cms_profile_id: 42)
       expect(person).to be_present
 
-      expect(person.country).to eq('CH')
+      expect(person.country).to eq("CH")
     end
 
     it "assigns Deutsch as fallback language" do
@@ -422,13 +451,15 @@ describe "import:people_cms" do
       person = Person.find_by(sww_cms_profile_id: 42)
       expect(person).to be_present
 
-      expect(person.language).to eq('de')
+      expect(person.language).to eq("de")
     end
 
     xit "updates existing person except password and creates role" do
-      existing = Fabricate(:person, first_name: 'Bob', password: 'old_password', password_confirmation: 'old_password', email: 'max.muster@example.com')
+      existing = Fabricate(:person, first_name: "Bob", password: "old_password",
+        password_confirmation: "old_password", email: "max.muster@example.com")
 
-      Fabricate(Group::Mitglieder::Aktivmitglied.to_s, person: existing, group: groups(:berner_mitglieder))
+      Fabricate(Group::Mitglieder::Aktivmitglied.to_s, person: existing,
+        group: groups(:berner_mitglieder))
 
       expect do
         expect do
@@ -438,20 +469,21 @@ describe "import:people_cms" do
 
       existing.reload
 
-      expect(existing.first_name).to eq('Max')
-      expect(existing.last_name).to eq('Muster')
-      expect(existing.address).to eq('Musterweg 12')
-      expect(existing.zip_code).to eq('3000')
-      expect(existing.town).to eq('Bern')
-      expect(existing.country).to eq('DE')
-      expect(existing.email).to eq('max.muster@example.com')
-      expect(existing.language).to eq('fr')
-      expect(existing.valid_password?('old_password')).to eq(true)
-      expect(existing.valid_password?('great_password')).to eq(false)
+      expect(existing.first_name).to eq("Max")
+      expect(existing.last_name).to eq("Muster")
+      expect(existing.address).to eq("Musterweg 12")
+      expect(existing.zip_code).to eq("3000")
+      expect(existing.town).to eq("Bern")
+      expect(existing.country).to eq("DE")
+      expect(existing.email).to eq("max.muster@example.com")
+      expect(existing.language).to eq("fr")
+      expect(existing.valid_password?("old_password")).to eq(true)
+      expect(existing.valid_password?("great_password")).to eq(false)
 
       expect(existing.roles.size).to eq(2)
 
-      role = Group::Benutzerkonten::Benutzerkonto.find_by(person_id: existing.id, group_id: benutzerkonten_group)
+      role = Group::Benutzerkonten::Benutzerkonto.find_by(person_id: existing.id,
+        group_id: benutzerkonten_group)
 
       expect(role).to be_present
     end

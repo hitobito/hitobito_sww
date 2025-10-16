@@ -12,18 +12,25 @@ describe GroupDecorator, :draper_with_helpers do
     it "does not include StagingUser" do
       decorator = GroupDecorator.new(groups(:benutzerkonten))
 
+      # rubocop:todo Layout/LineLength
       expect(decorator.allowed_roles_for_self_registration).to match_array [Group::Benutzerkonten::Benutzerkonto]
+      # rubocop:enable Layout/LineLength
     end
   end
 
   describe "possible_roles" do
-    let(:current_user) { Fabricate(Group::SchweizerWanderwege::Support.sti_name.to_sym, group: groups(:schweizer_wanderwege)).person }
+    let(:current_user) {
+      Fabricate(Group::SchweizerWanderwege::Support.sti_name.to_sym,
+        group: groups(:schweizer_wanderwege)).person
+    }
 
     it "contains StagingUser" do
       decorator = GroupDecorator.new(groups(:benutzerkonten))
       expect(decorator).to receive_message_chain(:helpers, :action_name).and_return(:new)
 
-      expect(decorator.possible_roles(person: people(:zuercher_leiter))).to match_array [Group::Benutzerkonten::StagingUser, Group::Benutzerkonten::Verwalter]
+      expect(decorator.possible_roles(person: people(:zuercher_leiter))).to match_array [
+        Group::Benutzerkonten::StagingUser, Group::Benutzerkonten::Verwalter
+      ]
     end
   end
 end
