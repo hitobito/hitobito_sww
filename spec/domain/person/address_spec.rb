@@ -9,46 +9,58 @@ require "spec_helper"
 
 describe Person::Address do
   let(:attrs) {
-    {first_name: "Jane", last_name: "Doe", nickname: nil, street: "Lagistrasse", housenumber: "12a",
-     zip_code: 1080, town: "Jamestown"}
+    {
+      first_name: "Jane",
+      last_name: "Doe",
+      nickname: nil,
+      address_care_of: "Office",
+      street: "Lagistrasse",
+      housenumber: "12a",
+      postbox: "Postfach 10",
+      zip_code: 1080,
+      town: "Jamestown"
+    }
   }
   let(:person) { Fabricate.build(:person, attrs) }
 
   subject(:text) { described_class.new(person).for_pdf_label(person.to_s) }
 
-  it "renders without gender if unknown" do
-    expect(text).to eq <<~TEXT
-      Jane Doe
-      Lagistrasse 12a
-      1080 Jamestown
-    TEXT
-  end
-
-  [
-    ["de", %w[Herr Frau]],
-    ["fr", %w[Monsieur Madame]],
-    ["it", %w[Signor Signora]]
-  ].each do |locale, (male, female)|
-    it "uses #{male} for male in #{locale}" do
-      person.language = locale
-      person.gender = :m
-
-      expect(text).to eq <<~TEXT
-        #{male}
-        Jane Doe
-        Lagistrasse 12a
-        1080 Jamestown
-      TEXT
+  describe "gender" do
+    it "renders without gender if unknown" do
+      expect(text).to start_with "Jane Doe"
     end
 
-    it "uses #{female} for male in #{locale}" do
-      person.language = locale
+    [
+      ["de", %w[Herr Frau]],
+      ["fr", %w[Monsieur Madame]],
+      ["it", %w[Signor Signora]]
+    ].each do |locale, (male, female)|
+      it "uses #{male} for male in #{locale}" do
+        person.language = locale
+        person.gender = :m
+
+        expect(text).to start_with male
+      end
+
+      it "uses #{female} for male in #{locale}" do
+        person.language = locale
+        person.gender = :w
+
+        expect(text).to start_with female
+      end
+    end
+  end
+
+  describe "person" do
+    it "renders full address" do
       person.gender = :w
 
       expect(text).to eq <<~TEXT
-        #{female}
+        Frau
         Jane Doe
+        Office
         Lagistrasse 12a
+        Postfach 10
         1080 Jamestown
       TEXT
     end
@@ -61,7 +73,9 @@ describe Person::Address do
       expect(text).to eq <<~TEXT
         Company LTD
         Jane Doe
+        Office
         Lagistrasse 12a
+        Postfach 10
         1080 Jamestown
       TEXT
     end
@@ -70,10 +84,17 @@ describe Person::Address do
       person.gender = :w
       person.company = true
       person.company_name = "Company LTD"
+      expect(text).to_not include "Frau"
+    end
+
+    it "prints name only once if they are identical" do
+      person.company = true
+      person.company_name = "Jane Doe"
       expect(text).to eq <<~TEXT
-        Company LTD
         Jane Doe
+        Office
         Lagistrasse 12a
+        Postfach 10
         1080 Jamestown
       TEXT
     end
@@ -83,17 +104,9 @@ describe Person::Address do
       person.company_name = "Jane Doe"
       expect(text).to eq <<~TEXT
         Jane Doe
+        Office
         Lagistrasse 12a
-        1080 Jamestown
-      TEXT
-    end
-
-    it "prints name only once if they are identical" do
-      person.company = true
-      person.company_name = "Jane Doe"
-      expect(text).to eq <<~TEXT
-        Jane Doe
-        Lagistrasse 12a
+        Postfach 10
         1080 Jamestown
       TEXT
     end
@@ -102,12 +115,7 @@ describe Person::Address do
       person.company = true
       person.company_name = "Jane Doe"
       person.gender = :w
-      expect(text).to eq <<~TEXT
-        Frau
-        Jane Doe
-        Lagistrasse 12a
-        1080 Jamestown
-      TEXT
+      expect(text).to start_with "Frau"
     end
   end
 end

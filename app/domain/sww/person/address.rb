@@ -11,7 +11,7 @@ module Sww::Person::Address
 
     [
       (print_company? ? build_company_block : build_person_block),
-      short_address(country_as: :country_label)
+      full_address(country_as: :country_label)
     ].compact.join("\n")
   end
 
