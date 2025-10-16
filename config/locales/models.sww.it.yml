@@ -61,6 +61,8 @@ it:
         one: Account utente
       group/benutzerkonten/verwalter:
         one: Assistenza
+      group/benutzerkonten/staging_user:
+        one: Staging Benutzer
 
       group/kontakte/kontakt:
         one: Contatti
