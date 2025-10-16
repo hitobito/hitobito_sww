@@ -5,7 +5,6 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
 require "spec_helper"
 
 describe :self_registration, js: true do
@@ -31,7 +30,6 @@ describe :self_registration, js: true do
     fill_in "wizards_register_new_user_wizard_new_user_form_zip_code", with: "63101"
     fill_in "wizards_register_new_user_wizard_new_user_form_town", with: "Zürich"
     fill_in "Geburtsdatum", with: "01.01.1980"
-    country_selector = "#self_registration_main_person_attributes_country"
     find(:label, "Land").click
     find(:option, text: "Vereinigte Staaten").click
     yield if block_given?
@@ -51,7 +49,9 @@ describe :self_registration, js: true do
 
       expect do
         click_on "Registrieren"
+        # rubocop:todo Layout/LineLength
         expect(page).to have_text("Sie haben sich erfolgreich registriert. Sie erhalten in Kürze eine E-Mail mit der Anleitung, wie Sie Ihren Account freischalten können.")
+        # rubocop:enable Layout/LineLength
       end.to change { Person.count }.by(1)
         .and change { Role.count }.by(1)
         .and change { ActionMailer::Base.deliveries.count }.by(1)
@@ -96,7 +96,9 @@ describe :self_registration, js: true do
         check "Ich erkläre mich mit den folgenden Bestimmungen einverstanden:"
         expect do
           click_on "Registrieren"
+          # rubocop:todo Layout/LineLength
           expect(page).to have_text("Sie haben sich erfolgreich registriert. Sie erhalten in Kürze eine E-Mail mit der Anleitung, wie Sie Ihren Account freischalten können.")
+          # rubocop:enable Layout/LineLength
         end.to change { Person.count }.by(1)
         person = Person.find_by(email: "max.muster@hitobito.example.com")
         expect(person.privacy_policy_accepted).to eq true

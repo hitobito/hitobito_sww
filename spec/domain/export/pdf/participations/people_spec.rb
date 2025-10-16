@@ -5,17 +5,21 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
 require "spec_helper"
 
 describe Export::Pdf::Participations::People do
   include PdfHelpers
 
-  let(:participation) { Fabricate(:event_participation, additional_information: "Ich mag kein Gemüse!!!", participant: person) }
+  let(:participation) {
+    Fabricate(:event_participation, additional_information: "Ich mag kein Gemüse!!!",
+      participant: person)
+  }
   let(:person) { people(:berner_wanderer) }
   let(:group) { groups(:schweizer_wanderwege) }
   let(:contactables) { [top_leader.tap { |u| u.update(nickname: "Funny Name") }] }
-  let(:pdf) { Export::Pdf::Participations::Runner.new.render([participation], group, participation.event) }
+  let(:pdf) {
+    Export::Pdf::Participations::Runner.new.render([participation], group, participation.event)
+  }
 
   subject { PDF::Inspector::Text.analyze(pdf) }
 

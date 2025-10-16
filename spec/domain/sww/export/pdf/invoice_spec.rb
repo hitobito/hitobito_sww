@@ -28,7 +28,9 @@ describe Export::Pdf::Invoice do
 
   let(:payment_slip) { true }
 
-  let(:pdf) { described_class.render(invoice, payment_slip: payment_slip, articles: true, reminders: true) }
+  let(:pdf) {
+    described_class.render(invoice, payment_slip: payment_slip, articles: true, reminders: true)
+  }
 
   subject { PDF::Inspector::Text.analyze(pdf) }
 
@@ -264,7 +266,8 @@ describe Export::Pdf::Invoice do
     end
 
     it "does not render membership card when invoice has reminder" do
-      invoice.update!(membership_card: true, membership_expires_on: Date.new(2022, 1, 1), due_at: 10.days.ago, state: "reminded")
+      invoice.update!(membership_card: true, membership_expires_on: Date.new(2022, 1, 1),
+        due_at: 10.days.ago, state: "reminded")
       Fabricate(:payment_reminder, invoice: invoice, due_at: 3.days.ago, created_at: 5.days.ago)
 
       expect(text_with_position).not_to include([346, 721, "Mitgliederausweis"])
@@ -453,9 +456,11 @@ describe Export::Pdf::Invoice do
     end
 
     it "renders created at of latest reminder when reminder exists as invoice date" do
-      invoice.invoice_items.build(name: "pens", unit_cost: 10, vat_rate: 10, count: 2, invoice: invoice)
+      invoice.invoice_items.build(name: "pens", unit_cost: 10, vat_rate: 10, count: 2,
+        invoice: invoice)
       invoice.update!(issued_at: Date.new(2025, 1, 1), due_at: 5.days.from_now, state: "sent")
-      PaymentReminder.create!(level: 1, due_at: 10.days.from_now, invoice: invoice, title: "Reminder 1", created_at: 10.days.from_now)
+      PaymentReminder.create!(level: 1, due_at: 10.days.from_now, invoice: invoice,
+        title: "Reminder 1", created_at: 10.days.from_now)
       invoice_text = [
         [459, 529, "Datum: #{I18n.l(10.days.from_now.to_date)}"],
         [57, 687, "Max Muster"],
@@ -519,12 +524,16 @@ describe Export::Pdf::Invoice do
     end
 
     context "without reminders" do
-      let(:pdf) { described_class.render(invoice, payment_slip: true, articles: true, reminders: false) }
+      let(:pdf) {
+        described_class.render(invoice, payment_slip: true, articles: true, reminders: false)
+      }
 
       it "does not render reminder and reminder date" do
-        invoice.invoice_items.build(name: "pens", unit_cost: 10, vat_rate: 10, count: 2, invoice: invoice)
+        invoice.invoice_items.build(name: "pens", unit_cost: 10, vat_rate: 10, count: 2,
+          invoice: invoice)
         invoice.update!(issued_at: Date.new(2025, 1, 1), due_at: 5.days.from_now, state: "sent")
-        PaymentReminder.create!(level: 1, due_at: 10.days.from_now, invoice: invoice, title: "Reminder 1", created_at: 10.days.from_now)
+        PaymentReminder.create!(level: 1, due_at: 10.days.from_now, invoice: invoice,
+          title: "Reminder 1", created_at: 10.days.from_now)
         invoice_text = [
           [459, 529, "Datum: 01.01.2025"],
           [57, 687, "Max Muster"],
@@ -588,7 +597,8 @@ describe Export::Pdf::Invoice do
       end
 
       it "renders membership card when reminders false" do
-        invoice.update!(membership_card: true, membership_expires_on: Date.new(2022, 1, 1), due_at: 10.days.ago, state: "reminded")
+        invoice.update!(membership_card: true, membership_expires_on: Date.new(2022, 1, 1),
+          due_at: 10.days.ago, state: "reminded")
         Fabricate(:payment_reminder, invoice: invoice, due_at: 3.days.ago, created_at: 5.days.ago)
 
         expect(text_with_position).to include([346, 721, "Mitgliederausweis"])
@@ -768,7 +778,9 @@ describe Export::Pdf::Invoice do
   end
 
   it "renders invoice number as column label" do
-    expect(text_with_position.find { _3.starts_with?("Rechnungsnummer") }).to end_with(["Rechnungsnummer: 636980692-2 vom 15.06.2022"])
+    expect(text_with_position.find {
+      _3.starts_with?("Rechnungsnummer")
+    }).to end_with(["Rechnungsnummer: 636980692-2 vom 15.06.2022"])
   end
 
   it "renders invoice due at below articles table" do
@@ -779,7 +791,7 @@ describe Export::Pdf::Invoice do
     expect(due_at).to end_with "Fällig bis:      01.08.2022"
   end
 
-  context do
+  context do # rubocop:todo RSpec/MissingExampleGroupArgument
     let(:invoice) do
       invoices(:invoice).tap do |i|
         i.update!(
@@ -873,13 +885,20 @@ describe Export::Pdf::Invoice do
 
     context "with use_header=true" do
       before do
+        # rubocop:todo Layout/LineLength
         # We have to mock the repeat_all call, since PDF::Inspector::Text.analzye can not read repeated texts
+        # rubocop:enable Layout/LineLength
         # see https://github.com/prawnpdf/pdf-inspector/issues/25
-        expect_any_instance_of(Sww::Export::Pdf::Invoice::PageHeader).to receive(:repeat_all) { |&block| block.call }
+        # rubocop:todo Layout/LineLength
+        expect_any_instance_of(Sww::Export::Pdf::Invoice::PageHeader).to receive(:repeat_all) { |&block|
+          # rubocop:enable Layout/LineLength
+          block.call
+        }
       end
 
       it "renders header on every page" do
-        invoice_config.update!(use_header: true, header: "<p>This is a <strong>header</strong><br/>With multiple lines</p>")
+        invoice_config.update!(use_header: true,
+          header: "<p>This is a <strong>header</strong><br/>With multiple lines</p>")
 
         header = [
           [57, 803, "This is a "],
@@ -891,7 +910,10 @@ describe Export::Pdf::Invoice do
       end
 
       it "renders all lines of very heigh header" do
-        invoice_config.update!(use_header: true, header: "<p>This is a <strong>header</strong><br/>With multiple lines</p><br/>Line<br/>Line</br>Line<br/>Line<br/>Line")
+        invoice_config.update!(use_header: true,
+          # rubocop:todo Layout/LineLength
+          header: "<p>This is a <strong>header</strong><br/>With multiple lines</p><br/>Line<br/>Line</br>Line<br/>Line<br/>Line")
+        # rubocop:enable Layout/LineLength
 
         expect(text_with_position.map(&:third).count("Line")).to eq 5
       end

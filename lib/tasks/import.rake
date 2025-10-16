@@ -8,7 +8,7 @@
 require Wagons.find("sww").root.join("db/seeds/support/data_migrator.rb")
 require Wagons.find("sww").root.join("db/seeds/support/data_migrator_cms.rb")
 
-# rubocop:disable Metrics/BlockLength, Metrics/LineLength, Rails/SkipsModelValidations
+# rubocop:disable Metrics/BlockLength, Layout/LineLength, Rails/SkipsModelValidations
 namespace :import do
   desc "Convert sww profile cms profile input file from xlsx to csv"
   file "tmp/mod_profile.csv" => ["data/mod_profile.xlsx"] do
@@ -341,4 +341,4 @@ namespace :import do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength, Metrics/LineLength, Rails/SkipsModelValidations
+# rubocop:enable Metrics/BlockLength, Layout/LineLength, Rails/SkipsModelValidations

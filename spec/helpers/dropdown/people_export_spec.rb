@@ -27,7 +27,9 @@ describe "Dropdown::PeopleExport" do
     let(:details) { true }
 
     it "contains participations list" do
-      expect(submenu_entries(dropdown, "Excel")).to match_array ["Adressliste", "Alle Angaben", "Spaltenauswahl", "Teilnehmerliste"]
+      expect(submenu_entries(dropdown,
+        "Excel")).to match_array ["Adressliste", "Alle Angaben", "Spaltenauswahl",
+          "Teilnehmerliste"]
     end
   end
 

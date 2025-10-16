@@ -5,11 +5,9 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
-require 'spec_helper'
+require "spec_helper"
 
 describe Sww::Export::Tabular::People::PeopleFull do
-
   let(:person) { people(:berner_wanderer) }
   let(:list) { [person] }
   let(:people_list) { Export::Tabular::People::PeopleFull.new(list) }
@@ -64,7 +62,9 @@ describe Sww::Export::Tabular::People::PeopleFull do
     end
 
     it "exports all household people member numbers" do
+      # rubocop:todo Layout/LineLength
       expect(people_list.data_rows.to_a.flatten).to include "#{people(:zuercher_wanderer).member_number}, #{people(:zuercher_leiter).member_number}"
+      # rubocop:enable Layout/LineLength
     end
   end
 end

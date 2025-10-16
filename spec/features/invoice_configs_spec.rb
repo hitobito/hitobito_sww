@@ -48,14 +48,18 @@ describe :invoice_configs do
       end
 
       it "has no remove_logo checkbox" do
+        # rubocop:todo Layout/LineLength
         expect(page).to have_no_selector "input[type='checkbox'][name='invoice_config[remove_logo]']"
+        # rubocop:enable Layout/LineLength
       end
 
       it 'requires a logo when logo_position is not "Kein Logo"' do
         select "Rechts", from: "invoice_config[logo_position]"
         click_button "Rechnungseinstellungen aktualisieren"
 
+        # rubocop:todo Layout/LineLength
         expect(page).to have_content "Logo muss angegeben werden, wenn eine Logoposition gewählt ist"
+        # rubocop:enable Layout/LineLength
         click_link "Layout"
         expect(page).to have_selector "#invoice_config_logo.is-invalid"
       end

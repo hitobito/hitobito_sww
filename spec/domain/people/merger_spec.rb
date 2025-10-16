@@ -5,7 +5,6 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
 require "spec_helper"
 
 describe People::Merger do
@@ -14,7 +13,6 @@ describe People::Merger do
   let(:actor) { people(:zuercher_wanderer) }
 
   let(:merger) { described_class.new(@source.reload, @target.reload, actor) }
-
 
   context "merge people" do
     before do

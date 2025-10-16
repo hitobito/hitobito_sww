@@ -5,9 +5,8 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
-require 'spec_helper'
+require "spec_helper"
 
 describe Group do
-  include_examples 'group types'
+  include_examples "group types"
 end
