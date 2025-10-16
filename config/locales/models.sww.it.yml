@@ -62,7 +62,7 @@ it:
       group/benutzerkonten/verwalter:
         one: Assistenza
       group/benutzerkonten/staging_user:
-        one: Staging Benutzer
+        one: Staging User
 
       group/kontakte/kontakt:
         one: Contatti
