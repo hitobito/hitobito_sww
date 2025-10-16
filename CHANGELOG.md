@@ -4,7 +4,7 @@
 
 - In den Rechnungseinstellungen kann jetzt für das Logo unten links die Option "Logo auf allen Seiten anzeigen" aktiviert werden (hitobito_sww#279)
 - In den Rechnungseinstellungen kann jetzt eine Kopfzeile konfiguriert werden (hitobito_sww#278)
-- Benutzern im Benutzerkonten-Layer können jetzt die Rolle "Staging Benutzer" zugewiesen werden, womit das Passwort beim Staging-Sync nicht zurückgesetzt wird (hitobito_sww#284)
+- Benutzern im Benutzerkonten-Layer können jetzt die Rolle "Staging User" zugewiesen werden, womit das Passwort beim Staging-Sync nicht zurückgesetzt wird (hitobito_sww#284)
 
 ## Version 2.6
 

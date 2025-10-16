@@ -54,7 +54,7 @@ de:
       group/benutzerkonten/verwalter:
         one: Support
       group/benutzerkonten/staging_user:
-        one: Staging Benutzer
+        one: Staging User
 
       group/kontakte/kontakt:
         one: Kontakt
