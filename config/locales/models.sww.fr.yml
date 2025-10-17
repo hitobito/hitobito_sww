@@ -62,7 +62,7 @@ fr:
       group/benutzerkonten/verwalter:
         one: Support
       group/benutzerkonten/staging_user:
-        one: Staging User
+        one: Staging Benutzer
 
       group/kontakte/kontakt:
         one: Contact
