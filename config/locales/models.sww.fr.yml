@@ -62,7 +62,7 @@ fr:
       group/benutzerkonten/verwalter:
         one: Support
       group/benutzerkonten/staging_user:
-        one: Staging User
+        one: Utilisateur Staging
 
       group/kontakte/kontakt:
         one: Contact
@@ -138,11 +138,11 @@ fr:
         membership_expires_on: Adhésion valide jusqu'au
       invoice_config:
         logo_positions:
-          bottom_left: Unten links
+          bottom_left: En bas à gauche
         separators: Afficher la ligne de séparation sur le bulletin de versement
-        use_header: Kopfzeile anzeigen
-        header: Kopfzeile
-        logo_on_every_page: Logo auf allen Seiten anzeigen
+        use_header: Afficher l'en-tête
+        header: en-tête
+        logo_on_every_page: Afficher le logo sur toutes les pages
       group:
         event_sender: Événement E-mail de l'expéditeur
         membership_card_left_position: Carte de membre Distance à partir de la gauche (cm)
@@ -159,7 +159,7 @@ fr:
     messages:
       cannot_be_later_than_today: ne peut pas être plus tard qu'aujourd'hui
       cannot_be_later_than_deleted_at: doit avoir lieu avant ou le même jour que la sortie
-      logo_on_every_page_only_allowed_for_position_bottom_left: "kann nur mit der Logo Position \"%{valid_position}\" aktiviert werden" 
+      logo_on_every_page_only_allowed_for_position_bottom_left: "Ne peut être activé qu'avec la position du logo \"%{valid_position}\"" 
 
   event:
     application_market:

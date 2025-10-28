@@ -19,12 +19,12 @@ it:
 
   devise:
     confirmation_instructions:
-      subject: "E-Mail-Adresse bestätigen"
+      subject: "Confermare l'indirizzo e-mail"
       body:
-        greeting: "Guten Tag"
-        information_html: "Ihre E-Mail-Adresse wurde geändert. Bitte klicken Sie auf den untenstehenden Link, um die Änderung zu bestätigen:"
-        link_text: "%{email} bestätigen"
-        footer: "Freundliche Grüsse<br>Ihre Schweizer Wanderwege"
+        greeting: "Buongiorno"
+        information_html: "Il vostro indirizzo e-mail è stato modificato. Cliccate sul link sottostante per confermare la modifica:"
+        link_text: "%{email} confermare"
+        footer: "Cordiali saluti<br>Sentieri Svizzeri"
     registrations:
       signed_up: 'La registrazione è avvenuta con successo.'
       signed_up_but_unconfirmed: 'La registrazione è avvenuta con successo. Riceverete a breve un''e-mail con le istruzioni su come attivare il vostro account.'
