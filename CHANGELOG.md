@@ -1,6 +1,6 @@
 # Hitobito SWW Changelog
 
-## unreleased
+## Version 2.7
 
 - In den Rechnungseinstellungen kann jetzt für das Logo unten links die Option "Logo auf allen Seiten anzeigen" aktiviert werden (hitobito_sww#279)
 - In den Rechnungseinstellungen kann jetzt eine Kopfzeile konfiguriert werden (hitobito_sww#278)
