@@ -37,7 +37,11 @@ schweizer_wanderwege:
   group: schweizer_wanderwege
   sequence_number: 1
   beneficiary: 'Schweizer Wanderwege'
-  payee: "Hitobito AG\nHans Gerber\nSwitzerland"
+  payee_name: "Hitobito AG"
+  payee_street: "Belpstrasse"
+  payee_housenumber: "37"
+  payee_zip_code: "3007"
+  payee_town: "Bern"
   address: 'schweizer wanderwege address'
   iban: 'CH93 0076 2011 6238 5295 7'
   account_number: '10-5318-5'
@@ -49,7 +53,11 @@ berner_wanderwege:
   group: berner_wanderwege
   sequence_number: 2
   beneficiary: 'Berner Wanderwege'
-  payee: "Hitobito AG\nHans Gerber\nSwitzerland"
+  payee_name: "Hitobito AG"
+  payee_street: "Belpstrasse"
+  payee_housenumber: "37"
+  payee_zip_code: "3007"
+  payee_town: "Bern"
   address: 'berner wanderwege address'
   iban: 'CH93 0076 2011 6238 5295 7'
   account_number: '10-5318-5'
