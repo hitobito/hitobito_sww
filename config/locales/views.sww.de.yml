@@ -45,7 +45,7 @@ de:
             without_password_html: 'Herzlich Willkommen! Bitte setzen Sie Ihr Passwort unter folgendem Link:'
           ignore_information_html: 'Wenn Sie Ihr Passwort nicht ändern wollen, können Sie diese E-Mail ignorieren.<br><br>Das Passwort ändert sich nicht, ohne dass Sie auf dem obigen Link gehen und dort ein neues Passwort vergeben.'
 
-  invoice_lists:
+  invoice_runs:
     form_invoice_fields_sww:
       membership_card_caption: Mitgliederausweis mit drucken
 

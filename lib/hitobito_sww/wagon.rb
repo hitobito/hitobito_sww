@@ -80,9 +80,9 @@ module HitobitoSww
       Event::RegisterMailer.prepend Sww::Event::RegisterMailer
 
       # Since permitted_attrs are an array, it's really hard to expand nested attrs
-      invoice_lists_invoice_permitted_attrs_hash = InvoiceListsController.permitted_attrs.find { |attr| attr.is_a?(Hash) && attr.keys.include?(:invoice) }
-      invoice_lists_invoice_permitted_attrs = invoice_lists_invoice_permitted_attrs_hash[:invoice]
-      invoice_lists_invoice_permitted_attrs_hash.merge!(invoice: invoice_lists_invoice_permitted_attrs + [:membership_card, :membership_expires_on])
+      invoice_runs_invoice_permitted_attrs_hash = InvoiceRunsController.permitted_attrs.find { |attr| attr.is_a?(Hash) && attr.keys.include?(:invoice) }
+      invoice_runs_invoice_permitted_attrs = invoice_runs_invoice_permitted_attrs_hash[:invoice]
+      invoice_runs_invoice_permitted_attrs_hash.merge!(invoice: invoice_runs_invoice_permitted_attrs + [:membership_card, :membership_expires_on])
 
       MailingListAbility.include Sww::MailingListAbility
 
