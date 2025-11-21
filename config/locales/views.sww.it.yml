@@ -45,7 +45,7 @@ it:
             without_password_html: 'Benvenuto! Imposta la tua password utilizzando il seguente link:'
           ignore_information_html: 'Se non desideri modificare la tua password, puoi ignorare questa e-mail.<br><br>La password non verrà modificata a meno che tu non clicchi sul link sopra indicato e ne imposti una nuova.'
 
-  invoice_lists:
+  invoice_runs:
     form_invoice_fields_sww:
       membership_card_caption: Stampa la carta socio
 

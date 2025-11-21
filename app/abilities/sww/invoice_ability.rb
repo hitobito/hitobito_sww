@@ -13,7 +13,7 @@ module Sww::InvoiceAbility
       permission(:complete_finance).may(:show, :create, :edit, :update, :destroy).all
     end
 
-    on(InvoiceList) do
+    on(InvoiceRun) do
       permission(:complete_finance).may(:update, :destroy, :create, :index_invoices).all
     end
 
