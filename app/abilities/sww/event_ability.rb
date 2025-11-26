@@ -10,9 +10,7 @@ module Sww::EventAbility
 
   included do
     on(Event) do
-      permission(:group_and_below_full).may(:create, :update, :destroy, :manage_tags,
-        :application_market)
-        .in_same_group_or_below_if_active
+      permission(:group_and_below_full).may(:application_market).in_same_group_or_below_if_active
     end
   end
 end
