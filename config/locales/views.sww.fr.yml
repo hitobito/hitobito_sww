@@ -47,7 +47,7 @@ fr:
 
   invoice_runs:
     form_invoice_fields_sww:
-      membership_card_caption: Carte de membre avec impression
+      membership_card_caption: Mitgliederausweis mit drucken
 
   groups:
     form_tabs:
