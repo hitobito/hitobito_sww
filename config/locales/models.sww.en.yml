@@ -1,0 +1,174 @@
+#  Copyright (c) 2012-2025, Schweizer Wanderwege. This file is part of
+#  hitobito_sww and licensed under the Affero General Public License version 3
+#  or later. See the COPYING file at the top-level directory or at
+#  https://github.com/hitobito/hitobito_sww.
+
+
+en:
+  activerecord:
+    models:
+
+      ### GROUPS
+
+      group/schweizer_wanderwege:
+        one: Suisse Rando
+        other: Suisse Rando
+
+      group/benutzerkonten:
+        one: Comptes d'utilisateurs
+        other: Comptes d'utilisateurs
+
+      group/fachorganisation:
+        one: Fachorganisation
+        other: Fachorganisation
+
+      group/kontakte:
+        one: Contacts
+        other: Contacts
+
+      group/vorstand:
+        one: Comité
+        other: Comité
+
+      group/geschaeftsstelle:
+        one: Direction
+        other: Direction
+
+      group/gremium_projektgruppe:
+        one: Gremium/Projektgruppe
+        other: Gremium/Projektgruppe
+
+      group/mitglieder:
+        one: Mitglieder
+        other: Mitglieder
+
+      ### ROLES
+
+      group/schweizer_wanderwege/mitarbeitende:
+        one: Mitarbeitende
+      group/schweizer_wanderwege/support:
+        one: Support
+
+      group/benutzerkonten/benutzerkonto:
+        one: Benutzerkonto
+      group/benutzerkonten/verwalter:
+        one: Support
+      group/benutzerkonten/staging_user:
+        one: Staging User
+
+      group/kontakte/kontakt:
+        one: Kontakt
+
+      group/vorstand/praesident:
+        one: Präsident
+      group/vorstand/vizepraesident:
+        one: Vizepräsident
+      group/vorstand/vorstandsmitglied:
+        one: Vorstandsmitglied
+
+      group/geschaeftsstelle/geschaeftsfuehrer:
+        one: Geschäftsführer
+      group/geschaeftsstelle/kassier:
+        one: Kassier
+      group/geschaeftsstelle/technischer_leiter:
+        one: Technischer Leiter
+      group/geschaeftsstelle/mitarbeiter:
+        one: Mitarbeiter
+
+      group/gremium_projektgruppe/leitung:
+        one: Leitung
+      group/gremium_projektgruppe/mitglied:
+        one: Mitglied
+
+      group/mitglieder/aktivmitglied:
+        one: Aktivmitglied
+      group/mitglieder/passivmitglied:
+        one: Passivmitglied
+      group/mitglieder/freimitglied:
+        one: Freimitglied
+      group/mitglieder/organisationen:
+        one: Organisationen
+      group/mitglieder/partner:
+        one: Partner
+      group/mitglieder/spender:
+        one: Spender
+      group/mitglieder/magazin_abonnent:
+        one: Magazin Abonnent
+
+      salutation:
+        available:
+          guten_tag:
+            label: Guten Tag
+            value:
+              m: Guten Tag
+              w: Guten Tag
+              other: Guten Tag
+          sehr_geehrte:
+            label: "Sehr geehrte*r Frau/Herr [Nachname]"
+            value:
+              m: "Sehr geehrter Herr %{last_name}"
+              w: "Sehr geehrte Frau %{last_name}"
+              other: "Sehr geehrte*r %{first_name} %{last_name}"
+
+    attributes:
+      person:
+        custom_salutation: Benutzerdefinierte Anrede
+        magazin_abo_number: 'Abo # Magazin'
+        member_number: Mitgliedernummer
+        manual_member_number: Mitgliedernummer
+        name_add_on: Namenszusatz
+        title: Titel
+        email: E-Mail
+        sww_salutation: Anrede
+        household_member_numbers: Mitgliedernummern Haushaltsmitglieder
+      message:
+        membership_card: Mitgliederausweis
+        membership_expires_on: Mitgliedschaft gültig bis
+      invoice:
+        hide_total: Spende
+        membership_card: Mitgliederausweis
+        membership_expires_on: Mitgliedschaft gültig bis
+      invoice_config:
+        logo_positions:
+          bottom_left: Unten links
+        separators: Trennlinie auf Einzahlungsschein anzeigen
+        use_header: Kopfzeile anzeigen
+        header: Kopfzeile
+        logo_on_every_page: Logo auf allen Seiten anzeigen
+      group:
+        event_sender: Anlass E-Mail Absendername
+        membership_card_left_position: Mitgliederausweis Abstand von links (cm)
+        membership_card_top_position: Mitgliederausweis Abstand von oben (cm)
+        letter_left_address_position: Addressabstand von links (cm)
+        letter_top_address_position: Addressabstand von oben (cm)
+
+  tags:
+    categories:
+      abo: Abonnement
+      category: Kategorie
+
+  errors:
+    messages:
+      cannot_be_later_than_today: kann nicht später als heute sein
+      cannot_be_later_than_deleted_at: muss vor oder am selben Tag wie der Austritt sein
+      logo_on_every_page_only_allowed_for_position_bottom_left: "kann nur mit der Logo Position \"%{valid_position}\" aktiviert werden" 
+
+  event:
+    application_market:
+      popover_waiting_list:
+        waiting_list_info: Setze diese Person auf die Warteliste.
+
+  doorkeeper:
+    scopes:
+      email: "Lesen Ihrer E-Mail-Adresse. Damit das Login korrekt abgewickelt werden kann, benötigen wir Ihre E-Mail-Adresse."
+      name: "Lesen Ihres Namens. Damit das Login korrekt abgewickelt werden kann, benötigen wir Ihren Namen."
+      with_roles: "Lesen Ihrer Adressstammdaten und Berechtigungen. Damit die Berechtigungen Ihres Kontos korrekt hinterlegt werden können, überprüft unser System Berechtigung und Adressstammdaten, welche keine weitere persönliche Information beinhaltet."
+      openid: "Lesen Ihres OpenID Connect (OIDC) Identity Tokens. Das ist eine Information, welche zur Authentifizierung Ihres Benutzers verwendet wird. So kann unser System die Identität Ihres Kontos bestätigen und sicherstellen, dass keine unautorisierten Zugriffe erfolgen."
+
+      api: "Lesen aller Personen, Gruppen, Events, Abos und Rechnungen auf die Sie Zugriff haben, via die JSON-Schnittstellen"
+      events: "Lesen aller Events, auf die Sie Zugriff haben"
+      groups: "Lesen aller Gruppen, auf die Sie Zugriff haben"
+      people: "Lesen aller Personen, auf die Sie Zugriff haben"
+      invoices: "Lesen aller Rechnungen, auf die Sie Zugriff haben"
+      mailing_lists: "Lesen aller Abos, auf die Sie Zugriff haben"
+      nextcloud: Lesen Ihrer Nextcloud-Gruppen und Ihres Anzeigenamens

@@ -1,0 +1,104 @@
+#  Copyright (c) 2012-2025, Schweizer Wanderwege. This file is part of
+#  hitobito_sww and licensed under the Affero General Public License version 3
+#  or later. See the COPYING file at the top-level directory or at
+#  https://github.com/hitobito/hitobito_sww.
+
+
+de_CH:
+  messages:
+    export:
+      pdf:
+        letter:
+          membership_card:
+            title: Mitgliederausweis
+            valid_until: Gültig bis
+
+    letter:
+      fields_sww:
+        membership_card_caption: Mitgliederausweis mit drucken
+
+  devise:
+    confirmation_instructions:
+      subject: "E-Mail-Adresse bestätigen"
+      body:
+        greeting: "Guten Tag"
+        information_html: "Ihre E-Mail-Adresse wurde geändert. Bitte klicken Sie auf den untenstehenden Link, um die Änderung zu bestätigen:"
+        link_text: "%{email} bestätigen"
+        footer: "Freundliche Grüsse<br>Ihre Schweizer Wanderwege"
+    registrations:
+      signed_up: 'Sie haben sich erfolgreich registriert.'
+      signed_up_but_unconfirmed: 'Sie haben sich erfolgreich registriert. Sie erhalten in Kürze eine E-Mail mit der Anleitung, wie Sie Ihren Account freischalten können.'
+      signed_up_but_inactive: 'Sie haben sich erfolgreich registriert. Wir konnten Sie noch nicht anmelden, da Ihr Account inaktiv ist.'
+      signed_up_but_locked: 'Sie haben sich erfolgreich registriert. Wir konnten Sie noch nicht anmelden, da Ihr Account gesperrt ist.'
+      signed_up_but_no_email: 'Sie haben sich erfolgreich registriert. Wir konnten Sie nicht anmelden, da Sie keine Mailadresse angegeben haben.'
+    sessions:
+      oauth_info:
+        sign_in: 'Anmelden'
+        info: ''
+    mailer:
+      reset_password_instructions:
+        subject: Passwort setzen
+        body:
+          greeting: Guten Tag
+          reset_instructions:
+            with_password: 'Sie können Ihr Passwort unter folgendem Link zurücksetzen:'
+            without_password_html: 'Herzlich Willkommen! Bitte setzen Sie Ihr Passwort unter folgendem Link:'
+          ignore_information_html: 'Wenn Sie Ihr Passwort nicht ändern wollen, können Sie diese E-Mail ignorieren.<br><br>Das Passwort ändert sich nicht, ohne dass Sie auf dem obigen Link gehen und dort ein neues Passwort vergeben.'
+
+  invoice_runs:
+    form_invoice_fields_sww:
+      membership_card_caption: Mitgliederausweis mit drucken
+
+  groups:
+    form_tabs:
+      membership_cards: Mitgliederausweis
+    form_tabs_sww:
+      email: E-Mail
+    tab_content_sww:
+      help_event_sender: Anlass E-Mails werden unter diesem Namen versendet.
+    self_registration:
+      new:
+        gender:
+          m: Herr
+          w: Frau
+          other: Andere
+      create:
+        email_taken: E-Mail wird bereits verwendet. Melden Sie sich an oder registrieren Sie sich mit einer anderen E-Mail-Adresse.
+      form:
+        has_account: "Haben Sie bereits ein Log-in?"
+        to_login_page: Anmelden
+      main_person:
+        birthday: Geburtsdatum
+        email: E-Mail
+        salutation: Anrede
+        street_house_nr: Strasse/Hausnummer
+        terms_of_use_title: Nutzungsbestimmungen
+        terms_of_use_text: "Indem Sie auf Registrieren klicken, stimmen Sie den Nutzungsbedingungen zu."
+        terms_of_use_link: ""
+        terms_of_use_link_name: Nutzungsbestimmungen
+        privacy_title: Datenschutzerklärung
+        privacy_text: "Weitere Informationen darüber, wie personenbezogene Daten erfasst, verwendet, weitergegeben und geschützt werden, finden Sie in der Datenschutzrichtlinie."
+        privacy_link: ""
+        privacy_link_name: Datenschutzrichtlinie
+  invoices:
+    export:
+      tabular:
+        evaluation_list:
+          daterange_label: Kriterium (von-bis)
+          print_date: Druckdatum
+          printed_by: Gedruckt von
+    form_sww:
+      membership_card_caption: Mitgliederausweis mit drucken
+
+    evaluations:
+      show:
+        excess: Spenden
+
+    pdf:
+      subtotal: Subtotal
+      donation: Spende
+      invoice_date: Datum
+      from: "vom %{date}"
+
+  dropdown/people_export:
+    participations: Teilnehmerliste
