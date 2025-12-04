@@ -14,7 +14,11 @@ describe Export::Pdf::Invoice do
     invoices(:invoice).tap do |i|
       i.update!(
         payment_slip: :qr,
-        payee: "Puzzle\nBelpstrasse 37\n3007 Bern",
+        payee_name: "Puzzle",
+        payee_street: "Belpstrasse",
+        payee_housenumber: "37",
+        payee_zip_code: "3007",
+        payee_town: "Bern",
         iban: "CH93 0076 2011 6238 5295 7",
         issued_at: Date.parse("2022-06-15"),
         due_at: Date.parse("2022-08-01")
@@ -791,12 +795,16 @@ describe Export::Pdf::Invoice do
     expect(due_at).to end_with "Fällig bis:      01.08.2022"
   end
 
-  context do # rubocop:todo RSpec/MissingExampleGroupArgument
+  context "with invoice item" do
     let(:invoice) do
       invoices(:invoice).tap do |i|
         i.update!(
           payment_slip: :qr,
-          payee: "Puzzle\nBelpstrasse 37\n3007 Bern",
+          payee_name: "Puzzle",
+          payee_street: "Belpstrasse",
+          payee_housenumber: "37",
+          payee_zip_code: "3007",
+          payee_town: "Bern",
           iban: "CH93 0076 2011 6238 5295 7",
           issued_at: Date.parse("2022-06-15"),
           due_at: Date.parse("2022-08-01")
@@ -885,15 +893,10 @@ describe Export::Pdf::Invoice do
 
     context "with use_header=true" do
       before do
-        # rubocop:todo Layout/LineLength
-        # We have to mock the repeat_all call, since PDF::Inspector::Text.analzye can not read repeated texts
-        # rubocop:enable Layout/LineLength
-        # see https://github.com/prawnpdf/pdf-inspector/issues/25
-        # rubocop:todo Layout/LineLength
-        expect_any_instance_of(Sww::Export::Pdf::Invoice::PageHeader).to receive(:repeat_all) { |&block|
-          # rubocop:enable Layout/LineLength
-          block.call
-        }
+        # We have to mock the repeat_all call, since PDF::Inspector::Text.analzye can not read
+        # repeated texts, see https://github.com/prawnpdf/pdf-inspector/issues/25
+        expect_any_instance_of(Sww::Export::Pdf::Invoice::PageHeader)
+          .to receive(:repeat_all) { |&block| block.call }
       end
 
       it "renders header on every page" do
@@ -911,9 +914,8 @@ describe Export::Pdf::Invoice do
 
       it "renders all lines of very heigh header" do
         invoice_config.update!(use_header: true,
-          # rubocop:todo Layout/LineLength
-          header: "<p>This is a <strong>header</strong><br/>With multiple lines</p><br/>Line<br/>Line</br>Line<br/>Line<br/>Line")
-        # rubocop:enable Layout/LineLength
+          header: "<p>This is a <strong>header</strong><br/>With multiple lines</p><br/>" \
+            "Line<br/>Line</br>Line<br/>Line<br/>Line")
 
         expect(text_with_position.map(&:third).count("Line")).to eq 5
       end
