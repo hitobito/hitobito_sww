@@ -35,20 +35,10 @@ module Sww::Person
       allow_nil: true
 
     belongs_to :updated_by, class_name: "Person", foreign_key: :updater_id
-
-    alias_method_chain :finance_groups, :complete_finance_permission
   end
 
   def member_number
     manual_member_number || id&.+(MEMBER_NUMBER_CALCULATION_OFFSET)
-  end
-
-  def finance_groups_with_complete_finance_permission
-    if groups_with_permission(:complete_finance).any?
-      Group.where(type: Group.all_types.select(&:layer).map(&:sti_name)).to_a
-    else
-      finance_groups_without_complete_finance_permission
-    end
   end
 
   def sww_salutation(skip_other: false)
