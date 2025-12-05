@@ -5,16 +5,18 @@ of Sww.
 
 ## Organization Hierarchy
 
+
+<!-- roles:start -->
 * Schweizer Wanderwege
   * Schweizer Wanderwege
     * Mitarbeitende: [:layer_and_below_full]
-    * Support: [:layer_and_below_full, :admin, :finance, :impersonation]
-* Benutzerkonten
+    * Support: [:layer_and_below_full, :admin, :impersonation, :support, :complete_finance]
+* Benutzerkonten < Schweizer Wanderwege
   * Benutzerkonten
     * Benutzerkonto: []
     * Support: [:layer_full]
-    * StagingUser: []
-* Fachorganisation
+    * Staging User: []
+* Fachorganisation < Schweizer Wanderwege
   * Vorstand
     * Präsident: [:contact_data, :layer_and_below_full]
     * Vizepräsident: [:contact_data, :layer_and_below_full]
@@ -40,3 +42,4 @@ of Sww.
     * Kontakt: []
 
 (Output of rake app:hitobito:roles)
+<!-- roles:end -->
