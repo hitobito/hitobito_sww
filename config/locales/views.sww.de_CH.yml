@@ -65,7 +65,7 @@ de_CH:
       create:
         email_taken: E-Mail wird bereits verwendet. Melden Sie sich an oder registrieren Sie sich mit einer anderen E-Mail-Adresse.
       form:
-        has_account: "Haben Sie bereits ein Log-in?"
+        has_account: "Haben Sie bereits ein Login?"
         to_login_page: Anmelden
       main_person:
         birthday: Geburtsdatum
