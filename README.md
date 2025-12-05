@@ -10,7 +10,7 @@ of Sww.
 * Schweizer Wanderwege
   * Schweizer Wanderwege
     * Mitarbeitende: [:layer_and_below_full]
-    * Support: [:layer_and_below_full, :admin, :impersonation, :support, :complete_finance]
+    * Support: [:layer_and_below_full, :admin, :impersonation, :support, :layer_and_below_finance]
 * Benutzerkonten < Schweizer Wanderwege
   * Benutzerkonten
     * Benutzerkonto: []

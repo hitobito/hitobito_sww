@@ -22,7 +22,6 @@ module HitobitoSww
     config.to_prepare do # rubocop:disable Metrics/BlockLength
       # rubocop:disable Layout/LineLength
       # extend application classes here
-      InvoiceAbility.include Sww::InvoiceAbility
       InvoiceConfig.prepend Sww::InvoiceConfig
       Invoice::STATES_PAYABLE << "payed" << "excess"
 
@@ -90,7 +89,7 @@ module HitobitoSww
         :membership_expires_on)
       MessagesController::PERMITTED_INVOICE_LETTER_ATTRS.push(:membership_card,
         :membership_expires_on)
-      Role::Permissions << :support << :complete_finance
+      Role::Permissions << :support
       # rubocop:enable Layout/LineLength
     end
 

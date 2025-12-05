@@ -24,7 +24,7 @@ class Group::SchweizerWanderwege < ::Group
       :admin,
       :impersonation,
       :support,
-      :complete_finance
+      :layer_and_below_finance
     ]
   end
 

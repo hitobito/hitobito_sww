@@ -70,31 +70,6 @@ describe Person do
     end
   end
 
-  describe "#finance_groups" do
-    it "returns all layers if complete_finance permission is given" do
-      all_layers = groups.select(&:layer)
-
-      person = Fabricate(Group::SchweizerWanderwege::Support.sti_name.to_sym,
-        group: groups(:schweizer_wanderwege)).person
-
-      expect(person.finance_groups).to match_array(all_layers)
-    end
-
-    it "returns layers of which finance permission is given" do
-      person = Fabricate(Group::Geschaeftsstelle::Kassier.sti_name.to_sym,
-        group: groups(:berner_geschaeftsstelle)).person
-
-      expect(person.finance_groups).to eq([groups(:berner_wanderwege)])
-    end
-
-    it "returns no layers when no finance permission is given" do
-      person = Fabricate(Group::Geschaeftsstelle::Mitarbeiter.sti_name.to_sym,
-        group: groups(:berner_geschaeftsstelle)).person
-
-      expect(person.finance_groups).to be_empty
-    end
-  end
-
   describe "#sww_salutation" do
     let(:person) { people(:berner_wanderer) }
 
