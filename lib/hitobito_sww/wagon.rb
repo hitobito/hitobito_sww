@@ -26,6 +26,9 @@ module HitobitoSww
 
       # rubocop:disable Layout/LineLength
       # extend application classes here
+
+      Contactable::Address.prepend Sww::Contactable::Address
+
       InvoiceConfig.prepend Sww::InvoiceConfig
       Invoice::STATES_PAYABLE << "payed" << "excess"
 
@@ -33,8 +36,6 @@ module HitobitoSww
       EventAbility.include Sww::EventAbility
       Group.include Sww::Group
       Person.include Sww::Person
-
-      Person::Address.prepend Sww::Person::Address
 
       Wizards::Steps::NewUserForm.prepend Sww::Wizards::Steps::NewUserForm
 
