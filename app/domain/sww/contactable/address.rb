@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-module Sww::Person::Address
+module Sww::Contactable::Address
   def for_pdf_label(name, nickname = false)
     return super unless addressable.is_a?(Person)
 
@@ -19,22 +19,22 @@ module Sww::Person::Address
 
   def build_company_block
     [
-      person.to_s,
-      person.full_name.presence
+      contactable.to_s,
+      contactable.full_name.presence
     ].compact.join("\n")
   end
 
   def build_person_block
     [
-      person.sww_salutation(skip_other: true),
-      person.to_s,
-      person.nickname
+      contactable.sww_salutation(skip_other: true),
+      contactable.to_s,
+      contactable.nickname
     ].compact.join("\n")
   end
 
   def print_company?
-    person.company? &&
-      person.company_name.present? &&
-      person.company_name != person.full_name
+    contactable.company? &&
+      contactable.company_name.present? &&
+      contactable.company_name != contactable.full_name
   end
 end
