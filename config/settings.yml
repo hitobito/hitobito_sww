@@ -28,6 +28,11 @@ email:
   # Sender for all emails sent by the application
   sender: <%= "Schweizer Wanderwege - Suisse Rando <noreply@#{mail_domain}>" %>
 
+event:
+  participations:
+    delete_answers_after_months: 12
+    delete_additional_information_after_months: 12
+
 # The person with this email has root access to everything
 # This person should only be used by the operators of the application,
 # not the customers.
