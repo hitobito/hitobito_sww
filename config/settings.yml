@@ -24,6 +24,20 @@ application:
                  ENV['RAILS_HOST_NAME'].presence ||
                  'localhost' %>
 
+droptours_export:
+  sftp_config: [
+    <% if ENV['RAILS_SFTP_CONFIG'].present? %>
+      <%= "#{ENV['RAILS_SFTP_CONFIG']}" %>
+    <% end %>
+  ]
+    #- fachorganisation_id: 1
+    #  host: sftp.example.com
+    #  port: 22
+    #  user: sftp_user
+    #  password: sftp_password
+    #  private_key: sftp_private_key_content
+    #  remote_path: /incoming/droptours/
+
 email:
   # Sender for all emails sent by the application
   sender: <%= "Schweizer Wanderwege - Suisse Rando <noreply@#{mail_domain}>" %>

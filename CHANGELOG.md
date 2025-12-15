@@ -2,6 +2,7 @@
 
 ## unreleased
 
+* CSV Export von Aktivmitgliedern von Genève Rando für Droptours (hitobito_sww#317)
 * Antworten und Zusätzlichen Angaben von Anmeldungen nach 12 Monaten löschen (hitobito_sww#320)
 
 ## Version 2.7

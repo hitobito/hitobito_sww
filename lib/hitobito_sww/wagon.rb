@@ -20,6 +20,10 @@ module HitobitoSww
     ]
 
     config.to_prepare do # rubocop:disable Metrics/BlockLength
+      JobManager.wagon_jobs += [
+        Export::DroptoursExportScheduleJob
+      ]
+
       # rubocop:disable Layout/LineLength
       # extend application classes here
       InvoiceConfig.prepend Sww::InvoiceConfig

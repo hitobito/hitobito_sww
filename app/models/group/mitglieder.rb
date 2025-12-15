@@ -8,6 +8,8 @@
 class Group::Mitglieder < ::Group
   children Group::Mitglieder
 
+  mounted_attr :droptours_export, :boolean
+
   ### ROLES
 
   class Aktivmitglied < ::Role
