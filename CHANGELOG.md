@@ -2,7 +2,7 @@
 
 ## unreleased
 
-* Antworten und Zusätzlichen Angeben von Anmeldungen nach 12 Monaten löschen (hitobito_sww#320)
+* Antworten und Zusätzlichen Angaben von Anmeldungen nach 12 Monaten löschen (hitobito_sww#320)
 
 ## Version 2.7
 
