@@ -1,5 +1,9 @@
 # Hitobito SWW Changelog
 
+## unreleased
+
+* Antworten und Zusätzlichen Angaben von Anmeldungen nach 12 Monaten löschen (hitobito_sww#320)
+
 ## Version 2.7
 
 - In den Rechnungseinstellungen kann jetzt für das Logo unten links die Option "Logo auf allen Seiten anzeigen" aktiviert werden (hitobito_sww#279)
