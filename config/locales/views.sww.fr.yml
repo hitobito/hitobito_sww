@@ -15,7 +15,7 @@ fr:
 
     letter:
       fields_sww:
-        membership_card_caption: Carte de membre avec impression
+        membership_card_caption: Imprimer la carte de membre
 
   devise:
     confirmation_instructions:
@@ -47,7 +47,7 @@ fr:
 
   invoice_runs:
     form_invoice_fields_sww:
-      membership_card_caption: Mitgliederausweis mit drucken
+      membership_card_caption: Imprimer la carte de membre
 
   groups:
     form_tabs:

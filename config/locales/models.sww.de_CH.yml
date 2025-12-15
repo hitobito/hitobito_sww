@@ -94,7 +94,6 @@ de_CH:
         one: Spender
       group/mitglieder/magazin_abonnent:
         one: Magazin Abonnent
-
       salutation:
         available:
           guten_tag:
@@ -141,6 +140,12 @@ de_CH:
         membership_card_top_position: Mitgliederausweis Abstand von oben (cm)
         letter_left_address_position: Addressabstand von links (cm)
         letter_top_address_position: Addressabstand von oben (cm)
+      role:
+        class:
+          permission:
+            description:
+              support: Erstellen und verwalten von allen Abos.
+
 
   tags:
     categories:

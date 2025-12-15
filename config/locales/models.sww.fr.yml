@@ -102,7 +102,6 @@ fr:
         one: Donateur
       group/mitglieder/magazin_abonnent:
         one: Abonnement Magazine
-
       salutation:
         available:
           guten_tag:
@@ -149,6 +148,12 @@ fr:
         membership_card_top_position: Carte de membre Distance du haut (cm)
         letter_left_address_position: Distance d'Address à partir de la gauche (cm)
         letter_top_address_position: Distance d'address depuis le haut (cm)
+      role:
+        class:
+          permission:
+            description:
+              support: Erstellen und verwalten von allen Abos.
+
 
   tags:
     categories:

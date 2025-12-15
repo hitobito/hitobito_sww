@@ -102,7 +102,6 @@ it:
         one: Donatore
       group/mitglieder/magazin_abonnent:
         one: Abbonato alla rivista
-
       salutation:
         available:
           guten_tag:
@@ -149,6 +148,12 @@ it:
         membership_card_top_position: Carta socio Distanza dall'alto (cm)
         letter_left_address_position: Distanza dell'indirizzo dalla sinistra (cm)
         letter_top_address_position: Distanza dall'indirizzo dall'alto (cm)
+      role:
+        class:
+          permission:
+            description:
+              support: Erstellen und verwalten von allen Abos.
+
 
   tags:
     categories:
