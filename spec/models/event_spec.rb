@@ -16,6 +16,10 @@ describe Event do
     event.groups = [groups(:berner_gremium), groups(:zuercher_mitglieder)]
   end
 
+  it "has automatic_assignment support" do
+    expect(described_class).to be_attr_used(:automatic_assignment)
+  end
+
   it "can have a waiting-list, generally" do
     expect(described_class.supports_applications).to be true
     expect(described_class).to be_attr_used(:waiting_list)

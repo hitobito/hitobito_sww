@@ -9,7 +9,7 @@ module Sww::Event
   extend ActiveSupport::Concern
 
   included do
-    self.used_attributes += [:waiting_list]
+    self.used_attributes += [:automatic_assignment, :waiting_list]
     self.supports_applications = true
 
     def group_names
