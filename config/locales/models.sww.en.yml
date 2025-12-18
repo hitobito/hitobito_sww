@@ -39,8 +39,8 @@ en:
         other: Gremium/Projektgruppe
 
       group/mitglieder:
-        one: Mitglieder
-        other: Mitglieder
+        one: Members
+        other: Members
 
       ### ROLES
 
