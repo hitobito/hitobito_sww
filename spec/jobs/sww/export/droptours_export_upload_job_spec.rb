@@ -34,14 +34,6 @@ describe Export::DroptoursExportUploadJob do
     expect(job.upload_path.to_s).to eq [sftp_config.first.remote_path, job.filename].join("/")
   end
 
-  it "#csv gets data from Export::DroptoursExportJob" do
-    expected_data = "csv data"
-    allow_any_instance_of(Export::DroptoursExportJob)
-      .to receive(:data).and_return(expected_data)
-
-    expect(job.csv).to eq expected_data
-  end
-
   describe "#perform" do
     it "uploads csv data to upload_path" do
       expect(sftp).to receive(:upload_file).with(job.csv, job.upload_path)

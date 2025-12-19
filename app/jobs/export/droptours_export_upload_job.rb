@@ -6,14 +6,14 @@
 #  https://github.com/hitobito/hitobito_sww
 
 class Export::DroptoursExportUploadJob < BaseJob
+  ENCODING_UTF_8 = "UTF-8"
+  CSV_COL_SEP = "$"
+
   self.parameters = [:fachorganisation_id]
   self.use_background_job_logging = true
 
-  delegate :filename, to: :export_job
-
   def initialize(fachorganisation_id)
     @fachorganisation_id = fachorganisation_id
-    super()
   end
 
   def perform
@@ -26,14 +26,38 @@ class Export::DroptoursExportUploadJob < BaseJob
     Pathname.new(sftp_config.remote_path).join(filename)
   end
 
+  def filename
+    @filename ||= generate_filename
+  end
+
   def csv
-    @csv ||= export_job.data
+    @csv ||= generate_csv
   end
 
   private
 
-  def export_job
-    @export_job ||= Export::DroptoursExportJob.new(:csv, nil, @fachorganisation_id)
+  def generate_csv
+    tabular = Export::Tabular::People::DroptoursMitglieder.new(fachorganisation)
+    Export::Csv::Generator.new(tabular,
+      csv_handler_class: CSV,
+      encoding: ENCODING_UTF_8,
+      utf8_bom: true,
+      col_sep: CSV_COL_SEP).call
+  end
+
+  def fachorganisation
+    @fachorganisation ||= Group::Fachorganisation.find(@fachorganisation_id)
+  end
+
+  def generate_filename
+    csv = [
+      fachorganisation.name,
+      Group::Mitglieder.model_name.human,
+      "Droptours",
+      Date.current.strftime("%Y%m%d")
+    ].join("-").gsub(/\s+/, "_") + ".csv"
+
+    ActiveStorage::Filename.new(csv).sanitized
   end
 
   def sftp_config
