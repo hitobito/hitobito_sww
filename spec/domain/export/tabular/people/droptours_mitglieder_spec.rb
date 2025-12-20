@@ -56,14 +56,30 @@ describe Export::Tabular::People::DroptoursMitglieder do
   end
 
   describe "#mitglieder" do
-    it "includes people having a role in a droptours_export=true Mitglieder group" do
-      mitglieder_group.update!(droptours_export: true)
+    it "includes Aktivmitglied in group included in export_groups" do
+      allow(tabular).to receive(:export_groups).and_return([mitglieder_group])
       expect(tabular.mitglieder).to include(mitglied)
     end
 
-    it "excludes people not having a role in a droptours_export=true Mitglieder group" do
-      mitglieder_group.update!(droptours_export: false)
+    it "excludes ended Aktivmitglied in group included in export_groups" do
+      allow(tabular).to receive(:export_groups).and_return([mitglieder_group])
+      mitglied.roles
+        .find_by(group: mitglieder_group, type: Group::Mitglieder::Aktivmitglied.sti_name)
+        .update!(end_on: 1.day.ago)
       expect(tabular.mitglieder).not_to include(mitglied)
+    end
+
+    it "excludes Aktivmitglied in group not included in export_groups" do
+      allow(tabular).to receive(:export_groups).and_return([])
+      expect(tabular.mitglieder).not_to include(mitglied)
+    end
+
+    (Group::Mitglieder.role_types - [Group::Mitglieder::Aktivmitglied]).each do |role_type|
+      it "excludes #{role_type.sti_name} in group included in export_groups" do
+        allow(tabular).to receive(:export_groups).and_return([mitglieder_group])
+        person = Fabricate(role_type.sti_name, group: mitglieder_group).person
+        expect(tabular.mitglieder).not_to include(person)
+      end
     end
   end
 end
