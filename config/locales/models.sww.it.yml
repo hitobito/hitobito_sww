@@ -143,6 +143,7 @@ it:
         header: Intestazione
         logo_on_every_page: Mostra il logo su tutte le pagine
       group:
+        droptours_export: In Droptours Export einbeziehen
         event_sender: "Occasione: Nome del mittente E-mail"
         membership_card_left_position: Carta socio Distanza da sinistra (cm)
         membership_card_top_position: Carta socio Distanza dall'alto (cm)
@@ -185,3 +186,9 @@ it:
       invoices: Leggere tutte le fatture a cui si ha accesso
       mailing_lists: Leggere tutti gli abbonamenti a cui avete accesso
       nextcloud: Leggere i vostri gruppi Nextcloud e il vostro nome visualizzato
+
+
+  mounted_attributes:
+    form_tabs:
+      group/mitglieder:
+        default: Weitere Einstellungen

@@ -143,6 +143,7 @@ fr:
         header: en-tête
         logo_on_every_page: Afficher le logo sur toutes les pages
       group:
+        droptours_export: In Droptours Export einbeziehen
         event_sender: Événement E-mail de l'expéditeur
         membership_card_left_position: Carte de membre Distance à partir de la gauche (cm)
         membership_card_top_position: Carte de membre Distance du haut (cm)
@@ -185,3 +186,9 @@ fr:
       invoices: Lire toutes les factures auxquelles vous avez accès
       mailing_lists: Lire tous les abonnements auxquels vous avez accès
       nextcloud: Lire vos groupes Nextcloud et votre nom d'affichage
+
+
+  mounted_attributes:
+    form_tabs:
+      group/mitglieder:
+        default: Weitere Einstellungen

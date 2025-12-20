@@ -135,6 +135,7 @@ en:
         header: Kopfzeile
         logo_on_every_page: Logo auf allen Seiten anzeigen
       group:
+        droptours_export: In Droptours Export einbeziehen
         event_sender: Anlass E-Mail Absendername
         membership_card_left_position: Mitgliederausweis Abstand von links (cm)
         membership_card_top_position: Mitgliederausweis Abstand von oben (cm)
@@ -177,3 +178,9 @@ en:
       invoices: "Lesen aller Rechnungen, auf die Sie Zugriff haben"
       mailing_lists: "Lesen aller Abos, auf die Sie Zugriff haben"
       nextcloud: Lesen Ihrer Nextcloud-Gruppen und Ihres Anzeigenamens
+
+
+  mounted_attributes:
+    form_tabs:
+      group/mitglieder:
+        default: Weitere Einstellungen
