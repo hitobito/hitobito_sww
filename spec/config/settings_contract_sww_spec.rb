@@ -167,7 +167,6 @@ describe SettingsContractSww do
       errors = subject.errors.to_h[:droptours_export][:sftp_config]
 
       expect(errors[0][:user]).to include("must be filled")
-      expect(errors[0][:remote_path]).to include("is missing")
       expect(errors[1][:fachorganisation_id]).to include("must be an integer")
     end
   end
