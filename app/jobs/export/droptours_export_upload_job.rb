@@ -23,7 +23,7 @@ class Export::DroptoursExportUploadJob < BaseJob
   end
 
   def upload_path
-    Pathname.new(sftp_config.remote_path).join(filename)
+    Pathname.new(sftp_config[:remote_path]).join(filename)
   end
 
   def filename
@@ -61,8 +61,7 @@ class Export::DroptoursExportUploadJob < BaseJob
   end
 
   def sftp_config
-    @sftp_config ||= Settings.droptours_export.sftp_config.find do |config|
-      config.fachorganisation_id == @fachorganisation_id
-    end || raise("Missing SFTP configuration for Fachorganisation ID #{@fachorganisation_id}")
+    @sftp_config ||= Export::DroptoursUploadConfig.instance.config[@fachorganisation_id] ||
+      raise("Missing SFTP configuration for Fachorganisation ID #{@fachorganisation_id}")
   end
 end
