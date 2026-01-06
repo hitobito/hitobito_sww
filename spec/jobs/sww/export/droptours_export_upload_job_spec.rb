@@ -11,34 +11,38 @@ describe Export::DroptoursExportUploadJob do
   let(:fachorganisation) { groups(:berner_wanderwege) }
   let(:sftp) { double(:sftp) }
   let(:sftp_config) do
-    [
-      OpenStruct.new(
-        fachorganisation_id: fachorganisation.id,
+    {
+      fachorganisation.id => {
         host: "sftp.example.com",
         port: 22,
         user: "testuser",
         password: "secret123",
         remote_path: "droptours/uploads"
-      )
-    ]
+      }
+    }
   end
+
+  let(:config_file) { Tempfile.new(["droptours-config", ".yml"]) }
 
   subject(:job) { described_class.new(fachorganisation.id) }
 
   before do
     allow(Sftp).to receive(:new).and_return(sftp)
-    allow(Settings.droptours_export).to receive(:sftp_config).and_return(sftp_config)
+
+    config_file.write(YAML.dump(sftp_config))
+    config_file.rewind
+    allow(Export::DroptoursUploadConfig).to receive(:instance)
+      .and_return(Export::DroptoursUploadConfig.new(config_file.path))
   end
 
   it "#upload_path prepends the job filename with the remote_path" do
-    expect(job.upload_path.to_s).to eq [sftp_config.first.remote_path, job.filename].join("/")
+    expect(job.upload_path.to_s).to eq [sftp_config.dig(fachorganisation.id, :remote_path),
+      job.filename].join("/")
   end
 
-  describe "#perform" do
-    it "uploads csv data to upload_path" do
-      expect(sftp).to receive(:upload_file).with(job.csv, job.upload_path)
+  it "#perform uploads csv data to upload_path" do
+    expect(sftp).to receive(:upload_file).with(job.csv, job.upload_path)
 
-      job.perform
-    end
+    job.perform
   end
 end
