@@ -10,33 +10,35 @@ require "spec_helper"
 describe Export::DroptoursExportScheduleJob do
   subject(:job) { described_class.new }
 
-  let(:fachorganisation_ids) { [42, 43] }
+  let(:group) { groups(:berner_wanderwege) }
 
-  before do
-    # Stub Settings.droptours_export.sftp_config with the test fachorganisation_ids
-    configs = fachorganisation_ids.map { OpenStruct.new(fachorganisation_id: _1) }
-    allow(Settings.droptours_export).to receive(:sftp_config).and_return(configs)
-  end
-
-  context "rescheduling" do
+  describe "#perform" do
     it "reschedules for tomorrow at 15 minutes past midnight" do
       job.perform
       next_job = Delayed::Job.find_by("handler like '%DroptoursExportScheduleJob%'")
       expect(next_job.run_at).to eq Time.zone.tomorrow + 15.minutes
     end
-  end
 
-  context "perform" do
     it "schedules jobs for all configured fachorganisation_id" do
+      # 1 fachorganisation has droptours_export enabled on a mitglieder group (berner_mitglieder)
+      # see spec/fixtures/mounted_attributes.yml
       expect { job.perform }
         .to change { Delayed::Job.count }
-        # 2 for the fachorganisation uploads + 1 for the rescheduled job
-        .by(fachorganisation_ids.length + 1)
+        # 1 for the enabled fachorganisation + 1 for the rescheduled job
+        .by(2)
 
-      fachorganisation_ids.each do |fachorganisation_id|
-        expect(Delayed::Job.where("handler like '%fachorganisation_id: #{fachorganisation_id}%'"))
-          .to be_present
-      end
+      upload_job = Export::DroptoursExportUploadJob.new(group.id)
+      expect(Delayed::Job.where(handler: upload_job.to_yaml).count).to eq 1
+    end
+  end
+
+  describe "#fachorganisation_ids" do
+    it "returns fachorganisation IDs with droptours_export enabled" do
+      expect(job.send(:fachorganisation_ids)).to eq [groups(:berner_wanderwege).id]
+
+      groups(:zuercher_mitglieder).update(droptours_export: true)
+      expect(job.send(:fachorganisation_ids).sort)
+        .to match_array groups(:berner_wanderwege, :zuercher_wanderwege).map(&:id)
     end
   end
 end
