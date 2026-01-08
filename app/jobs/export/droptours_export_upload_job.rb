@@ -23,7 +23,7 @@ class Export::DroptoursExportUploadJob < BaseJob
   end
 
   def upload_path
-    Pathname.new(sftp_config[:remote_path]).join(filename)
+    Pathname.new(sftp_config.fetch("remote_path")).join(filename)
   end
 
   def filename

@@ -11,15 +11,17 @@ describe Export::DroptoursExportUploadJob do
   let(:fachorganisation) { groups(:berner_wanderwege) }
   let(:sftp) { double(:sftp) }
   let(:sftp_config) do
-    {
-      fachorganisation.id => {
-        host: "sftp.example.com",
-        port: 22,
-        user: "testuser",
-        password: "secret123",
-        remote_path: "droptours/uploads"
+    YAML.safe_load <<~YAML
+      {
+        #{fachorganisation.id}: {
+          host: "sftp.example.com",
+          port: 22,
+          user: "testuser",
+          password: "secret123",
+          remote_path: "droptours/uploads"
+        }
       }
-    }
+    YAML
   end
 
   let(:config_file) { Tempfile.new(["droptours-config", ".yml"]) }
@@ -36,7 +38,7 @@ describe Export::DroptoursExportUploadJob do
   end
 
   it "#upload_path prepends the job filename with the remote_path" do
-    expect(job.upload_path.to_s).to eq [sftp_config.dig(fachorganisation.id, :remote_path),
+    expect(job.upload_path.to_s).to eq [sftp_config.dig(fachorganisation.id, "remote_path"),
       job.filename].join("/")
   end
 
