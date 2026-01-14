@@ -51,8 +51,8 @@ module Sww::Export::Pdf::Invoice
       ::Export::Pdf::Logo.new(
         pdf,
         invoice_config.logo,
-        image_width: ::Export::Pdf::Invoice::LOGO_WIDTH,
-        image_height: ::Export::Pdf::Invoice::LOGO_HEIGHT,
+        image_width: ::Export::Pdf::Invoice::Header::LOGO_WIDTH,
+        image_height: ::Export::Pdf::Invoice::Header::LOGO_HEIGHT,
         position: :left
       )
     end

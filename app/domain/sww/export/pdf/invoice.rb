@@ -30,6 +30,7 @@ module Sww::Export::Pdf::Invoice
 
     def sections
       sections = [
+        Export::Pdf::Invoice::Header,
         Export::Pdf::Invoice::InvoiceInformation,
         Export::Pdf::Invoice::ReceiverAddress,
         Export::Pdf::Invoice::Articles
@@ -62,13 +63,6 @@ module Sww::Export::Pdf::Invoice
 
     def customize(pdf)
       ::Export::Pdf::Font.new(super).customize
-    end
-
-    def render_logo(pdf, invoice_config, **options)
-      # Rendering the logo in the bottom is handled by Sww::Export::Pdf::Invoice::FooterLogo
-      return if invoice_config.logo_position == Sww::InvoiceConfig::LOGO_POSITION_BOTTOM_LEFT
-
-      super
     end
   end
 

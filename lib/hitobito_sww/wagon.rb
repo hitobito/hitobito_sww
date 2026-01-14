@@ -43,6 +43,7 @@ module HitobitoSww
 
       Export::Pdf::AddressRenderers.include Sww::Export::Pdf::AddressRenderers
       Export::Pdf::Invoice.prepend Sww::Export::Pdf::Invoice
+      Export::Pdf::Invoice::Header::HEADER_MARGIN = 0
       Export::Pdf::Invoice::ReceiverAddress.prepend Sww::Export::Pdf::Invoice::ReceiverAddress
       Export::Pdf::Invoice::InvoiceInformation.prepend Sww::Export::Pdf::Invoice::InvoiceInformation
       Export::Pdf::Invoice::Articles.prepend Sww::Export::Pdf::Invoice::Articles
