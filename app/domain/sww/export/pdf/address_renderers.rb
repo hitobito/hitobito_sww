@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-#  Copyright (c) 2012-2025, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2026 Hitobito AG. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -11,20 +9,24 @@ module Sww::Export::Pdf::AddressRenderers
   included do
     # rubocop:todo Metrics/CyclomaticComplexity
     def address_position(letter_address_position) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
-      left = left_position
-      x_coords = left.to_f.cm - page.margins[:left] if left.present?
+      if model.is_a?(Invoice)
+        super
+      else
+        left = left_position
+        x_coords = left.to_f.cm - page.margins[:left] if left.present?
 
-      x_coords ||= {
-        left: left_address_x,
-        right: right_address_x
-      }[letter_address_position&.to_sym]
-      x_coords ||= 0
+        x_coords ||= {
+          left: left_address_x,
+          right: right_address_x
+        }[letter_address_position&.to_sym]
+        x_coords ||= 0
 
-      top = top_position
-      y_coords = pdf.bounds.top - (top.to_f.cm - page.margins[:top]) if top.present?
-      y_coords ||= cursor
+        top = top_position
+        y_coords = pdf.bounds.top - (top.to_f.cm - page.margins[:top]) if top.present?
+        y_coords ||= cursor
 
-      [x_coords, y_coords]
+        [x_coords, y_coords]
+      end
     end
     # rubocop:enable Metrics/CyclomaticComplexity
 
