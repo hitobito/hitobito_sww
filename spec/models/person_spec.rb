@@ -9,7 +9,7 @@ require "spec_helper"
 
 describe Person do
   it "includes custom attributes" do
-    %I[custom_salutation magazin_abo_number].each do |a|
+    %I[magazin_abo_number].each do |a|
       expect(Person::PUBLIC_ATTRS).to include(a)
     end
 

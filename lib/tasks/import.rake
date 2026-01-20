@@ -83,7 +83,6 @@ namespace :import do
 
         country = country_mappings[import_row[:primaryaddresscountrylictranslated]&.to_sym]
         person_attrs[:country] = country || "CH"
-        person_attrs[:name_add_on] = import_row[:nameaddon]
         person_attrs[:primary_group_id] = group.id
 
         DataMigrator.assign_salutation!(person_attrs, import_row)

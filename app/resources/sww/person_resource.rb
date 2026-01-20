@@ -10,8 +10,6 @@ module Sww::PersonResource
 
   included do
     attribute :title, :string
-    attribute :custom_salutation, :string
-    attribute :name_add_on, :string
     attribute :magazin_abo_number, :integer
     attribute :sww_cms_profile_id, :integer, writable: false
     attribute :updated_at, :datetime, writable: false

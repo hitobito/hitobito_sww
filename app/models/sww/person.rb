@@ -11,12 +11,12 @@ module Sww::Person
   MEMBER_NUMBER_CALCULATION_OFFSET = 300_000
 
   included do
-    add_public_attrs = [:custom_salutation, :magazin_abo_number, :title,
-      :name_add_on]
+    add_public_attrs = [:magazin_abo_number, :title]
     Person::PUBLIC_ATTRS.push(*add_public_attrs)
 
     add_internal_attrs = [:alabus_id, :member_number, :manual_member_number,
-      :sww_cms_profile_id, :sww_cms_legacy_password_salt]
+      :sww_cms_profile_id, :sww_cms_legacy_password_salt,
+      :custom_salutation, :name_add_on]
     Person::INTERNAL_ATTRS.push(*add_internal_attrs)
 
     Person::MERGABLE_ATTRS << :manual_member_number
