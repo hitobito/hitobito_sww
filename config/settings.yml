@@ -49,3 +49,7 @@ assignments:
 hitobito_log:
   recipient_emails:
     - support@schweizer-wanderwege.ch
+
+people:
+  family_members:
+    enabled: false
