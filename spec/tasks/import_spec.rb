@@ -54,7 +54,6 @@ describe "import:people_fo" do
       expect(person.title).to eq("Dr.")
       expect(person.gender).to eq("m")
       expect(person.magazin_abo_number).to eq(1000)
-      expect(person.name_add_on).to eq("Mustermann")
       expect(person.email).to eq("max.muster@example.com")
       expect(person.roles.with_inactive.count).to eq(2)
 

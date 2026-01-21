@@ -2371,18 +2371,6 @@
           "writable": true,
           "description": null
         },
-        "custom_salutation": {
-          "type": "string",
-          "readable": true,
-          "writable": true,
-          "description": null
-        },
-        "name_add_on": {
-          "type": "string",
-          "readable": true,
-          "writable": true,
-          "description": null
-        },
         "magazin_abo_number": {
           "type": "integer",
           "readable": true,
@@ -2421,8 +2409,6 @@
         "updated_at": {},
         "additional_information": {},
         "title": {},
-        "custom_salutation": {},
-        "name_add_on": {},
         "magazin_abo_number": {},
         "sww_cms_profile_id": {}
       },
@@ -2734,36 +2720,6 @@
           ]
         },
         "title": {
-          "type": "string",
-          "operators": [
-            "eq",
-            "not_eq",
-            "eql",
-            "not_eql",
-            "prefix",
-            "not_prefix",
-            "suffix",
-            "not_suffix",
-            "match",
-            "not_match"
-          ]
-        },
-        "custom_salutation": {
-          "type": "string",
-          "operators": [
-            "eq",
-            "not_eq",
-            "eql",
-            "not_eql",
-            "prefix",
-            "not_prefix",
-            "suffix",
-            "not_suffix",
-            "match",
-            "not_match"
-          ]
-        },
-        "name_add_on": {
           "type": "string",
           "operators": [
             "eq",

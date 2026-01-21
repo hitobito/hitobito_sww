@@ -32,8 +32,6 @@ RSpec.describe PersonResource, type: :resource do
     def sww_simple_attrs
       [
         :title,
-        :custom_salutation,
-        :name_add_on,
         :magazin_abo_number,
         :sww_cms_profile_id
       ]

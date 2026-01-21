@@ -4,7 +4,7 @@
 -#  https://github.com/hitobito/hitobito_sww.
 
 = field_set_tag do
-  = f.labeled_input_field :custom_salutation
+  = f.labeled_input_field :custom_salutation if entry.custom_salutation.present?
   = f.labeled_input_field :magazin_abo_number
-  = f.labeled_input_field :name_add_on
+  = f.labeled_input_field :name_add_on if entry.name_add_on.present?
   = f.labeled_input_field :title
