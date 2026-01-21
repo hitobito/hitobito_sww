@@ -2,7 +2,7 @@
 
 ## unreleased
 
-* Deaktivierung des Features "Familienmitglieder", da der Fokus aus Haushalten liegt (hitobito_sww#295)
+* Deaktivierung des Features "Familienmitglieder", da der Fokus auf Haushalten liegt (hitobito_sww#295)
 
 ## unreleased
 
