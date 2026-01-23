@@ -257,7 +257,8 @@ describe Export::Pdf::Invoice do
     end
 
     it "renders membership_card when true" do
-      invoice.update!(membership_card: true, membership_expires_on: Date.parse("2022-10-01"))
+      invoice.update!(membership_card: true, membership_expires_on: Date.parse("2022-10-01"),
+        address: "Sender address")
       membership_card = [
         [346, 721, "Mitgliederausweis"],
         [346, 710, "42421"],
@@ -267,6 +268,8 @@ describe Export::Pdf::Invoice do
       ]
 
       expect(text_with_position).to include(*membership_card)
+      expect(text_with_position.map(&:last)).to include("Mitgliederausweis")
+      expect(text_with_position.map(&:last)).not_to include("Sender address")
     end
 
     it "does not render membership card when invoice has reminder" do
