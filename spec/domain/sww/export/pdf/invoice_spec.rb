@@ -306,6 +306,7 @@ describe Export::Pdf::Invoice do
     it "renders the whole text" do
       invoice_text = [
         [459, 529, "Datum: 15.06.2022"],
+        [430, 545, "Mitgliedernummer: 42421"],
         [57, 687, "Max Muster"],
         [57, 674, "Belpstrasse 37"],
         [57, 661, "3007 Bern"],
@@ -359,6 +360,7 @@ describe Export::Pdf::Invoice do
     it "renders everything else regardless" do
       invoice_text = [
         [459, 529, "Datum: 15.06.2022"],
+        [430, 545, "Mitgliedernummer: 42421"],
         [57, 687, "Max Muster"],
         [57, 674, "Belpstrasse 37"],
         [57, 661, "3007 Bern"],
@@ -412,6 +414,7 @@ describe Export::Pdf::Invoice do
     it "does not render issued_at behind_sequence_number when issued_at is not set" do
       invoice.update!(issued_at: nil)
       invoice_text = [
+        [430, 529, "Mitgliedernummer: 42421"],
         [57, 687, "Max Muster"],
         [57, 674, "Belpstrasse 37"],
         [57, 661, "3007 Bern"],
@@ -470,6 +473,7 @@ describe Export::Pdf::Invoice do
         title: "Reminder 1", created_at: 10.days.from_now)
       invoice_text = [
         [459, 529, "Datum: #{I18n.l(10.days.from_now.to_date)}"],
+        [430, 545, "Mitgliedernummer: 42421"],
         [57, 687, "Max Muster"],
         [57, 674, "Belpstrasse 37"],
         [57, 661, "3007 Bern"],
@@ -543,6 +547,7 @@ describe Export::Pdf::Invoice do
           title: "Reminder 1", created_at: 10.days.from_now)
         invoice_text = [
           [459, 529, "Datum: 01.01.2025"],
+          [430, 545, "Mitgliedernummer: 42421"],
           [57, 687, "Max Muster"],
           [57, 674, "Belpstrasse 37"],
           [57, 661, "3007 Bern"],
@@ -654,6 +659,7 @@ describe Export::Pdf::Invoice do
     it "renders everything else regardless" do
       invoice_text = [
         [459, 529, "Datum: 15.06.2022"],
+        [430, 545, "Mitgliedernummer: 42421"],
         [57, 687, "Max Muster"],
         [57, 674, "Belpstrasse 37"],
         [57, 661, "3007 Bern"],
@@ -780,8 +786,31 @@ describe Export::Pdf::Invoice do
     end
   end
 
-  it "renders invoice information to the right" do
-    expect(text_with_position.find { _3 == "Datum: 15.06.2022" }).to start_with(459, 529)
+  context "invoice information" do
+    it "renders date to the right" do
+      expect(text_with_position.find { _3 == "Datum: 15.06.2022" }).to start_with(459, 529)
+    end
+
+    it "renders member_number below date" do
+      expect(text_with_position.find {
+        _3.starts_with?("Mitgliedernummer")
+      }).to start_with(430, 545)
+    end
+
+    it "renders member_number at vertical position of date when date is missing" do
+      invoice.update!(issued_at: nil)
+      expect(text_with_position.find {
+        _3.starts_with?("Mitgliedernummer")
+      }).to start_with(430, 529)
+    end
+
+    it "renders only the date when invoice.recipient has no member_number" do
+      allow(invoice.recipient).to receive(:member_number).and_raise(NoMethodError)
+      allow(invoice.recipient).to receive(:respond_to?).with(:member_number).and_return(false)
+
+      expect(text_with_position.find { _3 == "Datum: 15.06.2022" }).to start_with(459, 529)
+      expect(text_with_position.find { _3.starts_with?("Mitgliedernummer") }).to be_nil
+    end
   end
 
   it "renders invoice number as column label" do
