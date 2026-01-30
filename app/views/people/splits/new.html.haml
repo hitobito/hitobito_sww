@@ -1,0 +1,28 @@
+-#  Copyright (c) 2026, Schweizer Wanderwege. This file is part of
+-#  hitobito_sww and licensed under the Affero General Public License version 3
+-#  or later. See the COPYING file at the top-level directory or at
+-#  https://github.com/hitobito/hitobito_sww
+
+- title t(".title", name: person.person_name)
+
+= render "shared/info_messages", messages: 1.upto(3).map { t(".info_#{_1}_html", email: person.email) }
+= render "shared/error_messages", errors: entry.errors
+
+= standard_form(entry, url: group_person_split_path(person_id: person.id, method: :post)) do |f|
+  .row.mb-2
+    .col-2.pb-1
+    .col-5.pb-1
+      %strong= captionize(:person_1, entry.class)
+    .col-5.pb-1
+      %strong= captionize(:person_2, entry.class)
+  - %i[first_name last_name email].each do |field|
+    .row.mb-2
+      =f.label(person, field, class: "col-2 col-form-label text-md-end pb-1")
+      .col-5.pb-1
+        = f.fields_for :person_1, include_id: false do |p1|
+          = p1.input_field field
+      .col-5.pb-1
+        = f.fields_for :person_2, include_id: false do |p2|
+          = p2.input_field field
+
+  = form_buttons(f, submit_label: t(".split"), cancel_url: group_person_path(group, person))

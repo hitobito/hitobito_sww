@@ -102,3 +102,12 @@ de:
 
   dropdown/people_export:
     participations: Teilnehmerliste
+
+  people:
+    splits:
+      new:
+        title: "%{name} aufteilen"
+        split: Aufteilen
+        info_1_html: Abos, Rechnungen, Verlauf, Tags und Notizen verbleiben auf der Person 1 und werden nicht auf die Person 2 übernommen.
+        info_2_html: Beide Personen werden zu einem Haushalt zusammengefügt.
+        info_3_html: "<b>%{email}</b> wird auf die Person 2 übertragen."
