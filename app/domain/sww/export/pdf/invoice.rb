@@ -56,7 +56,7 @@ module Sww::Export::Pdf::Invoice
     private
 
     def membership_card?
-      @page_invoice.membership_card? && !render_reminders?
+      @page_invoice.recipient.is_a?(Person) && @page_invoice.membership_card? && !render_reminders?
     end
 
     def render_reminders?
