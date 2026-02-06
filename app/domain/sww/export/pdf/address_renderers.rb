@@ -9,24 +9,20 @@ module Sww::Export::Pdf::AddressRenderers
   included do
     # rubocop:todo Metrics/CyclomaticComplexity
     def address_position(letter_address_position) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
-      if model.is_a?(Invoice)
-        super
-      else
-        left = left_position
-        x_coords = left.to_f.cm - page.margins[:left] if left.present?
+      left = left_position
+      x_coords = left.to_f.cm - page.margins[:left] if left.present?
 
-        x_coords ||= {
-          left: left_address_x,
-          right: right_address_x
-        }[letter_address_position&.to_sym]
-        x_coords ||= 0
+      x_coords ||= {
+        left: left_address_x,
+        right: right_address_x
+      }[letter_address_position&.to_sym]
+      x_coords ||= 0
 
-        top = top_position
-        y_coords = pdf.bounds.top - (top.to_f.cm - page.margins[:top]) if top.present?
-        y_coords ||= cursor
+      top = top_position
+      y_coords = pdf.bounds.top - (top.to_f.cm - page.margins[:top]) if top.present?
+      y_coords ||= cursor
 
-        [x_coords, y_coords]
-      end
+      [x_coords, y_coords]
     end
     # rubocop:enable Metrics/CyclomaticComplexity
 

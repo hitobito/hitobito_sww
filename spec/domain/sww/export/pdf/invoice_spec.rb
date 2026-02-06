@@ -615,6 +615,23 @@ describe Export::Pdf::Invoice do
 
         expect(text_with_position).to include([346, 721, "Mitgliederausweis"])
       end
+
+      it "renders membership card at custom position" do
+        invoice.update!(membership_card: true, membership_expires_on: Date.new(2022, 1, 1),
+          due_at: 10.days.ago, state: "reminded")
+        invoice.group.update!(membership_card_left_position: 5)
+        Fabricate(:payment_reminder, invoice: invoice, due_at: 3.days.ago, created_at: 5.days.ago)
+
+        expect(text_with_position).to include([142, 721, "Mitgliederausweis"])
+      end
+
+      it "does not render membership card when recipient is not a person" do
+        invoice.update!(membership_card: true, membership_expires_on: Date.new(2022, 1, 1),
+          due_at: 10.days.ago, state: "reminded", recipient: nil)
+        Fabricate(:payment_reminder, invoice: invoice, due_at: 3.days.ago, created_at: 5.days.ago)
+
+        expect(text_with_position).not_to include([346, 721, "Mitgliederausweis"])
+      end
     end
 
     it "renders total when hide_total=false" do
@@ -780,9 +797,9 @@ describe Export::Pdf::Invoice do
     end
 
     it "renders receiver address" do
-      expect(text_with_position).to include([57, 687, "Max Muster"],
-        [57, 674, "Belpstrasse 37"],
-        [57, 661, "3007 Bern"])
+      expect(text_with_position).to include([85, 690, "Max Muster"],
+        [85, 677, "Belpstrasse 37"],
+        [85, 664, "3007 Bern"])
     end
   end
 
