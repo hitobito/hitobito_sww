@@ -44,6 +44,7 @@ module HitobitoSww
       Export::Pdf::Invoice.prepend Sww::Export::Pdf::Invoice
       Export::Pdf::Invoice::Header::HEADER_MARGIN = 0
       Export::Pdf::Invoice::ReceiverAddress.prepend Sww::Export::Pdf::Invoice::ReceiverAddress
+      Export::Pdf::Invoice::Header.prepend Sww::Export::Pdf::Invoice::Header
       Export::Pdf::Invoice::InvoiceInformation.prepend Sww::Export::Pdf::Invoice::InvoiceInformation
       Export::Pdf::Invoice::Articles.prepend Sww::Export::Pdf::Invoice::Articles
       Export::Pdf::Invoice::PaymentSlipQr.include Sww::Export::Pdf::Invoice::PaymentSlipQr
