@@ -797,9 +797,9 @@ describe Export::Pdf::Invoice do
     end
 
     it "renders receiver address" do
-      expect(text_with_position).to include([57, 687, "Max Muster"],
-        [57, 674, "Belpstrasse 37"],
-        [57, 661, "3007 Bern"])
+      expect(text_with_position).to include([85, 690, "Max Muster"],
+        [85, 677, "Belpstrasse 37"],
+        [85, 664, "3007 Bern"])
     end
   end
 
