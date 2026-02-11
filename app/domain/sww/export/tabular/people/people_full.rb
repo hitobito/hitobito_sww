@@ -9,6 +9,7 @@ module Sww::Export::Tabular::People::PeopleFull
   extend ActiveSupport::Concern
 
   def person_attributes
-    super + [:id, :sww_salutation, :member_number, :magazin_abo_number, :household_member_numbers]
+    super + [:id, :sww_salutation, :member_number, :magazin_abo_number, :household_member_numbers,
+      :household_key]
   end
 end
