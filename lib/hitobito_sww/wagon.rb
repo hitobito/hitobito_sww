@@ -80,6 +80,7 @@ module HitobitoSww
       PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
         :name_add_on, :title]
       InvoicesController.permitted_attrs += [:membership_card, :membership_expires_on]
+      InvoicesController.sort_mappings.merge!(household_key: "people.household_key")
       InvoiceConfigsController.permitted_attrs += [:separators, :use_header, :header, :logo_on_every_page]
 
       Event::ParticipationMailer.prepend Sww::Event::ParticipationMailer
@@ -97,6 +98,9 @@ module HitobitoSww
       MessagesController::PERMITTED_INVOICE_LETTER_ATTRS.push(:membership_card,
         :membership_expires_on)
       Role::Permissions << :support
+
+      TableDisplay.register_column(Person, TableDisplays::PublicColumn, [:household_key])
+
       # rubocop:enable Layout/LineLength
     end
 

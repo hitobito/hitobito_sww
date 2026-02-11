@@ -41,7 +41,8 @@ describe Sww::Export::Tabular::People::PeopleFull do
       :id,
       :sww_salutation,
       :member_number,
-      :household_member_numbers
+      :household_member_numbers,
+      :household_key
     ]
   end
 
