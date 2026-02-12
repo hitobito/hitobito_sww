@@ -97,6 +97,8 @@ module HitobitoSww
       MessagesController::PERMITTED_INVOICE_LETTER_ATTRS.push(:membership_card,
         :membership_expires_on)
       Role::Permissions << :support
+
+      Sheet::Person.tabs.reject! { |t| t.label_key == "people.tabs.colleagues" }
       # rubocop:enable Layout/LineLength
     end
 
