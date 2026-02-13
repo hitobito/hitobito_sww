@@ -60,20 +60,20 @@ de_CH:
         one: Kontakt
 
       group/vorstand/praesident:
-        one: Präsident
+        one: "Präsident:in"
       group/vorstand/vizepraesident:
-        one: Vizepräsident
+        one: "Vizepräsident:in"
       group/vorstand/vorstandsmitglied:
         one: Vorstandsmitglied
 
       group/geschaeftsstelle/geschaeftsfuehrer:
-        one: Geschäftsführer
+        one: Geschäftsführung
       group/geschaeftsstelle/kassier:
-        one: Kassier
+        one: Finanzen
       group/geschaeftsstelle/technischer_leiter:
-        one: Technischer Leiter
+        one: Technische Leitung
       group/geschaeftsstelle/mitarbeiter:
-        one: Mitarbeiter
+        one: "Mitarbeiter:in"
 
       group/gremium_projektgruppe/leitung:
         one: Leitung
