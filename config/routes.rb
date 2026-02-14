@@ -5,14 +5,20 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-
 Rails.application.routes.draw do
-
   extend LanguageRouteScope
 
   language_scope do
     # Define wagon routes here
 
+    resources :groups, only: [] do
+      resources :people, only: [] do
+        resource :split, only: [:new, :create], module: :people do
+          collection do
+            get :role_types
+          end
+        end
+      end
+    end
   end
-
 end

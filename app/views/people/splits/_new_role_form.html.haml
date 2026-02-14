@@ -1,0 +1,22 @@
+-#  Copyright (c) 2026, Schweizer Wanderwege. This file is part of
+-#  hitobito_sww and licensed under the Affero General Public License version 3
+-#  or later. See the COPYING file at the top-level directory or at
+-#  https://github.com/hitobito/hitobito_sww
+
+-# locals: (f:)
+
+= f.fields_for(:person_2_role, entry.person_2_role, include_id: false) do |new_role_fields|
+  = new_role_fields.labeled_collection_select(:group_id,
+                                              group_options_with_level(entry.role_group_options),
+                                              :second, :first, {},
+                                              { class: 'form-select form-select-sm',
+                                                data: { remote: true,
+                                                url: role_types_group_person_split_path,
+                                                chosen_no_results: t('global.chosen_no_results') } })
+
+  = new_role_fields.labeled(:type) do
+    = render 'type_select', f: new_role_fields
+
+  = render 'roles/label', f: new_role_fields, entry: entry.person_2_role.decorate
+
+  = render 'roles/duration_fields', f: new_role_fields
