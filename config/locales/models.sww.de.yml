@@ -110,6 +110,15 @@ de:
               other: Sehr geehrte*r %{first_name} %{last_name}
 
     attributes:
+      contact_account:
+        predefined_labels:
+          andere: Andere
+          arbeit: Geschäftlich
+          facebook: Facebook
+          instagram: Instagram
+          mobil: Mobil
+          privat: Privat
+          webseite: Webseite
       person:
         custom_salutation: Benutzerdefinierte Anrede
         magazin_abo_number: 'Abo # Magazin'
