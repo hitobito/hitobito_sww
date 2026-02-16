@@ -42,7 +42,18 @@ describe Sww::Export::Tabular::People::PeopleFull do
       :sww_salutation,
       :member_number,
       :household_member_numbers,
-      :household_key
+      :household_key,
+      :additional_email_andere,
+      :additional_email_arbeit,
+      :additional_email_privat,
+      :phone_number_andere,
+      :phone_number_arbeit,
+      :phone_number_mobil,
+      :phone_number_privat,
+      :social_account_andere,
+      :social_account_facebook,
+      :social_account_instagram,
+      :social_account_webseite
     ]
   end
 

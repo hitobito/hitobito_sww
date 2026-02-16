@@ -53,3 +53,32 @@ hitobito_log:
 people:
   family_members:
     enabled: false
+
+additional_email:
+  custom_label:
+    enabled: false
+  predefined_labels:
+    - --
+    - Privat
+    - Arbeit
+    - Andere
+
+phone_number:
+  custom_label:
+    enabled: false
+  predefined_labels:
+    - --
+    - Mobil
+    - Privat
+    - Arbeit
+    - Andere
+
+social_account:
+  custom_label:
+    enabled: false
+  predefined_labels:
+    - --
+    - Webseite
+    - Instagram
+    - Facebook
+    - Andere
