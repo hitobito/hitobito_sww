@@ -19,9 +19,8 @@ describe People::SplitForm do
   end
   let(:split_form) { described_class.new(group: group, original_person: original_person) }
 
-  def person_1 = split_form.person_1
-
-  def person_2 = split_form.person_2
+  let(:person_1) { split_form.person_1 }
+  let(:person_2) { split_form.person_2 }
 
   def housemates(person) = Household.new(person).people - [person]
 

@@ -33,16 +33,20 @@ module People
 
       return if person_1.email.present? || original_email.blank?
 
-      person_1.additional_emails.build(email: original_email,
-        label: AdditionalEmail.predefined_labels.first)
+      person_1.additional_emails.build(
+        email: original_email,
+        label: AdditionalEmail.predefined_labels.first
+      )
     end
 
     def person_2_attributes=(attrs)
       person_2.assign_attributes(attrs)
       return unless person_1.email.present? && person_2.email.blank?
 
-      person_2.additional_emails.build(email: person_1.email,
-        label: AdditionalEmail.predefined_labels.first)
+      person_2.additional_emails.build(
+        email: person_1.email,
+        label: AdditionalEmail.predefined_labels.first
+      )
     end
 
     def person_2_role_attributes=(attrs)
