@@ -7,7 +7,8 @@
 
 module People::SplitHelper
   def split_form_header_row
-    split_form_row(
+    People::SplitHelper.split_form_row(
+      context: self,
       label: "",
       person_1_col: content_tag(:strong, captionize(:person_1, People::SplitForm)),
       person_2_col: content_tag(:strong, captionize(:person_2, People::SplitForm))
@@ -16,27 +17,34 @@ module People::SplitHelper
 
   def split_form_attr_row(form, attr, &block)
     label = form.captionize(attr, Person)
-    person_1_col = field_for_person(form, attr, :person_1, &block)
-    person_2_col = field_for_person(form, attr, :person_2, &block)
+    person_1_col = People::SplitHelper.field_for_person(
+      context: self, form:, attr:, person_sym: :person_1, &block
+    )
+    person_2_col = People::SplitHelper.field_for_person(
+      context: self, form:, attr:, person_sym: :person_2, &block
+    )
 
-    split_form_row(label:, person_1_col:, person_2_col:)
+    People::SplitHelper.split_form_row(context: self, label:, person_1_col:, person_2_col:)
   end
 
-  private
+  class << self
+    # Internal helper methods, implemented as class methods to avoid polluting the view context
+    # and prevent name clashes with other helper methods.
 
-  module_function def split_form_row(label:, person_1_col:, person_2_col:)
-    content_tag(:div, class: "row mb-2") do
-      [
-        content_tag(:div, label, class: "col-2 text-md-end"),
-        content_tag(:div, person_1_col, class: "col-5"),
-        content_tag(:div, person_2_col, class: "col-5")
-      ].join.html_safe
+    def split_form_row(context:, label:, person_1_col:, person_2_col:)
+      context.content_tag(:div, class: "row mb-2") do
+        [
+          context.content_tag(:div, label, class: "col-2 text-md-end"),
+          context.content_tag(:div, person_1_col, class: "col-5"),
+          context.content_tag(:div, person_2_col, class: "col-5")
+        ].join.html_safe
+      end
     end
-  end
 
-  module_function def field_for_person(form, attr, person_sym)
-    form.fields_for(person_sym, include_id: false) do |fields|
-      block_given? ? yield(fields) : fields.input_field(attr)
+    def field_for_person(context:, form:, attr:, person_sym:, &block)
+      form.fields_for(person_sym, include_id: false) do |fields|
+        block_given? ? context.instance_exec(fields, &block) : fields.input_field(attr)
+      end
     end
   end
 end
