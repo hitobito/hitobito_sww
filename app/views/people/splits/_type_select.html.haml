@@ -1,0 +1,14 @@
+-#  Copyright (c) 2026, Schweizer Wanderwege. This file is part of
+-#  hitobito_sww and licensed under the Affero General Public License version 3
+-#  or later. See the COPYING file at the top-level directory or at
+-#  https://github.com/hitobito/hitobito_sww
+
+-# locals: (f:)
+
+= f.collection_select(:type,
+      GroupDecorator.decorate(entry.role_group).possible_roles(person: entry.person_2),
+      :sti_name,
+      :label,
+      roles_type_select_options(entry.role_group, entry.person_2_role),
+      { include_blank: "",
+        class: 'form-select form-select-sm' })

@@ -1,0 +1,31 @@
+-#  Copyright (c) 2026, Schweizer Wanderwege. This file is part of
+-#  hitobito_sww and licensed under the Affero General Public License version 3
+-#  or later. See the COPYING file at the top-level directory or at
+-#  https://github.com/hitobito/hitobito_sww
+
+- title t(".title", name: original_person.person_name)
+
+= standard_form(entry, url: group_person_split_path(person_id: original_person.id, method: :post), html: {class: "form-striped"}) do |f|
+  = render "shared/info_messages", messages: 1.upto(3).map { t(".info_#{_1}_html", email: original_person.email) }
+  = render "shared/error_messages", errors: entry.errors
+
+  %fieldset
+    = split_form_header_row
+    - %i[first_name last_name].each do |attr|
+      = split_form_attr_row(f, attr)
+    = split_form_attr_row(f, :email) do |fields|
+      = fields.input_field(:email) + fields.help_inline(t('people.email_field.used_as_login'))
+    = split_form_attr_row(f, :gender) do |fields|
+      - (Person::GENDERS + ['']).each do |key|
+        = fields.inline_radio_button(:gender, key, original_person.gender_label(key), false)
+    = split_form_attr_row(f, :birthday)
+
+  %fieldset
+    %legend= t('.history_title')
+    = render 'roles_table'
+
+  %fieldset
+    %legend= t('.new_role_title')
+    = render 'new_role_form', f:
+
+  = form_buttons(f, submit_label: t(".split"), cancel_url: group_person_path(group, original_person))
