@@ -102,3 +102,18 @@ it:
 
   dropdown/people_export:
     participations: Lista dei partecipanti
+
+  people:
+    show:
+      button:
+        split: Aufteilen
+    splits:
+      new:
+        title: "%{name} aufteilen"
+        split: Aufteilen
+        info_1_html: "Abos, Rechnungen, Verlauf, Tags und Notizen <b>verbleiben auf der Person 1</b> und werden <b>nicht auf die Person 2 übernommen</b>."
+        info_2_html: Beide Personen werden zu einem Haushalt zusammengefügt.
+        info_3_html: "<b>%{email}</b> wird bei Person 2 als \"Weitere E-Mail\" hinterlegt sofern keine Login E-Mail angegeben wird."
+        history_title: "Rollen der Person 1 (bestehend)"
+        new_role_title: "Rolle für Person 2 (neu)"
+      success: Person wurde erfolgreich aufgeteilt.

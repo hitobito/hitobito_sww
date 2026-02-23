@@ -156,6 +156,15 @@ fr:
               support: Création et gestion de tous les abonnements.
 
 
+
+
+  activemodel:
+    attributes:
+      people/split_form:
+        person_1: Person 1 (bleibt bestehen)
+        person_2: Person 2 (neu)
+
+
   tags:
     categories:
       abo: Abonnement

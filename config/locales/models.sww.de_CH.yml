@@ -148,6 +148,15 @@ de_CH:
               support: Erstellen und verwalten von allen Abos.
 
 
+
+
+  activemodel:
+    attributes:
+      people/split_form:
+        person_1: Person 1 (bleibt bestehen)
+        person_2: Person 2 (neu)
+
+
   tags:
     categories:
       abo: Abonnement
