@@ -60,20 +60,20 @@ de_CH:
         one: Kontakt
 
       group/vorstand/praesident:
-        one: Präsident
+        one: "Präsident:in"
       group/vorstand/vizepraesident:
-        one: Vizepräsident
+        one: "Vizepräsident:in"
       group/vorstand/vorstandsmitglied:
         one: Vorstandsmitglied
 
       group/geschaeftsstelle/geschaeftsfuehrer:
-        one: Geschäftsführer
+        one: Geschäftsführung
       group/geschaeftsstelle/kassier:
-        one: Kassier
+        one: Finanzen
       group/geschaeftsstelle/technischer_leiter:
-        one: Technischer Leiter
+        one: Technische Leitung
       group/geschaeftsstelle/mitarbeiter:
-        one: Mitarbeiter
+        one: "Mitarbeiter:in"
 
       group/gremium_projektgruppe/leitung:
         one: Leitung
@@ -146,6 +146,15 @@ de_CH:
           permission:
             description:
               support: Erstellen und verwalten von allen Abos.
+
+
+
+
+  activemodel:
+    attributes:
+      people/split_form:
+        person_1: Person 1 (bleibt bestehen)
+        person_2: Person 2 (neu)
 
 
   tags:
