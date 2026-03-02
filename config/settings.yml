@@ -30,6 +30,7 @@ email:
 
 event:
   participations:
+    manual_sensitive_option: true
     delete_answers_after_months: 12
     delete_additional_information_after_months: 12
 
