@@ -118,6 +118,15 @@ it:
               other: "Gentile %{first_name} %{last_name}"
 
     attributes:
+      contact_account:
+        predefined_labels:
+          andere: Andere
+          arbeit: Geschäftlich
+          facebook: Facebook
+          instagram: Instagram
+          mobil: Mobil
+          privat: Privat
+          webseite: Webseite
       person:
         custom_salutation: Saluto personalizzato
         magazin_abo_number: 'Abo # Rivista'
