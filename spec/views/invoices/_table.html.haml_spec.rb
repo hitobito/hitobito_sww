@@ -24,6 +24,7 @@ describe "invoices/_table.html.haml" do
     allow(view).to receive(:sortable?).and_return(true)
     allow(view).to receive(:invoice_run).and_return(nil)
     allow(view).to receive(:group).and_return(group)
+    allow(view).to receive(:period_invoice_template).and_return(nil)
     allow(view).to receive(:current_user).and_return(person)
   end
 
