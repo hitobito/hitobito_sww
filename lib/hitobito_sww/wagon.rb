@@ -73,12 +73,12 @@ module HitobitoSww
       JsonApiController.include Sww::JsonApiController
 
       Event::ParticipationsController.prepend Sww::Event::ParticipationsController
+      Event::ParticipationContactDatasController.prepend Sww::Event::ParticipationContactDatasController
 
       PersonResource.include Sww::PersonResource
       Oauth::ProfilesController.prepend Sww::Oauth::ProfilesController
       GroupsController.permitted_attrs += [:event_sender]
-      PeopleController.permitted_attrs += [:custom_salutation, :magazin_abo_number,
-        :name_add_on, :title]
+      PeopleController.prepend Sww::PeopleController
       InvoicesController.permitted_attrs += [:membership_card, :membership_expires_on]
       InvoicesController.sort_mappings.merge!(household_key: "people.household_key")
       InvoiceConfigsController.permitted_attrs += [:separators, :use_header, :header, :logo_on_every_page]
