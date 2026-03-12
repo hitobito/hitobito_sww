@@ -6,6 +6,14 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 module Sww::Export::Pdf::Invoice::Header
+  extend ActiveSupport::Concern
+
+  prepended do
+    def render_address
+      # don't render address
+    end
+  end
+
   def group
     invoice.group
   end
