@@ -411,6 +411,11 @@ describe Export::Pdf::Invoice do
       end
     end
 
+    it "does not render address in header" do
+      invoice.update!(address: "unprintable address")
+      expect(text_with_position.map(&:third)).not_to include("unprintable address")
+    end
+
     it "does not render issued_at behind_sequence_number when issued_at is not set" do
       invoice.update!(issued_at: nil)
       invoice_text = [
