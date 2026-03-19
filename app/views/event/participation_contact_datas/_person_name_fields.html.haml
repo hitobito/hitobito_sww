@@ -12,3 +12,6 @@
     - else
       = f.labeled(attr) do
         %p.form-control-plaintext= entry.send(attr)
+
+- [:nickname, :company_name].each do |a|
+  = f.labeled_input_field(a) if event.show_contact_attr?(a)

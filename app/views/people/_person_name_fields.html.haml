@@ -11,3 +11,11 @@
   - else
     = f.labeled(attr) do
       %p.form-control-plaintext= entry.send(attr)
+= f.labeled_input_fields(*entry.decorate.used_attributes(:nickname))
+- entry.decorate.used?(:company_name) do
+  = f.labeled_input_field(:company_name,
+                           placeholder: I18n.t('global.search.placeholder_company_name'),
+                           data: { provide: 'entity',
+                                   url: query_company_name_path })
+- entry.decorate.used?(:company) do
+  = f.labeled_boolean_field :company

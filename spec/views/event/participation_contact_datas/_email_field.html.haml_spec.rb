@@ -38,5 +38,4 @@ describe "event/participation_contact_datas/_email_field.html.haml" do
       is_expected.to have_css("p.form-control-plaintext", text: person.email)
     end
   end
-
 end

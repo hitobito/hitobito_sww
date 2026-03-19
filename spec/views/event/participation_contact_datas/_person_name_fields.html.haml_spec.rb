@@ -5,7 +5,7 @@
 
 require "spec_helper"
 
-describe "event/participation_contact_datas/_name_fields.html.haml" do
+describe "event/participation_contact_datas/_person_name_fields.html.haml" do
   let(:person) { people(:berner_wanderer) }
   let(:event) { Fabricate(:event, groups: [groups(:berner_wanderwege)]) }
   let(:entry) { Event::ParticipationContactData.new(event, person, {}) }
@@ -18,7 +18,8 @@ describe "event/participation_contact_datas/_name_fields.html.haml" do
   end
 
   subject do
-    render partial: "event/participation_contact_datas/name_fields", locals: {f: form_builder}
+    render partial: "event/participation_contact_datas/person_name_fields",
+      locals: {f: form_builder}
     Capybara::Node::Simple.new(@rendered)
   end
 
@@ -47,5 +48,4 @@ describe "event/participation_contact_datas/_name_fields.html.haml" do
       is_expected.not_to have_css("input[name='entry[last_name]']")
     end
   end
-
 end

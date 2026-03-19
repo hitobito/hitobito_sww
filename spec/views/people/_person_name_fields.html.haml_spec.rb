@@ -5,7 +5,7 @@
 
 require "spec_helper"
 
-describe "people/_name_fields.html.haml" do
+describe "people/_person_name_fields.html.haml" do
   let(:person) { people(:berner_wanderer) }
   let(:form_builder) { StandardFormBuilder.new(:person, person, view, {}) }
 
@@ -15,7 +15,7 @@ describe "people/_name_fields.html.haml" do
   end
 
   subject do
-    render partial: "people/name_fields", locals: {f: form_builder}
+    render partial: "people/person_name_fields", locals: {f: form_builder}
     Capybara::Node::Simple.new(@rendered)
   end
 
