@@ -120,13 +120,13 @@ fr:
     attributes:
       contact_account:
         predefined_labels:
-          andere: Andere
-          arbeit: Geschäftlich
+          andere: Autre
+          arbeit: Professionnel
           facebook: Facebook
           instagram: Instagram
-          mobil: Mobil
-          privat: Privat
-          webseite: Webseite
+          mobil: Mobile
+          privat: Privé
+          webseite: Site web
       person:
         custom_salutation: Formule d'appel personnalisée
         magazin_abo_number: 'Numéro d''abonnement au magazine'
@@ -170,8 +170,8 @@ fr:
   activemodel:
     attributes:
       people/split_form:
-        person_1: Person 1 (bleibt bestehen)
-        person_2: Person 2 (neu)
+        person_1: Personne 1 (reste en place)
+        person_2: Personne 2 (nouvelle)
 
 
   tags:
