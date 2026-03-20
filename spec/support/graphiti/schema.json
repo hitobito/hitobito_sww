@@ -1249,6 +1249,11 @@
           "readable": true,
           "description": null
         },
+        "language": {
+          "type": "string",
+          "readable": true,
+          "description": null
+        },
         "privacy_policies": {
           "type": "array",
           "readable": true,
