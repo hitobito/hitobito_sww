@@ -88,7 +88,9 @@ headers = [
   "last_sign_in_at",
   "created_at",
   "updated_at",
-  "role_status"
+  "role_status",
+  "invoices_count",
+  "events_count"
 ]
 
 count_1 = 0
@@ -98,6 +100,7 @@ created_before = 2.years.ago
 CSV.open(file_1, "w", write_headers: true, headers: headers) do |csv_1|
   CSV.open(file_2, "w", write_headers: true, headers: headers) do |csv_2|
     Person.select(:id, :first_name, :last_name, :email, :sign_in_count, :last_sign_in_at, :created_at, :updated_at)
+      .includes(:invoices, :events)
       .where("created_at < ?", created_before)
       .find_in_batches(batch_size: 5_000) do |people|
         people.each do |person|
@@ -111,6 +114,9 @@ CSV.open(file_1, "w", write_headers: true, headers: headers) do |csv_1|
             people_with_non_benutzerkonto_role
           )
 
+          invoices_count = person.invoices.size
+          events_count = person.events.distinct.count
+
           row = [
             person.id,
             person.first_name,
@@ -120,7 +126,9 @@ CSV.open(file_1, "w", write_headers: true, headers: headers) do |csv_1|
             person.last_sign_in_at,
             person.created_at,
             person.updated_at,
-            role_status
+            role_status,
+            invoices_count,
+            events_count
           ]
 
           if never_logged_in
