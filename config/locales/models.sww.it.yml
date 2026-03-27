@@ -118,6 +118,8 @@ it:
               other: "Gentile %{first_name} %{last_name}"
 
     attributes:
+      additional_address:
+        address_care_of: Riga dell'indirizzo aggiuntiva 1
       contact_account:
         predefined_labels:
           andere: Altro
@@ -127,16 +129,16 @@ it:
           mobil: Cellulare
           privat: Privato
           webseite: Sito web
-      person:
-        custom_salutation: Saluto personalizzato
-        magazin_abo_number: 'Abo # Rivista'
-        member_number: Numero socio
-        manual_member_number: Numero socio
-        name_add_on: Suffisso del nome
-        title: Titolo
-        email: E-mail
-        sww_salutation: Appellativo
-        household_member_numbers: Numeri dei soci Membri del nucleo familiare
+      event/guest:
+        address_care_of: Riga dell'indirizzo aggiuntiva 1
+      group:
+        address_care_of: Riga dell'indirizzo aggiuntiva 1
+        droptours_export: Includere in Droptours Export
+        event_sender: "Occasione: Nome del mittente E-mail"
+        membership_card_left_position: Carta socio Distanza da sinistra (cm)
+        membership_card_top_position: Carta socio Distanza dall'alto (cm)
+        letter_left_address_position: Distanza dell'indirizzo dalla sinistra (cm)
+        letter_top_address_position: Distanza dall'indirizzo dall'alto (cm)
       message:
         membership_card: Carta socio
         membership_expires_on: Socio valido fino al
@@ -151,28 +153,31 @@ it:
         use_header: Mostra intestazione
         header: Intestazione
         logo_on_every_page: Mostra il logo su tutte le pagine
-      group:
-        droptours_export: Includere in Droptours Export
-        event_sender: "Occasione: Nome del mittente E-mail"
-        membership_card_left_position: Carta socio Distanza da sinistra (cm)
-        membership_card_top_position: Carta socio Distanza dall'alto (cm)
-        letter_left_address_position: Distanza dell'indirizzo dalla sinistra (cm)
-        letter_top_address_position: Distanza dall'indirizzo dall'alto (cm)
+      participant:
+        address_care_of: Riga dell'indirizzo aggiuntiva 1
+      person:
+        address_care_of: Riga dell'indirizzo aggiuntiva 1
+        company: Organizzazione
+        custom_salutation: Saluto personalizzato
+        magazin_abo_number: 'Abo # Rivista'
+        member_number: Numero socio
+        manual_member_number: Numero socio
+        name_add_on: Suffisso del nome
+        title: Titolo
+        email: E-mail
+        sww_salutation: Appellativo
+        household_member_numbers: Numeri dei soci Membri del nucleo familiare
       role:
         class:
           permission:
             description:
               support: Creazione e gestione di tutti gli abbonamenti.
 
-
-
-
   activemodel:
     attributes:
       people/split_form:
         person_1: Persona 1 (rimane)
         person_2: Persona 2 (nuova)
-
 
   tags:
     categories:
@@ -183,7 +188,7 @@ it:
     messages:
       cannot_be_later_than_today: non può essere più tardi di oggi
       cannot_be_later_than_deleted_at: deve essere prima o lo stesso giorno della dimissione
-      logo_on_every_page_only_allowed_for_position_bottom_left: "può essere attivato solo con la posizione del logo \"%{valid_position}\"." 
+      logo_on_every_page_only_allowed_for_position_bottom_left: "può essere attivato solo con la posizione del logo \"%{valid_position}\"."
 
   event:
     application_market:
@@ -204,7 +209,6 @@ it:
       invoices: Leggere tutte le fatture a cui si ha accesso
       mailing_lists: Leggere tutti gli abbonamenti a cui avete accesso
       nextcloud: Leggere i vostri gruppi Nextcloud e il vostro nome visualizzato
-
 
   mounted_attributes:
     form_tabs:
