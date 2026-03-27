@@ -150,6 +150,7 @@ de:
         address_care_of: Adressinformation 1
       person:
         address_care_of: Adressinformation 1
+        company: Organisation
         custom_salutation: Benutzerdefinierte Anrede
         magazin_abo_number: 'Abo # Magazin'
         member_number: Mitgliedernummer

@@ -157,6 +157,7 @@ it:
         address_care_of: Riga dell'indirizzo aggiuntiva 1
       person:
         address_care_of: Riga dell'indirizzo aggiuntiva 1
+        company: Organizzazione
         custom_salutation: Saluto personalizzato
         magazin_abo_number: 'Abo # Rivista'
         member_number: Numero socio
@@ -172,15 +173,11 @@ it:
             description:
               support: Creazione e gestione di tutti gli abbonamenti.
 
-
-
-
   activemodel:
     attributes:
       people/split_form:
         person_1: Person 1 (bleibt bestehen)
         person_2: Person 2 (neu)
-
 
   tags:
     categories:
@@ -191,7 +188,7 @@ it:
     messages:
       cannot_be_later_than_today: non può essere più tardi di oggi
       cannot_be_later_than_deleted_at: deve essere prima o lo stesso giorno della dimissione
-      logo_on_every_page_only_allowed_for_position_bottom_left: "può essere attivato solo con la posizione del logo \"%{valid_position}\"." 
+      logo_on_every_page_only_allowed_for_position_bottom_left: "può essere attivato solo con la posizione del logo \"%{valid_position}\"."
 
   event:
     application_market:
@@ -212,7 +209,6 @@ it:
       invoices: Leggere tutte le fatture a cui si ha accesso
       mailing_lists: Leggere tutti gli abbonamenti a cui avete accesso
       nextcloud: Leggere i vostri gruppi Nextcloud e il vostro nome visualizzato
-
 
   mounted_attributes:
     form_tabs:

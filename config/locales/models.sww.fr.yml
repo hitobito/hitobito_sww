@@ -157,6 +157,7 @@ fr:
         address_care_of: ligne d'adresse supplémentaire 1
       person:
         address_care_of: ligne d'adresse supplémentaire 1
+        company: Organisation
         custom_salutation: Formule d'appel personnalisée
         magazin_abo_number: 'Numéro d''abonnement au magazine'
         member_number: Numéro de membre
