@@ -77,7 +77,9 @@ describe JsonApi::PeopleController, type: [:request] do
 
     context "with personal oauth access token" do
       context "authorized" do
-        let(:token) { Fabricate(:access_token, resource_owner_id: verwalter.id) }
+        let(:token) {
+          Fabricate(:access_token, resource_owner_id: verwalter.id, scopes: ["people"])
+        }
 
         before do
           allow_any_instance_of(Authenticatable::Tokens).to receive(:oauth_token) { token }
