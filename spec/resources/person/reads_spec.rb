@@ -16,7 +16,10 @@ RSpec.describe PersonResource, type: :resource do
 
   around do |example|
     RSpec::Mocks.with_temporary_scope do
-      Graphiti.with_context(double({current_ability: Ability.new(user)})) { example.run }
+      Graphiti.with_context(double({
+        current_ability: Ability.new(user),
+        current_scopes: ["api"]
+      })) { example.run }
     end
   end
 
@@ -48,9 +51,8 @@ RSpec.describe PersonResource, type: :resource do
 
       data = jsonapi_data[0]
 
-      # rubocop:todo Layout/LineLength
-      expect(data.attributes.symbolize_keys.keys).to include(*(sww_simple_attrs + sww_datetime_attrs))
-      # rubocop:enable Layout/LineLength
+      expect(data.attributes.symbolize_keys.keys)
+        .to include(*(sww_simple_attrs + sww_datetime_attrs))
 
       expect(data.id).to eq(person.id)
       expect(data.jsonapi_type).to eq("people")
