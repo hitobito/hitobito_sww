@@ -61,7 +61,7 @@ module HitobitoSww
       Dropdown::PeopleExport.prepend Sww::Dropdown::PeopleExport
       Export::EventParticipationsExportJob.prepend Sww::Export::EventParticipationsExportJob
 
-      PaperTrail::VersionDecorator.prepend Sww::PaperTrail::VersionDecorator
+      PaperTrail::VersionAuthorPresenter.prepend Sww::PaperTrail::VersionAuthorPresenter
       GroupDecorator.prepend Sww::GroupDecorator
 
       LayoutHelper.include Sww::LayoutHelper

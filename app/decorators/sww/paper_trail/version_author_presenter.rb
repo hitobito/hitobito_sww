@@ -6,11 +6,11 @@
 #  https://github.com/hitobito/hitobito_sww.
 
 module Sww::PaperTrail
-  module VersionDecorator
+  module VersionAuthorPresenter
     def author_service_token_label(token)
-      return super if specific_author.blank?
+      return super if model.specific_author.blank?
 
-      "#{specific_author.inspect} via #{ServiceToken.model_name.human}: #{token}"
+      "#{model.specific_author.inspect} via #{ServiceToken.model_name.human}: #{token}"
     end
   end
 end
