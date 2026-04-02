@@ -120,13 +120,13 @@ it:
     attributes:
       contact_account:
         predefined_labels:
-          andere: Andere
-          arbeit: Geschäftlich
+          andere: Altro
+          arbeit: Lavoro
           facebook: Facebook
           instagram: Instagram
-          mobil: Mobil
-          privat: Privat
-          webseite: Webseite
+          mobil: Cellulare
+          privat: Privato
+          webseite: Sito web
       person:
         custom_salutation: Saluto personalizzato
         magazin_abo_number: 'Abo # Rivista'
@@ -170,8 +170,8 @@ it:
   activemodel:
     attributes:
       people/split_form:
-        person_1: Person 1 (bleibt bestehen)
-        person_2: Person 2 (neu)
+        person_1: Persona 1 (rimane)
+        person_2: Persona 2 (nuova)
 
 
   tags:
