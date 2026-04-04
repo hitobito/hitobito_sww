@@ -110,6 +110,8 @@ de:
               other: Sehr geehrte*r %{first_name} %{last_name}
 
     attributes:
+      additional_address:
+        address_care_of: Adressinformation 1
       contact_account:
         predefined_labels:
           andere: Andere
@@ -119,7 +121,36 @@ de:
           mobil: Mobil
           privat: Privat
           webseite: Webseite
+      event/guest:
+        address_care_of: Adressinformation 1
+      group:
+        address_care_of: Adressinformation 1
+        droptours_export: In Droptours Export einbeziehen
+        event_sender: Anlass E-Mail Absendername
+        membership_card_left_position: Mitgliederausweis Abstand von links (cm)
+        membership_card_top_position: Mitgliederausweis Abstand von oben (cm)
+        letter_left_address_position: Addressabstand von links (cm)
+        letter_top_address_position: Addressabstand von oben (cm)
+      invoice:
+        hide_total: Spende
+        membership_card: Mitgliederausweis
+        membership_expires_on: Mitgliedschaft gültig bis
+        recipient_address_care_of: Adressinformation 1
+      invoice_config:
+        logo_positions:
+          bottom_left: Unten links
+        separators: Trennlinie auf Einzahlungsschein anzeigen
+        use_header: Kopfzeile anzeigen
+        header: Kopfzeile
+        logo_on_every_page: Logo auf allen Seiten anzeigen
+      message:
+        membership_card: Mitgliederausweis
+        membership_expires_on: Mitgliedschaft gültig bis
+      participant:
+        address_care_of: Adressinformation 1
       person:
+        address_care_of: Adressinformation 1
+        company: Organisation
         custom_salutation: Benutzerdefinierte Anrede
         magazin_abo_number: 'Abo # Magazin'
         member_number: Mitgliedernummer
@@ -129,27 +160,7 @@ de:
         email: E-Mail
         sww_salutation: Anrede
         household_member_numbers: Mitgliedernummern Haushaltsmitglieder
-      message:
-        membership_card: Mitgliederausweis
-        membership_expires_on: Mitgliedschaft gültig bis
-      invoice:
-        hide_total: Spende
-        membership_card: Mitgliederausweis
-        membership_expires_on: Mitgliedschaft gültig bis
-      invoice_config:
-        logo_positions:
-          bottom_left: Unten links
-        separators: Trennlinie auf Einzahlungsschein anzeigen
-        use_header: Kopfzeile anzeigen
-        header: Kopfzeile
-        logo_on_every_page: Logo auf allen Seiten anzeigen
-      group:
-        droptours_export: In Droptours Export einbeziehen
-        event_sender: Anlass E-Mail Absendername
-        membership_card_left_position: Mitgliederausweis Abstand von links (cm)
-        membership_card_top_position: Mitgliederausweis Abstand von oben (cm)
-        letter_left_address_position: Addressabstand von links (cm)
-        letter_top_address_position: Addressabstand von oben (cm)
+        address_care_of: Adressinformation 1
       role:
         class:
           permission:
