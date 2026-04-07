@@ -98,7 +98,7 @@ it:
       subtotal: Totale parziale
       donation: Donazione
       invoice_date: Data
-      from: "dal %{date}"
+      from: "del %{date}"
 
   dropdown/people_export:
     participations: Lista dei partecipanti
