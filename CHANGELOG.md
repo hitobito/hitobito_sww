@@ -1,6 +1,6 @@
 # Hitobito SWW Changelog
 
-## unreleased
+## Version 2.9
 
 * Auf den Personentabellen und Rechnungstabellen kann nun die Spalte "Haushalts-ID" angezeigt sowie danach sortiert (hitobito_sww#324)
 * Das "Mitarbeiter/innen" Tab auf dem Personenprofil wird nicht mehr angezeigt (hitobito_sww#337)
