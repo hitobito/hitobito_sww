@@ -7,7 +7,7 @@
 
 - [:first_name, :last_name].each do |attr|
   - if event.show_contact_attr?(attr)
-    - if entry.is_a?(Event::ParticipationContactData) ? controller.permitted_attrs.include?(attr) : true
+    - if entry.is_a?(Event::ParticipationContactData) && controller.respond_to?(:permitted_attrs) ? controller.permitted_attrs.include?(attr) : true
       = f.labeled_input_field(attr)
     - else
       = f.labeled(attr) do
