@@ -1,0 +1,87 @@
+-# Copyright (c) 2026, Katholische Landjugendbewegung Paderborn. This file is part of
+-# hitobito_sww and licensed under the Affero General Public License version 3
+-# or later. See the COPYING file at the top-level directory or at
+-# https://github.com/hitobito/hitobito_sww
+
+= content_for(:filter) do
+  = form_tag(group_statistic_path(@group, :event_participation), method: :get, class: "form-inline-search statistics-filter", role: "search", remote: true, data: { spin: true }) do
+    .d-lg-flex.justify-content-between.gap-3
+      .d-lg-inline-flex.gap-3.align-items-end
+        .mb-3
+          = direct_filter_date(:from, t(".from"), value: statistic.filter_params[:from] || f(statistic.from_date), data: { submit: true })
+        .mb-3
+          = direct_filter_date(:to, t(".to"), value: statistic.filter_params[:to] || f(statistic.to_date), data: { submit: true })
+        .mb-3.form-check
+          = hidden_field_tag :include_sublayers, "false"
+          = check_box_tag :include_sublayers, "true", statistic.filter_params[:include_sublayers] != "false", class: "form-check-input", data: { submit: true }
+          = label_tag :include_sublayers, t(".include_sublayers"), class: "form-check-label"
+
+.row
+  .col-lg-6
+    .card.mb-3
+      .card-header
+        %h3.card-title= t('.events_overview')
+      .card-body
+        %dl.row
+          .col-sm-9
+            %dt= t('.total_events')
+          .col-sm-3.text-end
+            %dd= statistic.events_count
+          .col-sm-9
+            %dt= t('.total_participations')
+          .col-sm-3.text-end
+            %dd= statistic.total_participations
+          .col-sm-9.ps-4
+            %dt
+              ╰
+              = t('.participations_with_membership')
+          .col-sm-3.text-end
+            %dd= statistic.participations_with_membership
+          .col-sm-9.ps-4
+            %dt
+              ╰
+              = t('.participations_without_membership')
+          .col-sm-3.text-end
+            %dd= statistic.participations_without_membership
+          .col-sm-9.ps-4
+            %dt
+              ╰
+              = t('.participations_guests')
+          .col-sm-3.text-end
+            %dd= statistic.participations_guests
+          .col-sm-9
+            %dt= t('.unique_participants')
+          .col-sm-3.text-end
+            %dd= statistic.unique_participants_count
+          .col-sm-9
+            %dt= t('.average_participants')
+          .col-sm-3.text-end
+            %dd= statistic.average_participants.round(1)
+
+  .col-lg-6
+    .card.mb-3
+      .card-header
+        %h3.card-title= t('.participation_frequency_title')
+      .card-body
+        - freq = statistic.participation_frequency
+        - if freq.any?
+          - total_persons = freq.values.sum
+          - max_persons = freq.values.max
+          %table.table.table-bordered
+            %thead
+              %tr
+                %th.text-nowrap= t('.times_participated')
+                %th.text-nowrap.text-end= t('.number_of_people')
+                %th.text-nowrap.text-end= t('.share')
+                %th.w-100
+            %tbody
+              - freq.each do |times, persons|
+                %tr
+                  %td= t('.times_count', count: times)
+                  %td.text-nowrap.text-end= persons
+                  %td.text-nowrap.text-end= number_to_percentage(persons.to_f / total_persons * 100, precision: 1)
+                  %td
+                    .progress
+                      .progress-bar{style: "width: #{distribution_bar_width(persons.to_f / max_persons, 1.0)}"}
+        - else
+          %p.text-muted= t('.no_participations')

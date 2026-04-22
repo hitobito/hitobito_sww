@@ -117,3 +117,25 @@ it:
         history_title: "Ruoli della persona 1 (esistenti)"
         new_role_title: "Ruolo per la persona 2 (nuovo)"
       success: La persona è stata divisa con successo.
+
+  group:
+    statistics:
+      event_participation:
+        title: Statistiche degli eventi
+        events_overview: Panoramica
+        from: Dal
+        to: Al
+        include_sublayers: Includi livelli inferiori
+        total_events: Numero di eventi
+        total_participations: Totale partecipanti
+        participations_with_membership: di cui membri (ruolo nel livello)
+        participations_without_membership: di cui non-membri
+        participations_guests: di cui ospiti
+        unique_participants: Partecipanti unici
+        average_participants: Partecipanti medi per evento
+        participation_frequency_title: Frequenza di partecipazione
+        times_participated: Partecipazioni
+        number_of_people: Persone
+        share: Quota
+        times_count: "%{count}x"
+        no_participations: Nessuna partecipazione trovata
