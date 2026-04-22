@@ -107,6 +107,10 @@ module HitobitoSww
       TableDisplay.register_column(Person, TableDisplays::PublicColumn, [:household_key])
 
       Sheet::Person.prepend Sww::Sheet::Person
+
+      ::Group::Statistics::Registry.register(
+        Sww::Group::Statistics::EventParticipation
+      )
     end
 
     config.to_prepare do
