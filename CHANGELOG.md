@@ -1,5 +1,9 @@
 # Hitobito SWW Changelog
 
+## unreleased
+
+* Es gibt nun auf den Hauptgruppen eine Statistik über Anlässe und Teilnahmen (hitobito_sww#345)
+
 ## Version 2.9
 
 * Auf den Personentabellen und Rechnungstabellen kann nun die Spalte "Haushalts-ID" angezeigt sowie danach sortiert (hitobito_sww#324)
