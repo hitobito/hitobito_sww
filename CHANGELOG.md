@@ -11,7 +11,7 @@
 
 * Deaktivierung des Features "Familienmitglieder", da der Fokus auf Haushalten liegt (hitobito_sww#295)
 * Die Personenattribute "Benutzerdefininierte Anrede" und "Namenszusatz" werden nicht mehr angezeigt und können nicht mehr neu hinzugefügt werden. (hitobito_sww#308 und hitobito_sww#309)
-* Auf Rechnungen wird nun die Mitgliedernummer der Person angezeigt (hitobito_sww#281)
+
 * CSV Export von Aktivmitgliedern von Genève Rando für Droptours (hitobito_sww#317)
 * Antworten und Zusätzlichen Angaben von Anmeldungen nach 12 Monaten löschen (hitobito_sww#320)
 
