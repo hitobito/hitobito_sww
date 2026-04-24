@@ -102,6 +102,10 @@ module HitobitoSww
       TableDisplay.register_column(Person, TableDisplays::PublicColumn, [:household_key])
 
       Sheet::Person.tabs.reject! { |t| t.label_key == "people.tabs.colleagues" }
+
+      ::Group::Statistics::Registry.register(
+        Sww::Group::Statistics::EventParticipation
+      )
       # rubocop:enable Layout/LineLength
     end
 

@@ -117,3 +117,25 @@ fr:
         history_title: "Rôles de la personne 1 (actuel)"
         new_role_title: "Rôle pour la personne 2 (nouveau)"
       success: La personne a été séparée avec succès.
+
+  group:
+    statistics:
+      event_participation:
+        title: Statistiques des événements
+        events_overview: Aperçu
+        from: Du
+        to: Au
+        include_sublayers: Inclure les niveaux inférieurs
+        total_events: Nombre d'événements
+        total_participations: Total des participants
+        participations_with_membership: dont membres (rôle dans le niveau)
+        participations_without_membership: dont non-membres
+        participations_guests: dont d'invités
+        unique_participants: Participants uniques
+        average_participants: Participants en moyenne par événement
+        participation_frequency_title: Fréquence de participation
+        times_participated: Participations
+        number_of_people: Personnes
+        share: Part
+        times_count: "%{count}x"
+        no_participations: Aucune participation trouvée

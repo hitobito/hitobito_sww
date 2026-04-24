@@ -175,6 +175,15 @@ de:
       people/split_form:
         person_1: Person 1 (bleibt bestehen)
         person_2: Person 2 (neu)
+      sww/group/statistics/event_participation:
+        from: Von
+        to: Bis
+    errors:
+      models:
+        sww/group/statistics/event_participation:
+          attributes:
+            to:
+              date_range_invalid: darf nicht vor dem Von-Datum liegen
 
 
   tags:
