@@ -160,7 +160,6 @@ de:
         email: E-Mail
         sww_salutation: Anrede
         household_member_numbers: Mitgliedernummern Haushaltsmitglieder
-        address_care_of: Adressinformation 1
       role:
         class:
           permission:
