@@ -119,7 +119,7 @@ fr:
 
     attributes:
       additional_address:
-        address_care_of: ligne d'adresse supplémentaire 1
+        address_care_of: Adressinformation 1
       contact_account:
         predefined_labels:
           andere: Autre
@@ -130,9 +130,9 @@ fr:
           privat: Privé
           webseite: Site web
       event/guest:
-        address_care_of: ligne d'adresse supplémentaire 1
+        address_care_of: Adressinformation 1
       group:
-        address_care_of: ligne d'adresse supplémentaire 1
+        address_care_of: Adressinformation 1
         droptours_export: Inclure dans l'exportation Droptours
         event_sender: Événement E-mail de l'expéditeur
         membership_card_left_position: Carte de membre Distance à partir de la gauche (cm)
@@ -143,6 +143,7 @@ fr:
         hide_total: Donation
         membership_card: Carte de membre
         membership_expires_on: Adhésion valide jusqu'au
+        recipient_address_care_of: Adressinformation 1
       invoice_config:
         logo_positions:
           bottom_left: En bas à gauche
@@ -154,9 +155,9 @@ fr:
         membership_card: Carte de membre
         membership_expires_on: Adhésion valide jusqu'au
       participant:
-        address_care_of: ligne d'adresse supplémentaire 1
+        address_care_of: Adressinformation 1
       person:
-        address_care_of: ligne d'adresse supplémentaire 1
+        address_care_of: Adressinformation 1
         company: Organisation
         custom_salutation: Formule d'appel personnalisée
         magazin_abo_number: 'Numéro d''abonnement au magazine'
