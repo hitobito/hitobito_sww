@@ -118,6 +118,8 @@ fr:
               other: "Cher*e %{first_name} %{last_name}"
 
     attributes:
+      additional_address:
+        address_care_of: Adressinformation 1
       contact_account:
         predefined_labels:
           andere: Autre
@@ -127,7 +129,36 @@ fr:
           mobil: Mobile
           privat: Privé
           webseite: Site web
+      event/guest:
+        address_care_of: Adressinformation 1
+      group:
+        address_care_of: Adressinformation 1
+        droptours_export: Inclure dans l'exportation Droptours
+        event_sender: Événement E-mail de l'expéditeur
+        membership_card_left_position: Carte de membre Distance à partir de la gauche (cm)
+        membership_card_top_position: Carte de membre Distance du haut (cm)
+        letter_left_address_position: Distance d'Address à partir de la gauche (cm)
+        letter_top_address_position: Distance d'address depuis le haut (cm)
+      invoice:
+        hide_total: Donation
+        membership_card: Carte de membre
+        membership_expires_on: Adhésion valide jusqu'au
+        recipient_address_care_of: Adressinformation 1
+      invoice_config:
+        logo_positions:
+          bottom_left: En bas à gauche
+        separators: Afficher la ligne de séparation sur le bulletin de versement
+        use_header: Afficher l'en-tête
+        header: en-tête
+        logo_on_every_page: Afficher le logo sur toutes les pages
+      message:
+        membership_card: Carte de membre
+        membership_expires_on: Adhésion valide jusqu'au
+      participant:
+        address_care_of: Adressinformation 1
       person:
+        address_care_of: Adressinformation 1
+        company: Organisation
         custom_salutation: Formule d'appel personnalisée
         magazin_abo_number: 'Numéro d''abonnement au magazine'
         member_number: Numéro de membre
@@ -137,27 +168,6 @@ fr:
         email: E-mail
         sww_salutation: Salutation
         household_member_numbers: Numéros de membre du foyer
-      message:
-        membership_card: Carte de membre
-        membership_expires_on: Adhésion valide jusqu'au
-      invoice:
-        hide_total: Donation
-        membership_card: Carte de membre
-        membership_expires_on: Adhésion valide jusqu'au
-      invoice_config:
-        logo_positions:
-          bottom_left: En bas à gauche
-        separators: Afficher la ligne de séparation sur le bulletin de versement
-        use_header: Afficher l'en-tête
-        header: en-tête
-        logo_on_every_page: Afficher le logo sur toutes les pages
-      group:
-        droptours_export: Inclure dans l'exportation Droptours
-        event_sender: Événement E-mail de l'expéditeur
-        membership_card_left_position: Carte de membre Distance à partir de la gauche (cm)
-        membership_card_top_position: Carte de membre Distance du haut (cm)
-        letter_left_address_position: Distance d'Address à partir de la gauche (cm)
-        letter_top_address_position: Distance d'address depuis le haut (cm)
       role:
         class:
           permission:
