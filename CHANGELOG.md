@@ -1,5 +1,9 @@
 # Hitobito SWW Changelog
 
+## unreleased
+
+* Das Kurse und Qualifikationen Feature ist auf "Schweizer Wanderwege" und auf den Fachorganisationen aktiviert (hitobito_sww#387)
+
 ## Version 2.9
 
 * Auf den Personentabellen und Rechnungstabellen kann nun die Spalte "Haushalts-ID" angezeigt sowie danach sortiert (hitobito_sww#324)

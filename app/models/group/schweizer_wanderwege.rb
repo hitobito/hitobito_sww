@@ -7,6 +7,7 @@
 
 class Group::SchweizerWanderwege < ::Group
   self.layer = true
+  self.event_types = [Event::Course]
 
   children Group::Benutzerkonten,
     Group::Kontakte,
