@@ -163,5 +163,18 @@ describe Person do
         it { expect(person.sww_salutation).to eq "Herr" }
       end
     end
+
+    # not possible on person due to presence validation but possible for event
+    # guests that also have this method and do not require language
+    context "with blank person language" do
+      before do
+        person.update!(gender: "m")
+        allow(person).to receive(:language).and_return ""
+      end
+
+      it "returns salutation in default locale" do
+        expect(person.sww_salutation).to eq "Herr"
+      end
+    end
   end
 end
