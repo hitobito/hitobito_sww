@@ -24,9 +24,6 @@ module HitobitoSww
         Export::DroptoursExportScheduleJob
       ]
 
-      # rubocop:disable Layout/LineLength
-      # extend application classes here
-
       Contactable::Address.prepend Sww::Contactable::Address
 
       InvoiceConfig.prepend Sww::InvoiceConfig
@@ -49,7 +46,9 @@ module HitobitoSww
       Export::Pdf::Invoice::InvoiceInformation.prepend Sww::Export::Pdf::Invoice::InvoiceInformation
       Export::Pdf::Invoice::Articles.prepend Sww::Export::Pdf::Invoice::Articles
       Export::Pdf::Invoice::PaymentSlipQr.include Sww::Export::Pdf::Invoice::PaymentSlipQr
-      Export::Tabular::Invoices::EvaluationList.include Sww::Export::Tabular::Invoices::EvaluationList
+      Export::Tabular::Invoices::EvaluationList.include(
+        Sww::Export::Tabular::Invoices::EvaluationList
+      )
 
       Export::Tabular::People::PeopleFull.prepend Sww::Export::Tabular::People::PeopleFull
       Export::Tabular::People::PersonRow.prepend Sww::Export::Tabular::People::PersonRow
@@ -73,7 +72,9 @@ module HitobitoSww
       JsonApiController.include Sww::JsonApiController
 
       Event::ParticipationsController.prepend Sww::Event::ParticipationsController
-      Event::ParticipationContactDatasController.prepend Sww::Event::ParticipationContactDatasController
+      Event::ParticipationContactDatasController.prepend(
+        Sww::Event::ParticipationContactDatasController
+      )
 
       PersonResource.include Sww::PersonResource
       Oauth::ProfilesController.prepend Sww::Oauth::ProfilesController
@@ -81,28 +82,29 @@ module HitobitoSww
       PeopleController.prepend Sww::PeopleController
       InvoicesController.permitted_attrs += [:membership_card, :membership_expires_on]
       InvoicesController.sort_mappings.merge!(household_key: "people.household_key")
-      InvoiceConfigsController.permitted_attrs += [:separators, :use_header, :header, :logo_on_every_page]
+      InvoiceConfigsController.permitted_attrs +=
+        [:separators, :use_header, :header, :logo_on_every_page]
 
       Event::ParticipationMailer.prepend Sww::Event::ParticipationMailer
       Event::RegisterMailer.prepend Sww::Event::RegisterMailer
 
       # Since permitted_attrs are an array, it's really hard to expand nested attrs
-      invoice_runs_invoice_permitted_attrs_hash = InvoiceRunsController.permitted_attrs.find { |attr| attr.is_a?(Hash) && attr.keys.include?(:invoice) }
-      invoice_runs_invoice_permitted_attrs = invoice_runs_invoice_permitted_attrs_hash[:invoice]
-      invoice_runs_invoice_permitted_attrs_hash.merge!(invoice: invoice_runs_invoice_permitted_attrs + [:membership_card, :membership_expires_on])
+      attrs_hash = InvoiceRunsController.permitted_attrs.find do |attr|
+        attr.is_a?(Hash) && attr.keys.include?(:invoice)
+      end
+      attrs_hash.merge!(invoice: attrs_hash[:invoice] + [:membership_card, :membership_expires_on])
 
       MailingListAbility.include Sww::MailingListAbility
 
-      MessagesController::PERMITTED_LETTER_ATTRS.push(:membership_card,
-        :membership_expires_on)
-      MessagesController::PERMITTED_INVOICE_LETTER_ATTRS.push(:membership_card,
-        :membership_expires_on)
+      MailingLists::MessagesController::PERMITTED_LETTER_ATTRS
+        .push(:membership_card, :membership_expires_on)
+      MailingLists::MessagesController::PERMITTED_INVOICE_LETTER_ATTRS
+        .push(:membership_card, :membership_expires_on)
       Role::Permissions << :support
 
       TableDisplay.register_column(Person, TableDisplays::PublicColumn, [:household_key])
 
       Sheet::Person.tabs.reject! { |t| t.label_key == "people.tabs.colleagues" }
-      # rubocop:enable Layout/LineLength
     end
 
     # We can't directly override the languages hash in a config file since the hashes are merged
@@ -117,12 +119,6 @@ module HitobitoSww
     initializer "sww.add_settings" do |_app|
       Settings.add_source!(File.join(paths["config"].existent, "settings.yml"))
       Settings.reload!
-    end
-
-    initializer "sww.add_inflections" do |_app|
-      ActiveSupport::Inflector.inflections do |inflect|
-        # inflect.irregular 'census', 'censuses'
-      end
     end
 
     private
