@@ -12,18 +12,18 @@ describe PersonAbility do
 
   let(:ability) { Ability.new(role.person.reload) }
 
-  context "person with only benutzerkonto role" do
+  context "person with basic_permissions_only role" do
     let(:role) do
       Fabricate(Group::Benutzerkonten::Benutzerkonto.sti_name.to_sym,
         group: groups(:benutzerkonten))
     end
 
-    it "may not show_details herself" do
-      is_expected.to_not be_able_to(:show_details, role.person)
+    it "may show_details herself" do
+      is_expected.to be_able_to(:show_details, role.person)
     end
 
-    it "may not show_full herself" do
-      is_expected.to_not be_able_to(:show_full, role.person)
+    it "may show_full herself" do
+      is_expected.to be_able_to(:show_full, role.person)
     end
 
     it "may not show history on herself" do
@@ -36,6 +36,10 @@ describe PersonAbility do
 
     it "may not index invoices on herself" do
       is_expected.to_not be_able_to(:index_invoices, role.person)
+    end
+
+    it "may not access security on herself" do
+      is_expected.to_not be_able_to(:security, role.person)
     end
   end
 end

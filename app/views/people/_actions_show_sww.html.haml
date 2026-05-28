@@ -3,7 +3,7 @@
 -#  or later. See the COPYING file at the top-level directory or at
 -#  https://github.com/hitobito/hitobito_sww
 
-- if can?(:edit, entry)
+- if can?(:edit, entry) && !current_person.basic_permissions_only?
   = action_button ti("button.split"),
       new_group_person_split_path(@group, entry),
       "scissors"
