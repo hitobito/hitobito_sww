@@ -19,7 +19,7 @@ describe Sww::Export::EventParticipationsExportJob do
   let(:user) { people(:zuercher_leiter) }
   let(:event) { events(:top_course) }
   let(:group) { event.groups.first }
-  let(:file) { subject.user_job_result }
+  let(:file) { subject.job_observation }
 
   before do
     subject.enqueue!
