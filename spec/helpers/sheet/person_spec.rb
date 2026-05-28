@@ -9,14 +9,45 @@ require "spec_helper"
 
 describe Sheet::Person do
   let(:person) { people(:berner_wanderer) }
-  let(:label_key) { "people.tabs.colleagues" }
 
-  subject(:sheet) { Sheet::Person.new(self, person) }
+  before do
+    allow(controller).to receive(:current_user).and_return(person)
+    allow(view).to receive(:current_user).and_return(person)
+  end
+
+  subject(:sheet) { Sheet::Person.new(view, person) }
 
   def tabs = sheet.tabs.map(&:label_key)
 
   it "does not have the colleagues tab" do
+    label_key = "people.tabs.colleagues"
     expect(I18n.t(label_key)).to be_present # sanity check that the label key is correct
     expect(tabs).not_to include(label_key)
+  end
+
+  context "when user has basic_permissions_only" do
+    let(:security_label_key) { "people.tabs.security_tools" }
+
+    it "has only the info tab" do
+      expect(person).to be_basic_permissions_only
+
+      label_key = "global.tabs.info"
+      expect(I18n.t(label_key)).to be_present # sanity check
+      expect(tabs).to eq [label_key]
+    end
+  end
+
+  context "when user has more than basic_permissions_only" do
+    let(:security_label_key) { "people.tabs.security_tools" }
+
+    it "has the security tab" do
+      Fabricate(Group::Benutzerkonten::Verwalter.sti_name,
+        group: groups(:benutzerkonten), person: person)
+      expect(person).not_to be_basic_permissions_only
+
+      label_key = "people.tabs.security_tools"
+      expect(I18n.t(label_key)).to be_present # sanity check
+      expect(tabs).to include(label_key)
+    end
   end
 end

@@ -11,6 +11,7 @@ describe "people/_actions_show.html.haml" do
   before do
     allow(view).to receive(:can?).and_return(false)
     allow(view).to receive(:current_user).and_return(person)
+    allow(view).to receive(:current_person).and_return(person)
 
     # Set proper controller context for translation lookup
     controller.class_eval do
@@ -40,6 +41,7 @@ describe "people/_actions_show.html.haml" do
     context "when user can edit person" do
       before do
         allow(view).to receive(:can?).with(:edit, person.decorate).and_return(true)
+        allow(person).to receive(:basic_permissions_only?).and_return(false)
       end
 
       it "is shown" do
@@ -55,6 +57,18 @@ describe "people/_actions_show.html.haml" do
     context "when user cannot edit person" do
       before do
         allow(view).to receive(:can?).with(:edit, person.decorate).and_return(false)
+        allow(person).to receive(:basic_permissions_only?).and_return(false)
+      end
+
+      it "is not shown" do
+        is_expected.not_to have_link("Aufteilen")
+      end
+    end
+
+    context "when user has basic_permissions_only" do
+      before do
+        allow(view).to receive(:can?).with(:edit, person.decorate).and_return(true)
+        allow(person).to receive(:basic_permissions_only?).and_return(true)
       end
 
       it "is not shown" do

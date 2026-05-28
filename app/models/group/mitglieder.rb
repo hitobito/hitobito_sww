@@ -14,30 +14,37 @@ class Group::Mitglieder < ::Group
 
   class Aktivmitglied < ::Role
     self.permissions = []
+    self.basic_permissions_only = true
   end
 
   class Passivmitglied < ::Role
     self.permissions = []
+    self.basic_permissions_only = true
   end
 
   class Freimitglied < ::Role
     self.permissions = []
+    self.basic_permissions_only = true
   end
 
   class Organisationen < ::Role
     self.permissions = []
+    self.basic_permissions_only = true
   end
 
   class Partner < ::Role
     self.permissions = []
+    self.basic_permissions_only = true
   end
 
   class Spender < ::Role
     self.permissions = []
+    self.basic_permissions_only = true
   end
 
   class MagazinAbonnent < ::Role
     self.permissions = []
+    self.basic_permissions_only = true
   end
 
   roles Aktivmitglied, Passivmitglied, Freimitglied, Organisationen,

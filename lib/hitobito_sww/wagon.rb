@@ -33,6 +33,7 @@ module HitobitoSww
       EventAbility.include Sww::EventAbility
       Group.include Sww::Group
       Person.include Sww::Person
+      PersonAbility.include Sww::PersonAbility
 
       Wizards::Steps::NewUserForm.prepend Sww::Wizards::Steps::NewUserForm
 
@@ -62,6 +63,7 @@ module HitobitoSww
 
       PaperTrail::VersionAuthorPresenter.prepend Sww::PaperTrail::VersionAuthorPresenter
       GroupDecorator.prepend Sww::GroupDecorator
+      PersonDecorator.prepend Sww::PersonDecorator
 
       LayoutHelper.include Sww::LayoutHelper
       TagListsHelper.include Sww::TagListsHelper
@@ -104,7 +106,7 @@ module HitobitoSww
 
       TableDisplay.register_column(Person, TableDisplays::PublicColumn, [:household_key])
 
-      Sheet::Person.tabs.reject! { |t| t.label_key == "people.tabs.colleagues" }
+      Sheet::Person.prepend Sww::Sheet::Person
     end
 
     # We can't directly override the languages hash in a config file since the hashes are merged
