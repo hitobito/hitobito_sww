@@ -33,7 +33,6 @@ module HitobitoSww
       EventAbility.include Sww::EventAbility
       Group.include Sww::Group
       Person.include Sww::Person
-      PersonAbility.include Sww::PersonAbility
 
       Wizards::Steps::NewUserForm.prepend Sww::Wizards::Steps::NewUserForm
 
