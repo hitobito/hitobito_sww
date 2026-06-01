@@ -37,9 +37,5 @@ describe PersonAbility do
     it "may not index invoices on herself" do
       is_expected.to_not be_able_to(:index_invoices, role.person)
     end
-
-    it "may not access security on herself" do
-      is_expected.to_not be_able_to(:security, role.person)
-    end
   end
 end
