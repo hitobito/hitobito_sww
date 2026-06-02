@@ -24,6 +24,7 @@ class Group::Benutzerkonten < ::Group
   # Users with this role are excluded from the password reset of the staging sync
   # see https://github.com/hitobito/hitobito_sww/issues/284
   class StagingUser < ::Role
+    self.basic_permissions_only = true
     self.permissions = []
   end
 
