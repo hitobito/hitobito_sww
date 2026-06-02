@@ -103,6 +103,10 @@ it:
   dropdown/people_export:
     participations: Lista dei partecipanti
 
+  global:
+    search:
+      placeholder_company_name: "Organisation suchen..."
+
   people:
     show:
       button:

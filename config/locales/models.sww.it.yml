@@ -131,6 +131,7 @@ it:
           webseite: Sito web
       event/guest:
         address_care_of: Adressinformation 1
+        company_name: Name der Organisation
       group:
         address_care_of: Adressinformation 1
         droptours_export: Includere in Droptours Export
@@ -156,9 +157,11 @@ it:
         membership_expires_on: Socio valido fino al
       participant:
         address_care_of: Adressinformation 1
+        company_name: Name der Organisation
       person:
         address_care_of: Adressinformation 1
         company: Organisation
+        company_name: Name der Organisation
         custom_salutation: Saluto personalizzato
         magazin_abo_number: 'Abo # Rivista'
         member_number: Numero socio
@@ -168,6 +171,9 @@ it:
         email: E-mail
         sww_salutation: Appellativo
         household_member_numbers: Numeri dei soci Membri del nucleo familiare
+      person_duplicate:
+        company_name: Name der Organisation
+
       role:
         class:
           permission:
@@ -214,7 +220,6 @@ it:
       invoices: Leggere tutte le fatture a cui si ha accesso
       mailing_lists: Leggere tutti gli abbonamenti a cui avete accesso
       nextcloud: Leggere i vostri gruppi Nextcloud e il vostro nome visualizzato
-
 
   mounted_attributes:
     form_tabs:

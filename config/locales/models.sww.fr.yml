@@ -131,6 +131,7 @@ fr:
           webseite: Site web
       event/guest:
         address_care_of: Ligne d’adresse supplémentaire 1
+        company_name: Name der Organisation
       group:
         address_care_of: Ligne d’adresse supplémentaire 1
         droptours_export: Inclure dans l'exportation Droptours
@@ -156,9 +157,11 @@ fr:
         membership_expires_on: Adhésion valide jusqu'au
       participant:
         address_care_of: Ligne d’adresse supplémentaire 1
+        company_name: Name der Organisation
       person:
         address_care_of: Ligne d’adresse supplémentaire 1
         company: Organisation
+        company_name: Name der Organisation
         custom_salutation: Formule d'appel personnalisée
         magazin_abo_number: 'Numéro d''abonnement au magazine'
         member_number: Numéro de membre
@@ -168,6 +171,9 @@ fr:
         email: E-mail
         sww_salutation: Salutation
         household_member_numbers: Numéros de membre du foyer
+      person_duplicate:
+        company_name: Name der Organisation
+
       role:
         class:
           permission:
@@ -214,7 +220,6 @@ fr:
       invoices: Lire toutes les factures auxquelles vous avez accès
       mailing_lists: Lire tous les abonnements auxquels vous avez accès
       nextcloud: Lire vos groupes Nextcloud et votre nom d'affichage
-
 
   mounted_attributes:
     form_tabs:

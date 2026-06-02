@@ -123,6 +123,7 @@ en:
           webseite: Webseite
       event/guest:
         address_care_of: Adressinformation 1
+        company_name: Name der Organisation
       group:
         address_care_of: Adressinformation 1
         droptours_export: In Droptours Export einbeziehen
@@ -148,9 +149,11 @@ en:
         membership_expires_on: Mitgliedschaft gültig bis
       participant:
         address_care_of: Adressinformation 1
+        company_name: Name der Organisation
       person:
         address_care_of: Adressinformation 1
         company: Organisation
+        company_name: Name der Organisation
         custom_salutation: Benutzerdefinierte Anrede
         magazin_abo_number: 'Abo # Magazin'
         member_number: Member Number
@@ -160,6 +163,9 @@ en:
         email: E-Mail
         sww_salutation: Anrede
         household_member_numbers: Mitgliedernummern Haushaltsmitglieder
+      person_duplicate:
+        company_name: Name der Organisation
+
       role:
         class:
           permission:
@@ -206,7 +212,6 @@ en:
       invoices: "Lesen aller Rechnungen, auf die Sie Zugriff haben"
       mailing_lists: "Lesen aller Abos, auf die Sie Zugriff haben"
       nextcloud: Lesen Ihrer Nextcloud-Gruppen und Ihres Anzeigenamens
-
 
   mounted_attributes:
     form_tabs:
