@@ -5,14 +5,13 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
 
-module Sww::EventAbility
+module Sww::Event::InvitationAbility
   extend ActiveSupport::Concern
 
   included do
-    on(Event) do
-      permission(:group_and_below_full).may(:application_market).in_same_group_or_below_if_active
-      permission(:any).may(:application_market).for_participations_full_events
-      permission(:any).may(:index_invitations)
+    on(Event::Invitation) do
+      permission(:any)
+        .may(:create, :destroy)
         .for_participations_full_events_and_invitations_supported
     end
   end

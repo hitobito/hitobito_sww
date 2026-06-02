@@ -36,3 +36,12 @@ zuercher_leiter:
   zip_code: 8001
   street: Belpstrasse
   housenumber: 37
+
+no_permissions:
+  first_name: Dana
+  last_name: Smith
+  email: dana@example.com
+  town: Bern
+  zip_code: 3000
+  street: Bahnhofstrasse
+  housenumber: 1
