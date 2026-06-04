@@ -15,4 +15,8 @@ describe Invoice do
   it "allows payement if it is overpaid" do
     expect(described_class::STATES_PAYABLE).to include("excess")
   end
+
+  it "has custom translation for company name" do
+    expect(described_class.human_attribute_name(:recipient_company_name)).to eq "Name der Organisation"
+  end
 end

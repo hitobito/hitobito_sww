@@ -134,6 +134,7 @@ de:
         letter_top_address_position: Addressabstand von oben (cm)
       invoice:
         hide_total: Spende
+        recipient_company_name: Name der Organisation
         membership_card: Mitgliederausweis
         membership_expires_on: Mitgliedschaft gültig bis
         recipient_address_care_of: Adressinformation 1
