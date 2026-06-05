@@ -17,6 +17,7 @@ describe Invoice do
   end
 
   it "has custom translation for company name" do
-    expect(described_class.human_attribute_name(:recipient_company_name)).to eq "Name der Organisation"
+    expect(described_class.human_attribute_name(:recipient_company_name))
+      .to eq "Name der Organisation"
   end
 end
