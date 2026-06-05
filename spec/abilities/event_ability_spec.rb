@@ -9,13 +9,13 @@ require "spec_helper"
 
 describe EventAbility do
   let(:user) { role.person }
-  let(:group) { groups(:berner_gremium) }
+  let(:group) { groups(:schweizer_wanderwege) }
   let(:event) { Fabricate(:event, groups: [group], globally_visible: false) }
 
   subject(:ability) { Ability.new(user.reload) }
 
   context :layer_and_below_full do
-    let(:role) { Fabricate(Group::GremiumProjektgruppe::Leitung.name.to_sym, group: group) }
+    let(:role) { Fabricate(Group::SchweizerWanderwege::Support.name.to_sym, group: group) }
 
     context "on Event" do
       it "may create events (as with the core-ability)" do
@@ -32,6 +32,31 @@ describe EventAbility do
 
       it "may see application market for event in his layer" do
         is_expected.to be_able_to(:application_market, event)
+      end
+
+      it "may qualify participants for event in his layer" do
+        is_expected.to be_able_to(:qualify, event)
+      end
+    end
+
+    context "on Event in subgroup (Fachorganisation)" do
+      let(:subgroup) { groups(:berner_wanderwege) }
+      let(:event_in_subgroup) { Fabricate(:event, groups: [subgroup], globally_visible: false) }
+
+      it "may create events in subgroup" do
+        is_expected.to be_able_to(:create, event_in_subgroup)
+      end
+
+      it "may delete events in subgroup" do
+        is_expected.to be_able_to(:destroy, event_in_subgroup)
+      end
+
+      it "may see application market for event in subgroup" do
+        is_expected.to be_able_to(:application_market, event_in_subgroup)
+      end
+
+      it "may qualify participants for event in subgroup" do
+        is_expected.to be_able_to(:qualify, event_in_subgroup)
       end
     end
   end
