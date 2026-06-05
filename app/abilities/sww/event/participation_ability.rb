@@ -13,6 +13,10 @@ module Sww::Event::ParticipationAbility
       for_self_or_manageds do
         permission(:any).may(:create).her_own_or_for_participations_full_events
       end
+
+      permission(:layer_and_below_full)
+        .may(:create, :destroy)
+        .in_same_layer_or_below_if_active
     end
   end
 
