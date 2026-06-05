@@ -8,19 +8,25 @@
 require "spec_helper"
 
 describe Sww::Export::EventParticipationsExportJob do
+  include JobObservationSpecHelper
+
   subject {
     Export::EventParticipationsExportJob.new(format,
       user.id,
       event.id,
       group.id,
-      params.merge(filename: filename))
+      params.merge(filename: "event_participation_export"))
   }
 
   let(:user) { people(:zuercher_leiter) }
   let(:event) { events(:top_course) }
   let(:group) { event.groups.first }
-  let(:filename) { AsyncDownloadFile.create_name("event_participation_export", user.id) }
-  let(:file) { AsyncDownloadFile.from_filename(filename, format) }
+  let(:file) { subject.job_observation }
+
+  before do
+    subject.enqueue!
+    subject.perform
+  end
 
   context "export participations list" do
     let(:format) { :csv }
@@ -28,9 +34,7 @@ describe Sww::Export::EventParticipationsExportJob do
     let(:expected_columns_count) { 6 }
 
     it "and saves it" do
-      subject.perform
-
-      lines = file.read.lines
+      lines = read_data_from_generated_file(file).lines
       expect(lines.size).to eq(2)
       expect(lines[0]).to match(Regexp.new("^#{Export::Csv::UTF8_BOM}Vorname;Nachname"))
       expect(lines[0].split(";").count).to match(expected_columns_count)
@@ -41,9 +45,7 @@ describe Sww::Export::EventParticipationsExportJob do
       let(:user) { people(:zuercher_wanderer) }
 
       it "uses default exporter" do
-        subject.perform
-
-        lines = file.read.lines
+        lines = read_data_from_generated_file(file).lines
         expect(lines[0].split(";").count).to_not match(expected_columns_count)
       end
     end
