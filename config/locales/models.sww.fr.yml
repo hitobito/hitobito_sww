@@ -142,6 +142,7 @@ fr:
         letter_top_address_position: Distance d'address depuis le haut (cm)
       invoice:
         hide_total: Donation
+        recipient_company_name: Name der Organisation
         membership_card: Carte de membre
         membership_expires_on: Adhésion valide jusqu'au
         recipient_address_care_of: Ligne d’adresse supplémentaire 1

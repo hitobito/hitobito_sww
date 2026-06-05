@@ -142,6 +142,7 @@ it:
         letter_top_address_position: Distanza dall'indirizzo dall'alto (cm)
       invoice:
         hide_total: Donazione
+        recipient_company_name: Name der Organisation
         membership_card: Carta socio
         membership_expires_on: Socio valido fino al
         recipient_address_care_of: Adressinformation 1
