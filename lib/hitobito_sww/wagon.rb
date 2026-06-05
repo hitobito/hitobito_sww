@@ -31,6 +31,7 @@ module HitobitoSww
 
       Event.include Sww::Event
       EventAbility.include Sww::EventAbility
+      Event::ParticipationAbility.include Sww::Event::ParticipationAbility
       Group.include Sww::Group
       Person.include Sww::Person
 
