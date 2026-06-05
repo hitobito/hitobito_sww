@@ -11,6 +11,9 @@ module Sww::EventAbility
   included do
     on(Event) do
       permission(:group_and_below_full).may(:application_market).in_same_group_or_below_if_active
+      permission(:layer_and_below_full)
+        .may(:create, :destroy, :application_market, :qualify)
+        .in_same_layer_or_below_if_active
       permission(:any).may(:application_market).for_participations_full_events
       permission(:any).may(:index_invitations)
         .for_participations_full_events_and_invitations_supported

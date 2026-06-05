@@ -5,6 +5,7 @@
 * Es gibt nun auf den Hauptgruppen eine Statistik über Anlässe und Teilnahmen (hitobito_sww#345)
 * Hauptleitung und Leitung von Anlässen können neu auf die Register "Anmeldungen" und "Einladungen" zugreifen (hitobito_sww#384)
 * Das Kurse und Qualifikationen Feature ist auf "Schweizer Wanderwege" und auf den Fachorganisationen aktiviert (hitobito_sww#387)
+* Rollen mit Berechtigung `layer_and_below_full` (z.B. `Support`) erhalten vollen Zugriff auf Anlässe (Warteliste etc.) (hitobito_sww#383)
 
 ## Version 2.9
 
