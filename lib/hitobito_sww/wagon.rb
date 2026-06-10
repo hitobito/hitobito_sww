@@ -27,7 +27,6 @@ module HitobitoSww
       Contactable::Address.prepend Sww::Contactable::Address
 
       InvoiceConfig.prepend Sww::InvoiceConfig
-      Invoice::STATES_PAYABLE << "payed" << "excess"
 
       Event.include Sww::Event
       EventAbility.include Sww::EventAbility
