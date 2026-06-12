@@ -35,4 +35,27 @@ describe EventAbility do
       end
     end
   end
+
+  context "with event role" do
+    let(:user) { people(:no_permissions) }
+    let(:participation) { Fabricate(:event_participation, event: event, participant: user) }
+
+    context "with permission :participations_full" do
+      let!(:event_role) {
+        Fabricate(Event::Role::ParticipationsFull.name.to_sym, participation: participation)
+      }
+
+      it { is_expected.to be_able_to(:application_market, event) }
+      it { is_expected.to be_able_to(:index_invitations, event) }
+    end
+
+    context "with permission :event_full" do
+      let!(:event_role) {
+        Fabricate(Event::Role::EventsFull.name.to_sym, participation: participation)
+      }
+
+      it { is_expected.not_to be_able_to(:application_market, event) }
+      it { is_expected.not_to be_able_to(:index_invitations, event) }
+    end
+  end
 end

@@ -18,3 +18,8 @@ berner_mitglied:
   person: berner_wanderer
   group: berner_mitglieder
   type: Group::Mitglieder::Aktivmitglied
+
+no_permissions:
+  person: no_permissions
+  group: berner_kontakte
+  type: Group::Kontakte::Kontakt
