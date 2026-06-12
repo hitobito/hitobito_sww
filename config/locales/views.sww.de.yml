@@ -52,24 +52,23 @@ de:
   group:
     statistics:
       event_participation:
-        title: Anlassstatistik
+        title: Anlässe
         events_overview: Übersicht
         from: Von
         to: Bis
         include_sublayers: Darunterliegende Ebenen einbeziehen
-        total_events: Anzahl Anlässe
-        total_participations: Anzahl Teilnehmende Total
+        total_events: Anlässe
+        total_participations: Teilnehmende Total
         participations_with_membership: davon Mitglieder (Rolle in der Ebene)
         participations_without_membership: davon Nicht-Mitglieder
         participations_guests: davon Gäste
-        unique_participants: Anzahl eindeutige Personen
+        unique_participants: Eindeutige Personen
         average_participants: Durchschnittliche Teilnehmende pro Anlass
         participation_frequency_title: Teilnahme-Häufigkeit
-        times_participated: Anzahl Teilnahmen
+        times_participated: Teilnahmen
         number_of_people: Personen
         share: Anteil
         times_count: "%{count}x"
-        no_participations: Keine Teilnahmen vorhanden
 
   groups:
     form_tabs:

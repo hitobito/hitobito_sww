@@ -1,0 +1,14 @@
+-# Copyright (c) 2026, Schweizer Wanderwege. This file is part of
+-# hitobito_sww and licensed under the Affero General Public License version 3
+-# or later. See the COPYING file at the top-level directory or at
+-# https://github.com/hitobito/hitobito_sww
+
+- indent_class = row[:nested] ? 'ps-4' : ''
+
+.col-sm-9{ class: indent_class }
+  %dt
+    - if row[:nested]
+      ╰
+    = row[:label_key]
+.col-sm-3.text-end
+  %dd= row[:value]

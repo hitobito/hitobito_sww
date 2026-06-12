@@ -12,7 +12,7 @@
         .mb-3
           = direct_filter_date(:to, t(".to"), value: statistic.filter_params[:to] || f(statistic.to_date), data: { submit: true })
         .mb-3.form-check
-          = hidden_field_tag :include_sublayers, "false"
+          = hidden_field_tag :include_sublayers, "false", id: :include_sublayers_hidden
           = check_box_tag :include_sublayers, "true", statistic.filter_params[:include_sublayers] != "false", class: "form-check-input", data: { submit: true }
           = label_tag :include_sublayers, t(".include_sublayers"), class: "form-check-label"
 
@@ -22,42 +22,21 @@
       .card-header
         %h3.card-title= t('.events_overview')
       .card-body
-        %dl.row
-          .col-sm-9
-            %dt= t('.total_events')
-          .col-sm-3.text-end
-            %dd= statistic.events_count
-          .col-sm-9
-            %dt= t('.total_participations')
-          .col-sm-3.text-end
-            %dd= statistic.total_participations
-          .col-sm-9.ps-4
-            %dt
-              ╰
-              = t('.participations_with_membership')
-          .col-sm-3.text-end
-            %dd= statistic.participations_with_membership
-          .col-sm-9.ps-4
-            %dt
-              ╰
-              = t('.participations_without_membership')
-          .col-sm-3.text-end
-            %dd= statistic.participations_without_membership
-          .col-sm-9.ps-4
-            %dt
-              ╰
-              = t('.participations_guests')
-          .col-sm-3.text-end
-            %dd= statistic.participations_guests
-          .col-sm-9
-            %dt= t('.unique_participants')
-          .col-sm-3.text-end
-            %dd= statistic.unique_participants_count
-          .col-sm-9
-            %dt= t('.average_participants')
-          .col-sm-3.text-end
-            %dd= statistic.average_participants.round(1)
+        - if statistic.events_count.positive?
+          %dl.row
+            - rows = [ |
+              { label_key: t('.total_events'), value: statistic.events_count }, |
+              { label_key: t('.total_participations'), value: statistic.total_participations }, |
+              { label_key: t('.participations_with_membership'), value: statistic.participations_with_membership, nested: true }, |
+              { label_key: t('.participations_without_membership'), value: statistic.participations_without_membership, nested: true }, |
+              { label_key: t('.participations_guests'), value: statistic.participations_guests, nested: true }, |
+              { label_key: t('.unique_participants'), value: statistic.unique_participants_count }, |
+              { label_key: t('.average_participants'), value: statistic.average_participants.round(1) } |
+            ] |
 
+            = render partial: 'overview_row', collection: rows, as: :row
+        - else
+          %p.text-muted=ti(:no_list_entries)
   .col-lg-6
     .card.mb-3
       .card-header
@@ -67,21 +46,26 @@
         - if freq.any?
           - total_persons = freq.values.sum
           - max_persons = freq.values.max
-          %table.table.table-bordered
+          %table.table.table-bordered.text-end
+            %colgroup
+              %col{style: "width: 5%"}
+              %col{style: "width: 10%"}
+              %col{style: "width: 15%"}
+              %col{style: "width: 70%"}
             %thead
               %tr
-                %th.text-nowrap= t('.times_participated')
-                %th.text-nowrap.text-end= t('.number_of_people')
-                %th.text-nowrap.text-end= t('.share')
-                %th.w-100
+                %th
+                %th= t('.number_of_people')
+                %th
+                  %span.pe-2=t('.share')
             %tbody
               - freq.each do |times, persons|
                 %tr
                   %td= t('.times_count', count: times)
-                  %td.text-nowrap.text-end= persons
-                  %td.text-nowrap.text-end= number_to_percentage(persons.to_f / total_persons * 100, precision: 1)
+                  %td= persons
+                  %td= number_to_percentage(persons.to_f / total_persons * 100, precision: 2)
                   %td
-                    .progress
+                    .progress.ms-2
                       .progress-bar{style: "width: #{distribution_bar_width(persons.to_f / max_persons, 1.0)}"}
         - else
-          %p.text-muted= t('.no_participations')
+          %p.text-muted= ti(:no_list_entries)
