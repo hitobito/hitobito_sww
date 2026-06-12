@@ -54,8 +54,8 @@ describe EventAbility do
         Fabricate(Event::Role::EventsFull.name.to_sym, participation: participation)
       }
 
-      it { is_expected.to be_able_to(:application_market, event) }
-      it { is_expected.to be_able_to(:index_invitations, event) }
+      it { is_expected.not_to be_able_to(:application_market, event) }
+      it { is_expected.not_to be_able_to(:index_invitations, event) }
     end
   end
 end

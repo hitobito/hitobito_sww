@@ -6,7 +6,7 @@
 #  https://github.com/hitobito/hitobito_sww
 
 class Event::Role::EventsFull < Event::Role
-  self.permissions = [:participations_full]
+  self.permissions = [:events_full]
 
   self.kind = :leader
 end
