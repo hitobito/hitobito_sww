@@ -49,6 +49,27 @@ fr:
     form_invoice_fields_sww:
       membership_card_caption: Imprimer la carte de membre
 
+  group:
+    statistics:
+      event_participation:
+        title: Anlässe
+        events_overview: Übersicht
+        from: Von
+        to: Bis
+        include_sublayers: Darunterliegende Ebenen einbeziehen
+        total_events: Anlässe
+        total_participations: Teilnehmende Total
+        participations_with_membership: davon Mitglieder (Rolle in der Ebene)
+        participations_without_membership: davon Nicht-Mitglieder
+        participations_guests: davon Gäste
+        unique_participants: Eindeutige Personen
+        average_participants: Durchschnittliche Teilnehmende pro Anlass
+        participation_frequency_title: Teilnahme-Häufigkeit
+        times_participated: Teilnahmen
+        number_of_people: Personen
+        share: Anteil
+        times_count: "%{count}x"
+
   groups:
     form_tabs:
       membership_cards: Carte de membre
@@ -80,6 +101,7 @@ fr:
         privacy_text: "Pour en savoir plus sur la manière dont les données personnelles sont collectées, utilisées, divulguées et protégées, veuillez consulter la politique de confidentialité."
         privacy_link: ""
         privacy_link_name: Politique de confidentialité
+
   invoices:
     export:
       tabular:
@@ -121,25 +143,3 @@ fr:
         history_title: "Rôles de la personne 1 (actuel)"
         new_role_title: "Rôle pour la personne 2 (nouveau)"
       success: La personne a été séparée avec succès.
-
-  group:
-    statistics:
-      event_participation:
-        title: Statistiques des événements
-        events_overview: Aperçu
-        from: Du
-        to: Au
-        include_sublayers: Inclure les niveaux inférieurs
-        total_events: Nombre d'événements
-        total_participations: Total des participants
-        participations_with_membership: dont membres (rôle dans le niveau)
-        participations_without_membership: dont non-membres
-        participations_guests: dont d'invités
-        unique_participants: Participants uniques
-        average_participants: Participants en moyenne par événement
-        participation_frequency_title: Fréquence de participation
-        times_participated: Participations
-        number_of_people: Personnes
-        share: Part
-        times_count: "%{count}x"
-        no_participations: Aucune participation trouvée

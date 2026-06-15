@@ -189,6 +189,15 @@ fr:
       people/split_form:
         person_1: Personne 1 (reste en place)
         person_2: Personne 2 (nouvelle)
+      sww/group/statistics/event_participation:
+        from: Von
+        to: Bis
+    errors:
+      models:
+        sww/group/statistics/event_participation:
+          attributes:
+            to:
+              date_range_invalid: darf nicht vor dem Von-Datum liegen
 
 
   tags:
