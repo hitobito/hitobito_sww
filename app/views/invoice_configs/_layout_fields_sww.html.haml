@@ -8,9 +8,9 @@
 = f.labeled_input_field(:separators)
 
 = field_set_tag do
-  %div{data: { controller: 'form-field-toggle', 'form-field-toggle-hide-on-value': false}}
+  %div{data: { controller: 'field-visibility', 'field-visibility-observed-field-id-value': 'invoice_config_use_header', 'field-visibility-show-when-present-value': true}}
     %div
-      = f.labeled_input_field(:use_header, data: { action: 'input->form-field-toggle#toggle'})
+      = f.labeled_input_field(:use_header)
 
-    %div{data: { 'form-field-toggle-target': 'toggle' }, class: entry.use_header ? "" : "hidden"}
+    %div{data: { 'field-visibility-target': 'container' }, class: entry.use_header ? "" : "hidden"}
       = f.labeled_rich_text_area :header, rows: 20
