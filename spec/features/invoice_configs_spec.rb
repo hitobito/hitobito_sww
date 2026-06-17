@@ -7,7 +7,7 @@
 
 require "spec_helper"
 
-describe :invoice_configs do
+describe :invoice_configs, js: true do
   include ActionDispatch::TestProcess::FixtureFile
 
   subject { page }
@@ -36,6 +36,25 @@ describe :invoice_configs do
         right: "Rechts",
         bottom_left: "Unten links"
       )
+    end
+  end
+
+  context "use_header" do
+    before do
+      visit edit_path
+      click_link "Layout"
+    end
+
+    it "hides header field by default" do
+      expect(page).to have_no_css "[data-field-visibility-target='container']"
+    end
+
+    it "toggles header field visibility with use_header checkbox" do
+      check "Kopfzeile anzeigen"
+      expect(page).to have_css "[data-field-visibility-target='container']"
+
+      uncheck "Kopfzeile anzeigen"
+      expect(page).to have_no_css "[data-field-visibility-target='container']"
     end
   end
 
