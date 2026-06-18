@@ -7,7 +7,7 @@
 
 class Group::Fachorganisation < ::Group
   self.layer = true
-  self.event_types = [Event::Course]
+  self.event_types = [Event, Event::Course]
 
   children Group::Vorstand,
     Group::Geschaeftsstelle,
