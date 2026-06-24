@@ -21,8 +21,6 @@ module Sww::Person
 
     Person::MERGABLE_ATTRS << :manual_member_number
 
-    Person::SEARCHABLE_ATTRS << :magazin_abo_number << :manual_member_number
-
     attr_readonly :alabus_id
 
     validates :manual_member_number,
