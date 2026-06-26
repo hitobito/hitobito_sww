@@ -119,7 +119,7 @@ it:
 
     attributes:
       additional_address:
-        address_care_of: Adressinformation 1
+        address_care_of: Riga aggiuntiva dell'indirizzo 1
       contact_account:
         predefined_labels:
           andere: Altro
@@ -130,10 +130,10 @@ it:
           privat: Privato
           webseite: Sito web
       event/guest:
-        address_care_of: Adressinformation 1
-        company_name: Name der Organisation
+        address_care_of: Riga aggiuntiva dell'indirizzo 1
+        company_name: Nome dell'organizzazione
       group:
-        address_care_of: Adressinformation 1
+        address_care_of: Riga aggiuntiva dell'indirizzo 1
         droptours_export: Includere in Droptours Export
         event_sender: "Occasione: Nome del mittente E-mail"
         membership_card_left_position: Carta socio Distanza da sinistra (cm)
@@ -142,10 +142,10 @@ it:
         letter_top_address_position: Distanza dall'indirizzo dall'alto (cm)
       invoice:
         hide_total: Donazione
-        recipient_company_name: Name der Organisation
+        recipient_company_name: Nome dell'organizzazione
         membership_card: Carta socio
         membership_expires_on: Socio valido fino al
-        recipient_address_care_of: Adressinformation 1
+        recipient_address_care_of: Riga aggiuntiva dell'indirizzo 1
       invoice_config:
         logo_positions:
           bottom_left: In basso a sinistra
@@ -157,12 +157,12 @@ it:
         membership_card: Carta socio
         membership_expires_on: Socio valido fino al
       participant:
-        address_care_of: Adressinformation 1
-        company_name: Name der Organisation
+        address_care_of: Riga aggiuntiva dell'indirizzo 1
+        company_name: Nome dell'organizzazione
       person:
-        address_care_of: Adressinformation 1
-        company: Organisation
-        company_name: Name der Organisation
+        address_care_of: Riga aggiuntiva dell'indirizzo 1
+        company: Organizzazione
+        company_name: Nome dell'organizzazione
         custom_salutation: Saluto personalizzato
         magazin_abo_number: 'Abo # Rivista'
         member_number: Numero socio
@@ -173,7 +173,7 @@ it:
         sww_salutation: Appellativo
         household_member_numbers: Numeri dei soci Membri del nucleo familiare
       person_duplicate:
-        company_name: Name der Organisation
+        company_name: Nome dell'organizzazione
 
       role:
         class:
@@ -190,14 +190,14 @@ it:
         person_1: Persona 1 (rimane)
         person_2: Persona 2 (nuova)
       sww/group/statistics/event_participation:
-        from: Von
-        to: Bis
+        from: Da
+        to: A
     errors:
       models:
         sww/group/statistics/event_participation:
           attributes:
             to:
-              date_range_invalid: darf nicht vor dem Von-Datum liegen
+              date_range_invalid: non deve essere anteriore alla data “da”
 
 
   tags:
