@@ -97,6 +97,7 @@ module HitobitoSww
       attrs_hash.merge!(invoice: attrs_hash[:invoice] + [:membership_card, :membership_expires_on])
 
       MailingListAbility.include Sww::MailingListAbility
+      VariousAbility.prepend Sww::VariousAbility
 
       MailingLists::MessagesController::PERMITTED_LETTER_ATTRS
         .push(:membership_card, :membership_expires_on)
