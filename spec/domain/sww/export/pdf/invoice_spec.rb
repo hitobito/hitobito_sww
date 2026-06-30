@@ -33,7 +33,7 @@ describe Export::Pdf::Invoice do
   let(:payment_slip) { true }
 
   let(:pdf) {
-    described_class.render(invoice, payment_slip: payment_slip, articles: true, reminders: true)
+    described_class.render([invoice], payment_slip: payment_slip, articles: true, reminders: true)
   }
 
   subject { PDF::Inspector::Text.analyze(pdf) }
@@ -537,7 +537,7 @@ describe Export::Pdf::Invoice do
 
     context "without reminders" do
       let(:pdf) {
-        described_class.render(invoice, payment_slip: true, articles: true, reminders: false)
+        described_class.render([invoice], payment_slip: true, articles: true, reminders: false)
       }
 
       it "does not render reminder and reminder date" do
