@@ -39,6 +39,8 @@ module HitobitoSww
 
       PersonResource.include Sww::PersonResource
 
+      SearchStrategies::PersonSearch.prepend Sww::SearchStrategies::PersonSearch
+
       Export::Pdf::AddressRenderers.include Sww::Export::Pdf::AddressRenderers
       Export::Pdf::Invoice.prepend Sww::Export::Pdf::Invoice
       Export::Pdf::Invoice::Header::HEADER_MARGIN = 0

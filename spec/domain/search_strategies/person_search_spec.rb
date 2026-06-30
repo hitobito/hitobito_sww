@@ -8,7 +8,7 @@
 require "spec_helper"
 
 describe SearchStrategies::PersonSearch do
-  describe "#search_fulltext" do
+  describe "#search" do
     let(:user) { people(:zuercher_wanderer) }
 
     before do
@@ -16,13 +16,13 @@ describe SearchStrategies::PersonSearch do
     end
 
     it "finds accessible person by magazin_abo_number" do
-      result = search_class(people(:zuercher_wanderer).magazin_abo_number.to_s).search_fulltext
+      result = search_class(people(:zuercher_wanderer).magazin_abo_number.to_s).search
 
       expect(result).to include(people(:zuercher_wanderer))
     end
 
     it "finds accessible person by manual_member_number" do
-      result = search_class(people(:zuercher_wanderer).manual_member_number.to_s).search_fulltext
+      result = search_class(people(:zuercher_wanderer).manual_member_number.to_s).search
 
       expect(result).to include(people(:zuercher_wanderer))
     end
