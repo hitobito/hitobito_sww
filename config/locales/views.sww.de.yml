@@ -13,9 +13,11 @@ de:
             title: Mitgliederausweis
             valid_until: Gültig bis
 
-    letter:
-      fields_sww:
-        membership_card_caption: Mitgliederausweis mit drucken
+  mailing_lists:
+    messages:
+      letter:
+        fields_sww:
+          membership_card_caption: Mitgliederausweis mit drucken
 
   devise:
     confirmation_instructions:
