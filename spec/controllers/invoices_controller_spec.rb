@@ -12,7 +12,7 @@ describe InvoicesController do
   let(:person_a) { Fabricate(:person, household_key: "family_a") }
   let(:person_b) { Fabricate(:person, household_key: "family_b") }
   let(:user) do
-    Fabricate(Group::Geschaeftsstelle::Kassier.sti_name,
+    Fabricate(Group::Geschaeftsstelle::Rechnungswesen.sti_name,
       group: groups(:berner_geschaeftsstelle)).person
   end
 

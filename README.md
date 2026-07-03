@@ -17,15 +17,22 @@ of Sww.
         * Support: [:layer_full]
         * Staging User: []
     * Fachorganisation < Schweizer Wanderwege
+      * Fachorganisation
       * Vorstand
-        * Präsident: [:contact_data, :layer_and_below_full]
-        * Vizepräsident: [:contact_data, :layer_and_below_full]
-        * Vorstandsmitglied: [:layer_and_below_full]
+        * Präsident: [:group_and_below_full]
+        * Vizepräsident: [:group_and_below_full]
+        * Vorstandsmitglied: [:group_and_below_full]
+        * Rechnungswesen: [:finance]
+        * Leserechte: [:layer_and_below_read]
+        * Schreibrechte: [:layer_and_below_full]
       * Geschäftsleitung
-        * Geschäftsführer: [:contact_data, :layer_and_below_full, :finance]
-        * Kassier: [:finance, :layer_and_below_full]
-        * Technischer Leiter: [:layer_and_below_full]
-        * Mitarbeiter: [:layer_and_below_full]
+        * Geschäftsführer: [:group_and_below_full]
+        * Kassier: [:group_and_below_full]
+        * Technischer Leiter: [:group_and_below_full]
+        * Mitarbeiter: [:group_and_below_full]
+        * Rechnungswesen: [:finance]
+        * Leserechte: [:layer_and_below_read]
+        * Schreibrechte: [:layer_and_below_full]
       * Gremium/Projektgruppe
         * Leitung: [:group_and_below_full]
         * Mitglied: [:group_and_below_read]
