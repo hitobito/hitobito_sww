@@ -13,9 +13,11 @@ it:
             title: Carta socio
             valid_until: Valido fino al
 
-    letter:
-      fields_sww:
-        membership_card_caption: Stampa la carta socio
+  mailing_lists:
+    messages:
+      letter:
+        fields_sww:
+          membership_card_caption: Mitgliederausweis mit drucken
 
   devise:
     confirmation_instructions:

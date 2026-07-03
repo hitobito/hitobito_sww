@@ -13,9 +13,11 @@ fr:
             title: Carte de membre
             valid_until: Validité
 
-    letter:
-      fields_sww:
-        membership_card_caption: Imprimer la carte de membre
+  mailing_lists:
+    messages:
+      letter:
+        fields_sww:
+          membership_card_caption: Mitgliederausweis mit drucken
 
   devise:
     confirmation_instructions:
