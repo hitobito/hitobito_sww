@@ -11,7 +11,7 @@ describe People::SplitsController do
   let(:group) { groups(:berner_wanderwege) }
   let(:person) { people(:berner_wanderer) }
   let(:user_with_permission) do
-    Fabricate(Group::Geschaeftsstelle::Mitarbeiter.sti_name,
+    Fabricate(Group::Geschaeftsstelle::Schreibrechte.sti_name,
       group: groups(:berner_geschaeftsstelle)).person
   end
   let(:user_without_permission) { people(:zuercher_wanderer) }

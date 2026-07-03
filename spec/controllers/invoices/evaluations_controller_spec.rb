@@ -9,7 +9,7 @@ require "spec_helper"
 
 describe Invoices::EvaluationsController do
   let(:person) {
-    Fabricate(Group::Geschaeftsstelle::Kassier.sti_name.to_sym,
+    Fabricate(Group::Geschaeftsstelle::Rechnungswesen.sti_name.to_sym,
       group: groups(:zuercher_geschaeftsstelle)).person
   }
 

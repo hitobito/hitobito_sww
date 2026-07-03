@@ -10,7 +10,7 @@ require "spec_helper"
 describe Group::StatisticsController do
   let(:group) { groups(:berner_wanderwege) }
   let(:user) do
-    Fabricate(Group::Geschaeftsstelle::Mitarbeiter.sti_name,
+    Fabricate(Group::Geschaeftsstelle::Schreibrechte.sti_name,
       group: groups(:berner_geschaeftsstelle)).person
   end
 
