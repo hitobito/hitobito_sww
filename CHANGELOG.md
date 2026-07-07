@@ -1,6 +1,6 @@
 # Hitobito SWW Changelog
 
-## unreleased
+## Version 2.10
 
 * Es gibt nun auf den Hauptgruppen eine Statistik über Anlässe und Teilnahmen (hitobito_sww#345)
 * Hauptleitung und Leitung von Anlässen können neu auf die Register "Anmeldungen" und "Einladungen" zugreifen (hitobito_sww#384)
