@@ -1,0 +1,96 @@
+-# Copyright (c) 2026, Schweizer Wanderwege. This file is part of
+-# hitobito_sww and licensed under the Affero General Public License version 3
+-# or later. See the COPYING file at the top-level directory or at
+-# https://github.com/hitobito/hitobito_sww
+
+= content_for(:filter) do
+  = form_tag(group_statistic_path(@group, :people), method: :get, class: "form-inline-search statistics-filter", role: "search", remote: true, data: { spin: true }) do
+    .d-lg-flex.justify-content-between.gap-3
+      .d-lg-inline-flex.gap-3.align-items-end
+        .mb-3
+          = direct_filter_date(:date, t(".date"), value: statistic.filter_params[:date] || f(statistic.stichtag), data: { submit: true })
+        - if statistic.selectable_groups_without_selected.any?
+          .mb-3
+            = direct_filter(:selected_group_id, t(".group")) do
+              = select_tag(:selected_group_id, options_for_select(group_options_with_level(statistic.selectable_groups), statistic.selected_group.id), class: "form-select form-select-sm", data: { submit: true })
+        - if statistic.selectable_groups_without_selected.any?(&:layer?)
+          .mb-3.form-check
+            = hidden_field_tag :include_sublayers, "false", id: :include_sublayers_hidden
+            = check_box_tag :include_sublayers, "true", statistic.include_sublayers?, class: "form-check-input", data: { submit: true }
+            = label_tag :include_sublayers, t(".include_sublayers"), class: "form-check-label"
+
+.card.mb-3
+  .card-header.d-flex.justify-content-between.align-items-center
+    %h3.card-title.mb-0= statistic.selected_group.to_s
+    %span
+      - count_key = statistic.include_sublayers? ? ".persons_count_incl_sublayers" : ".persons_count"
+      = t(count_key, count: statistic.total_count)
+  .card-body
+    = render_card title: t('.overview') do
+      %dl.row
+        - rows = [ |
+          { label_key: t('.total_count'), value: statistic.total_count }, |
+          { label_key: t('.magazine_subscribers_count'), value: statistic.magazine_subscribers_count } |
+        ] |
+        = render partial: 'overview_row', collection: rows, as: :row
+        %p.text-muted.small= t('.magazine_subscribers_hint')
+    .row
+      .col-lg-6
+        = render_card statistic.language_breakdown, title: t('.language_title') do |breakdown|
+          %table.table.table-bordered.text-end
+            %colgroup
+              %col{style: "width: 40%"}
+              %col{style: "width: 20%"}
+              %col{style: "width: 40%"}
+            %thead
+              %tr
+                %th.text-start= t('.language')
+                %th= t('.count')
+                %th= t('.share')
+            %tbody
+              - breakdown.each do |bucket|
+                %tr
+                  %td.text-start= bucket.label
+                  %td= bucket.count
+                  %td= number_to_percentage(bucket.percent, precision: 1)
+      .col-lg-6
+        = render_card statistic.gender_breakdown, title: t('.gender_title') do |gender_breakdown|
+          %table.table.table-bordered.text-end
+            %colgroup
+              %col{style: "width: 40%"}
+              %col{style: "width: 20%"}
+              %col{style: "width: 40%"}
+            %thead
+              %tr
+                %th.text-start= t('.gender')
+                %th= t('.count')
+                %th= t('.share')
+            %tbody
+              - gender_breakdown.each do |bucket|
+                %tr
+                  %td.text-start= bucket.label
+                  %td= bucket.count
+                  %td= number_to_percentage(bucket.percent, precision: 1)
+
+    = render_card statistic.age_groups, title: t('.age_structure_title') do |age_groups|
+      %table.table.table-bordered.text-end
+        %colgroup
+          %col{style: "width: 15%"}
+          %col{style: "width: 10%"}
+          %col{style: "width: 15%"}
+          %col{style: "width: 60%"}
+        %thead
+          %tr
+            %th
+            %th= t('.count')
+            %th
+              %span.pe-2= t('.share')
+        %tbody
+          - age_groups.each do |bucket|
+            %tr
+              %td= bucket.label
+              %td= bucket.count
+              %td= number_to_percentage(bucket.percent, precision: 1)
+              %td
+                .progress.ms-2
+                  .progress-bar{style: "width: #{distribution_bar_width(bucket.percent / 100.0, 1.0)}"}

@@ -111,7 +111,9 @@ module HitobitoSww
 
       Sheet::Person.prepend Sww::Sheet::Person
 
+      ::Group::Statistics::Registry.statistics.delete(::Group::Statistics::Demographic)
       ::Group::Statistics::Registry.register(
+        Sww::Group::Statistics::People,
         Sww::Group::Statistics::EventParticipation
       )
     end

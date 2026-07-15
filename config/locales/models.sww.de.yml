@@ -184,6 +184,8 @@ de:
       sww/group/statistics/event_participation:
         from: Von
         to: Bis
+      sww/group/statistics/people:
+        date: Stichtag
     errors:
       models:
         sww/group/statistics/event_participation:

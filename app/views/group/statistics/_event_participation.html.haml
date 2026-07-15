@@ -38,34 +38,27 @@
         - else
           %p.text-muted=ti(:no_list_entries)
   .col-lg-6
-    .card.mb-3
-      .card-header
-        %h3.card-title= t('.participation_frequency_title')
-      .card-body
-        - freq = statistic.participation_frequency
-        - if freq.any?
-          - total_persons = freq.values.sum
-          - max_persons = freq.values.max
-          %table.table.table-bordered.text-end
-            %colgroup
-              %col{style: "width: 5%"}
-              %col{style: "width: 10%"}
-              %col{style: "width: 15%"}
-              %col{style: "width: 70%"}
-            %thead
-              %tr
-                %th
-                %th= t('.number_of_people')
-                %th
-                  %span.pe-2=t('.share')
-            %tbody
-              - freq.each do |times, persons|
-                %tr
-                  %td= t('.times_count', count: times)
-                  %td= persons
-                  %td= number_to_percentage(persons.to_f / total_persons * 100, precision: 2)
-                  %td
-                    .progress.ms-2
-                      .progress-bar{style: "width: #{distribution_bar_width(persons.to_f / max_persons, 1.0)}"}
-        - else
-          %p.text-muted= ti(:no_list_entries)
+    = render_card statistic.participation_frequency, title: t('.participation_frequency_title') do |freq|
+      - total_persons = freq.values.sum
+      - max_persons = freq.values.max
+      %table.table.table-bordered.text-end
+        %colgroup
+          %col{style: "width: 5%"}
+          %col{style: "width: 10%"}
+          %col{style: "width: 15%"}
+          %col{style: "width: 70%"}
+        %thead
+          %tr
+            %th
+            %th= t('.number_of_people')
+            %th
+              %span.pe-2=t('.share')
+        %tbody
+          - freq.each do |times, persons|
+            %tr
+              %td= t('.times_count', count: times)
+              %td= persons
+              %td= number_to_percentage(persons.to_f / total_persons * 100, precision: 2)
+              %td
+                .progress.ms-2
+                  .progress-bar{style: "width: #{distribution_bar_width(persons.to_f / max_persons, 1.0)}"}

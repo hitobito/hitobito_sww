@@ -51,5 +51,72 @@ describe Group::StatisticsController do
         expect(assigns(:statistic).include_sublayers?).to be false
       end
     end
+
+    context "people statistic" do
+      it "renders successfully with default stichtag" do
+        get :show, params: {group_id: group.id, key: :people}
+
+        expect(response).to have_http_status(200)
+        expect(assigns(:statistic).stichtag).to eq(Time.zone.today)
+      end
+
+      it "uses date param when provided" do
+        get :show, params: {group_id: group.id, key: :people, date: "01.03.2023"}
+
+        expect(response).to have_http_status(200)
+        expect(assigns(:statistic).stichtag).to eq(Date.new(2023, 3, 1))
+      end
+
+      it "includes sublayers by default" do
+        get :show, params: {group_id: group.id, key: :people}
+
+        expect(assigns(:statistic).include_sublayers?).to be true
+      end
+
+      it "excludes sublayers when param is false" do
+        get :show, params: {group_id: group.id, key: :people, include_sublayers: "false"}
+
+        expect(assigns(:statistic).include_sublayers?).to be false
+      end
+
+      it "defaults selected_group to the given group" do
+        get :show, params: {group_id: group.id, key: :people}
+
+        expect(assigns(:statistic).selected_group).to eq(group)
+      end
+
+      context "with a selectable sub-layer" do
+        let(:group) { groups(:schweizer_wanderwege) }
+        let(:user) do
+          Fabricate(Group::SchweizerWanderwege::Mitarbeitende.sti_name, group: group).person
+        end
+
+        it "uses selected_group_id param, without being shadowed by the group_id route param" do
+          other_layer = groups(:zuercher_wanderwege)
+
+          get :show,
+            params: {group_id: group.id, key: :people, selected_group_id: other_layer.id}
+
+          expect(assigns(:statistic).selected_group).to eq(other_layer)
+        end
+      end
+
+      context "rendering" do
+        render_views
+        include Capybara::RSpecMatchers
+
+        it "renders the group header and all statistic cards" do
+          get :show, params: {group_id: group.id, key: :people}
+
+          expect(response).to have_http_status(200)
+          expect(response.body).to have_css(".card-header", text: group.to_s)
+          expect(response.body).to have_css(".card-header", text: "Übersicht")
+          expect(response.body).to have_css(".card-header", text: "Sprache")
+          expect(response.body).to have_css(".card-header", text: "Geschlecht")
+          expect(response.body).to have_css(".card-header", text: "Altersstruktur")
+          expect(response.body).to have_css(".progress-bar")
+        end
+      end
+    end
   end
 end
