@@ -1,0 +1,55 @@
+-# Copyright (c) 2026, Schweizer Wanderwege. This file is part of
+-# hitobito_sww and licensed under the Affero General Public License version 3
+-# or later. See the COPYING file at the top-level directory or at
+-# https://github.com/hitobito/hitobito_sww
+
+= content_for(:filter) do
+  = form_tag(group_statistic_path(@group, :memberships), method: :get, class: "form-inline-search") do
+    .d-lg-flex.justify-content-between.gap-3
+      .d-lg-inline-flex.gap-3.align-items-end
+        .mb-3
+          = direct_filter_date(:from, t(".from"), value: statistic.filter_params[:from] || f(statistic.from_date), data: { submit: true })
+        .mb-3
+          = direct_filter_date(:to, t(".to"), value: statistic.filter_params[:to] || f(statistic.to_date), data: { submit: true })
+
+.card.mb-3
+  .card-header.d-flex.justify-content-between.align-items-center
+    %h3.card-title.mb-0= @group.to_s
+    %span= t('.period', from: l(statistic.from_date), to: l(statistic.to_date))
+  .card-body
+    = render_card title: t('.summary_title') do
+      %dl.row
+        - rows = [ |
+          { label_key: t('.total_entries'), value: signed_number(statistic.total_entries) }, |
+          { label_key: t('.total_exits'), value: signed_number(-statistic.total_exits) }, |
+          { label_key: t('.net_change'), |
+            value: "#{signed_number(statistic.net_change)} #{net_change_arrow(statistic.net_change)}" } |
+        ] |
+        = render partial: 'overview_row', collection: rows, as: :row
+
+    - statistic.group_breakdowns.each do |breakdown|
+      = render_card breakdown.role_rows, title: breakdown.title do |role_rows|
+        %table.table.table-bordered.text-end
+          %colgroup
+            %col{style: "width: 40%"}
+            %col{style: "width: 20%"}
+            %col{style: "width: 20%"}
+            %col{style: "width: 20%"}
+          %thead
+            %tr
+              %th.text-start= t('.role_type')
+              %th= t('.entries')
+              %th= t('.exits')
+              %th= t('.net')
+          %tbody
+            - role_rows.each do |row|
+              %tr
+                %td.text-start= row.label
+                %td= row.entries
+                %td= row.exits
+                %td= "#{signed_number(row.net)} #{net_change_arrow(row.net)}"
+            %tr.fw-bold
+              %td.text-start= t('.total')
+              %td= breakdown.total_row.entries
+              %td= breakdown.total_row.exits
+              %td= "#{signed_number(breakdown.total_row.net)} #{net_change_arrow(breakdown.total_row.net)}"

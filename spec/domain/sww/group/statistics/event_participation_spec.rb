@@ -6,6 +6,7 @@
 #  https://github.com/hitobito/hitobito_sww
 
 require "spec_helper"
+require_relative "date_range_filter_examples"
 
 describe Sww::Group::Statistics::EventParticipation do
   let(:layer) { groups(:berner_wanderwege) }
@@ -19,73 +20,7 @@ describe Sww::Group::Statistics::EventParticipation do
       dates: [Event::Date.new(start_at: start_at, finish_at: start_at + 1.day)])
   end
 
-  describe "validations" do
-    it "is valid with no params" do
-      expect(statistic).to be_valid
-    end
-
-    it "is valid with blank date params" do
-      expect(statistic(from: "", to: "")).to be_valid
-    end
-
-    it "is valid with valid from and to dates" do
-      expect(statistic(from: "01.01.2024", to: "31.12.2024")).to be_valid
-    end
-
-    it "is valid when from equals to" do
-      expect(statistic(from: "15.06.2024", to: "15.06.2024")).to be_valid
-    end
-
-    it "is invalid when from is not a valid date" do
-      s = statistic(from: "not-a-date")
-      expect(s).not_to be_valid
-      expect(s.errors[:from]).to be_present
-    end
-
-    it "is invalid when to is not a valid date" do
-      s = statistic(to: "32.13.2024")
-      expect(s).not_to be_valid
-      expect(s.errors[:to]).to be_present
-    end
-
-    it "is invalid when from is after to" do
-      s = statistic(from: "31.12.2024", to: "01.01.2024")
-      expect(s).not_to be_valid
-      expect(s.errors[:to]).to be_present
-    end
-
-    it "is valid when from is before to" do
-      expect(statistic(from: "01.01.2024", to: "31.12.2024")).to be_valid
-    end
-
-    it "does not validate to against from when from is blank" do
-      expect(statistic(from: "", to: "01.01.2024")).to be_valid
-    end
-  end
-
-  describe "#from_date" do
-    it "defaults to January 1st of current year" do
-      expect(statistic.from_date).to eq(Time.zone.today.beginning_of_year)
-    end
-
-    it "parses date from param" do
-      expect(statistic(from: "01.01.2024").from_date).to eq(Date.new(2024, 1, 1))
-    end
-
-    it "falls back to default for invalid date" do
-      expect(statistic(from: "not-a-date").from_date).to eq(Time.zone.today.beginning_of_year)
-    end
-  end
-
-  describe "#to_date" do
-    it "defaults to December 31st of current year" do
-      expect(statistic.to_date).to eq(Time.zone.today.end_of_year)
-    end
-
-    it "parses date from param" do
-      expect(statistic(to: "31.12.2024").to_date).to eq(Date.new(2024, 12, 31))
-    end
-  end
+  it_behaves_like "a date range filter"
 
   describe "#include_sublayers?" do
     it "is true by default (no param)" do
