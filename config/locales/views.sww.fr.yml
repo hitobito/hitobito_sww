@@ -13,9 +13,11 @@ fr:
             title: Carte de membre
             valid_until: Validité
 
-    letter:
-      fields_sww:
-        membership_card_caption: Imprimer la carte de membre
+  mailing_lists:
+    messages:
+      letter:
+        fields_sww:
+          membership_card_caption: Mitgliederausweis mit drucken
 
   devise:
     confirmation_instructions:
@@ -52,22 +54,22 @@ fr:
   group:
     statistics:
       event_participation:
-        title: Anlässe
-        events_overview: Übersicht
-        from: Von
-        to: Bis
-        include_sublayers: Darunterliegende Ebenen einbeziehen
-        total_events: Anlässe
-        total_participations: Teilnehmende Total
-        participations_with_membership: davon Mitglieder (Rolle in der Ebene)
-        participations_without_membership: davon Nicht-Mitglieder
-        participations_guests: davon Gäste
-        unique_participants: Eindeutige Personen
-        average_participants: Durchschnittliche Teilnehmende pro Anlass
-        participation_frequency_title: Teilnahme-Häufigkeit
-        times_participated: Teilnahmen
-        number_of_people: Personen
-        share: Anteil
+        title: Événements
+        events_overview: Aperçu
+        from: De
+        to: Jusqu'à
+        include_sublayers: Inclure les groups sous-jacents
+        total_events: Événements
+        total_participations: Nombre total de participants
+        participations_with_membership: dont membres (rôle au sein du groupe)
+        participations_without_membership: dont les non-membres
+        participations_guests: dont les invités
+        unique_participants: Personnes uniques
+        average_participants: Nombre moyen de participants par événement
+        participation_frequency_title: Fréquence de participation
+        times_participated: Participations
+        number_of_people: Personnes
+        share: Pourcentage
         times_count: "%{count}x"
 
   groups:
@@ -127,7 +129,7 @@ fr:
 
   global:
     search:
-      placeholder_company_name: "Organisation suchen..."
+      placeholder_company_name: "Rechercher une organisation..."
 
   people:
     show:

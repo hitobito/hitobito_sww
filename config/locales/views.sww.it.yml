@@ -13,9 +13,11 @@ it:
             title: Carta socio
             valid_until: Valido fino al
 
-    letter:
-      fields_sww:
-        membership_card_caption: Stampa la carta socio
+  mailing_lists:
+    messages:
+      letter:
+        fields_sww:
+          membership_card_caption: Mitgliederausweis mit drucken
 
   devise:
     confirmation_instructions:
@@ -52,22 +54,22 @@ it:
   group:
     statistics:
       event_participation:
-        title: Anlässe
-        events_overview: Übersicht
-        from: Von
-        to: Bis
-        include_sublayers: Darunterliegende Ebenen einbeziehen
-        total_events: Anlässe
-        total_participations: Teilnehmende Total
-        participations_with_membership: davon Mitglieder (Rolle in der Ebene)
-        participations_without_membership: davon Nicht-Mitglieder
-        participations_guests: davon Gäste
-        unique_participants: Eindeutige Personen
-        average_participants: Durchschnittliche Teilnehmende pro Anlass
-        participation_frequency_title: Teilnahme-Häufigkeit
-        times_participated: Teilnahmen
-        number_of_people: Personen
-        share: Anteil
+        title: Eventi
+        events_overview: Panoramica
+        from: Da
+        to: A
+        include_sublayers: Includere i gruppi sottostanti
+        total_events: Eventi
+        total_participations: Totale partecipanti
+        participations_with_membership: di cui soci (ruolo nel gruppo)
+        participations_without_membership: di cui non soci
+        participations_guests: di cui ospiti
+        unique_participants: Persone uniche
+        average_participants: Numero medio di partecipanti per evento
+        participation_frequency_title: Frequenza di partecipazione
+        times_participated: Partecipazioni
+        number_of_people: Persone
+        share: Quota
         times_count: "%{count}x"
 
   groups:
@@ -127,7 +129,7 @@ it:
 
   global:
     search:
-      placeholder_company_name: "Organisation suchen..."
+      placeholder_company_name: "Cerca organizzazione..."
 
   people:
     show:

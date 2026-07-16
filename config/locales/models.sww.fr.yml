@@ -131,7 +131,7 @@ fr:
           webseite: Site web
       event/guest:
         address_care_of: Ligne d’adresse supplémentaire 1
-        company_name: Name der Organisation
+        company_name: Nom de l'organisation
       group:
         address_care_of: Ligne d’adresse supplémentaire 1
         droptours_export: Inclure dans l'exportation Droptours
@@ -142,7 +142,7 @@ fr:
         letter_top_address_position: Distance d'address depuis le haut (cm)
       invoice:
         hide_total: Donation
-        recipient_company_name: Name der Organisation
+        recipient_company_name: Nom de l'organisation
         membership_card: Carte de membre
         membership_expires_on: Adhésion valide jusqu'au
         recipient_address_care_of: Ligne d’adresse supplémentaire 1
@@ -158,11 +158,11 @@ fr:
         membership_expires_on: Adhésion valide jusqu'au
       participant:
         address_care_of: Ligne d’adresse supplémentaire 1
-        company_name: Name der Organisation
+        company_name: Nom de l'organisation
       person:
         address_care_of: Ligne d’adresse supplémentaire 1
         company: Organisation
-        company_name: Name der Organisation
+        company_name: Nom de l'organisation
         custom_salutation: Formule d'appel personnalisée
         magazin_abo_number: 'Numéro d''abonnement au magazine'
         member_number: Numéro de membre
@@ -173,7 +173,7 @@ fr:
         sww_salutation: Salutation
         household_member_numbers: Numéros de membre du foyer
       person_duplicate:
-        company_name: Name der Organisation
+        company_name: Nom de l'organisation
 
       role:
         class:
@@ -190,14 +190,14 @@ fr:
         person_1: Personne 1 (reste en place)
         person_2: Personne 2 (nouvelle)
       sww/group/statistics/event_participation:
-        from: Von
-        to: Bis
+        from: De
+        to: Jusqu'à
     errors:
       models:
         sww/group/statistics/event_participation:
           attributes:
             to:
-              date_range_invalid: darf nicht vor dem Von-Datum liegen
+              date_range_invalid: ne doit pas être avant la date de début
 
 
   tags:
