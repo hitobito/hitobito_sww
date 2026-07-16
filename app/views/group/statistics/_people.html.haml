@@ -9,11 +9,7 @@
       .d-lg-inline-flex.gap-3.align-items-end
         .mb-3
           = direct_filter_date(:date, t(".date"), value: statistic.filter_params[:date] || f(statistic.stichtag), data: { submit: true })
-        - if statistic.selectable_groups_without_selected.any?
-          .mb-3
-            = direct_filter(:selected_group_id, t(".group")) do
-              = select_tag(:selected_group_id, options_for_select(group_options_with_level(statistic.selectable_groups), statistic.selected_group.id), class: "form-select form-select-sm", data: { submit: true })
-        - if statistic.selectable_groups_without_selected.any?(&:layer?)
+        - if @group.layer?
           .mb-3.form-check
             = hidden_field_tag :include_sublayers, "false", id: :include_sublayers_hidden
             = check_box_tag :include_sublayers, "true", statistic.include_sublayers?, class: "form-check-input", data: { submit: true }
@@ -21,7 +17,7 @@
 
 .card.mb-3
   .card-header.d-flex.justify-content-between.align-items-center
-    %h3.card-title.mb-0= statistic.selected_group.to_s
+    %h3.card-title.mb-0= statistic.group.to_s
     %span
       - count_key = statistic.include_sublayers? ? ".persons_count_incl_sublayers" : ".persons_count"
       = t(count_key, count: statistic.total_count)

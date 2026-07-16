@@ -8,7 +8,8 @@
 module Sww::Group::Statistics
   class People < ::Group::Statistics::Base
     self.key = :people
-    self.permitted_params = [:date, :selected_group_id]
+    self.layer_only = false
+    self.permitted_params = [:date]
 
     ABO_TAG_PREFIX = "abo:"
 
@@ -27,12 +28,7 @@ module Sww::Group::Statistics
       super
       @date = filter_params[:date] # kept seperately for validation
       @stichtag = parse_date(@date) || Time.zone.today
-      @selected_group_id = filter_params[:selected_group_id].to_i
       @person = Person.new # we want Person's methods but avoid loading (many) people
-    end
-
-    def selected_group
-      @selected_group ||= selectable_groups.index_by(&:id)[@selected_group_id] || layer
     end
 
     def total_count
@@ -55,17 +51,9 @@ module Sww::Group::Statistics
       @age_groups ||= build_age_groups
     end
 
-    def selectable_groups
-      @selectable_groups ||= layer.self_and_descendants.merge(::Group.layers).to_a
-    end
-
-    def selectable_groups_without_selected
-      selectable_groups - [selected_group]
-    end
-
     private
 
-    alias_method :scoping_root, :selected_group
+    alias_method :scoping_root, :group
 
     def people
       @people ||= ::Person.where(id: person_ids_scope)

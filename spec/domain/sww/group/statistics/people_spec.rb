@@ -34,6 +34,13 @@ describe Sww::Group::Statistics::People do
     end
   end
 
+  describe "layer_only" do
+    it "is disabled, so a non-layer group can be used" do
+      expect(described_class.layer_only).to be false
+      expect { described_class.new(groups(:berner_mitglieder)) }.not_to raise_error
+    end
+  end
+
   describe "#stichtag" do
     it "defaults to today" do
       expect(statistic.stichtag).to eq(Time.zone.today)
@@ -62,44 +69,12 @@ describe Sww::Group::Statistics::People do
     end
   end
 
-  describe "#selected_group" do
-    let(:layer) { groups(:schweizer_wanderwege) }
-
-    it "defaults to the statistic's layer" do
-      expect(statistic.selected_group).to eq(layer)
-    end
-
-    it "resolves a selected_group_id among the selectable groups" do
-      sub_layer = groups(:berner_wanderwege)
-      expect(statistic(selected_group_id: sub_layer.id).selected_group).to eq(sub_layer)
-    end
-
-    it "falls back to the layer for an unknown selected_group_id" do
-      expect(statistic(selected_group_id: 0).selected_group).to eq(layer)
-    end
-  end
-
-  describe "#selectable_groups" do
-    let(:layer) { groups(:schweizer_wanderwege) }
-
-    it "includes the layer itself and its sub-layers, excluding non-layer descendants" do
-      expect(statistic.selectable_groups).to contain_exactly(
-        layer, groups(:benutzerkonten), groups(:berner_wanderwege), groups(:zuercher_wanderwege)
-      )
-    end
-  end
-
   describe "group scoping" do
     let(:layer) { groups(:schweizer_wanderwege) }
     let(:member) { people(:berner_wanderer) }
 
     it "counts everyone below the layer by default" do
       expect(statistic.total_count).to eq(4)
-    end
-
-    it "only counts people below the selected sub-layer when one is chosen" do
-      expect(statistic(selected_group_id: groups(:berner_wanderwege).id).total_count).to eq(2)
-      expect(statistic(selected_group_id: groups(:zuercher_wanderwege).id).total_count).to eq(2)
     end
 
     it "excludes people from other layers when include_sublayers is false" do
