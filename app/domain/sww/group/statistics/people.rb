@@ -14,7 +14,10 @@ module Sww::Group::Statistics
     ABO_TAG_PREFIX = "abo:"
 
     AGE_BUCKET_SIZE = 10
-    AGE_BUCKET_NIL_SORT_VALUE = 10_000
+
+    AgeCalculator = Struct.new(:birthday, keyword_init: true) do
+      include AgeCalculatable
+    end
 
     Bucket = Data.define(:label, :count, :percent)
 
@@ -103,7 +106,7 @@ module Sww::Group::Statistics
     end
 
     def build_age_groups
-      buckets = sorted_tally(age_buckets) { |bucket| bucket || AGE_BUCKET_NIL_SORT_VALUE }
+      buckets = sorted_tally(age_buckets) { |bucket| bucket || Float::INFINITY }
       buckets.map do |min_age, count, percent|
         Bucket.new(label: age_bucket_label(min_age), count:, percent:)
       end
@@ -123,9 +126,9 @@ module Sww::Group::Statistics
     def age_buckets
       people.pluck(:birthday).map do |birthday|
         next if birthday.blank?
-        person.birthday = birthday
 
-        (person.years(stichtag) / AGE_BUCKET_SIZE) * AGE_BUCKET_SIZE
+        age = AgeCalculator.new(birthday: birthday).years(stichtag)
+        (age / AGE_BUCKET_SIZE) * AGE_BUCKET_SIZE
       end
     end
 
