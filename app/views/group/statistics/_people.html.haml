@@ -4,7 +4,7 @@
 -# https://github.com/hitobito/hitobito_sww
 
 = content_for(:filter) do
-  = form_tag(group_statistic_path(@group, :people), method: :get, class: "form-inline-search statistics-filter", role: "search", remote: true, data: { spin: true }) do
+  = form_tag(group_statistic_path(@group, :people), method: :get, class: "form-inline-search") do
     .d-lg-flex.justify-content-between.gap-3
       .d-lg-inline-flex.gap-3.align-items-end
         .mb-3

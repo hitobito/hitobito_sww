@@ -125,5 +125,45 @@ describe Group::StatisticsController do
         end
       end
     end
+
+    context "memberships statistic" do
+      it "renders successfully with default date range" do
+        get :show, params: {group_id: group.id, key: :memberships}
+
+        expect(response).to have_http_status(200)
+        statistic = assigns(:statistic)
+        expect(statistic.from_date).to eq(Time.zone.today.beginning_of_year)
+        expect(statistic.to_date).to eq(Time.zone.today.end_of_year)
+      end
+
+      it "uses date params when provided" do
+        get :show,
+          params: {group_id: group.id, key: :memberships, from: "01.03.2023",
+                   to: "31.10.2023"}
+
+        expect(response).to have_http_status(200)
+        statistic = assigns(:statistic)
+        expect(statistic.from_date).to eq(Date.new(2023, 3, 1))
+        expect(statistic.to_date).to eq(Date.new(2023, 10, 31))
+      end
+
+      context "rendering" do
+        render_views
+        include Capybara::RSpecMatchers
+
+        it "renders the group header, summary card and per-group breakdown cards" do
+          mitglieder = groups(:berner_mitglieder)
+          Fabricate(Group::Mitglieder::Aktivmitglied.sti_name.to_sym,
+            group: mitglieder, start_on: Time.zone.today)
+
+          get :show, params: {group_id: group.id, key: :memberships}
+
+          expect(response).to have_http_status(200)
+          expect(response.body).to have_css(".card-header", text: group.to_s)
+          expect(response.body).to have_css(".card-header", text: "Zusammenfassung")
+          expect(response.body).to have_css(".card-header", text: "Mitglieder")
+        end
+      end
+    end
   end
 end

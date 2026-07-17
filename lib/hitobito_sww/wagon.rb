@@ -114,7 +114,8 @@ module HitobitoSww
       ::Group::Statistics::Registry.statistics.delete(::Group::Statistics::Demographic)
       ::Group::Statistics::Registry.register(
         Sww::Group::Statistics::People,
-        Sww::Group::Statistics::EventParticipation
+        Sww::Group::Statistics::EventParticipation,
+        Sww::Group::Statistics::Memberships
       )
     end
 

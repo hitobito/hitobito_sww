@@ -186,9 +186,16 @@ de:
         to: Bis
       sww/group/statistics/people:
         date: Stichtag
+      sww/group/statistics/memberships:
+        from: Von
+        to: Bis
     errors:
       models:
         sww/group/statistics/event_participation:
+          attributes:
+            to:
+              date_range_invalid: darf nicht vor dem Von-Datum liegen
+        sww/group/statistics/memberships:
           attributes:
             to:
               date_range_invalid: darf nicht vor dem Von-Datum liegen

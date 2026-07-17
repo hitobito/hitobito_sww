@@ -8,15 +8,9 @@
 module Sww::Group::Statistics
   class EventParticipation < ::Group::Statistics::Base
     self.key = :event_participation
-    self.permitted_params = [:from, :to]
 
     include GroupScoping
-
-    validates_date :from, allow_blank: true
-    validates_date :to, allow_blank: true
-    validates_date :to, on_or_after: :from,
-      on_or_after_message: :date_range_invalid,
-      if: -> { filter_params[:from].present? && errors[:to].none? }
+    include DateRangeFilter
 
     def events_count
       @events_count ||= events.count
@@ -71,22 +65,6 @@ module Sww::Group::Statistics
           .count(:event_id)
         counts.values.tally.sort.to_h
       end
-    end
-
-    def from_date
-      @from_date ||= parse_date(filter_params[:from]) || Time.zone.today.beginning_of_year
-    end
-
-    def to_date
-      @to_date ||= parse_date(filter_params[:to]) || Time.zone.today.end_of_year
-    end
-
-    def from
-      filter_params[:from]
-    end
-
-    def to
-      filter_params[:to]
     end
 
     private

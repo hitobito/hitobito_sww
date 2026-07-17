@@ -89,6 +89,23 @@ de:
         share: Anteil
         age_structure_title: Altersstruktur
         age_range: Alter
+      memberships:
+        title: Ein- und Austritte
+        from: Von
+        to: Bis
+        period: "Zeitraum: %{from} - %{to}"
+        summary_title: Zusammenfassung
+        total_entries: "Total Eintritte"
+        total_exits: "Total Austritte"
+        net_change: "Netto-Veränderung"
+        total_count: "Anzahl Rollen per %{date}"
+        role_type: Rollentyp
+        entries: Eintritte
+        exits: Austritte
+        net: Netto
+        count: Anzahl
+        total: Total
+        layer_only_suffix: "(nur Hauptgruppe ohne Untergruppen)"
 
   groups:
     form_tabs:
