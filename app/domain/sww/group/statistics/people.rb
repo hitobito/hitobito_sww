@@ -9,14 +9,12 @@ module Sww::Group::Statistics
   class People < ::Group::Statistics::Base
     self.key = :people
     self.layer_only = false
-    self.permitted_params = [:date]
+    self.permitted_params = [:date, :include_subgroups]
 
     ABO_TAG_PREFIX = "abo:"
 
     AGE_BUCKET_SIZE = 10
     AGE_BUCKET_NIL_SORT_VALUE = 10_000
-
-    include GroupScoping
 
     Bucket = Data.define(:label, :count, :percent)
 
@@ -51,21 +49,39 @@ module Sww::Group::Statistics
       @age_groups ||= build_age_groups
     end
 
+    def has_subgroups?
+      @has_subgroups ||= group.descendants.where(layer_group_id: group.layer_group_id).any?
+    end
+
+    def include_subgroups?
+      filter_params[:include_subgroups].to_s != "false"
+    end
+
+    def includes_subgroups?
+      has_subgroups? && include_subgroups?
+    end
+
     private
 
-    alias_method :scoping_root, :group
+    def group_ids
+      @group_ids ||= if includes_subgroups?
+        group.self_and_descendants.where(layer_group_id: group.layer_group_id).pluck(:id)
+      else
+        [group.id]
+      end
+    end
 
     def people
       @people ||= ::Person.where(id: person_ids_scope)
     end
 
     def count_subscribed_people
-      people_today = ::Person.joins(:roles).where(roles: {group_id: group_ids}).distinct
-      people_today
-        .joins(:tags)
+      ::Person
+        .joins(:roles, :tags)
+        .where(roles: {group_id: group_ids})
         .where("tags.name LIKE ?", "#{ABO_TAG_PREFIX}%")
         .distinct
-        .count
+        .count(:id)
     end
 
     def person_ids_scope
@@ -76,6 +92,7 @@ module Sww::Group::Statistics
         .joins(:roles_unscoped)
         .merge(active_role_scope)
         .where(roles: {group_id: group_ids})
+        .distinct
         .select(:id)
     end
 
@@ -113,7 +130,11 @@ module Sww::Group::Statistics
     end
 
     def age_bucket_label(min_age)
-      "#{min_age}-#{min_age + AGE_BUCKET_SIZE - 1}" if min_age
+      if min_age
+        "#{min_age}-#{min_age + AGE_BUCKET_SIZE - 1}"
+      else
+        I18n.t("global.unknown")
+      end
     end
   end
 end

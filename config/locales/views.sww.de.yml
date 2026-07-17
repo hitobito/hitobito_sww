@@ -74,9 +74,9 @@ de:
       people:
         date: Stichtag
         group: Gruppe
-        include_sublayers: Untergruppen einbeziehen
+        include_subgroups: Untergruppen einbeziehen
         persons_count: "%{count} Personen"
-        persons_count_incl_sublayers: "%{count} Personen (inkl. Untergr.)"
+        including_subgroups: "(inkl. Untergruppen)"
         overview: Übersicht
         total_count: Total Personen
         magazine_subscribers_count: Magazin-Abonnenten

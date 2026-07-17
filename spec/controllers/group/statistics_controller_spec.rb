@@ -67,38 +67,16 @@ describe Group::StatisticsController do
         expect(assigns(:statistic).stichtag).to eq(Date.new(2023, 3, 1))
       end
 
-      it "includes sublayers by default" do
+      it "includes subgroups by default" do
         get :show, params: {group_id: group.id, key: :people}
 
-        expect(assigns(:statistic).include_sublayers?).to be true
+        expect(assigns(:statistic).include_subgroups?).to be true
       end
 
-      it "excludes sublayers when param is false" do
-        get :show, params: {group_id: group.id, key: :people, include_sublayers: "false"}
+      it "excludes subgroups when param is false" do
+        get :show, params: {group_id: group.id, key: :people, include_subgroups: "false"}
 
-        expect(assigns(:statistic).include_sublayers?).to be false
-      end
-
-      it "defaults selected_group to the given group" do
-        get :show, params: {group_id: group.id, key: :people}
-
-        expect(assigns(:statistic).selected_group).to eq(group)
-      end
-
-      context "with a selectable sub-layer" do
-        let(:group) { groups(:schweizer_wanderwege) }
-        let(:user) do
-          Fabricate(Group::SchweizerWanderwege::Mitarbeitende.sti_name, group: group).person
-        end
-
-        it "uses selected_group_id param, without being shadowed by the group_id route param" do
-          other_layer = groups(:zuercher_wanderwege)
-
-          get :show,
-            params: {group_id: group.id, key: :people, selected_group_id: other_layer.id}
-
-          expect(assigns(:statistic).selected_group).to eq(other_layer)
-        end
+        expect(assigns(:statistic).include_subgroups?).to be false
       end
 
       context "rendering" do
@@ -115,6 +93,35 @@ describe Group::StatisticsController do
           expect(response.body).to have_css(".card-header", text: "Geschlecht")
           expect(response.body).to have_css(".card-header", text: "Altersstruktur")
           expect(response.body).to have_css(".progress-bar")
+        end
+
+        it "shows the include_subgroups checkbox when the group has subgroups" do
+          get :show, params: {group_id: group.id, key: :people}
+
+          expect(response.body).to have_css("input[type='checkbox'][name='include_subgroups']")
+        end
+
+        it "shows the including_subgroups hint when subgroups are included" do
+          get :show, params: {group_id: group.id, key: :people}
+
+          expect(response.body).to have_text("(inkl. Untergruppen)")
+        end
+
+        context "without subgroups" do
+          let(:group) { groups(:berner_mitglieder) }
+
+          it "hides the include_subgroups checkbox" do
+            get :show, params: {group_id: group.id, key: :people}
+
+            expect(response.body)
+              .not_to have_css("input[type='checkbox'][name='include_subgroups']")
+          end
+
+          it "hides the including_subgroups hint" do
+            get :show, params: {group_id: group.id, key: :people}
+
+            expect(response.body).not_to have_text("(inkl. Untergruppen)")
+          end
         end
       end
     end

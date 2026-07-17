@@ -8,10 +8,10 @@
 require "spec_helper"
 
 describe Sww::Group::Statistics::People do
-  let(:layer) { groups(:berner_wanderwege) }
+  let(:group) { groups(:berner_wanderwege) }
 
   def statistic(params = {})
-    described_class.new(layer, ActionController::Parameters.new(params))
+    described_class.new(group, ActionController::Parameters.new(params))
   end
 
   describe "validations" do
@@ -55,36 +55,88 @@ describe Sww::Group::Statistics::People do
     end
   end
 
-  describe "#include_sublayers?" do
+  describe "#has_subgroups?" do
+    it "is true when the group has subgroups in the same layer" do
+      expect(statistic.has_subgroups?).to be true
+    end
+
+    it "is false for a leaf group in the layer" do
+      s = described_class.new(groups(:berner_mitglieder), ActionController::Parameters.new({}))
+      expect(s.has_subgroups?).to be false
+    end
+
+    it "is false when descendants belong to other layers" do
+      s = described_class.new(groups(:schweizer_wanderwege), ActionController::Parameters.new({}))
+      expect(s.has_subgroups?).to be false
+    end
+  end
+
+  describe "#include_subgroups?" do
     it "is true by default (no param)" do
-      expect(statistic.include_sublayers?).to be true
+      expect(statistic.include_subgroups?).to be true
     end
 
     it "is true when param is 'true'" do
-      expect(statistic(include_sublayers: "true").include_sublayers?).to be true
+      expect(statistic(include_subgroups: "true").include_subgroups?).to be true
     end
 
     it "is false when param is 'false'" do
-      expect(statistic(include_sublayers: "false").include_sublayers?).to be false
+      expect(statistic(include_subgroups: "false").include_subgroups?).to be false
+    end
+  end
+
+  describe "#includes_subgroups?" do
+    it "is true when the group has subgroups and include_subgroups is true" do
+      expect(statistic.includes_subgroups?).to be true
+    end
+
+    it "is false when include_subgroups is false" do
+      expect(statistic(include_subgroups: "false").includes_subgroups?).to be false
+    end
+
+    context "on a group without subgroups" do
+      let(:group) { groups(:berner_mitglieder) }
+
+      it "is false by default" do
+        expect(statistic.includes_subgroups?).to be false
+      end
+
+      it "is still false when include_subgroups is 'true'" do
+        expect(statistic(include_subgroups: "true").includes_subgroups?).to be false
+      end
     end
   end
 
   describe "group scoping" do
-    let(:layer) { groups(:schweizer_wanderwege) }
+    let(:group) { groups(:berner_wanderwege) }
     let(:member) { people(:berner_wanderer) }
 
-    it "counts everyone below the layer by default" do
-      expect(statistic.total_count).to eq(4)
+    it "counts everyone in the current group and its subgroups by default" do
+      expect(statistic.total_count).to eq(2)
     end
 
-    it "excludes people from other layers when include_sublayers is false" do
-      s = statistic(include_sublayers: "false")
+    it "counts only the current group when include_subgroups is false" do
+      s = statistic(include_subgroups: "false")
       expect(s.total_count).to eq(0)
+    end
+
+    it "counts descendants within the same layer when include_subgroups is true" do
+      s = statistic(include_subgroups: "true")
+
+      expect(s.send(:group_ids)).to include(groups(:berner_mitglieder).id)
+      expect(s.send(:group_ids)).to include(groups(:berner_kontakte).id)
+    end
+
+    it "does not include groups from other layers when include_subgroups is true" do
+      s = statistic(include_subgroups: "true")
+
+      expect(s.send(:group_ids)).not_to include(groups(:zuercher_wanderwege).id)
+      expect(s.send(:group_ids)).not_to include(groups(:zuercher_mitglieder).id)
     end
   end
 
   describe "calculations" do
-    let(:layer) { groups(:berner_wanderwege) }
+    let(:group) { groups(:berner_wanderwege) }
     let(:member) { people(:berner_wanderer) }
     let(:other_member) { people(:no_permissions) }
 
@@ -128,13 +180,20 @@ describe Sww::Group::Statistics::People do
         expect(statistic.magazine_subscribers_count).to eq(0)
       end
 
-      it "counts a person tagged with an abo tag" do
+      it "counts a peson tagged with an abo tag" do
         member.update!(tag_list: "abo:Wandern")
         expect(statistic.magazine_subscribers_count).to eq(1)
       end
 
       it "counts a person only once, even with multiple abo tags" do
         member.update!(tag_list: "abo:Wandern, abo:Another")
+        expect(statistic.magazine_subscribers_count).to eq(1)
+      end
+
+      it "counts a person only once, even with multiple roles in scope" do
+        member.update!(tag_list: "abo:Wandern")
+        Fabricate(Group::Kontakte::Kontakt.sti_name.to_sym,
+          person: member, group: groups(:berner_kontakte))
         expect(statistic.magazine_subscribers_count).to eq(1)
       end
 
@@ -205,7 +264,7 @@ describe Sww::Group::Statistics::People do
 
         expect(statistic.age_groups.map(&:to_h)).to eq([
           {label: "20-29", count: 1, percent: 50.0},
-          {label: nil, count: 1, percent: 50.0}
+          {label: I18n.t("global.unknown"), count: 1, percent: 50.0}
         ])
       end
 
