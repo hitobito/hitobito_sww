@@ -74,6 +74,24 @@ describe Sww::Group::Statistics::Memberships do
       end
     end
 
+    describe "#total_count" do
+      it "counts active roles at to_date, across the whole hierarchy" do
+        create_role(group: mitglieder, start_on: Date.new(2024, 3, 1))
+        create_role(group: kontakte, type: Group::Kontakte::Kontakt, start_on: Date.new(2024, 7, 1))
+
+        # 2 additional roles plus berner_mitglied and no_permissions fixtures
+        expect(statistic(range).total_count).to eq(4)
+      end
+
+      it "does not count roles from a different layer" do
+        zuercher = groups(:zuercher_mitglieder)
+        create_role(group: zuercher, start_on: Date.new(2024, 3, 1))
+
+        # only berner_mitglied and no_permissions fixtures are in the layer
+        expect(statistic(range).total_count).to eq(2)
+      end
+    end
+
     describe "a role type change within the same group" do
       it "counts as both an exit for the old type and an entry for the new type" do
         person = Fabricate(:person)
@@ -90,19 +108,15 @@ describe Sww::Group::Statistics::Memberships do
     end
 
     describe "#group_breakdowns" do
-      it "lists every descendant group in the layer, even ones without any changes" do
+      it "lists only groups with entries, exits or count in the layer" do
+        create_role(group: mitglieder, start_on: Date.new(2024, 3, 1))
         titles = statistic(range).group_breakdowns.map(&:title)
-        expect(titles).to contain_exactly("Gremium", "Vorstand", "Geschäftsstelle", "Mitglieder",
-          "Kontakte")
+        expect(titles).to include("Mitglieder")
+        expect(titles).to include("Kontakte")
       end
 
-      it "gives a group without changes an empty role_rows and a zeroed total_row" do
-        breakdown = statistic(range).group_breakdowns.find { |b| b.title == "Kontakte" }
-        expect(breakdown.role_rows).to be_empty
-        expect(breakdown.total_row.to_h).to eq(entries: 0, exits: 0, net: 0)
-      end
-
-      it "returns entries/exits/net per role type, plus a summed total_row" do
+      it "returns entries/exits/net/count per role type, plus a summed total_row" do
+        # role(:berner_mitglied) from fixtures is also counted
         create_role(group: mitglieder, type: Group::Mitglieder::Aktivmitglied,
           start_on: Date.new(2024, 3, 1))
         create_role(group: mitglieder, type: Group::Mitglieder::Freimitglied,
@@ -110,22 +124,28 @@ describe Sww::Group::Statistics::Memberships do
 
         breakdown = statistic(range).group_breakdowns.find { |b| b.title == "Mitglieder" }
         expect(breakdown.role_rows.map(&:to_h)).to contain_exactly(
-          {label: "Aktivmitglied", entries: 1, exits: 0, net: 1},
-          {label: "Freimitglied", entries: 0, exits: 1, net: -1}
+          {label: "Aktivmitglied", entries: 1, exits: 0, net: 1, count: 2},
+          {label: "Freimitglied", entries: 0, exits: 1, net: -1, count: 0}
         )
-        expect(breakdown.total_row.to_h).to eq(entries: 1, exits: 1, net: 0)
+        expect(breakdown.total_row.to_h).to eq(entries: 1, exits: 1, net: 0, count: 2)
       end
 
-      it "builds a breadcrumb title for a nested group, excluding the layer itself" do
-        Fabricate(Group::Mitglieder.sti_name.to_sym, parent: mitglieder, name: "Aktive")
+      it "builds a breadcrumb title for a nested group, excluding the layer name itself" do
+        aktive = Fabricate(Group::Mitglieder.sti_name.to_sym, parent: mitglieder, name: "Aktive")
+        create_role(group: aktive, start_on: Date.new(2024, 3, 1))
 
         titles = statistic(range).group_breakdowns.map(&:title)
         expect(titles).to include("Mitglieder → Aktive")
       end
 
-      it "does not include the layer itself in the breakdown" do
-        titles = statistic(range).group_breakdowns.map(&:title)
-        expect(titles).not_to include(layer.to_s)
+      it "includes the layer itself in the breakdown with suffix when it has entries/exits" do
+        root = groups(:schweizer_wanderwege)
+        create_role(group: root, type: Group::SchweizerWanderwege::Mitarbeitende,
+          start_on: Date.new(2024, 3, 1))
+        stat = described_class.new(root, ActionController::Parameters.new(range))
+
+        titles = stat.group_breakdowns.map(&:title)
+        expect(titles).to include("#{root} (nur Hauptgruppe ohne Untergruppen)")
       end
     end
 
@@ -152,7 +172,9 @@ describe Sww::Group::Statistics::Memberships do
         create_role(group: aktive, start_on: Date.new(2024, 3, 1))
         create_role(group: kontakte, type: Group::Kontakte::Kontakt, start_on: Date.new(2024, 3, 1))
         stat = described_class.new(mitglieder.reload, ActionController::Parameters.new(range))
-        expect(stat.group_breakdowns.map(&:title)).to contain_exactly("Mitglieder → Aktive")
+        expect(stat.group_breakdowns.map(&:title)).to contain_exactly(
+          "Mitglieder (nur Hauptgruppe ohne Untergruppen)", "Mitglieder → Aktive"
+        )
         expect(stat.total_entries).to eq(1)
       end
     end

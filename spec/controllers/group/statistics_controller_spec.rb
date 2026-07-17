@@ -152,6 +152,10 @@ describe Group::StatisticsController do
         include Capybara::RSpecMatchers
 
         it "renders the group header, summary card and per-group breakdown cards" do
+          mitglieder = groups(:berner_mitglieder)
+          Fabricate(Group::Mitglieder::Aktivmitglied.sti_name.to_sym,
+            group: mitglieder, start_on: Time.zone.today)
+
           get :show, params: {group_id: group.id, key: :memberships}
 
           expect(response).to have_http_status(200)

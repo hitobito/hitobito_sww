@@ -20,6 +20,7 @@
     = render_card title: t('.summary_title') do
       %dl.row
         - rows = [ |
+          { label_key: t('.total_count', date: l(statistic.to_date)), value: statistic.total_count }, |
           { label_key: t('.total_entries'), value: signed_number(statistic.total_entries) }, |
           { label_key: t('.total_exits'), value: signed_number(-statistic.total_exits) }, |
           { label_key: t('.net_change'), |
@@ -32,12 +33,14 @@
         %table.table.table-bordered.text-end
           %colgroup
             %col{style: "width: 40%"}
-            %col{style: "width: 20%"}
-            %col{style: "width: 20%"}
-            %col{style: "width: 20%"}
+            %col{style: "width: 15%"}
+            %col{style: "width: 15%"}
+            %col{style: "width: 15%"}
+            %col{style: "width: 15%"}
           %thead
             %tr
               %th.text-start= t('.role_type')
+              %th= t('.count')
               %th= t('.entries')
               %th= t('.exits')
               %th= t('.net')
@@ -45,11 +48,13 @@
             - role_rows.each do |row|
               %tr
                 %td.text-start= row.label
+                %td= row.count
                 %td= row.entries
                 %td= row.exits
                 %td= "#{signed_number(row.net)} #{net_change_arrow(row.net)}"
             %tr.fw-bold
               %td.text-start= t('.total')
+              %td= breakdown.total_row.count
               %td= breakdown.total_row.entries
               %td= breakdown.total_row.exits
               %td= "#{signed_number(breakdown.total_row.net)} #{net_change_arrow(breakdown.total_row.net)}"
