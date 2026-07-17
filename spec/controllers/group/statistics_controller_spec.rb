@@ -83,11 +83,10 @@ describe Group::StatisticsController do
         render_views
         include Capybara::RSpecMatchers
 
-        it "renders the group header and all statistic cards" do
+        it "renders all statistic cards" do
           get :show, params: {group_id: group.id, key: :people}
 
           expect(response).to have_http_status(200)
-          expect(response.body).to have_css(".card-header", text: group.to_s)
           expect(response.body).to have_css(".card-header", text: "Übersicht")
           expect(response.body).to have_css(".card-header", text: "Sprache")
           expect(response.body).to have_css(".card-header", text: "Geschlecht")
@@ -101,12 +100,6 @@ describe Group::StatisticsController do
           expect(response.body).to have_css("input[type='checkbox'][name='include_subgroups']")
         end
 
-        it "shows the including_subgroups hint when subgroups are included" do
-          get :show, params: {group_id: group.id, key: :people}
-
-          expect(response.body).to have_text("(inkl. Untergruppen)")
-        end
-
         context "without subgroups" do
           let(:group) { groups(:berner_mitglieder) }
 
@@ -115,12 +108,6 @@ describe Group::StatisticsController do
 
             expect(response.body)
               .not_to have_css("input[type='checkbox'][name='include_subgroups']")
-          end
-
-          it "hides the including_subgroups hint" do
-            get :show, params: {group_id: group.id, key: :people}
-
-            expect(response.body).not_to have_text("(inkl. Untergruppen)")
           end
         end
       end
@@ -151,7 +138,7 @@ describe Group::StatisticsController do
         render_views
         include Capybara::RSpecMatchers
 
-        it "renders the group header, summary card and per-group breakdown cards" do
+        it "renders the summary card and per-group breakdown cards" do
           mitglieder = groups(:berner_mitglieder)
           Fabricate(Group::Mitglieder::Aktivmitglied.sti_name.to_sym,
             group: mitglieder, start_on: Time.zone.today)
@@ -159,7 +146,6 @@ describe Group::StatisticsController do
           get :show, params: {group_id: group.id, key: :memberships}
 
           expect(response).to have_http_status(200)
-          expect(response.body).to have_css(".card-header", text: group.to_s)
           expect(response.body).to have_css(".card-header", text: "Zusammenfassung")
           expect(response.body).to have_css(".card-header", text: "Mitglieder")
         end

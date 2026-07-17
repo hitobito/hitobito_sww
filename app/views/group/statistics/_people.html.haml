@@ -15,79 +15,71 @@
             = check_box_tag :include_subgroups, "true", statistic.include_subgroups?, class: "form-check-input", data: { submit: true }
             = label_tag :include_subgroups, t(".include_subgroups"), class: "form-check-label"
 
-.card.mb-3
-  .card-header.d-flex.justify-content-between.align-items-center
-    %h3.card-title.mb-0
-      = statistic.group.to_s
-      = t(".including_subgroups") if statistic.includes_subgroups?
-    %span
-      = t(".persons_count", count: statistic.total_count)
-  .card-body
-    = render_card title: t('.overview') do
-      %dl.row
-        - rows = [ |
-          { label_key: t('.total_count'), value: statistic.total_count }, |
-          { label_key: t('.magazine_subscribers_count'), value: statistic.magazine_subscribers_count } |
-        ] |
-        = render partial: 'overview_row', collection: rows, as: :row
-        %p.text-muted.small= t('.magazine_subscribers_hint')
-    .row
-      .col-lg-6
-        = render_card statistic.language_breakdown, title: t('.language_title') do |breakdown|
-          %table.table.table-bordered.text-end
-            %colgroup
-              %col{style: "width: 40%"}
-              %col{style: "width: 20%"}
-              %col{style: "width: 40%"}
-            %thead
-              %tr
-                %th.text-start= t('.language')
-                %th= t('.count')
-                %th= t('.share')
-            %tbody
-              - breakdown.each do |bucket|
-                %tr
-                  %td.text-start= bucket.label
-                  %td= bucket.count
-                  %td= number_to_percentage(bucket.percent, precision: 1)
-      .col-lg-6
-        = render_card statistic.gender_breakdown, title: t('.gender_title') do |gender_breakdown|
-          %table.table.table-bordered.text-end
-            %colgroup
-              %col{style: "width: 40%"}
-              %col{style: "width: 20%"}
-              %col{style: "width: 40%"}
-            %thead
-              %tr
-                %th.text-start= t('.gender')
-                %th= t('.count')
-                %th= t('.share')
-            %tbody
-              - gender_breakdown.each do |bucket|
-                %tr
-                  %td.text-start= bucket.label
-                  %td= bucket.count
-                  %td= number_to_percentage(bucket.percent, precision: 1)
-
-    = render_card statistic.age_groups, title: t('.age_structure_title') do |age_groups|
+= render_card title: t('.overview') do
+  %dl.row
+    - rows = [ |
+      { label_key: t('.total_count'), value: statistic.total_count }, |
+      { label_key: t('.magazine_subscribers_count'), value: statistic.magazine_subscribers_count } |
+    ] |
+    = render partial: 'overview_row', collection: rows, as: :row
+    %p.text-muted.small= t('.magazine_subscribers_hint')
+.row
+  .col-lg-6
+    = render_card statistic.language_breakdown, title: t('.language_title') do |breakdown|
       %table.table.table-bordered.text-end
         %colgroup
-          %col{style: "width: 15%"}
-          %col{style: "width: 10%"}
-          %col{style: "width: 15%"}
-          %col{style: "width: 60%"}
+          %col{style: "width: 40%"}
+          %col{style: "width: 20%"}
+          %col{style: "width: 40%"}
         %thead
           %tr
-            %th
+            %th.text-start= t('.language')
             %th= t('.count')
-            %th
-              %span.pe-2= t('.share')
+            %th= t('.share')
         %tbody
-          - age_groups.each do |bucket|
+          - breakdown.each do |bucket|
             %tr
-              %td= bucket.label
+              %td.text-start= bucket.label
               %td= bucket.count
               %td= number_to_percentage(bucket.percent, precision: 1)
-              %td
-                .progress.ms-2
-                  .progress-bar{style: "width: #{distribution_bar_width(bucket.percent / 100.0, 1.0)}"}
+  .col-lg-6
+    = render_card statistic.gender_breakdown, title: t('.gender_title') do |gender_breakdown|
+      %table.table.table-bordered.text-end
+        %colgroup
+          %col{style: "width: 40%"}
+          %col{style: "width: 20%"}
+          %col{style: "width: 40%"}
+        %thead
+          %tr
+            %th.text-start= t('.gender')
+            %th= t('.count')
+            %th= t('.share')
+        %tbody
+          - gender_breakdown.each do |bucket|
+            %tr
+              %td.text-start= bucket.label
+              %td= bucket.count
+              %td= number_to_percentage(bucket.percent, precision: 1)
+
+= render_card statistic.age_groups, title: t('.age_structure_title') do |age_groups|
+  %table.table.table-bordered.text-end
+    %colgroup
+      %col{style: "width: 15%"}
+      %col{style: "width: 10%"}
+      %col{style: "width: 15%"}
+      %col{style: "width: 60%"}
+    %thead
+      %tr
+        %th
+        %th= t('.count')
+        %th
+          %span.pe-2= t('.share')
+    %tbody
+      - age_groups.each do |bucket|
+        %tr
+          %td= bucket.label
+          %td= bucket.count
+          %td= number_to_percentage(bucket.percent, precision: 1)
+          %td
+            .progress.ms-2
+              .progress-bar{style: "width: #{distribution_bar_width(bucket.percent / 100.0, 1.0)}"}
