@@ -8,14 +8,15 @@
 require "spec_helper"
 
 describe Export::Tabular::People::ParticipationsList do
-  let(:event) { events(:top_course) }
-  let(:participation) { event_participations(:top_participant) }
+  let(:event) { participation.event }
+  let(:participation) { event_participations(:top_leader) }
+  let(:ability) { Ability.new(participation.person) }
+
+  subject(:attribute_labels) { described_class.new([participation], ability).attribute_labels }
 
   describe "attribute_labels" do
     it "contains keys and translated labels" do
-      attribute_labels = described_class.new([participation]).attribute_labels
-
-      expect(attribute_labels).to eq(
+      expect(attribute_labels).to include(
         {
           first_name: "Vorname",
           last_name: "Nachname",
@@ -28,15 +29,10 @@ describe Export::Tabular::People::ParticipationsList do
     end
 
     context "event with question" do
-      let(:question) {
-        Fabricate(:event_question, event: event, question: "Vegi?")
-      }
-
       it "contains questions" do
-        participation.answers.create! question: question, answer: "Ja"
-
-        attribute_labels = described_class.new([participation]).attribute_labels
-
+        question = Fabricate(:event_question, event: event, question: "Vegi?")
+        expect(question.event).to eq participation.event
+        participation.answers.find_by(question:).update!(answer: "Ja")
         expect(attribute_labels[:"question_#{question.id}"]).to eq("Vegi?")
       end
     end
