@@ -51,5 +51,79 @@ describe Group::StatisticsController do
         expect(assigns(:statistic).include_sublayers?).to be false
       end
     end
+
+    context "people statistic" do
+      it "renders successfully with default stichtag" do
+        get :show, params: {group_id: group.id, key: :people}
+
+        expect(response).to have_http_status(200)
+        expect(assigns(:statistic).stichtag).to eq(Time.zone.today)
+      end
+
+      it "uses date param when provided" do
+        get :show, params: {group_id: group.id, key: :people, date: "01.03.2023"}
+
+        expect(response).to have_http_status(200)
+        expect(assigns(:statistic).stichtag).to eq(Date.new(2023, 3, 1))
+      end
+
+      it "includes subgroups by default" do
+        get :show, params: {group_id: group.id, key: :people}
+
+        expect(assigns(:statistic).include_subgroups?).to be true
+      end
+
+      it "excludes subgroups when param is false" do
+        get :show, params: {group_id: group.id, key: :people, include_subgroups: "false"}
+
+        expect(assigns(:statistic).include_subgroups?).to be false
+      end
+
+      context "rendering" do
+        render_views
+        include Capybara::RSpecMatchers
+
+        it "renders the group header and all statistic cards" do
+          get :show, params: {group_id: group.id, key: :people}
+
+          expect(response).to have_http_status(200)
+          expect(response.body).to have_css(".card-header", text: group.to_s)
+          expect(response.body).to have_css(".card-header", text: "Übersicht")
+          expect(response.body).to have_css(".card-header", text: "Sprache")
+          expect(response.body).to have_css(".card-header", text: "Geschlecht")
+          expect(response.body).to have_css(".card-header", text: "Altersstruktur")
+          expect(response.body).to have_css(".progress-bar")
+        end
+
+        it "shows the include_subgroups checkbox when the group has subgroups" do
+          get :show, params: {group_id: group.id, key: :people}
+
+          expect(response.body).to have_css("input[type='checkbox'][name='include_subgroups']")
+        end
+
+        it "shows the including_subgroups hint when subgroups are included" do
+          get :show, params: {group_id: group.id, key: :people}
+
+          expect(response.body).to have_text("(inkl. Untergruppen)")
+        end
+
+        context "without subgroups" do
+          let(:group) { groups(:berner_mitglieder) }
+
+          it "hides the include_subgroups checkbox" do
+            get :show, params: {group_id: group.id, key: :people}
+
+            expect(response.body)
+              .not_to have_css("input[type='checkbox'][name='include_subgroups']")
+          end
+
+          it "hides the including_subgroups hint" do
+            get :show, params: {group_id: group.id, key: :people}
+
+            expect(response.body).not_to have_text("(inkl. Untergruppen)")
+          end
+        end
+      end
+    end
   end
 end

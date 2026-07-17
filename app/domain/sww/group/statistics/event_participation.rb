@@ -8,7 +8,9 @@
 module Sww::Group::Statistics
   class EventParticipation < ::Group::Statistics::Base
     self.key = :event_participation
-    self.permitted_params = [:from, :to, :include_sublayers]
+    self.permitted_params = [:from, :to]
+
+    include GroupScoping
 
     validates_date :from, allow_blank: true
     validates_date :to, allow_blank: true
@@ -87,11 +89,9 @@ module Sww::Group::Statistics
       filter_params[:to]
     end
 
-    def include_sublayers?
-      filter_params[:include_sublayers].to_s != "false"
-    end
-
     private
+
+    alias_method :scoping_root, :layer
 
     def events
       @events ||= Event.joins(:groups)
@@ -108,21 +108,6 @@ module Sww::Group::Statistics
 
     def person_participations
       filtered_participations.where(participant_type: "Person")
-    end
-
-    def parse_date(value)
-      return nil if value.blank?
-      Date.parse(value)
-    rescue Date::Error, TypeError
-      nil
-    end
-
-    def group_ids
-      @group_ids ||= if include_sublayers?
-        layer.self_and_descendants.pluck(:id)
-      else
-        layer.groups_in_same_layer.pluck(:id)
-      end
     end
   end
 end

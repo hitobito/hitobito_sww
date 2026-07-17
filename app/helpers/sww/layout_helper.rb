@@ -20,4 +20,11 @@ module Sww::LayoutHelper
       end
     end
   end
+
+  # Allows us to use relative locales and yield the nested statistic value to the content block
+  # https://world.hey.com/josh.brown/rails-templates-vs-partials-and-what-even-is-the-difference-13234473
+  def render_card(stats = nil, title:, &block)
+    content = capture(stats, &block) if stats.nil? || stats.any?
+    render partial: "group/statistics/card", locals: {title:, content:}
+  end
 end

@@ -71,6 +71,24 @@ de:
         number_of_people: Personen
         share: Anteil
         times_count: "%{count}x"
+      people:
+        date: Stichtag
+        group: Gruppe
+        include_subgroups: Untergruppen einbeziehen
+        persons_count: "%{count} Personen"
+        including_subgroups: "(inkl. Untergruppen)"
+        overview: Übersicht
+        total_count: Total Personen
+        magazine_subscribers_count: Magazin-Abonnenten
+        magazine_subscribers_hint: Da Abonnemente über Tags ohne Verlauf abgebildet werden, wird diese Zahl immer per heute berechnet.
+        language_title: Sprache
+        language: Sprache
+        gender_title: Geschlecht
+        gender: Geschlecht
+        count: Anzahl
+        share: Anteil
+        age_structure_title: Altersstruktur
+        age_range: Alter
 
   groups:
     form_tabs:
