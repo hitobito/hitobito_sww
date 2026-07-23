@@ -12,7 +12,7 @@ describe "people split", js: true do
   let(:gremium) { groups(:berner_gremium) }
 
   let(:user) do
-    person = Fabricate(Group::Geschaeftsstelle::Mitarbeiter.sti_name,
+    person = Fabricate(Group::Geschaeftsstelle::Schreibrechte.sti_name,
       group: groups(:berner_geschaeftsstelle)).person
     person.update!(email: "admin@example.com")
     person

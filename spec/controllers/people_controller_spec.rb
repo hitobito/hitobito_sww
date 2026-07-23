@@ -37,7 +37,7 @@ describe PeopleController do
     context "editing another person" do
       let(:other_person) { people(:berner_wanderer) }
       let(:admin) do
-        Fabricate(Group::Geschaeftsstelle::Mitarbeiter.sti_name,
+        Fabricate(Group::Geschaeftsstelle::Schreibrechte.sti_name,
           group: groups(:berner_geschaeftsstelle)).person
       end
 

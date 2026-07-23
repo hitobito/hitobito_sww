@@ -9,20 +9,38 @@ class Group::Geschaeftsstelle < ::Group
   ### ROLES
 
   class Geschaeftsfuehrer < ::Role
-    self.permissions = [:contact_data, :layer_and_below_full, :finance]
+    self.permissions = [:group_and_below_full]
   end
 
   class Kassier < ::Role
-    self.permissions = [:finance, :layer_and_below_full]
+    self.permissions = [:group_and_below_full]
   end
 
   class TechnischerLeiter < ::Role
-    self.permissions = [:layer_and_below_full]
+    self.permissions = [:group_and_below_full]
   end
 
   class Mitarbeiter < ::Role
+    self.permissions = [:group_and_below_full]
+  end
+
+  class Rechnungswesen < ::Role
+    self.permissions = [:finance]
+  end
+
+  class Leserechte < ::Role
+    self.permissions = [:layer_and_below_read]
+  end
+
+  class Schreibrechte < ::Role
     self.permissions = [:layer_and_below_full]
   end
 
-  roles Geschaeftsfuehrer, Kassier, TechnischerLeiter, Mitarbeiter
+  roles Geschaeftsfuehrer,
+    Kassier,
+    TechnischerLeiter,
+    Mitarbeiter,
+    Rechnungswesen,
+    Leserechte,
+    Schreibrechte
 end

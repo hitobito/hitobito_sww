@@ -65,6 +65,12 @@ de:
         one: Vizepräsident
       group/vorstand/vorstandsmitglied:
         one: Vorstandsmitglied
+      group/vorstand/rechnungswesen:
+        one: Rechnungswesen
+      group/vorstand/leserechte:
+        one: Leserechte
+      group/vorstand/schreibrechte:
+        one: Schreibrechte
 
       group/geschaeftsstelle/geschaeftsfuehrer:
         one: Geschäftsführer
@@ -74,6 +80,12 @@ de:
         one: Technischer Leiter
       group/geschaeftsstelle/mitarbeiter:
         one: Mitarbeiter
+      group/geschaeftsstelle/rechnungswesen:
+        one: Rechnungswesen
+      group/geschaeftsstelle/leserechte:
+        one: Leserechte
+      group/geschaeftsstelle/schreibrechte:
+        one: Schreibrechte
 
       group/gremium_projektgruppe/leitung:
         one: Leitung
