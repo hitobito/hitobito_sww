@@ -71,6 +71,41 @@ fr:
         number_of_people: Personnes
         share: Pourcentage
         times_count: "%{count}x"
+      people:
+        date: Stichtag
+        group: Gruppe
+        include_subgroups: Untergruppen einbeziehen
+        persons_count: "%{count} Personen"
+        including_subgroups: "(inkl. Untergruppen)"
+        overview: Übersicht
+        total_count: Total Personen
+        magazine_subscribers_count: Magazin-Abonnenten
+        magazine_subscribers_hint: "Da Abonnemente über Tags ohne Verlauf abgebildet werden, wird diese Zahl immer per heute berechnet."
+        language_title: Sprache
+        language: Sprache
+        gender_title: Geschlecht
+        gender: Geschlecht
+        count: Anzahl
+        share: Anteil
+        age_structure_title: Altersstruktur
+        age_range: Alter
+      memberships:
+        title: Ein- und Austritte
+        from: Von
+        to: Bis
+        period: "Zeitraum: %{from} - %{to}"
+        summary_title: Zusammenfassung
+        total_entries: "Total Eintritte"
+        total_exits: "Total Austritte"
+        net_change: "Netto-Veränderung"
+        total_count: "Anzahl Rollen per %{date}"
+        role_type: Rollentyp
+        entries: Eintritte
+        exits: Austritte
+        net: Netto
+        count: Anzahl
+        total: Total
+        layer_only_suffix: "(nur Hauptgruppe ohne Untergruppen)"
 
   groups:
     form_tabs:
