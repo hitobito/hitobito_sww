@@ -32,7 +32,6 @@ describe Export::Tabular::People::ParticipationsList do
       it "contains questions" do
         question = Fabricate(:event_question, event: event, question: "Vegi?")
         expect(question.event).to eq participation.event
-        participation.answers.find_by(question:).update!(answer: "Ja")
         expect(attribute_labels[:"question_#{question.id}"]).to eq("Vegi?")
       end
     end
