@@ -10,6 +10,8 @@ module Sww::Group::Statistics
     self.key = :memberships
     self.layer_only = false
 
+    EXCLUDED_ROLES = [Group::Mitglieder::MagazinAbonnent]
+
     include DateRangeFilter
 
     TotalRow = Data.define(:entries, :exits, :net, :count) do
@@ -100,15 +102,19 @@ module Sww::Group::Statistics
     end
 
     def entries_scope
-      ::Role.with_inactive.where(start_on: from_date..to_date)
+      roles_scope.with_inactive.where(start_on: from_date..to_date)
     end
 
     def exits_scope
-      ::Role.with_inactive.where(end_on: from_date..to_date)
+      roles_scope.with_inactive.where(end_on: from_date..to_date)
     end
 
     def actives_scope
-      ::Role.active(to_date)
+      roles_scope.active(to_date)
+    end
+
+    def roles_scope
+      ::Role.where.not(type: EXCLUDED_ROLES.map(&:sti_name))
     end
   end
 end

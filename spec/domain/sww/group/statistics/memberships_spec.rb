@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2026, Schweizer Wanderwege. This file is part of
-#  hitobito_sww and licensed under the Affero General Public License version 3
-#  or later. See the COPYING file at the top-level directory or at
-#  https://github.com/hitobito/hitobito_sww
+# Copyright (c) 2026, Schweizer Wanderwege. This file is part of
+# hitobito_sww and licensed under the Affero General Public License version 3
+# or later. See the COPYING file at the top-level directory or at
+# https://github.com/hitobito/hitobito_sww
 
 require "spec_helper"
 require_relative "date_range_filter_examples"
@@ -47,6 +47,12 @@ describe Sww::Group::Statistics::Memberships do
         create_role(group: mitglieder, start_on: Date.new(2023, 12, 31))
         expect(statistic(range).total_entries).to eq(0)
       end
+
+      it "does not count MagazinAbonnent roles" do
+        create_role(group: mitglieder, type: Group::Mitglieder::MagazinAbonnent,
+          start_on: Date.new(2024, 6, 1))
+        expect(statistic(range).total_entries).to eq(0)
+      end
     end
 
     describe "#total_exits" do
@@ -58,6 +64,12 @@ describe Sww::Group::Statistics::Memberships do
       it "does not count roles ending outside the range" do
         create_role(group: mitglieder, start_on: Date.new(2020, 1, 1),
           end_on: Date.new(2025, 1, 15))
+        expect(statistic(range).total_exits).to eq(0)
+      end
+
+      it "does not count MagazinAbonnent roles" do
+        create_role(group: mitglieder, type: Group::Mitglieder::MagazinAbonnent,
+          start_on: Date.new(2020, 1, 1), end_on: Date.new(2024, 6, 1))
         expect(statistic(range).total_exits).to eq(0)
       end
     end
@@ -88,6 +100,13 @@ describe Sww::Group::Statistics::Memberships do
         create_role(group: zuercher, start_on: Date.new(2024, 3, 1))
 
         # only berner_mitglied and no_permissions fixtures are in the layer
+        expect(statistic(range).total_count).to eq(2)
+      end
+
+      it "does not count active MagazinAbonnent roles" do
+        create_role(group: mitglieder, type: Group::Mitglieder::MagazinAbonnent,
+          start_on: Date.new(2024, 3, 1))
+
         expect(statistic(range).total_count).to eq(2)
       end
     end
@@ -128,6 +147,14 @@ describe Sww::Group::Statistics::Memberships do
           {label: "Freimitglied", entries: 0, exits: 1, net: -1, count: 0}
         )
         expect(breakdown.total_row.to_h).to eq(entries: 1, exits: 1, net: 0, count: 2)
+      end
+
+      it "does not list a role_row for MagazinAbonnent" do
+        create_role(group: mitglieder, type: Group::Mitglieder::MagazinAbonnent,
+          start_on: Date.new(2024, 3, 1))
+
+        breakdown = statistic(range).group_breakdowns.find { |b| b.title == "Mitglieder" }
+        expect(breakdown.role_rows.map(&:label)).not_to include("MagazinAbonnent")
       end
 
       it "builds a breadcrumb title for a nested group, excluding the layer name itself" do
