@@ -15,6 +15,7 @@ module Sww::Export::Pdf::Invoice
     def invoice_page(pdf, invoice, options)
       @page_invoice = invoice
       @options = options
+      @invoice_config ||= invoice.invoice_config
 
       super
     end
