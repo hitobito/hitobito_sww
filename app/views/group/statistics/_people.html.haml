@@ -17,12 +17,11 @@
 
 = render_card title: t('.overview') do
   %dl.row
-    - rows = [ |
-      { label_key: t('.total_count'), value: statistic.total_count }, |
-      { label_key: t('.magazine_subscribers_count'), value: statistic.magazine_subscribers_count } |
-    ] |
+    - rows = [{ label_key: t('.total_count'), value: statistic.total_count }]
+    -# magazine_subscribers_count temporarily disabled (see hitobito_sww #247)
+    -# rows << { label_key: t('.magazine_subscribers_count'), value: statistic.magazine_subscribers_count }
     = render partial: 'overview_row', collection: rows, as: :row
-    %p.text-muted.small= t('.magazine_subscribers_hint')
+    -# %p.text-muted.small= t('.magazine_subscribers_hint')
 .row
   .col-lg-6
     = render_card statistic.language_breakdown, title: t('.language_title') do |breakdown|
