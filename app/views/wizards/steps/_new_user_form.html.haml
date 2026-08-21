@@ -4,7 +4,7 @@
 -#  https://github.com/hitobito/hitobito_sww.
 
 = c.fields_for do |form|
-  = form.labeled_collection_select :gender, form.object.gender_options, :first, :last, { }, class: "form-select form-select-sm"
+  = form.labeled_collection_select :gender, form.object.gender_options, :first, :last, { }
   = form.labeled_input_field :first_name, required: true
   = form.labeled_input_field :last_name, required: true
   = form.labeled_input_field :company_name
