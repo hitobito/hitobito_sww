@@ -74,13 +74,15 @@ describe Export::Tabular::People::DroptoursMitgliederRow do
     expect(row.fetch(:member_number)).to eq(person.member_number)
   end
 
-  it "#phone_number_landline returns number with label landline" do
-    main = Fabricate(:phone_number, contactable: person, label: "Privat", number: "0311234567")
+  it "#phone_number_landline returns number with category landline" do
+    category = contact_account_categories(:phone_number_person_landline)
+    main = Fabricate(:phone_number, contactable: person, category:, number: "0311234567")
     expect(row.fetch(:phone_number_landline)).to eq main.number
   end
 
-  it "#phone_number_mobile returns any number with label mobile" do
-    mobile = Fabricate(:phone_number, contactable: person, label: "Mobil", number: "0781234567")
+  it "#phone_number_mobile returns any number with category mobile" do
+    category = contact_account_categories(:phone_number_person_mobile)
+    mobile = Fabricate(:phone_number, contactable: person, category:, number: "0781234567")
     expect(row.fetch(:phone_number_mobile)).to eq mobile.number
   end
 

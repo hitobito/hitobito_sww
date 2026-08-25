@@ -13,7 +13,8 @@ describe Export::Tabular::People::ParticipationsListRow do
   let(:row) { described_class.new(participation) }
 
   it "contains mobile phone number" do
-    person.phone_numbers.create! label: "Mobil", number: "079 123 45 67"
+    person.phone_numbers.create! category: contact_account_categories(:phone_number_person_mobile),
+      number: "079 123 45 67"
 
     expect(row.phone_mobile).to eq "+41 79 123 45 67"
   end

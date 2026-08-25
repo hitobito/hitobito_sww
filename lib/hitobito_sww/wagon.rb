@@ -119,12 +119,6 @@ module HitobitoSww
       )
     end
 
-    config.to_prepare do
-      if Rails.env.test?
-        Settings.application.languages.delete_field(:en)
-      end
-    end
-
     initializer "sww.add_settings" do |_app|
       Settings.add_source!(File.join(paths["config"].existent, "settings.yml"))
       Settings.reload!

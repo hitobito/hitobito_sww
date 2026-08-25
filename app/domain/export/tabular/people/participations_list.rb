@@ -15,10 +15,16 @@ class Export::Tabular::People::ParticipationsList < Export::Tabular::People::Par
       last_name: Person.human_attribute_name(:last_name),
       email: Person.human_attribute_name(:email),
       full_address: Person.human_attribute_name(:address),
-      phone_mobile: "#{PhoneNumber.model_name.human} (#{PhoneNumber.translate_label("Mobil")})",
+      phone_mobile: "#{PhoneNumber.model_name.human} (#{mobile_category})",
       # rubocop:todo Layout/LineLength
       participation_additional_information: Event::Participation.human_attribute_name(:additional_information)
       # rubocop:enable Layout/LineLength
     }.merge(questions_labels)
+  end
+
+  private
+
+  def mobile_category
+    ContactAccountCategory.for("PhoneNumber", "Person").find_by(key: "mobile")
   end
 end
