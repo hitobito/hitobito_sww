@@ -132,15 +132,6 @@ it:
     attributes:
       additional_address:
         address_care_of: Riga aggiuntiva dell'indirizzo 1
-      contact_account:
-        predefined_labels:
-          andere: Altro
-          arbeit: Lavoro
-          facebook: Facebook
-          instagram: Instagram
-          mobil: Cellulare
-          privat: Privato
-          webseite: Sito web
       event/guest:
         address_care_of: Riga aggiuntiva dell'indirizzo 1
         company_name: Nome dell'organizzazione

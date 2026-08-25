@@ -124,15 +124,6 @@ de:
     attributes:
       additional_address:
         address_care_of: Adressinformation 1
-      contact_account:
-        predefined_labels:
-          andere: Andere
-          arbeit: Geschäftlich
-          facebook: Facebook
-          instagram: Instagram
-          mobil: Mobil
-          privat: Privat
-          webseite: Webseite
       event/guest:
         address_care_of: Adressinformation 1
         company_name: Name der Organisation

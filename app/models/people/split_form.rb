@@ -35,7 +35,7 @@ module People
 
       person_1.additional_emails.build(
         email: original_email,
-        label: AdditionalEmail.predefined_labels.first
+        category: ContactAccountCategory.for("AdditionalEmail", "Person").other.first
       )
     end
 
@@ -45,7 +45,7 @@ module People
 
       person_2.additional_emails.build(
         email: person_1.email,
-        label: AdditionalEmail.predefined_labels.first
+        category: ContactAccountCategory.for("AdditionalEmail", "Person").other.first
       )
     end
 
