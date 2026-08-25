@@ -73,6 +73,12 @@ it:
         one: Vicepresidente
       group/vorstand/vorstandsmitglied:
         one: Membro del comitato
+      group/vorstand/rechnungswesen:
+        one: Rechnungswesen
+      group/vorstand/leserechte:
+        one: Leserechte
+      group/vorstand/schreibrechte:
+        one: Schreibrechte
 
       group/geschaeftsstelle/geschaeftsfuehrer:
         one: Direttore generale
@@ -82,6 +88,12 @@ it:
         one: Responsabile tecnico
       group/geschaeftsstelle/mitarbeiter:
         one: Collaboratori
+      group/geschaeftsstelle/rechnungswesen:
+        one: Rechnungswesen
+      group/geschaeftsstelle/leserechte:
+        one: Leserechte
+      group/geschaeftsstelle/schreibrechte:
+        one: Schreibrechte
 
       group/gremium_projektgruppe/leitung:
         one: Direzione
