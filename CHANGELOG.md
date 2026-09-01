@@ -1,5 +1,9 @@
 # Hitobito SWW Changelog
 
+## Unreleased
+
+* Die Mitgliedernummer (`member_number`) entspricht neu direkt der Personen-ID (hitobito_sww#256)
+
 ## Version 2.10
 
 * Es gibt nun auf den Hauptgruppen eine Statistik über Anlässe und Teilnahmen (hitobito_sww#345)

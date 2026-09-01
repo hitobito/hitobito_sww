@@ -20,7 +20,7 @@ describe Export::Pdf::Messages::LetterWithInvoice do
       )
     end
 
-    let(:recipient) { people(:top_leader) }
+    let(:recipient) { people(:zuercher_wanderer) }
 
     subject { Export::Pdf::Messages::LetterWithInvoice.new(letter, options) }
 
@@ -63,7 +63,7 @@ describe Export::Pdf::Messages::LetterWithInvoice do
       it "renders the membership card on the left" do
         membership_card = [
           [346, 721, "Mitgliederausweis"],
-          [346, 710, "42431"],
+          [346, 710, recipient.id.to_s],
           [346, 699, "Alice Bar"],
           [511, 721, "Gültig bis"],
           [517, 710, "12.2042"]
@@ -86,7 +86,7 @@ describe Export::Pdf::Messages::LetterWithInvoice do
       it "renders the membership card on the right" do
         membership_card = [
           [57, 721, "Mitgliederausweis"],
-          [57, 710, "42431"],
+          [57, 710, recipient.id.to_s],
           [57, 699, "Alice Bar"],
           [222, 721, "Gültig bis"],
           [227, 710, "12.2042"]
@@ -129,7 +129,7 @@ describe Export::Pdf::Messages::LetterWithInvoice do
       it "renders membership card at the custom position" do
         membership_card = [
           [283, 693, "Mitgliederausweis"],
-          [283, 681, "42431"],
+          [283, 681, recipient.id.to_s],
           [283, 670, "Alice Bar"],
           [449, 693, "Gültig bis"],
           [454, 681, "12.2042"]
