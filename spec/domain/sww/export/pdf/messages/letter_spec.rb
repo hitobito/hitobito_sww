@@ -20,7 +20,7 @@ describe Export::Pdf::Messages::Letter do
       )
     end
 
-    let(:recipient) { people(:top_leader) }
+    let(:recipient) { people(:zuercher_wanderer) }
 
     subject { Export::Pdf::Messages::Letter.new(letter, options) }
 
@@ -39,7 +39,7 @@ describe Export::Pdf::Messages::Letter do
       it "renders membership card onto the letter" do
         expect(text_with_position).to include(
           [346, 721, "Mitgliederausweis"],
-          [346, 710, "42431"],
+          [346, 710, recipient.id.to_s],
           [346, 699, "Alice Bar"],
           [511, 721, "Gültig bis"],
           [517, 710, "12.2042"]
@@ -88,7 +88,7 @@ describe Export::Pdf::Messages::Letter do
       it "renders membership card onto the letter" do
         expect(text_with_position).to include(
           [57, 721, "Mitgliederausweis"],
-          [57, 710, "42431"],
+          [57, 710, recipient.id.to_s],
           [57, 699, "Alice Bar"],
           [222, 721, "Gültig bis"],
           [227, 710, "12.2042"]
@@ -141,7 +141,7 @@ describe Export::Pdf::Messages::Letter do
       it "renders membership card onto the letter" do
         expect(text_with_position).to include(
           [283, 693, "Mitgliederausweis"],
-          [283, 681, "42431"],
+          [283, 681, recipient.id.to_s],
           [283, 670, "Alice Bar"],
           [449, 693, "Gültig bis"],
           [454, 681, "12.2042"]
@@ -183,28 +183,28 @@ describe Export::Pdf::Messages::Letter do
 
     context "name length" do
       it "long name renders on lone line" do
-        people(:zuercher_wanderer).update(
+        recipient.update(
           first_name: "Michelangelo",
           last_name: "Greiner-Petter-Memm"
         )
 
         expect(text_with_position).to include(
           [346, 721, "Mitgliederausweis"],
-          [346, 710, "42431"],
+          [346, 710, recipient.id.to_s],
           [346, 699, "Michelangelo Greiner-Petter-Memm"],
           [511, 721, "Gültig bis"]
         )
       end
 
       it "extreme long name renders on two lines" do
-        people(:zuercher_wanderer).update(
+        recipient.update(
           first_name: "Captain Fantastic",
           last_name: "Faster Than Superman Spiderman Batman Wolverine Hulk And The Flash Combined"
         )
 
         expect(text_with_position).to include(
           [346, 721, "Mitgliederausweis"],
-          [346, 710, "42431"],
+          [346, 710, recipient.id.to_s],
           [346, 700, "Captain Fantastic Faster Than Superman Spiderman"],
           [346, 691, "Batman Wolverine Hulk And The Flash Combined"],
           [511, 721, "Gültig bis"]

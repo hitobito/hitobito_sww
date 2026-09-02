@@ -8,35 +8,26 @@
 module Sww::Person
   extend ActiveSupport::Concern
 
-  MEMBER_NUMBER_CALCULATION_OFFSET = 300_000
-
   included do
     add_public_attrs = [:magazin_abo_number, :title]
     Person::PUBLIC_ATTRS.push(*add_public_attrs)
 
-    add_internal_attrs = [:alabus_id, :member_number, :manual_member_number,
+    add_internal_attrs = [:alabus_id, :member_number,
       :sww_cms_profile_id, :sww_cms_legacy_password_salt,
       :custom_salutation, :name_add_on]
     Person::INTERNAL_ATTRS.push(*add_internal_attrs)
 
-    Person::MERGABLE_ATTRS << :manual_member_number
+    Person::SEARCHABLE_ATTRS << :magazin_abo_number
+
+    alias_attribute :member_number, :id
 
     attr_readonly :alabus_id
-
-    validates :manual_member_number,
-      uniqueness: true,
-      allow_nil: true,
-      numericality: {less_than: MEMBER_NUMBER_CALCULATION_OFFSET}
 
     validates :sww_cms_profile_id,
       uniqueness: true,
       allow_nil: true
 
     belongs_to :updated_by, class_name: "Person", foreign_key: :updater_id
-  end
-
-  def member_number
-    manual_member_number || id&.+(MEMBER_NUMBER_CALCULATION_OFFSET)
   end
 
   def sww_salutation(skip_other: false)

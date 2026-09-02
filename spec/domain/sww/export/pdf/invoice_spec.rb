@@ -256,12 +256,14 @@ describe Export::Pdf::Invoice do
       invoice.group.save!
     end
 
+    let(:recipient) { people(:berner_wanderer) }
+
     it "renders membership_card when true" do
       invoice.update!(membership_card: true, membership_expires_on: Date.parse("2022-10-01"),
         address: "Sender address")
       membership_card = [
         [346, 721, "Mitgliederausweis"],
-        [346, 710, "42421"],
+        [346, 710, invoice.recipient.id.to_s],
         [346, 699, "Bob Foo"],
         [511, 721, "Gültig bis"],
         [517, 710, "10.2022"]
@@ -760,7 +762,7 @@ describe Export::Pdf::Invoice do
       invoice.update!(membership_card: true, membership_expires_on: Date.parse("2022-10-01"))
       membership_card = [
         [57, 721, "Mitgliederausweis"],
-        [57, 710, "42421"],
+        [57, 710, invoice.recipient.id.to_s],
         [57, 699, "Bob Foo"],
         [222, 721, "Gültig bis"],
         [227, 710, "10.2022"]
@@ -786,7 +788,7 @@ describe Export::Pdf::Invoice do
       invoice.update!(membership_card: true, membership_expires_on: Date.parse("2022-10-01"))
       membership_card = [
         [346, 721, "Mitgliederausweis"],
-        [346, 710, "42421"],
+        [346, 710, invoice.recipient.id.to_s],
         [346, 699, "Bob Foo"],
         [511, 721, "Gültig bis"],
         [517, 710, "10.2022"]

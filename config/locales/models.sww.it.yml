@@ -178,7 +178,6 @@ it:
         custom_salutation: Saluto personalizzato
         magazin_abo_number: 'Abo # Rivista'
         member_number: Numero socio
-        manual_member_number: Numero socio
         name_add_on: Suffisso del nome
         title: Titolo
         email: E-mail
