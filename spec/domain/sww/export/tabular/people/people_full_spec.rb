@@ -43,17 +43,18 @@ describe Sww::Export::Tabular::People::PeopleFull do
       :member_number,
       :household_member_numbers,
       :household_key,
-      :additional_email_andere,
-      :additional_email_arbeit,
-      :additional_email_privat,
-      :phone_number_andere,
-      :phone_number_arbeit,
-      :phone_number_mobil,
-      :phone_number_privat,
-      :social_account_andere,
+      :additional_email_other,
+      :additional_email_work,
+      :additional_email_invoices,
+      :additional_email_private,
+      :phone_number_other,
+      :phone_number_work,
+      :phone_number_mobile,
+      :phone_number_landline,
+      :social_account_other,
       :social_account_facebook,
-      :social_account_instagram,
-      :social_account_webseite
+      :social_account_x_twitter,
+      :social_account_website
     ]
   end
 

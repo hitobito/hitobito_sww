@@ -117,7 +117,8 @@ describe People::SplitForm do
         additional_emails = person_1.additional_emails
         expect(additional_emails.size).to eq(1)
         expect(additional_emails.first.email).to eq("tom.tina@example.com")
-        expect(additional_emails.first.label).to eq(AdditionalEmail.predefined_labels.first)
+        category = ContactAccountCategory.for("AdditionalEmail", "Person").other.first
+        expect(additional_emails.first.category).to eq(category)
       end
     end
 
@@ -166,7 +167,8 @@ describe People::SplitForm do
         additional_emails = person_2.additional_emails
         expect(additional_emails.size).to eq(1)
         expect(additional_emails.first.email).to eq("tom.tina@example.com")
-        expect(additional_emails.first.label).to eq(AdditionalEmail.predefined_labels.first)
+        category = ContactAccountCategory.for("AdditionalEmail", "Person").other.first
+        expect(additional_emails.first.category).to eq(category)
       end
     end
 

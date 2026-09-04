@@ -8,7 +8,7 @@
 module Export::Tabular::People
   class ParticipationsListRow < Export::Tabular::People::ParticipationRow
     def phone_mobile
-      entry.phone_numbers.find_by(label: "Mobil").try(:number)
+      entry.phone_numbers.find { |number| number.category.key == "mobile" }&.number
     end
 
     def full_address

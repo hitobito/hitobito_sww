@@ -132,15 +132,6 @@ fr:
     attributes:
       additional_address:
         address_care_of: Ligne d’adresse supplémentaire 1
-      contact_account:
-        predefined_labels:
-          andere: Autre
-          arbeit: Professionnel
-          facebook: Facebook
-          instagram: Instagram
-          mobil: Mobile
-          privat: Privé
-          webseite: Site web
       event/guest:
         address_care_of: Ligne d’adresse supplémentaire 1
         company_name: Nom de l'organisation

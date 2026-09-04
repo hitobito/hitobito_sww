@@ -61,11 +61,11 @@ module Export::Tabular::People
     # end
 
     def phone_number_landline
-      entry.phone_numbers.find { _1.label == "Privat" }&.number
+      entry.phone_numbers.find { _1.category&.key == "landline" }&.number
     end
 
     def phone_number_mobile
-      entry.phone_numbers.find { _1.label == "Mobil" }&.number
+      entry.phone_numbers.find { _1.category&.key == "mobile" }&.number
     end
   end
 end
