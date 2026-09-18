@@ -33,6 +33,7 @@ describe Sww::Export::Tabular::People::PeopleFull do
       :birthday,
       :additional_information,
       :language,
+      :canton,
       :magazin_abo_number,
       :title,
       :layer_group,
