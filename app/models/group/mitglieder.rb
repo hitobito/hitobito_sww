@@ -10,6 +10,8 @@ class Group::Mitglieder < ::Group
 
   mounted_attr :droptours_export, :boolean
 
+  validate :droptours_upload_config_present, if: :droptours_export
+
   ### ROLES
 
   class Aktivmitglied < ::Role
@@ -49,4 +51,20 @@ class Group::Mitglieder < ::Group
 
   roles Aktivmitglied, Passivmitglied, Freimitglied, Organisationen,
     Partner, Spender, MagazinAbonnent
+
+  private
+
+  def droptours_upload_config_present
+    return if Export::DroptoursUploadConfig.instance.config
+      .key?(droptours_fachorganisation&.id)
+
+    errors.add(:droptours_export, :upload_config_missing,
+      fachorganisation: droptours_fachorganisation&.name)
+  end
+
+  # The layer_group_id of new records is only assigned after save, so the
+  # fachorganisation is derived from the parent in that case.
+  def droptours_fachorganisation
+    layer_group || parent&.layer_group
+  end
 end

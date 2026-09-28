@@ -12,6 +12,14 @@ describe Export::DroptoursExportScheduleJob do
 
   let(:group) { groups(:berner_wanderwege) }
 
+  before do
+    allow(Export::DroptoursUploadConfig).to receive(:instance)
+      .and_return(instance_double(Export::DroptoursUploadConfig,
+        config: Group::Fachorganisation.ids.index_with({})))
+
+    groups(:berner_mitglieder).update!(droptours_export: true)
+  end
+
   describe "#perform" do
     it "reschedules for tomorrow at 15 minutes past midnight" do
       job.perform
@@ -20,8 +28,7 @@ describe Export::DroptoursExportScheduleJob do
     end
 
     it "schedules jobs for all configured fachorganisation_id" do
-      # 1 fachorganisation has droptours_export enabled on a mitglieder group (berner_mitglieder)
-      # see spec/fixtures/mounted_attributes.yml
+      # 1 fachorganisation has droptours_export enabled (berner_mitglieder, see before)
       expect { job.perform }
         .to change { Delayed::Job.count }
         # 1 for the enabled fachorganisation + 1 for the rescheduled job
