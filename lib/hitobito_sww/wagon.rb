@@ -24,6 +24,8 @@ module HitobitoSww
         Export::DroptoursExportScheduleJob
       ]
 
+      HitobitoLogEntry.categories |= %w[droptours]
+
       Contactable::Address.prepend Sww::Contactable::Address
 
       InvoiceConfig.prepend Sww::InvoiceConfig

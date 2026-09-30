@@ -14,6 +14,12 @@ describe Export::Tabular::People::DroptoursMitglieder do
 
   subject(:tabular) { described_class.new(fachorganisation) }
 
+  before do
+    allow(Export::DroptoursUploadConfig).to receive(:instance)
+      .and_return(instance_double(Export::DroptoursUploadConfig,
+        config: {fachorganisation.id => {}}))
+  end
+
   its(:model_class) { is_expected.to eq Person }
   its(:row_class) { is_expected.to eq Export::Tabular::People::DroptoursMitgliederRow }
 
