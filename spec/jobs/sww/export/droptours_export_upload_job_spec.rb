@@ -47,4 +47,20 @@ describe Export::DroptoursExportUploadJob do
 
     job.perform
   end
+
+  context "without sftp config for the fachorganisation" do
+    let(:sftp_config) { {} }
+
+    it "logs the missing config and finishes successfully" do
+      expect { job.perform }
+        .to change { HitobitoLogEntry.count }.by(1)
+
+      entry = HitobitoLogEntry.last
+      expect(entry.level).to eq "error"
+      expect(entry.category).to eq "droptours"
+      expect(entry.message).to include(fachorganisation.id.to_s)
+      expect(entry.subject).to eq fachorganisation
+      expect(entry.payload).to eq("fachorganisation_id" => fachorganisation.id)
+    end
+  end
 end

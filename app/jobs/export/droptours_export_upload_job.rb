@@ -17,6 +17,8 @@ class Export::DroptoursExportUploadJob < BaseJob
   end
 
   def perform
+    return log_missing_sftp_config unless sftp_config
+
     I18n.with_locale(:en) do
       Sftp.new(sftp_config).upload_file(csv, upload_path)
     end
@@ -61,7 +63,15 @@ class Export::DroptoursExportUploadJob < BaseJob
   end
 
   def sftp_config
-    @sftp_config ||= Export::DroptoursUploadConfig.instance.config[@fachorganisation_id] ||
-      raise("Missing SFTP configuration for Fachorganisation ID #{@fachorganisation_id}")
+    @sftp_config ||= Export::DroptoursUploadConfig.instance.config[@fachorganisation_id]
+  end
+
+  def log_missing_sftp_config
+    HitobitoLogger.new.error(
+      :droptours,
+      "Missing SFTP configuration for Fachorganisation ID #{@fachorganisation_id}",
+      subject: Group::Fachorganisation.find_by(id: @fachorganisation_id),
+      payload: {fachorganisation_id: @fachorganisation_id}
+    )
   end
 end

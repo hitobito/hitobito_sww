@@ -178,6 +178,14 @@ de_CH:
 
 
 
+
+    errors:
+      models:
+        group/mitglieder:
+          attributes:
+            droptours_export:
+              upload_config_missing: "kann nicht aktiviert werden, da für die Fachorganisation \"%{fachorganisation}\" keine SFTP-Konfiguration für den Droptours Export hinterlegt ist"
+
   activemodel:
     attributes:
       people/split_form:

@@ -23,6 +23,8 @@ describe JsonApiController do
 
         render status: 500, plain: "ERROR"
       end
+
+      def authorize_entry = true
     end
 
     before do

@@ -5,6 +5,6 @@
 
 berner_mitglieder_droptours_export:
   key: droptours_export
-  value: <%= YAML.dump(true) %>
+  value: <%= YAML.dump(false) %>
   entry_type: Group
   entry: berner_mitglieder
