@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-* Die Mitgliedernummer (`member_number`) entspricht neu direkt der Personen-ID (hitobito_sww#256)
+* Die Mitgliedernummer (`member_number`) ist neu ein eigenes, suchbares Datenbankfeld auf der Person, wird automatisch vergeben (hitobito_sww#256)
 
 ## Version 2.10
 

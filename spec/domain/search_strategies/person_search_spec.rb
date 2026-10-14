@@ -20,6 +20,12 @@ describe SearchStrategies::PersonSearch do
 
       expect(result).to include(people(:zuercher_wanderer))
     end
+
+    it "finds accessible person by member_number" do
+      result = search_class(people(:zuercher_wanderer).member_number.to_s).search
+
+      expect(result).to include(people(:zuercher_wanderer))
+    end
   end
 
   def search_class(term = nil, page = nil)

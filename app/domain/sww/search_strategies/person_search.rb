@@ -11,7 +11,8 @@ module Sww::SearchStrategies
 
     prepended do
       self.searchable_identifiers = searchable_identifiers.merge({
-        magazin_abo_number: /\A\d+\z/
+        magazin_abo_number: /\A\d+\z/,
+        member_number: /\A\d+\z/
       })
     end
   end

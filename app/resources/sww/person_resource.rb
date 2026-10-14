@@ -11,6 +11,7 @@ module Sww::PersonResource
   included do
     attribute :title, :string
     attribute :magazin_abo_number, :integer, readable: :show_details_on_person?
+    attribute :member_number, :integer, writable: false
     attribute :sww_cms_profile_id, :integer, writable: false,
       readable: :show_details_on_person?
     attribute :updated_at, :datetime, writable: false

@@ -2933,6 +2933,12 @@
           "writable": true,
           "description": null
         },
+        "member_number": {
+          "type": "integer",
+          "readable": true,
+          "writable": false,
+          "description": null
+        },
         "sww_cms_profile_id": {
           "type": "integer",
           "readable": "guarded",
@@ -2967,6 +2973,7 @@
         "additional_information": {},
         "title": {},
         "magazin_abo_number": {},
+        "member_number": {},
         "sww_cms_profile_id": {}
       },
       "filters": {
@@ -3307,6 +3314,17 @@
           ]
         },
         "magazin_abo_number": {
+          "type": "integer",
+          "operators": [
+            "eq",
+            "not_eq",
+            "gt",
+            "gte",
+            "lt",
+            "lte"
+          ]
+        },
+        "member_number": {
           "type": "integer",
           "operators": [
             "eq",
