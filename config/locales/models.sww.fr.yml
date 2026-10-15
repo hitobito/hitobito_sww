@@ -132,15 +132,6 @@ fr:
     attributes:
       additional_address:
         address_care_of: Ligne d’adresse supplémentaire 1
-      contact_account:
-        predefined_labels:
-          andere: Autre
-          arbeit: Professionnel
-          facebook: Facebook
-          instagram: Instagram
-          mobil: Mobile
-          privat: Privé
-          webseite: Site web
       event/guest:
         address_care_of: Ligne d’adresse supplémentaire 1
         company_name: Nom de l'organisation
@@ -178,7 +169,6 @@ fr:
         custom_salutation: Formule d'appel personnalisée
         magazin_abo_number: 'Numéro d''abonnement au magazine'
         member_number: Numéro de membre
-        manual_member_number: Numéro de membre
         name_add_on: Complément de nom
         title: Titre
         email: E-mail
@@ -195,6 +185,14 @@ fr:
 
 
 
+
+
+    errors:
+      models:
+        group/mitglieder:
+          attributes:
+            droptours_export:
+              upload_config_missing: "kann nicht aktiviert werden, da für die Fachorganisation \"%{fachorganisation}\" keine SFTP-Konfiguration für den Droptours Export hinterlegt ist"
 
   activemodel:
     attributes:

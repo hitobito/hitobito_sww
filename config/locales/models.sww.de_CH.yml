@@ -124,15 +124,6 @@ de_CH:
     attributes:
       additional_address:
         address_care_of: Adressinformation 1
-      contact_account:
-        predefined_labels:
-          andere: Andere
-          arbeit: Geschäftlich
-          facebook: Facebook
-          instagram: Instagram
-          mobil: Mobil
-          privat: Privat
-          webseite: Webseite
       event/guest:
         address_care_of: Adressinformation 1
         company_name: Name der Organisation
@@ -170,7 +161,6 @@ de_CH:
         custom_salutation: Benutzerdefinierte Anrede
         magazin_abo_number: 'Abo # Magazin'
         member_number: Mitgliedernummer
-        manual_member_number: Mitgliedernummer
         name_add_on: Namenszusatz
         title: Titel
         email: E-Mail
@@ -187,6 +177,14 @@ de_CH:
 
 
 
+
+
+    errors:
+      models:
+        group/mitglieder:
+          attributes:
+            droptours_export:
+              upload_config_missing: "kann nicht aktiviert werden, da für die Fachorganisation \"%{fachorganisation}\" keine SFTP-Konfiguration für den Droptours Export hinterlegt ist"
 
   activemodel:
     attributes:

@@ -132,15 +132,6 @@ it:
     attributes:
       additional_address:
         address_care_of: Riga aggiuntiva dell'indirizzo 1
-      contact_account:
-        predefined_labels:
-          andere: Altro
-          arbeit: Lavoro
-          facebook: Facebook
-          instagram: Instagram
-          mobil: Cellulare
-          privat: Privato
-          webseite: Sito web
       event/guest:
         address_care_of: Riga aggiuntiva dell'indirizzo 1
         company_name: Nome dell'organizzazione
@@ -178,7 +169,6 @@ it:
         custom_salutation: Saluto personalizzato
         magazin_abo_number: 'Abo # Rivista'
         member_number: Numero socio
-        manual_member_number: Numero socio
         name_add_on: Suffisso del nome
         title: Titolo
         email: E-mail
@@ -195,6 +185,14 @@ it:
 
 
 
+
+
+    errors:
+      models:
+        group/mitglieder:
+          attributes:
+            droptours_export:
+              upload_config_missing: "kann nicht aktiviert werden, da für die Fachorganisation \"%{fachorganisation}\" keine SFTP-Konfiguration für den Droptours Export hinterlegt ist"
 
   activemodel:
     attributes:
