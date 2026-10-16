@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2012-2025, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2012-2026, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -82,9 +82,9 @@ module Sww::Export::Pdf::Invoice::Articles
   end
 
   def render_due_at
-    return if invoice.due_at.blank?
+    return if displayed_due_at.blank?
 
     pdf.move_up 15
-    text I18n.t("invoices.pdf.due_at") + ":      #{I18n.l(invoice.due_at)}"
+    text I18n.t("invoices.pdf.due_at") + ":      #{I18n.l(displayed_due_at)}"
   end
 end
