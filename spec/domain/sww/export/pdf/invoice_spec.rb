@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2012-2025, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2012-2026, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -570,7 +570,7 @@ describe Export::Pdf::Invoice do
           [506, 451, "2.00 CHF"],
           [400, 433, "Gesamtbetrag"],
           [501, 433, "22.00 CHF"],
-          [57, 434, "Fällig bis:      #{I18n.l(10.days.from_now.to_date)}"],
+          [57, 434, "Fällig bis:      #{I18n.l(5.days.from_now.to_date)}"],
           [14, 275, "Empfangsschein"],
           [14, 251, "Konto / Zahlbar an"],
           [14, 242, "CH93 0076 2011 6238 5295 7"],
