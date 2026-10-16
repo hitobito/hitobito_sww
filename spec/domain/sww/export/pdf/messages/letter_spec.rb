@@ -39,7 +39,7 @@ describe Export::Pdf::Messages::Letter do
       it "renders membership card onto the letter" do
         expect(text_with_position).to include(
           [346, 721, "Mitgliederausweis"],
-          [346, 710, recipient.id.to_s],
+          [346, 710, recipient.member_number.to_s],
           [346, 699, "Alice Bar"],
           [511, 721, "Gültig bis"],
           [517, 710, "12.2042"]
@@ -88,7 +88,7 @@ describe Export::Pdf::Messages::Letter do
       it "renders membership card onto the letter" do
         expect(text_with_position).to include(
           [57, 721, "Mitgliederausweis"],
-          [57, 710, recipient.id.to_s],
+          [57, 710, recipient.member_number.to_s],
           [57, 699, "Alice Bar"],
           [222, 721, "Gültig bis"],
           [227, 710, "12.2042"]
@@ -141,7 +141,7 @@ describe Export::Pdf::Messages::Letter do
       it "renders membership card onto the letter" do
         expect(text_with_position).to include(
           [283, 693, "Mitgliederausweis"],
-          [283, 681, recipient.id.to_s],
+          [283, 681, recipient.member_number.to_s],
           [283, 670, "Alice Bar"],
           [449, 693, "Gültig bis"],
           [454, 681, "12.2042"]
@@ -190,7 +190,7 @@ describe Export::Pdf::Messages::Letter do
 
         expect(text_with_position).to include(
           [346, 721, "Mitgliederausweis"],
-          [346, 710, recipient.id.to_s],
+          [346, 710, recipient.member_number.to_s],
           [346, 699, "Michelangelo Greiner-Petter-Memm"],
           [511, 721, "Gültig bis"]
         )
@@ -204,7 +204,7 @@ describe Export::Pdf::Messages::Letter do
 
         expect(text_with_position).to include(
           [346, 721, "Mitgliederausweis"],
-          [346, 710, recipient.id.to_s],
+          [346, 710, recipient.member_number.to_s],
           [346, 700, "Captain Fantastic Faster Than Superman Spiderman"],
           [346, 691, "Batman Wolverine Hulk And The Flash Combined"],
           [511, 721, "Gültig bis"]

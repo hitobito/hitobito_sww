@@ -18,6 +18,21 @@ describe Person do
     end
   end
 
+  describe "#member_number" do
+    let(:person) { people(:berner_wanderer) }
+
+    it "is assigned from the sequence on create" do
+      new_person = Person.create!(first_name: "Test", last_name: "Person")
+
+      expect(new_person.reload.member_number).to be > person.member_number
+    end
+
+    it "is readonly" do
+      expect { person.update!(member_number: 42) }
+        .not_to change { person.reload.member_number }
+    end
+  end
+
   describe "#sww_salutation" do
     let(:person) { people(:berner_wanderer) }
 

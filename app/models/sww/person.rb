@@ -17,11 +17,9 @@ module Sww::Person
       :custom_salutation, :name_add_on]
     Person::INTERNAL_ATTRS.push(*add_internal_attrs)
 
-    Person::SEARCHABLE_ATTRS << :magazin_abo_number
+    Person::SEARCHABLE_ATTRS << :magazin_abo_number << :member_number
 
-    alias_attribute :member_number, :id
-
-    attr_readonly :alabus_id
+    attr_readonly :alabus_id, :member_number
 
     validates :sww_cms_profile_id,
       uniqueness: true,

@@ -36,6 +36,7 @@ RSpec.describe PersonResource, type: :resource do
       [
         :title,
         :magazin_abo_number,
+        :member_number,
         :sww_cms_profile_id
       ]
     end
