@@ -10,8 +10,8 @@ require "spec_helper"
 describe "people/_actions_show.html.haml" do
   before do
     allow(view).to receive(:can?).and_return(false)
-    allow(view).to receive(:current_user).and_return(person)
-    allow(view).to receive(:current_person).and_return(person)
+    allow(view).to receive(:current_user).and_return(user)
+    allow(view).to receive(:current_person).and_return(user)
 
     # Set proper controller context for translation lookup
     controller.class_eval do
@@ -30,6 +30,7 @@ describe "people/_actions_show.html.haml" do
   end
 
   let(:person) { people(:berner_wanderer) }
+  let(:user) { people(:zuercher_leiter) }
   let(:group) { groups(:berner_mitglieder) }
 
   subject do
@@ -41,7 +42,7 @@ describe "people/_actions_show.html.haml" do
     context "when user can edit person" do
       before do
         allow(view).to receive(:can?).with(:edit, person.decorate).and_return(true)
-        allow(person).to receive(:basic_permissions_only?).and_return(false)
+        allow(user).to receive(:basic_permissions_only?).and_return(false)
       end
 
       it "is shown" do
@@ -57,7 +58,7 @@ describe "people/_actions_show.html.haml" do
     context "when user cannot edit person" do
       before do
         allow(view).to receive(:can?).with(:edit, person.decorate).and_return(false)
-        allow(person).to receive(:basic_permissions_only?).and_return(false)
+        allow(user).to receive(:basic_permissions_only?).and_return(false)
       end
 
       it "is not shown" do
@@ -68,7 +69,20 @@ describe "people/_actions_show.html.haml" do
     context "when user has basic_permissions_only" do
       before do
         allow(view).to receive(:can?).with(:edit, person.decorate).and_return(true)
-        allow(person).to receive(:basic_permissions_only?).and_return(true)
+        allow(user).to receive(:basic_permissions_only?).and_return(true)
+      end
+
+      it "is not shown" do
+        is_expected.not_to have_link("Aufteilen")
+      end
+    end
+
+    context "when user views her own profile" do
+      let(:user) { person }
+
+      before do
+        allow(view).to receive(:can?).with(:edit, person.decorate).and_return(true)
+        allow(user).to receive(:basic_permissions_only?).and_return(false)
       end
 
       it "is not shown" do
