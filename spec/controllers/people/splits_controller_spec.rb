@@ -52,6 +52,28 @@ describe People::SplitsController do
     end
   end
 
+  context "as authorized user splitting herself" do
+    let(:user) { user_with_permission }
+    let(:person) { user_with_permission }
+    let(:group) { groups(:berner_geschaeftsstelle) }
+
+    it "GET #new raises CanCan::AccessDenied" do
+      expect do
+        get :new, params: {group_id: group.id, person_id: person.id}
+      end.to raise_error(CanCan::AccessDenied)
+    end
+
+    it "POST #create raises CanCan::AccessDenied" do
+      expect do
+        post :create, params: {
+          group_id: group.id,
+          person_id: person.id,
+          people_split_form: {person_1_attributes: {email: "new@example.com"}}
+        }
+      end.to raise_error(CanCan::AccessDenied)
+    end
+  end
+
   describe "POST #create" do
     let(:user) { person }
     let(:param) do
@@ -144,7 +166,7 @@ describe People::SplitsController do
   end
 
   describe "GET #role_types JS" do
-    let(:user) { person }
+    let(:user) { user_with_permission }
     let(:params) do
       {
         group_id: group.id,

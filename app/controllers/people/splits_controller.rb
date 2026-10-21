@@ -53,7 +53,10 @@ module People
 
     def assign_attributes = entry.assign_attributes(split_form_params)
 
-    def authorize_action = authorize!(:update, person)
+    def authorize_action
+      authorize!(:update, person)
+      raise CanCan::AccessDenied if person == current_user
+    end
 
     def split_form_params
       params.require(:people_split_form).permit(
