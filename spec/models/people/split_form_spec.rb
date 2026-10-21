@@ -15,7 +15,9 @@ describe People::SplitForm do
       last_name: "Tester",
       email: "tom.tina@example.com",
       gender: "m",
-      birthday: Date.new(1980, 1, 1))
+      birthday: Date.new(1980, 1, 1)).tap do |person|
+      Fabricate(Group::Mitglieder::Aktivmitglied.sti_name, group:, person:)
+    end
   end
   let(:split_form) { described_class.new(group: group, original_person: original_person) }
 
@@ -222,6 +224,46 @@ describe People::SplitForm do
 
       expect(split_form.person_2_role).to be_a(Role)
     end
+
+    it "defaults to baseclass Role when type does not belong to the group" do
+      split_form.person_2_role_attributes = {
+        type: Group::SchweizerWanderwege::Support.sti_name,
+        group_id: group.id
+      }
+
+      expect(split_form.person_2_role.class).to eq(Role)
+    end
+
+    it "does not instantiate arbitrary classes" do
+      split_form.person_2_role_attributes = {
+        type: "Person",
+        group_id: group.id
+      }
+
+      expect(split_form.person_2_role.class).to eq(Role)
+    end
+  end
+
+  describe "person_2_role group validation" do
+    before { split_form.person_2_attributes = {first_name: "Tina"} }
+
+    it "is valid for a group in the layer of the original person's roles" do
+      split_form.person_2_role_attributes = {
+        type: Group::Mitglieder::Aktivmitglied.sti_name,
+        group_id: group.id
+      }
+
+      expect(split_form).to be_valid
+    end
+
+    it "is invalid for a group outside the layer of the original person's roles" do
+      split_form.person_2_role_attributes = {
+        type: Group::Mitglieder::Aktivmitglied.sti_name,
+        group_id: groups(:zuercher_mitglieder).id
+      }
+
+      expect(split_form).not_to be_valid
+    end
   end
 
   describe "#save" do
@@ -399,11 +441,6 @@ describe People::SplitForm do
   end
 
   describe "#role_group_options" do
-    before do
-      Fabricate(Group::Mitglieder::Aktivmitglied.sti_name.to_sym,
-        group:, person: original_person)
-    end
-
     it "returns groups in the same layer as original person's roles" do
       options = split_form.role_group_options
       expect(options).to be_present

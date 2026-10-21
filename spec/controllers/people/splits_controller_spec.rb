@@ -74,8 +74,58 @@ describe People::SplitsController do
       end
     end
 
+    context "as person splitting herself without permission to create the role" do
+      let(:user) { person }
+      let(:param) do
+        {
+          group_id: group.id,
+          person_id: person.id,
+          people_split_form: {
+            person_2_attributes: {first_name: "Eve", email: "eve@example.com"},
+            person_2_role_attributes: {
+              group_id: groups(:schweizer_wanderwege).id,
+              type: Group::SchweizerWanderwege::Support.sti_name
+            }
+          }
+        }
+      end
+
+      it "raises CanCan::AccessDenied and creates nothing" do
+        expect do
+          post :create, params: param
+        end.to raise_error(CanCan::AccessDenied)
+          .and not_change { Person.count }
+          .and not_change { Role.count }
+      end
+    end
+
     context "as authorized user" do
       let(:user) { user_with_permission }
+
+      it "creates the role of person 2" do
+        post :create, params: param.deep_merge(people_split_form: {
+          person_2_attributes: {first_name: "Tina"},
+          person_2_role_attributes: {
+            group_id: groups(:berner_mitglieder).id,
+            type: Group::Mitglieder::Aktivmitglied.sti_name
+          }
+        })
+
+        expect(response).to redirect_to(group_person_path(group, person))
+        expect(Person.find_by(first_name: "Tina").roles.map(&:type))
+          .to eq [Group::Mitglieder::Aktivmitglied.sti_name]
+      end
+
+      it "raises CanCan::AccessDenied for a role it may not create" do
+        expect do
+          post :create, params: param.deep_merge(people_split_form: {
+            person_2_role_attributes: {
+              group_id: groups(:schweizer_wanderwege).id,
+              type: Group::SchweizerWanderwege::Support.sti_name
+            }
+          })
+        end.to raise_error(CanCan::AccessDenied)
+      end
 
       it "when valid saves the split and redirects to person page with success notice" do
         expect_any_instance_of(People::SplitForm).to receive(:save).and_return(true)
