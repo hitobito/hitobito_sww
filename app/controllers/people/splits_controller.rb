@@ -18,6 +18,7 @@ module People
 
     def create
       assign_attributes
+      authorize!(:create, entry.person_2_role)
 
       if @split.save
         redirect_to group_person_path(group, person), notice: t(".success")

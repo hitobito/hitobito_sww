@@ -50,8 +50,8 @@ module People
     end
 
     def person_2_role_attributes=(attrs)
-      role_type = attrs.delete(:type).presence || Role.name
-      @person_2_role = role_type.constantize.new(attrs.merge(person: person_2))
+      role_type = find_role_type(attrs.delete(:type), Group.find_by(id: attrs[:group_id]))
+      @person_2_role = role_type.new(attrs.merge(person: person_2))
     end
 
     def save
@@ -106,8 +106,16 @@ module People
       end
     end
 
+    def find_role_type(sti_name, group)
+      group&.role_types&.find { _1.sti_name == sti_name } || Role
+    end
+
     def validate_person_2_role
-      add_errors(1, person_2_role.errors) if person_2_role.invalid?
+      person_2_role.validate
+      unless role_group_options.exists?(id: person_2_role.group_id)
+        person_2_role.errors.add(:group_id, :inclusion)
+      end
+      add_errors(1, person_2_role.errors) if person_2_role.errors.any?
     end
 
     def add_errors(person_index, person_errors)
