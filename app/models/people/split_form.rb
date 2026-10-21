@@ -30,23 +30,12 @@ module People
     def person_1_attributes=(attrs)
       original_email = person_1.email
       person_1.assign_attributes(attrs)
-
-      return if person_1.email.present? || original_email.blank?
-
-      person_1.additional_emails.build(
-        email: original_email,
-        category: ContactAccountCategory.for("AdditionalEmail", "Person").other.first
-      )
+      add_additional_email(person_1, original_email) if person_1.email.blank?
     end
 
     def person_2_attributes=(attrs)
       person_2.assign_attributes(attrs)
-      return unless person_1.email.present? && person_2.email.blank?
-
-      person_2.additional_emails.build(
-        email: person_1.email,
-        category: ContactAccountCategory.for("AdditionalEmail", "Person").other.first
-      )
+      add_additional_email(person_2, person_1.email) if person_2.email.blank?
     end
 
     def person_2_role_attributes=(attrs)
@@ -98,6 +87,15 @@ module People
         last_name: original_person.last_name
       )
       @person_2_role = Role.new(person: @person_2, group: original_person.primary_group || group)
+    end
+
+    def add_additional_email(person, email)
+      return if email.blank?
+
+      person.additional_emails.build(
+        email:,
+        category: ContactAccountCategory.for("AdditionalEmail", "Person").other.first
+      )
     end
 
     def validate_people

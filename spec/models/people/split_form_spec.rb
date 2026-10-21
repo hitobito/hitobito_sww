@@ -30,27 +30,16 @@ describe People::SplitForm do
       expect(split_form.original_person).to eq(original_person)
     end
 
-    it "initializes person_1 clone from original_person with proposed first name" do
-      allow_any_instance_of(described_class)
-        .to receive(:proposed_first_names)
-        .and_return(["Proposed 1", "Proposed 2"])
-
-      expect(person_1).to be_a(Person)
-      expect(person_1.first_name).to eq("Proposed 1")
+    it "initializes person_1 as original_person with first proposed first name" do
+      expect(person_1).to eq(original_person)
+      expect(person_1.first_name).to eq("Tom")
       expect(person_1.last_name).to eq("Tester")
       expect(person_1.email).to eq("tom.tina@example.com")
-
-      expect(person_1).to eq(split_form.original_person)
-      expect(person_1.object_id).not_to eq(split_form.original_person.object_id)
     end
 
-    it "initializes person_2 with proposed first name and original last name" do
-      allow_any_instance_of(described_class)
-        .to receive(:proposed_first_names)
-        .and_return(["Proposed 1", "Proposed 2"])
-
+    it "initializes person_2 with second proposed first name and original last name" do
       expect(person_2).to be_a(Person)
-      expect(person_2.first_name).to eq("Proposed 2")
+      expect(person_2.first_name).to eq("Tina")
       expect(person_2.last_name).to eq("Tester")
 
       expect(person_2).not_to eq(split_form.original_person)

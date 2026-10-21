@@ -3,22 +3,28 @@
 -#  or later. See the COPYING file at the top-level directory or at
 -#  https://github.com/hitobito/hitobito_sww
 
-- title t(".title", name: original_person.person_name)
+- title t(".title", name: person.person_name)
 
-= standard_form(entry, url: group_person_split_path(person_id: original_person.id, method: :post), html: {class: "form-striped"}) do |f|
-  = render "shared/info_messages", messages: 1.upto(3).map { t(".info_#{_1}_html", email: original_person.email) }
+= standard_form(entry, url: group_person_split_path(person_id: person.id, method: :post), html: {class: "form-striped"}) do |f|
+  = render "shared/info_messages", messages: 1.upto(3).map { t(".info_#{_1}_html", email: person.email) }
   = render "shared/error_messages", errors: entry.errors
 
   %fieldset
-    = split_form_header_row
+    .row.mb-2
+      .col-2
+      - %i[person_1 person_2].each do |key|
+        .col-5
+          %strong= captionize(key, People::SplitForm)
     - %i[first_name last_name].each do |attr|
-      = split_form_attr_row(f, attr)
-    = split_form_attr_row(f, :email) do |fields|
+      = render layout: 'attr_row', locals: { f:, attr: } do |fields|
+        = fields.input_field(attr)
+    = render layout: 'attr_row', locals: { f:, attr: :email } do |fields|
       = fields.input_field(:email) + fields.help_inline(t('people.email_field.used_as_login'))
-    = split_form_attr_row(f, :gender) do |fields|
+    = render layout: 'attr_row', locals: { f:, attr: :gender } do |fields|
       - (Person::GENDERS + ['']).each do |key|
-        = fields.inline_radio_button(:gender, key, original_person.gender_label(key), false)
-    = split_form_attr_row(f, :birthday)
+        = fields.inline_radio_button(:gender, key, person.gender_label(key), false)
+    = render layout: 'attr_row', locals: { f:, attr: :birthday } do |fields|
+      = fields.input_field(:birthday)
 
   %fieldset
     %legend= t('.history_title')
@@ -28,4 +34,4 @@
     %legend= t('.new_role_title')
     = render 'new_role_form', f:
 
-  = form_buttons(f, submit_label: t(".split"), cancel_url: group_person_path(group, original_person))
+  = form_buttons(f, submit_label: t(".split"), cancel_url: group_person_path(group, person))

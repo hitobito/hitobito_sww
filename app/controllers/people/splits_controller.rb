@@ -11,15 +11,13 @@ module People
     before_action :assign_attributes, only: [:create, :role_types]
     before_action :role
     before_action :all_roles, only: [:new, :create]
-    helper_method :entry, :original_person, :group
-
-    delegate :original_person, to: :entry
+    helper_method :entry, :person, :group
 
     def new
     end
 
     def create
-      if @split.save
+      if entry.save
         redirect_to group_person_path(group, person), notice: t(".success")
       else
         render :new, status: 422
@@ -31,8 +29,8 @@ module People
 
     private
 
-    def split
-      @split ||= People::SplitForm.new(group:, original_person: person)
+    def entry
+      @entry ||= People::SplitForm.new(group:, original_person: person)
     end
 
     def person
@@ -50,8 +48,6 @@ module People
     def all_roles
       @all_roles = person.roles.with_inactive
     end
-
-    def entry = split
 
     def assign_attributes = entry.assign_attributes(split_form_params)
 
