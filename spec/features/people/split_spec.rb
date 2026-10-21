@@ -48,6 +48,19 @@ describe "people split", js: true do
     expect(page).to have_selector(".alert-danger", text: "Person 2: Rolle muss ausgefüllt werden")
   end
 
+  it "keeps entered role dates and role history when form is submitted with invalid data",
+    :aggregate_failures do
+    visit split_path
+
+    fill_in "people_split_form_person_2_role_attributes_start_on", with: "01.02.2026"
+    click_on "Aufteilen"
+
+    expect(page).to have_selector(".alert-danger")
+    expect(page).to have_field("people_split_form_person_2_role_attributes_start_on",
+      with: "01.02.2026")
+    expect(page).to have_css("table td", text: "Aktivmitglied")
+  end
+
   it "successfully splits the person and redirects with a flash message" do
     visit split_path
 
