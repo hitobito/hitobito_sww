@@ -7,6 +7,8 @@
 
 module People
   class SplitsController < ApplicationController
+    PERSON_ATTRS = [:first_name, :last_name, :email, :gender, :birthday].freeze
+
     before_action :authorize_action, :role
     helper_method :entry, :original_person, :group
 
@@ -60,10 +62,14 @@ module People
 
     def split_form_params
       params.require(:people_split_form).permit(
-        person_1_attributes: [:first_name, :last_name, :email, :gender, :birthday],
-        person_2_attributes: [:first_name, :last_name, :email, :gender, :birthday],
+        person_1_attributes: person_1_attrs,
+        person_2_attributes: PERSON_ATTRS,
         person_2_role_attributes: [:group_id, :label, :start_on, :end_on, :type]
       )
+    end
+
+    def person_1_attrs
+      can?(:update_email, person) ? PERSON_ATTRS : PERSON_ATTRS - [:email]
     end
   end
 end

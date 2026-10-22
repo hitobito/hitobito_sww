@@ -14,7 +14,11 @@
     - %i[first_name last_name].each do |attr|
       = split_form_attr_row(f, attr)
     = split_form_attr_row(f, :email) do |fields|
-      = fields.input_field(:email) + fields.help_inline(t('people.email_field.used_as_login'))
+      - if can?(:update_email, fields.object)
+        = fields.input_field(:email) + fields.help_inline(t('people.email_field.used_as_login'))
+      - else
+        %p.inline= fields.object.email
+        = fields.help_block(t('people.email_field.only_changeable_by_superior'))
     = split_form_attr_row(f, :gender) do |fields|
       - (Person::GENDERS + ['']).each do |key|
         = fields.inline_radio_button(:gender, key, original_person.gender_label(key), false)
