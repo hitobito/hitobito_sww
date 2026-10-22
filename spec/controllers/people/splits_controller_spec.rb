@@ -162,6 +162,56 @@ describe People::SplitsController do
         expect(response).to have_http_status(:unprocessable_content)
         expect(response).to render_template(:new)
       end
+
+      it "assigns the email of person 1" do
+        post :create, params: param.deep_merge(people_split_form: {
+          person_1_attributes: {email: "new@example.com"}
+        })
+
+        expect(assigns(:split).person_1.email).to eq "new@example.com"
+      end
+    end
+
+    context "as authorized user without permission to update the email" do
+      let(:user) { user_with_permission }
+
+      before do
+        Fabricate(Group::Geschaeftsstelle::Leserechte.sti_name,
+          group: groups(:zuercher_geschaeftsstelle), person:)
+      end
+
+      it "ignores the email of person 1" do
+        post :create, params: param.deep_merge(people_split_form: {
+          person_1_attributes: {email: "new@example.com"},
+          person_2_role_attributes: {group_id: groups(:berner_mitglieder).id}
+        })
+
+        expect(assigns(:split).person_1.email).to eq person.email
+      end
+    end
+  end
+
+  describe "GET #new email of person 1" do
+    render_views
+
+    let(:user) { user_with_permission }
+    let(:dom) { Capybara::Node::Simple.new(response.body) }
+
+    it "is editable with permission to update the email" do
+      get :new, params: {group_id: group.id, person_id: person.id}
+
+      expect(dom).to have_field("people_split_form[person_1_attributes][email]")
+    end
+
+    it "is shown as text without permission to update the email" do
+      Fabricate(Group::Geschaeftsstelle::Leserechte.sti_name,
+        group: groups(:zuercher_geschaeftsstelle), person:)
+
+      get :new, params: {group_id: group.id, person_id: person.id}
+
+      expect(dom).not_to have_field("people_split_form[person_1_attributes][email]")
+      expect(dom).to have_field("people_split_form[person_2_attributes][email]")
+      expect(dom).to have_css("p.inline", text: person.email)
     end
   end
 
