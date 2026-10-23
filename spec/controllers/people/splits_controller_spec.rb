@@ -45,9 +45,9 @@ describe People::SplitsController do
 
       it "assigns split form instance variables" do
         get :new, params: {group_id: group.id, person_id: person.id}
-        expect(assigns(:split)).to be_a(People::SplitForm)
-        expect(assigns(:split).original_person).to eq(person)
-        expect(assigns(:split).group).to eq(group)
+        expect(assigns(:entry)).to be_a(People::SplitForm)
+        expect(assigns(:entry).original_person).to eq(person)
+        expect(assigns(:entry).group).to eq(group)
       end
     end
   end
@@ -122,7 +122,7 @@ describe People::SplitsController do
       it "assigns attributes to the split form" do
         post :role_types, xhr: true, params: params, format: :js
 
-        split = assigns(:split)
+        split = assigns(:entry)
         expect(split).to be_a(People::SplitForm)
         expect(split.person_2_role.type).to eq("Group::GremiumProjektgruppe::Leitung")
         expect(split.person_2_role.group_id).to eq(groups(:berner_gremium).id)
