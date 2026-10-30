@@ -17,7 +17,7 @@ it:
     messages:
       letter:
         fields_sww:
-          membership_card_caption: Mitgliederausweis mit drucken
+          membership_card_caption: Stampa la carta socio
 
   devise:
     confirmation_instructions:
@@ -72,40 +72,40 @@ it:
         share: Quota
         times_count: "%{count}x"
       people:
-        date: Stichtag
-        group: Gruppe
-        include_subgroups: Untergruppen einbeziehen
-        persons_count: "%{count} Personen"
-        including_subgroups: "(inkl. Untergruppen)"
-        overview: Übersicht
-        total_count: Total Personen
-        magazine_subscribers_count: Magazin-Abonnenten
-        magazine_subscribers_hint: "Da Abonnemente über Tags ohne Verlauf abgebildet werden, wird diese Zahl immer per heute berechnet."
-        language_title: Sprache
-        language: Sprache
-        gender_title: Geschlecht
-        gender: Geschlecht
-        count: Anzahl
-        share: Anteil
-        age_structure_title: Altersstruktur
-        age_range: Alter
+        date: Data di riferimento
+        group: Gruppo
+        include_subgroups: Includere i sottogruppi
+        persons_count: "%{count} persone"
+        including_subgroups: "(compresi i sottogruppi)"
+        overview: Panoramica
+        total_count: Totale persone
+        magazine_subscribers_count: Abbonato alla rivista
+        magazine_subscribers_hint: "Poiché gli abbonamenti vengono visualizzati in base ai giorni senza data di scadenza, questo numero viene sempre calcolato alla data odierna."
+        language_title: Lingua
+        language: Lingua
+        gender_title: Sesso
+        gender: Sesso
+        count: Numero
+        share: Numero
+        age_structure_title: Distribuzione per età
+        age_range: Età
       memberships:
-        title: Ein- und Austritte
-        from: Von
-        to: Bis
-        period: "Zeitraum: %{from} - %{to}"
-        summary_title: Zusammenfassung
-        total_entries: "Total Eintritte"
-        total_exits: "Total Austritte"
-        net_change: "Netto-Veränderung"
-        total_count: "Anzahl Rollen per %{date}"
-        role_type: Rollentyp
-        entries: Eintritte
-        exits: Austritte
+        title: Entrate e uscite
+        from: Da
+        to: A
+        period: "Periodo: %{from} - %{to}"
+        summary_title: Riepilogo
+        total_entries: "Totale entrate"
+        total_exits: "Totale uscite"
+        net_change: "Variazione netta"
+        total_count: "Numero di ruoli al %{date}"
+        role_type: Tipo di ruolo
+        entries: Entrate
+        exits: Uscite
         net: Netto
-        count: Anzahl
-        total: Total
-        layer_only_suffix: "(nur Hauptgruppe ohne Untergruppen)"
+        count: Numero
+        total: Totale
+        layer_only_suffix: "(solo gruppo principale senza sottogruppi)"
 
   groups:
     form_tabs:
