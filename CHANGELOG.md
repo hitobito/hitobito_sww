@@ -1,6 +1,6 @@
 # Hitobito SWW Changelog
 
-## Unreleased
+## Version 2.11
 
 * Die Mitgliedernummer (`member_number`) ist neu ein eigenes, suchbares Datenbankfeld auf der Person, wird automatisch vergeben (hitobito_sww#256)
 
