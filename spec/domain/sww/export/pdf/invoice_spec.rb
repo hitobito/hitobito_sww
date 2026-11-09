@@ -61,7 +61,7 @@ describe Export::Pdf::Invoice do
       [:disabled, :left, :right, :bottom_left].each do |position|
         it "with logo_position=#{position} it does not render logo" do
           invoice.invoice_config.update(logo_position: position)
-          expect(image_positions).to have(1).item # only qr code
+          expect(image_positions).to have(2).items # qr code and swiss cross
         end
       end
     end
@@ -77,7 +77,7 @@ describe Export::Pdf::Invoice do
         let(:logo_position) { :disabled }
 
         it "does not render the logo" do
-          expect(image_positions).to have(1).item # only qr code
+          expect(image_positions).to have(2).items # qr code and swiss cross
         end
       end
 
@@ -85,7 +85,7 @@ describe Export::Pdf::Invoice do
         let(:logo_position) { :left }
 
         it "renders the logo on the left" do
-          expect(image_positions).to have(2).items # logo and qr code
+          expect(image_positions).to have(3).items # logo, qr code and swiss cross
           expect(image_positions.first).to match(
             displayed_height: 18_912.75561,
             displayed_width: 108_763.38,
@@ -101,7 +101,7 @@ describe Export::Pdf::Invoice do
         let(:logo_position) { :right }
 
         it "renders the logo on the right" do
-          expect(image_positions).to have(2).items # logo and qr code
+          expect(image_positions).to have(3).items # logo, qr code and swiss cross
           expect(image_positions.first).to match(
             displayed_height: 18_912.75561,
             displayed_width: 108_763.38,
@@ -121,7 +121,7 @@ describe Export::Pdf::Invoice do
         let(:logo_position) { :bottom_left }
 
         it "renders the logo above the payment slip" do
-          expect(image_positions).to have(2).items
+          expect(image_positions).to have(3).items # logo, qr code and swiss cross
           expect(image_positions.first).to match(
             displayed_height: 18_912.75561,
             displayed_width: 108_763.38,
@@ -206,12 +206,12 @@ describe Export::Pdf::Invoice do
 
       it "with logo_position=disabled it does not render logo" do
         invoice.invoice_config.update(logo_position: :disabled)
-        expect(image_positions).to have(1).item # only qr code
+        expect(image_positions).to have(2).items # qr code and swiss cross
       end
 
       it "with logo_position=left it renders logo on the left" do
         invoice.invoice_config.update(logo_position: :left)
-        expect(image_positions).to have(2).items # logo and qr code
+        expect(image_positions).to have(3).items # logo, qr code and swiss cross
         expect(image_positions.first).to match(
           displayed_height: 18_912.75561,
           displayed_width: 108_763.38,
@@ -224,7 +224,7 @@ describe Export::Pdf::Invoice do
 
       it "with logo_position=right it renders logo on the right" do
         invoice.invoice_config.update(logo_position: :right)
-        expect(image_positions).to have(2).items # logo and qr code
+        expect(image_positions).to have(3).items # logo, qr code and swiss cross
         expect(image_positions.first).to match(
           displayed_height: 18_912.75561,
           displayed_width: 108_763.38,
@@ -237,7 +237,7 @@ describe Export::Pdf::Invoice do
 
       it "with logo_position=bottom_left it renders logo above the payment slip" do
         invoice.invoice_config.update(logo_position: :bottom_left)
-        expect(image_positions).to have(2).items # logo and qr code
+        expect(image_positions).to have(3).items # logo, qr code and swiss cross
         expect(image_positions.first).to match(
           displayed_height: 18_912.75561,
           displayed_width: 108_763.38,
