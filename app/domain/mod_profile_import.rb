@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2012-2025, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2012-2026, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -54,7 +54,7 @@ module ModProfileImport
       @person ||= ::Person.find_or_initialize_by(email:).tap do |person|
         person.skip_confirmation_notification!
         person.attributes = to_h.except(:phone)
-        person.phone_numbers.build(label: "Privat", number: phone) if phone
+        person.phone_numbers.build(category: landline_category, number: phone) if phone
         person.roles.find_or_initialize_by(group_id: group_id,
           type: Group::Benutzerkonten::Benutzerkonto.sti_name).tap do |role|
           role.created_at = role_activation_date
@@ -85,6 +85,10 @@ values].join(",") : sww_cms_profile_id})", (full_error_messages if details)
         [target, conversion ? conversion.call(value) : value]
       end.to_h.compact_blank
     end
+
+    def landline_category = @@landline_category ||= ContactAccountCategory
+      .find_by!(contact_account_type: PhoneNumber.sti_name, contactable_type: Person.sti_name,
+        key: "landline")
 
     # rubocop:todo Layout/LineLength
     def group_id = @@group_id ||= Group.root.children.find_by(type: Group::Benutzerkonten.sti_name).id
