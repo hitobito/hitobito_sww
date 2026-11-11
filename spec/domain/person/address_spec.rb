@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2012-2025, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2012-2026, Schweizer Wanderwege. This file is part of
 #  hitobito_sww and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww.
@@ -55,7 +55,7 @@ describe Person::Address do
     it "renders full address" do
       person.gender = :w
 
-      expect(text).to eq <<~TEXT
+      expect(text).to eq <<~TEXT.chomp
         Frau
         Jane Doe
         Office
@@ -70,7 +70,7 @@ describe Person::Address do
     it "prints company and person name" do
       person.company = true
       person.company_name = "Company LTD"
-      expect(text).to eq <<~TEXT
+      expect(text).to eq <<~TEXT.chomp
         Company LTD
         Jane Doe
         Office
@@ -90,7 +90,7 @@ describe Person::Address do
     it "prints name only once if they are identical" do
       person.company = true
       person.company_name = "Jane Doe"
-      expect(text).to eq <<~TEXT
+      expect(text).to eq <<~TEXT.chomp
         Jane Doe
         Office
         Lagistrasse 12a
@@ -102,7 +102,7 @@ describe Person::Address do
     it "prints name only once if they are identical" do
       person.company = true
       person.company_name = "Jane Doe"
-      expect(text).to eq <<~TEXT
+      expect(text).to eq <<~TEXT.chomp
         Jane Doe
         Office
         Lagistrasse 12a
