@@ -10,8 +10,7 @@ class MoveAddressCareOfToAddressAddition < ActiveRecord::Migration[8.0]
     people: %w[address_care_of address_addition],
     groups: %w[address_care_of address_addition],
     additional_addresses: %w[address_care_of address_addition],
-    event_guests: %w[address_care_of address_addition],
-    invoices: %w[recipient_address_care_of recipient_address_addition]
+    event_guests: %w[address_care_of address_addition]
   }.freeze
 
   CARE_OF_PREFIX = '^\s*(c\s*/\s*o|c\.\s*o\.|p\.\s*a\.|bei\s|chez\s|presso\s|z\.?\s*hd|z\.\s*h\.|' \
