@@ -74,11 +74,11 @@ fr:
       group/vorstand/vorstandsmitglied:
         one: Membre du conseil
       group/vorstand/rechnungswesen:
-        one: Rechnungswesen
+        one: Comptabilité
       group/vorstand/leserechte:
-        one: Leserechte
+        one: Droits de lecture
       group/vorstand/schreibrechte:
-        one: Schreibrechte
+        one: Droits d'écriture
 
       group/geschaeftsstelle/geschaeftsfuehrer:
         one: Directeur
@@ -89,11 +89,11 @@ fr:
       group/geschaeftsstelle/mitarbeiter:
         one: Collaborateur
       group/geschaeftsstelle/rechnungswesen:
-        one: Rechnungswesen
+        one: Comptabilité
       group/geschaeftsstelle/leserechte:
-        one: Leserechte
+        one: Droits de lecture
       group/geschaeftsstelle/schreibrechte:
-        one: Schreibrechte
+        one: Droits d'écriture
 
       group/gremium_projektgruppe/leitung:
         one: Direction
@@ -192,7 +192,7 @@ fr:
         group/mitglieder:
           attributes:
             droptours_export:
-              upload_config_missing: "kann nicht aktiviert werden, da für die Fachorganisation \"%{fachorganisation}\" keine SFTP-Konfiguration für den Droptours Export hinterlegt ist"
+              upload_config_missing: "ne peut pas être activée, car aucune configuration SFTP n'est enregistrée pour l'exportation Droptours concernant l'ACTP «%{fachorganisation}»"
 
   activemodel:
     attributes:
@@ -203,10 +203,10 @@ fr:
         from: De
         to: Jusqu'à
       sww/group/statistics/people:
-        date: Stichtag
+        date: Date de référence
       sww/group/statistics/memberships:
-        from: Von
-        to: Bis
+        from: De
+        to: Jusqu'à
     errors:
       models:
         sww/group/statistics/event_participation:
@@ -216,7 +216,7 @@ fr:
         sww/group/statistics/memberships:
           attributes:
             to:
-              date_range_invalid: darf nicht vor dem Von-Datum liegen
+              date_range_invalid: ne doit pas être avant la date de début
 
 
   tags:

@@ -74,11 +74,11 @@ it:
       group/vorstand/vorstandsmitglied:
         one: Membro del comitato
       group/vorstand/rechnungswesen:
-        one: Rechnungswesen
+        one: Contabilità
       group/vorstand/leserechte:
-        one: Leserechte
+        one: Diritti di lettura
       group/vorstand/schreibrechte:
-        one: Schreibrechte
+        one: Diritti di scrittura
 
       group/geschaeftsstelle/geschaeftsfuehrer:
         one: Direttore generale
@@ -89,11 +89,11 @@ it:
       group/geschaeftsstelle/mitarbeiter:
         one: Collaboratori
       group/geschaeftsstelle/rechnungswesen:
-        one: Rechnungswesen
+        one: Contabilità
       group/geschaeftsstelle/leserechte:
-        one: Leserechte
+        one: Diritti di lettura
       group/geschaeftsstelle/schreibrechte:
-        one: Schreibrechte
+        one: Diritti di scrittura
 
       group/gremium_projektgruppe/leitung:
         one: Direzione
@@ -192,7 +192,7 @@ it:
         group/mitglieder:
           attributes:
             droptours_export:
-              upload_config_missing: "kann nicht aktiviert werden, da für die Fachorganisation \"%{fachorganisation}\" keine SFTP-Konfiguration für den Droptours Export hinterlegt ist"
+              upload_config_missing: "Non è possibile attivarlo, poiché per l'organizzazione specialistica “%{fachorganisation}” non è stata configurata alcuna impostazione SFTP per l'esportazione Droptours"
 
   activemodel:
     attributes:
@@ -203,10 +203,10 @@ it:
         from: Da
         to: A
       sww/group/statistics/people:
-        date: Stichtag
+        date: Data di riferimento
       sww/group/statistics/memberships:
-        from: Von
-        to: Bis
+        from: Da
+        to: A
     errors:
       models:
         sww/group/statistics/event_participation:
@@ -216,7 +216,7 @@ it:
         sww/group/statistics/memberships:
           attributes:
             to:
-              date_range_invalid: darf nicht vor dem Von-Datum liegen
+              date_range_invalid: non deve essere anteriore alla data “da”
 
 
   tags:
