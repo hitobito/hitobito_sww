@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+* Die bisherige "Adressinformation 1" wird neu als "c/o-Adresse" geführt. Für weitere Adressangaben gibt es neu das Feld "Adresszusatz", bestehende Werte ohne c/o-Angabe werden dorthin übernommen (hitobito_sww#292)
 * Die Mitgliedernummer (`member_number`) ist neu ein eigenes, suchbares Datenbankfeld auf der Person, wird automatisch vergeben (hitobito_sww#256)
 
 ## Version 2.10

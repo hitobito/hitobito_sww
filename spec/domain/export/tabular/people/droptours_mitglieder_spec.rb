@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2025, Schweizer Wanderwege. This file is part of
+#  Copyright (c) 2025-2026, Schweizer Wanderwege. This file is part of
 #  hitobito and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_sww
@@ -31,6 +31,7 @@ describe Export::Tabular::People::DroptoursMitglieder do
         :last_name,
         :first_name,
         :address_care_of,
+        :address_addition,
         :address,
         :postbox,
         :zip_code,
