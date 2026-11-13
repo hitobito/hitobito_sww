@@ -13,8 +13,15 @@ class MoveAddressCareOfToAddressAddition < ActiveRecord::Migration[8.0]
     event_guests: %w[address_care_of address_addition]
   }.freeze
 
-  CARE_OF_PREFIX = '^\s*(c\s*/\s*o|c\.\s*o\.|p\.\s*a\.|bei\s|chez\s|presso\s|z\.?\s*hd|z\.\s*h\.|' \
-    'zu\s*handen|attn|att\.|à l.attention|a l.attention|all.attenzione)'
+  # Values starting with a c/o or attention prefix stay c/o addresses. Accented capitals are
+  # listed explicitly, as case insensitive matching of them depends on the db locale.
+  CARE_OF_PREFIXES = [
+    'c\s*/\s*[o0]\M', 'c\.\s*o\.', "℅", 'p\.\s*a\.', 'bei\s', 'chez\s', 'presso\s',
+    'z\.?\s*hd', 'z\.\s*h\M', 'zu\s*handen', "attn", 'att\.', '[aàÀ]\s*l.\s*att',
+    'all.\s*attenzione'
+  ].freeze
+
+  CARE_OF_PREFIX = "^\\s*(#{CARE_OF_PREFIXES.join("|")})"
 
   def up
     COLUMNS.each do |table, (care_of, addition)|
