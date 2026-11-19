@@ -31,8 +31,8 @@ email:
 event:
   participations:
     manual_sensitive_option: true
-    delete_answers_after_months: 12
-    delete_additional_information_after_months: 12
+    delete_answers_after_months: P12M
+    delete_additional_information_after_months: P12M
 
 # The person with this email has root access to everything
 # This person should only be used by the operators of the application,
