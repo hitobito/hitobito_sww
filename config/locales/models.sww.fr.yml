@@ -130,13 +130,9 @@ fr:
               other: "Cher*e %{first_name} %{last_name}"
 
     attributes:
-      additional_address:
-        address_care_of: Ligne d’adresse supplémentaire 1
       event/guest:
-        address_care_of: Ligne d’adresse supplémentaire 1
         company_name: Nom de l'organisation
       group:
-        address_care_of: Ligne d’adresse supplémentaire 1
         droptours_export: Inclure dans l'exportation Droptours
         event_sender: Événement E-mail de l'expéditeur
         membership_card_left_position: Carte de membre Distance à partir de la gauche (cm)
@@ -148,7 +144,6 @@ fr:
         recipient_company_name: Nom de l'organisation
         membership_card: Carte de membre
         membership_expires_on: Adhésion valide jusqu'au
-        recipient_address_care_of: Ligne d’adresse supplémentaire 1
       invoice_config:
         logo_positions:
           bottom_left: En bas à gauche
@@ -160,10 +155,8 @@ fr:
         membership_card: Carte de membre
         membership_expires_on: Adhésion valide jusqu'au
       participant:
-        address_care_of: Ligne d’adresse supplémentaire 1
         company_name: Nom de l'organisation
       person:
-        address_care_of: Ligne d’adresse supplémentaire 1
         company: Organisation
         company_name: Nom de l'organisation
         custom_salutation: Formule d'appel personnalisée

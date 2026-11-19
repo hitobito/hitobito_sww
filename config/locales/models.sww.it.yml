@@ -130,13 +130,9 @@ it:
               other: "Gentile %{first_name} %{last_name}"
 
     attributes:
-      additional_address:
-        address_care_of: Riga aggiuntiva dell'indirizzo 1
       event/guest:
-        address_care_of: Riga aggiuntiva dell'indirizzo 1
         company_name: Nome dell'organizzazione
       group:
-        address_care_of: Riga aggiuntiva dell'indirizzo 1
         droptours_export: Includere in Droptours Export
         event_sender: "Occasione: Nome del mittente E-mail"
         membership_card_left_position: Carta socio Distanza da sinistra (cm)
@@ -148,7 +144,6 @@ it:
         recipient_company_name: Nome dell'organizzazione
         membership_card: Carta socio
         membership_expires_on: Socio valido fino al
-        recipient_address_care_of: Riga aggiuntiva dell'indirizzo 1
       invoice_config:
         logo_positions:
           bottom_left: In basso a sinistra
@@ -160,10 +155,8 @@ it:
         membership_card: Carta socio
         membership_expires_on: Socio valido fino al
       participant:
-        address_care_of: Riga aggiuntiva dell'indirizzo 1
         company_name: Nome dell'organizzazione
       person:
-        address_care_of: Riga aggiuntiva dell'indirizzo 1
         company: Organizzazione
         company_name: Nome dell'organizzazione
         custom_salutation: Saluto personalizzato
